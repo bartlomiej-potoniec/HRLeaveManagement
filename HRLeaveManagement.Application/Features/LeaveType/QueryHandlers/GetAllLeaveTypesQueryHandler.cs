@@ -6,7 +6,7 @@ using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.QueryHandlers;
 
-public class GetAllLeaveTypesQueryHandler(ILeaveTypeRepository repository, IMapper mapper) 
+public sealed class GetAllLeaveTypesQueryHandler(ILeaveTypeRepository repository, IMapper mapper) 
     : IRequestHandler<GetAllLeaveTypesQuery, IEnumerable<LeaveTypeDTO>>
 {
     private readonly ILeaveTypeRepository _repository = repository;

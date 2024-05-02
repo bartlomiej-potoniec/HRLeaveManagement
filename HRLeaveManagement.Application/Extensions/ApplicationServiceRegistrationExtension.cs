@@ -9,7 +9,7 @@ public static class ApplicationServiceRegistrationExtension
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        services.AddMediatR(config => 
+        services.AddMediatR(config =>
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
         );
 

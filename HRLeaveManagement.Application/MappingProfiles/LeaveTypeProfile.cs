@@ -9,5 +9,6 @@ public class LeaveTypeProfile : Profile
     public LeaveTypeProfile()
     {
         CreateMap<LeaveType, LeaveTypeDTO>().ReverseMap();
+        CreateMap<LeaveType, LeaveTypeDetailsDTO>().ReverseMap();
     }
 }
