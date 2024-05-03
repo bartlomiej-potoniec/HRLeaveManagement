@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
 using MediatR;
 
@@ -13,7 +14,7 @@ public sealed class DeleteLeaveTypeCommandHandler(ILeaveTypeRepository repositor
                              CancellationToken cancellationToken)
     {
         var leaveType = await _repository.GetByIdAsync(request.Id)
-            ?? throw new Exception($"No leave type with id: { request.Id }");
+            ?? throw new NotFoundException(nameof(LeaveType), request.Id);
 
         await _repository.DeleteAsync(leaveType);
     }

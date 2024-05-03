@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.DTOs;
+using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveType.Queries;
 using MediatR;
 
@@ -16,8 +17,8 @@ public sealed class GetLeaveTypeDetailsQueryHandler(ILeaveTypeRepository reposit
                                                   CancellationToken cancellationToken)
     {
         var leaveType = await _repository.GetByIdAsync(request.Id)
-            ?? throw new Exception();
-
+            ?? throw new NotFoundException(nameof(LeaveType), request.Id);
+        
         var leaveTypeDetailsDto = _mapper.Map<LeaveTypeDetailsDTO>(leaveType);
         return leaveTypeDetailsDto;
     }

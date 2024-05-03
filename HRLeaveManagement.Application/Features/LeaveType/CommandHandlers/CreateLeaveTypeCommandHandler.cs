@@ -2,7 +2,9 @@
 using DomainLeaveType = HRLeaveManagement.Domain.LeaveType;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
+using HRLeaveManagement.Application.Validation;
 using MediatR;
+using HRLeaveManagement.Application.Exceptions;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.CommandHandlers;
 
@@ -15,6 +17,12 @@ public sealed class CreateLeaveTypeCommandHandler(ILeaveTypeRepository repositor
     public async Task<int> Handle(CreateLeaveTypeCommand request,
                                   CancellationToken cancellationToken)
     {
+        var validator = new CreateLeaveTypeCommandValidator(_repository);
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+            throw new BadRequestException("Invalid Leave type", validationResult);
+
         var leaveType = _mapper.Map<DomainLeaveType>(request);
 
         leaveType.CreatedAt = DateTime.UtcNow;
