@@ -20,12 +20,14 @@ public abstract class GenericRepository<T>(ApplicationDbContext context)
         .AsNoTracking()
         .FirstOrDefaultAsync(t => t.Id == id);
 
-    public async Task CreateAsync(T entity)
+    public async Task<int> CreateAsync(T entity)
     {
         await _context.AddAsync(entity);
         _context.Entry(entity).State = EntityState.Added;
 
         await SaveChangesAsync();
+
+        return entity.Id;
     }
 
     public async Task UpdateAsync(T entity)
