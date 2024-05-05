@@ -9,7 +9,7 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext context)
     : GenericRepository<LeaveAllocation>(context), ILeaveAllocationRepository
 {
     public async Task<LeaveAllocation?> GetUserLeaveAllocationByIdAsync(string userId,
-                                                                       int leaveTypeId)
+                                                                        int leaveTypeId)
         => await _context.LeaveAllocations
             .FirstOrDefaultAsync(la => la.EmployeeId == userId && la.LeaveTypeId == leaveTypeId);
 
@@ -31,10 +31,9 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext context)
 
     public async Task<bool> IsAllocationExistAsync(string userId, int leaveTypeId, int period)
         => await _context.LeaveAllocations
-            .AnyAsync(la =>
-                la.EmployeeId == userId
-                    && la.LeaveTypeId == leaveTypeId
-                    && la.Period == period
+            .AnyAsync(la => la.EmployeeId == userId
+                && la.LeaveTypeId == leaveTypeId
+                && la.Period == period
             );
 
     public async Task AddAllocationsAsync(IEnumerable<LeaveAllocation> leaveAllocations)
@@ -42,5 +41,4 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext context)
         await _context.AddRangeAsync(leaveAllocations);
         await _context.SaveChangesAsync();
     }
-
 }
