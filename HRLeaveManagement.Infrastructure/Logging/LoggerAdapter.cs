@@ -5,7 +5,6 @@ namespace HRLeaveManagement.Infrastructure.Logging;
 
 public class LoggerAdapter<T>(ILoggerFactory loggerFactory) : IAppLogger<T>
 {
-    private readonly ILoggerFactory _loggerFactory = loggerFactory;
     private readonly ILogger<T> _logger = loggerFactory.CreateLogger<T>();
 
     public void LogInformation(string message, params object[] args)

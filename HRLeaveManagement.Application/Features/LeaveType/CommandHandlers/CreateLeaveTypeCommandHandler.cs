@@ -3,9 +3,9 @@ using DomainLeaveType = HRLeaveManagement.Domain.LeaveType;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
 using HRLeaveManagement.Application.Validation;
-using MediatR;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
+using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.CommandHandlers;
 

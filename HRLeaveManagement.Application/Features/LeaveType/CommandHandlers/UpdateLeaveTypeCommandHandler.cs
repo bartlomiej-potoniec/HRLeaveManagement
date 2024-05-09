@@ -18,7 +18,6 @@ public sealed class UpdateLeaveTypeCommandHandler(ILeaveTypeRepository repositor
         var leaveType = _mapper.Map<DomainLeaveType>(request);
         leaveType.ModifiedAt = DateTime.UtcNow;
 
-        var result = await _repository.UpdateAsync(leaveType)
-            ?? throw new Exception();
+        await _repository.UpdateAsync(leaveType);
     }
 }
