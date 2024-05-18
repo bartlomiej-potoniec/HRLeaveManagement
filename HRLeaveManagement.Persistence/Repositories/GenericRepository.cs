@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
-public abstract class GenericRepository<T>(ApplicationDbContext context) 
+public class GenericRepository<T>(ApplicationDbContext context) 
     : IGenericRepository<T> where T : BaseEntity
 {
     protected readonly ApplicationDbContext _context = context;
@@ -22,8 +22,8 @@ public abstract class GenericRepository<T>(ApplicationDbContext context)
 
     public async Task<int> CreateAsync(T entity)
     {
-        await _context.AddAsync(entity);
         _context.Entry(entity).State = EntityState.Added;
+        await _context.AddAsync(entity);
 
         await SaveChangesAsync();
 
@@ -32,8 +32,8 @@ public abstract class GenericRepository<T>(ApplicationDbContext context)
 
     public async Task UpdateAsync(T entity)
     {
-        _context.Update(entity);
         _context.Entry(entity).State = EntityState.Modified;
+        _context.Update(entity);
 
         await SaveChangesAsync();
     }

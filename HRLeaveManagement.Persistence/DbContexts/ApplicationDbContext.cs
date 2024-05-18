@@ -1,15 +1,14 @@
 ﻿using HRLeaveManagement.Domain;
 using HRLeaveManagement.Domain.Common;
-using HRLeaveManagement.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRLeaveManagement.Persistence.DbContexts;
 
 public class ApplicationDbContext : DbContext
 {
-    public DbSet<LeaveType> LeaveTypes { get; private set; }
-    public DbSet<LeaveAllocation> LeaveAllocations { get; private set; }
-    public DbSet<LeaveRequest> LeaveRequests { get; private set; }
+    public DbSet<LeaveType> LeaveTypes { get; set; }
+    public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+    public DbSet<LeaveRequest> LeaveRequests { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options) { }

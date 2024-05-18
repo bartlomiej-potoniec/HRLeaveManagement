@@ -4,9 +4,9 @@ using HRLeaveManagement.Application.Features.LeaveType.Commands;
 
 namespace HRLeaveManagement.Application.Validation;
 
-public sealed class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveTypeCommand>
+public sealed class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveTypeCommand>
 {
-    public CreateLeaveTypeCommandValidator(ILeaveTypeRepository repository)
+    public UpdateLeaveTypeCommandValidator(ILeaveTypeRepository repository)
     {
         RuleFor(c => c.Name)
             .NotEmpty()
@@ -21,8 +21,8 @@ public sealed class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLe
             .GreaterThan(1)
                 .WithMessage("{PropertyName} cannot be less than 1");
 
-        RuleFor(c => c)
-            .MustAsync(async (command, token) => await repository.IsLeaveTypeUnique(command.Name))
-                .WithMessage("Leave type already exists");
+        RuleFor(c => c.Id)
+            .MustAsync(async (id, token) => await repository.GetByIdAsync(id) is not null)
+                .WithMessage("Leave type does not exists");
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HRLeaveManagement.Persistence.Configurations;
 
-public sealed class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>
+public class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>
 {
     public void Configure(EntityTypeBuilder<LeaveType> builder)
     {

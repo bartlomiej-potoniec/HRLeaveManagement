@@ -3,7 +3,6 @@ using HRLeaveManagement.Application.Models.Email;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Net;
 
 namespace HRLeaveManagement.Infrastructure.EmailService;
 
@@ -32,6 +31,6 @@ public sealed class EmailSender(IOptions<EmailSettings> emailSettings) : IEmailS
 
         var response = await client.SendEmailAsync(message);
 
-        return response.StatusCode is HttpStatusCode.OK or HttpStatusCode.Accepted;
+        return response.IsSuccessStatusCode;
     }
 }
