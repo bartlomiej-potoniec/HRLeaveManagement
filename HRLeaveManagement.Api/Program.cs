@@ -1,3 +1,4 @@
+using HRLeaveManagement.Api.Middleware;
 using HRLeaveManagement.Application.Extensions;
 using HRLeaveManagement.Infrastructure.Extensions;
 using HRLeaveManagement.Persistence.Extensions;
@@ -26,6 +27,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -34,8 +37,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.UseCors("all");
 
 app.Run();

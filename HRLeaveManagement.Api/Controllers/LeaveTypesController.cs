@@ -42,7 +42,7 @@ public class LeaveTypesController(ISender sender) : ControllerBase
     public async Task<IActionResult> Update([FromRoute] int id,
                                             [FromBody] UpdateLeaveTypeCommand command)
     {
-        await _sender.Send(command);
+        await _sender.Send(command with { Id = id });
         return NoContent();
     }
 
@@ -51,10 +51,9 @@ public class LeaveTypesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Delete([FromRoute] int id,
-                                            [FromBody] DeleteLeaveTypeCommand command)
+    public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        await _sender.Send(command);
+        await _sender.Send(new DeleteLeaveTypeCommand(id));
         return NoContent();
     }
 }

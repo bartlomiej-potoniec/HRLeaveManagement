@@ -2,13 +2,13 @@
 
 namespace HRLeaveManagement.Application.Exceptions;
 
-internal class BadRequestException : Exception
+public class BadRequestException : Exception
 {
-    public List<string> ValidationErrors { get; set; } = [];
+    public IDictionary<string, string[]> ValidationErrors { get; set; } 
+        = (Dictionary<string, string[]>)[];
 
     internal BadRequestException(string message) : base(message) {}
 
-    internal BadRequestException(string message, ValidationResult result) : base(message) 
-        => result.Errors
-            .ForEach(error => ValidationErrors.Add(error.ErrorMessage));
+    internal BadRequestException(string message, ValidationResult validationResult) : base(message)
+        => ValidationErrors = validationResult.ToDictionary();
 }
