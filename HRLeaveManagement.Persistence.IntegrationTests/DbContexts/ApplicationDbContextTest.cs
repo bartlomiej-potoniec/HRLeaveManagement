@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
-using HRLeaveManagement.Domain;
+﻿using HRLeaveManagement.Domain;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using FluentAssertions;
 
 namespace HRLeaveManagement.Persistence.IntegrationTests.DbContexts;
 
@@ -22,7 +22,7 @@ public class ApplicationDbContextTest
     public async Task Save_SetDateCreatedValue()
     {
         // Arrange
-        var leaveType = new LeaveType { Id = 10, DefaultDays = 10, Name = "Test Vacation" };
+        var leaveType = new LeaveType { Id = 1, DefaultDays = 10, Name = "Test Vacation" };
 
         // Act
         await _dbContext.LeaveTypes.AddAsync(leaveType);
@@ -39,7 +39,7 @@ public class ApplicationDbContextTest
     {
         // Arrange
         var dateTime = DateTime.Now;
-        var leaveType = new LeaveType { Id = 11, DefaultDays = 10, Name = "Test Vacation" };
+        var leaveType = new LeaveType { Id = 2, DefaultDays = 10, Name = "Test Vacation" };
 
         // Act
         await _dbContext.LeaveTypes.AddAsync(leaveType);

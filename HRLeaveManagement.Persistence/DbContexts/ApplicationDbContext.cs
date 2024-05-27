@@ -19,7 +19,7 @@ public class ApplicationDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
-
+    
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var entityEntries = base.ChangeTracker.Entries<BaseEntity>()
@@ -35,6 +35,4 @@ public class ApplicationDbContext : DbContext
 
         return base.SaveChangesAsync(cancellationToken);
     }
-
-
 }

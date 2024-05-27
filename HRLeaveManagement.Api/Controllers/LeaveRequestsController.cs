@@ -1,5 +1,6 @@
 ﻿using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
 using HRLeaveManagement.Application.Features.LeaveRequest.Queries;
+using HRLeaveManagement.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
@@ -14,7 +15,7 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> GetAllWithDetails()
+    public async Task<ActionResult<IEnumerable<LeaveRequestDTO>>> GetAllWithDetails()
     {
         var leaveRequests = await _sender.Send(new GetAllLeaveRequestsWithDetailsQuery());
         return Ok(leaveRequests);
@@ -24,7 +25,7 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> GetWithDetailsById([FromRoute] int id)
+    public async Task<ActionResult<LeaveRequestDetailsDTO>> GetWithDetailsById([FromRoute] int id)
     {
         var leaveRequest = await _sender.Send(new GetLeaveRequestWithDetailsByIdQuery(id));
         return Ok(leaveRequest);
@@ -35,7 +36,7 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Create([FromBody] CreateLeaveRequestCommand command)
+    public async Task<ActionResult> Create([FromBody] CreateLeaveRequestCommand command)
     {
         var leaveRequestId = await _sender.Send(command);
         return CreatedAtAction(nameof(GetWithDetailsById), new { id = leaveRequestId }, command);
@@ -46,7 +47,7 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Update([FromRoute] int id,
+    public async Task<ActionResult> Update([FromRoute] int id,
                                             [FromBody] UpdateLeaveRequestCommand command)
     {
         await _sender.Send(command with { Id = id });
@@ -57,21 +58,21 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Delete([FromRoute] int id)
+    public async Task<ActionResult> Delete([FromRoute] int id)
     {
         await _sender.Send(new DeleteLeaveRequestCommand(id));
         return NoContent();
     }
 
     [HttpPatch("cancel")]
-    public async Task<IActionResult> Cancel([FromBody] CancelLeaveRequestCommand command)
+    public async Task<ActionResult> Cancel([FromBody] CancelLeaveRequestCommand command)
     {
         await _sender.Send(command);
         return NoContent();
     }
 
     [HttpPatch("approve")]
-    public async Task<IActionResult> Approve([FromBody] ChangeLeaveRequestApprovalCommand command)
+    public async Task<ActionResult> Approve([FromBody] ChangeLeaveRequestApprovalCommand command)
     {
         await _sender.Send(command);
         return NoContent();
