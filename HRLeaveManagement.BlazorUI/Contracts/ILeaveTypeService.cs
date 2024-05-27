@@ -6,7 +6,7 @@ namespace HRLeaveManagement.BlazorUI.Contracts;
 public interface ILeaveTypeService
 {
     Task<IEnumerable<LeaveTypeViewModel>> GetAll();
-    Task<LeaveTypeViewModel> GetDetails();
+    Task<LeaveTypeViewModel> GetDetails(int id);
 
     Task<Response<Guid>> Create(LeaveTypeViewModel leaveType);
     Task<Response<Guid>> Update(int id, LeaveTypeViewModel leaveType);
