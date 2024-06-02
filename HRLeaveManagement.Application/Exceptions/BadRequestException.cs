@@ -7,8 +7,8 @@ public class BadRequestException : Exception
     public IDictionary<string, string[]> ValidationErrors { get; set; } 
         = (Dictionary<string, string[]>)[];
 
-    internal BadRequestException(string message) : base(message) {}
+    public BadRequestException(string message) : base(message) {}
 
-    internal BadRequestException(string message, ValidationResult validationResult) : base(message)
+    public BadRequestException(string message, ValidationResult validationResult) : base(message)
         => ValidationErrors = validationResult.ToDictionary();
 }

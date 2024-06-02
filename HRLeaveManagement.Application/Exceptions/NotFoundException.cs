@@ -2,7 +2,7 @@
 
 public class NotFoundException : Exception
 {
-    internal NotFoundException(string message) : base(message) {}
-    internal NotFoundException(string name, object key) 
+    public NotFoundException(string message) : base(message) {}
+    public NotFoundException(string name, object key) 
         : base($"{ name } ({ key }) was not found") {}
 }

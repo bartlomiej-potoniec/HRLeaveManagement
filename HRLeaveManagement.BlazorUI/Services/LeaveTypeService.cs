@@ -6,7 +6,8 @@ using HRLeaveManagement.BlazorUI.ViewModels.LeaveType;
 
 namespace HRLeaveManagement.BlazorUI.Services;
 
-public class LeaveTypeService(IClient client, IMapper mapper) : HttpServiceBase(client), ILeaveTypeService
+public sealed class LeaveTypeService(IClient client, IMapper mapper) 
+    : HttpServiceBase(client), ILeaveTypeService
 {
     private readonly IMapper _mapper = mapper;
     
@@ -25,6 +26,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : HttpServiceBase(
 
         return viewModel;
     }
+
     public async Task<Response<Guid>> Create(LeaveTypeViewModel leaveType)
     {
         Response<Guid> response;
@@ -43,7 +45,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : HttpServiceBase(
         }
 
         return response;
-    }
+    } 
 
     public async Task<Response<Guid>> Update(int id, LeaveTypeViewModel leaveType)
     {
