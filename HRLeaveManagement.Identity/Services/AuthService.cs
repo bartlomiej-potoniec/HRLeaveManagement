@@ -3,6 +3,7 @@ using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Models.Identity;
 using HRLeaveManagement.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,12 +13,12 @@ namespace HRLeaveManagement.Identity.Services;
 
 public sealed class AuthService(UserManager<ApplicationUser> userManager,
                                 SignInManager<ApplicationUser> signInManager,
-                                JwtSettings jwtSettings) 
+                                IOptions<JwtSettings> jwtSettings) 
     : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
-    private readonly JwtSettings _jwtSettings = jwtSettings;
+    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
     public async Task<AuthResponse> Login(AuthRequest request)
     {
@@ -29,9 +30,11 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
         if (!result.Succeeded)
             throw new BadRequestException($"Credentials for '{ request.Email }' are not valid");
 
-        var token = GenerateJwtToken(user);
+        var jwtSecurityToken = await GenerateJwtToken(user);
+        var token = new JwtSecurityTokenHandler()
+            .WriteToken(jwtSecurityToken);
 
-        return new(user.Id, user.UserName, user.Email, token.ToString());
+        return new(user.Id, user.UserName!, user.Email!, token);
     }
 
     public async Task<RegistrationResponse> Register(RegistrationRequest request)
@@ -90,9 +93,9 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
 
         var initialClaims = new Claim[]
         {
-            new(JwtRegisteredClaimNames.Sub, user.UserName),
+            new(JwtRegisteredClaimNames.Sub, user.UserName!),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(JwtRegisteredClaimNames.Email, user.Email!),
             new("uid", user.Id)
         };
 

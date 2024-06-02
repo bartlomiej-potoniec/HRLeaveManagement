@@ -8,7 +8,7 @@ namespace HRLeaveManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class LeaveAllocationsController(ISender sender) : ControllerBase
+public sealed class LeaveAllocationsController(ISender sender) : ControllerBase
 {
     private readonly ISender _sender = sender;
 
