@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Blazored.LocalStorage;
 using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.Models;
 using HRLeaveManagement.BlazorUI.Services.Base;
@@ -6,13 +7,17 @@ using HRLeaveManagement.BlazorUI.ViewModels.LeaveType;
 
 namespace HRLeaveManagement.BlazorUI.Services;
 
-public sealed class LeaveTypeService(IClient client, IMapper mapper) 
-    : HttpServiceBase(client), ILeaveTypeService
+public sealed class LeaveTypeService(IClient client,
+                                     IMapper mapper,
+                                     ILocalStorageService localStorage)
+    : HttpServiceBase(client, localStorage), ILeaveTypeService
 {
     private readonly IMapper _mapper = mapper;
     
     public async Task<IEnumerable<LeaveTypeViewModel>> GetAll()
     {
+        await AddBearerToken();
+
         var leaveTypes = await _client.LeaveTypesAllAsync();
         var viewModels = _mapper.Map<IEnumerable<LeaveTypeViewModel>>(leaveTypes);
 
@@ -21,6 +26,8 @@ public sealed class LeaveTypeService(IClient client, IMapper mapper)
 
     public async Task<LeaveTypeViewModel> GetDetails(int id)
     {
+        await AddBearerToken();
+
         var leaveType = await _client.LeaveTypesGETAsync(id);
         var viewModel = _mapper.Map<LeaveTypeViewModel>(leaveType);
 
@@ -33,6 +40,8 @@ public sealed class LeaveTypeService(IClient client, IMapper mapper)
 
         try
         {
+            await AddBearerToken();
+
             var command = _mapper.Map<CreateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPOSTAsync(command);
 
@@ -53,6 +62,8 @@ public sealed class LeaveTypeService(IClient client, IMapper mapper)
 
         try
         {
+            await AddBearerToken();
+
             var command = _mapper.Map<UpdateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPATCHAsync(id, command);
 
@@ -73,6 +84,8 @@ public sealed class LeaveTypeService(IClient client, IMapper mapper)
 
         try
         {
+            await AddBearerToken();
+
             await _client.LeaveTypesDELETEAsync(id);
             response = GenerateSuccessResponse("Leave Type removed successfully");
         }

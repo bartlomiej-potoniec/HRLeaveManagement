@@ -27,10 +27,13 @@
                     <td>@leaveType.Name</td>
                     <td>@leaveType.DefaultDays</td>
                     <td>
-                        <button @onclick=@(() => AllocateLeaveType(leaveType.Id)) class="btn btn-dark">Allocate Leave</button>
+                        <AuthorizeView Roles="Administrator">
+                                <button @onclick=@(() => AllocateLeaveType(leaveType.Id)) class="btn btn-dark">Allocate Leave</button>
+                                <button @onclick=@(() => EditLeaveType(leaveType.Id)) class="btn btn-warning">Edit</button>
+                                <button @onclick=@(() => DeleteLeaveType(leaveType.Id)) class="btn btn-danger">Delete</button>
+                        </AuthorizeView>
+
                         <button @onclick=@(() => DetailLeaveType(leaveType.Id)) class="btn btn-info">Details</button>
-                        <button @onclick=@(() => EditLeaveType(leaveType.Id)) class="btn btn-warning">Edit</button>
-                        <button @onclick=@(() => DeleteLeaveType(leaveType.Id)) class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             }

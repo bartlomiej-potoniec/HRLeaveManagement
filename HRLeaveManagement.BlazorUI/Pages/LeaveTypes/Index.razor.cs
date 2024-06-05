@@ -1,7 +1,6 @@
 using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.ViewModels.LeaveType;
 using Microsoft.AspNetCore.Components;
-using System.Runtime.CompilerServices;
 
 namespace HRLeaveManagement.BlazorUI.Pages.LeaveTypes;
 
