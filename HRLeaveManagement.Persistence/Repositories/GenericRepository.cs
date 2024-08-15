@@ -23,9 +23,19 @@ public class GenericRepository<T>(ApplicationDbContext context)
     public async Task<int> CreateAsync(T entity)
     {
         _context.Entry(entity).State = EntityState.Added;
+
         await _context.AddAsync(entity);
 
-        await SaveChangesAsync();
+        try
+        {
+            await SaveChangesAsync();
+        }
+
+        catch (DbUpdateException ex)
+        {
+            Console.WriteLine($"+++AN ERROR OCCURED WHILE SAVING CHANGES+++ : {ex.InnerException}");
+            throw new Exception("An error occurred while saving the entity changes. See the inner exception for details.", ex);
+        }
 
         return entity.Id;
     }

@@ -1,7 +1,11 @@
-﻿namespace HRLeaveManagement.Application.DTOs;
+﻿using HRLeaveManagement.Application.Models.Identity;
+
+namespace HRLeaveManagement.Application.DTOs;
 
 public sealed record LeaveRequestDetailsDTO
 {
+    public required int Id { get; init; }
+    public required Employee Employee { get; init; }
     public required string RequestedEmployeeId { get; init; }
 
     public required LeaveTypeDTO LeaveType { get; init; }
@@ -15,6 +19,6 @@ public sealed record LeaveRequestDetailsDTO
     
     public DateTime? ActionedAt { get; init; }
 
-    public bool? IsApproved { get; set; }
-    public required bool IsCancelled { get; set; }
+    public bool? IsApproved { get; init; }
+    public required bool IsCancelled { get; init; }
 }

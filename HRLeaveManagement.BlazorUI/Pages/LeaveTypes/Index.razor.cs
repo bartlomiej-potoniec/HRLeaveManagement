@@ -12,6 +12,9 @@ public partial class Index
     [Inject]
     public ILeaveTypeService LeaveTypeService { get; set; }
 
+    [Inject]
+    public ILeaveAllocationService LeaveAllocationService { get; set; }
+
     public IEnumerable<LeaveTypeViewModel>? LeaveTypes { get; set; }
     public string? Message { get; set; }
 
@@ -24,7 +27,7 @@ public partial class Index
     
     protected async Task AllocateLeaveType(int id)
     {
-
+        await LeaveAllocationService.CreateLeaveAllocations(id);
     }
 
     protected void DetailLeaveType(int id)

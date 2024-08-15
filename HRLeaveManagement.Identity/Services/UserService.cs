@@ -2,14 +2,23 @@
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Models.Identity;
 using HRLeaveManagement.Identity.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace HRLeaveManagement.Identity.Services;
 
-public sealed class UserService(UserManager<ApplicationUser> userManager) : IUserService
+public sealed class UserService(UserManager<ApplicationUser> userManager,
+                                IHttpContextAccessor httpContextAccessor)
+    : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
+    public ClaimsPrincipal? User => _httpContextAccessor?.HttpContext?.User;
+    public string? UserId 
+        => User?.FindFirst(claim => claim.Type is "uid")?.Value;
+    
     public async Task<Employee> GetEmployee(string userId)
     {
         var employee = await _userManager.FindByIdAsync(userId)

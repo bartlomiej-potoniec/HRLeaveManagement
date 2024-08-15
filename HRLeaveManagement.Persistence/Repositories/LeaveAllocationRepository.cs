@@ -8,7 +8,7 @@ namespace HRLeaveManagement.Persistence.Repositories;
 public sealed class LeaveAllocationRepository(ApplicationDbContext context)
     : GenericRepository<LeaveAllocation>(context), ILeaveAllocationRepository
 {
-    public async Task<LeaveAllocation?> GetUserLeaveAllocationByIdAsync(string userId,
+    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId,
                                                                         int leaveTypeId)
         => await _context.LeaveAllocations
             .FirstOrDefaultAsync(la => la.EmployeeId == userId && la.LeaveTypeId == leaveTypeId);

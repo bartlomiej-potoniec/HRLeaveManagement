@@ -89,12 +89,12 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync(bool isUserLoggedIn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync(bool isUserLoggedIn, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -873,16 +873,19 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync(bool isUserLoggedIn)
         {
-            return LeaveRequestsAllAsync(System.Threading.CancellationToken.None);
+            return LeaveRequestsAllAsync(isUserLoggedIn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveRequestDTO>> LeaveRequestsAllAsync(bool isUserLoggedIn, System.Threading.CancellationToken cancellationToken)
         {
+            if (isUserLoggedIn == null)
+                throw new System.ArgumentNullException("isUserLoggedIn");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
@@ -2118,17 +2121,14 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
     public partial class CreateLeaveRequestCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("requestedEmployeeId")]
-        public string RequestedEmployeeId { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
         public int LeaveTypeId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("startedAt")]
-        public System.DateTimeOffset StartedAt { get; set; }
+        public System.DateTime StartedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("endedAt")]
-        public System.DateTimeOffset EndedAt { get; set; }
+        public System.DateTime EndedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestComment")]
         public string RequestComment { get; set; }
@@ -2144,6 +2144,24 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("defaultDays")]
         public int DefaultDays { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Employee
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
 
     }
 
@@ -2193,6 +2211,12 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
     public partial class LeaveRequestDTO
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employee")]
+        public Employee Employee { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
         public string RequestingEmployeeId { get; set; }
 
@@ -2200,13 +2224,13 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
         public LeaveTypeDTO LeaveType { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestedAt")]
-        public System.DateTimeOffset RequestedAt { get; set; }
+        public System.DateTime RequestedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("startedAt")]
-        public System.DateTimeOffset StartedAt { get; set; }
+        public System.DateTime StartedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("endedAt")]
-        public System.DateTimeOffset EndedAt { get; set; }
+        public System.DateTime EndedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
         public bool? IsApproved { get; set; }
@@ -2216,6 +2240,12 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class LeaveRequestDetailsDTO
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employee")]
+        public Employee Employee { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestedEmployeeId")]
         public string RequestedEmployeeId { get; set; }
@@ -2227,19 +2257,19 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
         public int LeaveTypeId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestedAt")]
-        public System.DateTimeOffset RequestedAt { get; set; }
+        public System.DateTime RequestedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("startedAt")]
-        public System.DateTimeOffset StartedAt { get; set; }
+        public System.DateTime StartedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("endedAt")]
-        public System.DateTimeOffset EndedAt { get; set; }
+        public System.DateTime EndedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestComment")]
         public string RequestComment { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("actionedAt")]
-        public System.DateTimeOffset? ActionedAt { get; set; }
+        public System.DateTime? ActionedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
         public bool? IsApproved { get; set; }
@@ -2278,10 +2308,10 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
         public int DefaultDays { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
-        public System.DateTimeOffset? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("modifiedAt")]
-        public System.DateTimeOffset? ModifiedAt { get; set; }
+        public System.DateTime? ModifiedAt { get; set; }
 
     }
 
@@ -2381,10 +2411,10 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
         public string RequestedEmployeeId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("startedAt")]
-        public System.DateTimeOffset StartedAt { get; set; }
+        public System.DateTime StartedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("endedAt")]
-        public System.DateTimeOffset EndedAt { get; set; }
+        public System.DateTime EndedAt { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestComment")]
         public string RequestComment { get; set; }

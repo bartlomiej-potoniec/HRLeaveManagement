@@ -12,7 +12,7 @@ public static class ApplicationServiceRegistrationExtension
         services.AddMediatR(config =>
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
         );
-
+    
         return services;
     }
 

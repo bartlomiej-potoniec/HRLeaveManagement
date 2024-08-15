@@ -15,9 +15,10 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<IEnumerable<LeaveRequestDTO>>> GetAllWithDetails()
+    public async Task<ActionResult<IEnumerable<LeaveRequestDTO>>> GetAllWithDetails(
+        [FromRoute] bool isUserLoggedIn = false) 
     {
-        var leaveRequests = await _sender.Send(new GetAllLeaveRequestsWithDetailsQuery());
+        var leaveRequests = await _sender.Send(new GetAllLeaveRequestsWithDetailsQuery(isUserLoggedIn));
         return Ok(leaveRequests);
     }
 

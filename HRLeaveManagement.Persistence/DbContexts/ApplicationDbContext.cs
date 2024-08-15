@@ -28,9 +28,9 @@ public class ApplicationDbContext : DbContext
         foreach (var entry in entityEntries)
         {
             if (entry.State is EntityState.Added)
-                entry.Entity.CreatedAt = DateTime.Now;
+                entry.Entity.CreatedAt = DateTime.UtcNow;
 
-            entry.Entity.ModifiedAt = DateTime.Now;
+            entry.Entity.ModifiedAt = DateTime.UtcNow;
         }
 
         return base.SaveChangesAsync(cancellationToken);

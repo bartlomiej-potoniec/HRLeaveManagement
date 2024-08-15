@@ -31,7 +31,7 @@ public sealed class CancelLeaveRequestCommandHandler(ILeaveRequestRepository rep
             var email = new EmailMessage
             {
                 To = string.Empty, /* Get email from employee record */
-                TextContent = $"Your leave request for {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D}" +
+                TextContent = $"Your leave request for {leaveRequest.StartedAt:D} to {leaveRequest.EndedAt:D}" +
                               $"has been submitted successfully.",
                 Subject = $"Leave request with ID: {leaveRequest.Id} submitted"
             };

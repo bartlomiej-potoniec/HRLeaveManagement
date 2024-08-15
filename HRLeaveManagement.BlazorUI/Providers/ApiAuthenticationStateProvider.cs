@@ -5,12 +5,11 @@ using System.Security.Claims;
 
 namespace HRLeaveManagement.BlazorUI.Providers;
 
-public sealed class ApiAuthenticationStateProvider(ILocalStorageService localStorage,
-                                                   JwtSecurityTokenHandler jwtSecurityTokenHandler)
+public sealed class ApiAuthenticationStateProvider(ILocalStorageService localStorage)
     : AuthenticationStateProvider
 {
     private readonly ILocalStorageService _localStorage = localStorage;
-    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
+    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new();
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
@@ -21,7 +20,7 @@ public sealed class ApiAuthenticationStateProvider(ILocalStorageService localSto
 
         var tokenContent = await GetTokenContent("token");
 
-        if (tokenContent.ValidTo < DateTime.Now)
+        if (tokenContent.ValidTo < DateTime.UtcNow)
         {
             await _localStorage.RemoveItemAsync("token");
             return new(user);

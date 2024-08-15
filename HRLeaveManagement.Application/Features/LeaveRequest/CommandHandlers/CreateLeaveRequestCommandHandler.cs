@@ -4,30 +4,44 @@ using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
 using HRLeaveManagement.Application.Validation;
-using MediatR;
-using AutoMapper;
 using HRLeaveManagement.Application.Models.Email;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
+using HRLeaveManagement.Application.Contracts.Identity;
+using MediatR;
+using AutoMapper;
+using FluentValidation.Results;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.CommandHandlers;
 
 public sealed class CreateLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository,
                                                      ILeaveTypeRepository leaveTypeRepository,
-                                                     IAppLogger<CreateLeaveRequestCommand> logger,
+                                                     ILeaveAllocationRepository leaveAllocationRepository,
+                                                     IUserService userService,
                                                      IEmailSender emailSender,
+                                                     IAppLogger<CreateLeaveRequestCommand> logger,
                                                      IMapper mapper)
     : IRequestHandler<CreateLeaveRequestCommand, int>
 {
     private readonly ILeaveRequestRepository _leaveRequestRepository = leaveRequestRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
-    private readonly IAppLogger<CreateLeaveRequestCommand> _logger = logger;
+    private readonly ILeaveAllocationRepository _leaveAllocationRepository = leaveAllocationRepository;
+    private readonly IUserService _userService = userService;
     private readonly IEmailSender _emailSender = emailSender;
+    private readonly IAppLogger<CreateLeaveRequestCommand> _logger = logger;
     private readonly IMapper _mapper = mapper;
 
     public async Task<int> Handle(CreateLeaveRequestCommand request,
                                   CancellationToken cancellationToken)
     {
-        var validator = new CreateLeaveRequestCommandValidator(_leaveTypeRepository);
+        var employeeId = _userService.UserId
+            ?? throw new NotFoundException("No user claim exists in actual context");
+
+        var validator = new CreateLeaveRequestCommandValidator(
+            _leaveTypeRepository,
+            _leaveAllocationRepository,
+            employeeId
+        );
+
         var validationResult = await validator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
@@ -36,7 +50,10 @@ public sealed class CreateLeaveRequestCommandHandler(ILeaveRequestRepository lea
             throw new BadRequestException("Invalid leave request", validationResult);
         }
 
-        var leaveRequest = _mapper.Map<DomainLeaveRequest>(request);
+        var leaveRequest = _mapper.Map<DomainLeaveRequest>(request, opt =>
+            opt.AfterMap((src, dest) => dest.RequestingEmployeeId = employeeId)
+        );
+
         var leaveRequestId = await _leaveRequestRepository.CreateAsync(leaveRequest);
 
         try

@@ -1,12 +1,11 @@
 ﻿using HRLeaveManagement.Domain.Common;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRLeaveManagement.Domain;
 
 public class LeaveRequest : BaseEntity
 {
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public DateTime StartedAt { get; set; }
+    public DateTime EndedAt { get; set; }
 
     public LeaveType? LeaveType { get; set; }
     public int LeaveTypeId { get; set; }

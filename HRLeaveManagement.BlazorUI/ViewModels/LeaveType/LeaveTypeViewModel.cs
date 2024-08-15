@@ -7,9 +7,9 @@ public class LeaveTypeViewModel
     public int Id { get; set; }
 
     [Required]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     [Required]
     [Display(Name = "Default Number Of Days")]
-    public required int DefaultDays { get; set; }
+    public int DefaultDays { get; set; }
 }

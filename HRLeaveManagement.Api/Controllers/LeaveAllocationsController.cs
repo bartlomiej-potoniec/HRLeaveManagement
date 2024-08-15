@@ -38,8 +38,9 @@ public sealed class LeaveAllocationsController(ISender sender) : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Create([FromBody] CreateLeaveAllocationCommand command)
     {
-        var resultId = await _sender.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = resultId }, command);
+        await _sender.Send(command);
+        /*return CreatedAtAction(nameof(GetById), new { id = resultId }, command);*/
+        return Ok();
     }
 
     [HttpPatch("{id:int}")]
@@ -48,7 +49,7 @@ public sealed class LeaveAllocationsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Update([FromRoute] int id,
-                                            [FromBody] UpdateLeaveAllocationCommand command)
+                                           [FromBody] UpdateLeaveAllocationCommand command)
     {
         await _sender.Send(command with { Id = id });
         return NoContent();

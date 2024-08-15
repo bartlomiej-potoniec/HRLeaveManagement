@@ -16,8 +16,6 @@ public sealed class LeaveTypeService(IClient client,
     
     public async Task<IEnumerable<LeaveTypeViewModel>> GetAll()
     {
-        await AddBearerToken();
-
         var leaveTypes = await _client.LeaveTypesAllAsync();
         var viewModels = _mapper.Map<IEnumerable<LeaveTypeViewModel>>(leaveTypes);
 
@@ -26,8 +24,6 @@ public sealed class LeaveTypeService(IClient client,
 
     public async Task<LeaveTypeViewModel> GetDetails(int id)
     {
-        await AddBearerToken();
-
         var leaveType = await _client.LeaveTypesGETAsync(id);
         var viewModel = _mapper.Map<LeaveTypeViewModel>(leaveType);
 
@@ -40,12 +36,10 @@ public sealed class LeaveTypeService(IClient client,
 
         try
         {
-            await AddBearerToken();
-
             var command = _mapper.Map<CreateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPOSTAsync(command);
 
-            response = GenerateSuccessResponse("Leave Type created successfully");
+            response = base.GenerateSuccessResponse("Leave Type created successfully");
         }
 
         catch (ApiException ex)
@@ -62,12 +56,10 @@ public sealed class LeaveTypeService(IClient client,
 
         try
         {
-            await AddBearerToken();
-
             var command = _mapper.Map<UpdateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPATCHAsync(id, command);
 
-            response = GenerateSuccessResponse("Leave Type updated successfully");
+            response = base.GenerateSuccessResponse("Leave Type updated successfully");
         }
 
         catch (ApiException ex)
@@ -84,10 +76,8 @@ public sealed class LeaveTypeService(IClient client,
 
         try
         {
-            await AddBearerToken();
-
             await _client.LeaveTypesDELETEAsync(id);
-            response = GenerateSuccessResponse("Leave Type removed successfully");
+            response = base.GenerateSuccessResponse("Leave Type removed successfully");
         }
 
         catch (ApiException ex)
@@ -97,11 +87,4 @@ public sealed class LeaveTypeService(IClient client,
 
         return response;
     }
-
-    private static Response<Guid> GenerateSuccessResponse(string message) 
-        => new() 
-        { 
-            Message = message, 
-            IsSuccess = true 
-        };
 }

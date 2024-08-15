@@ -17,7 +17,7 @@ namespace HRLeaveManagement.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -67,7 +67,7 @@ namespace HRLeaveManagement.Persistence.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime>("EndedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsApproved")
@@ -92,7 +92,7 @@ namespace HRLeaveManagement.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime>("StartedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -132,9 +132,9 @@ namespace HRLeaveManagement.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 12, 23, 51, 31, 590, DateTimeKind.Local).AddTicks(6064),
+                            CreatedAt = new DateTime(2024, 6, 9, 19, 0, 44, 456, DateTimeKind.Local).AddTicks(8864),
                             DefaultDays = 10,
-                            ModifiedAt = new DateTime(2024, 5, 12, 23, 51, 31, 590, DateTimeKind.Local).AddTicks(6120),
+                            ModifiedAt = new DateTime(2024, 6, 9, 19, 0, 44, 456, DateTimeKind.Local).AddTicks(8917),
                             Name = "Vacation"
                         });
                 });

@@ -9,20 +9,24 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.Reflection;
 using Blazored.LocalStorage;
 using System.IdentityModel.Tokens.Jwt;
+using HRLeaveManagement.BlazorUI.Handlers;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddHttpClient<IClient, Client>(client =>
-    client.BaseAddress = new Uri("https://localhost:7131")
-);
+builder.Services.AddTransient<JwtAuthorizationMessageHandler>();
+
+builder.Services
+    .AddHttpClient<IClient, Client>(client =>
+        client.BaseAddress = new Uri("https://localhost:7131")
+    )
+    .AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
-builder.Services.AddScoped<JwtSecurityTokenHandler>();
 
 builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
 builder.Services.AddScoped<ILeaveAllocationService, LeaveAllocationService>();

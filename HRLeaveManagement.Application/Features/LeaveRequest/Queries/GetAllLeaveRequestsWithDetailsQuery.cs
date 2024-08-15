@@ -3,4 +3,5 @@ using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.Queries;
 
-public sealed record GetAllLeaveRequestsWithDetailsQuery : IRequest<IEnumerable<LeaveRequestDTO>>;
+public sealed record GetAllLeaveRequestsWithDetailsQuery(bool IsUserLoggedIn) 
+    : IRequest<IEnumerable<LeaveRequestDTO>>;
