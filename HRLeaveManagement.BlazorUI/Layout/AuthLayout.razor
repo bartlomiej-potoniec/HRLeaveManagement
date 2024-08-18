@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+
+<MudLayout>
+    <MudMainContent>
+        <MudGrid Justify="Justify.Center" Class="mt-3">
+            <MudItem sm="12" md="6" lg="4">
+                @Body
+            </MudItem>
+        </MudGrid>
+    </MudMainContent>
+</MudLayout>
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />

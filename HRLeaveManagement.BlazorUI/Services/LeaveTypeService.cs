@@ -13,11 +13,21 @@ public sealed class LeaveTypeService(IClient client,
     : HttpServiceBase(client, localStorage), ILeaveTypeService
 {
     private readonly IMapper _mapper = mapper;
-    
+
     public async Task<IEnumerable<LeaveTypeViewModel>> GetAll()
     {
-        var leaveTypes = await _client.LeaveTypesAllAsync();
-        var viewModels = _mapper.Map<IEnumerable<LeaveTypeViewModel>>(leaveTypes);
+        IEnumerable<LeaveTypeViewModel> viewModels = null;
+
+        try
+        {
+            var leaveTypes = await _client.LeaveTypesAllAsync();
+            viewModels = _mapper.Map<IEnumerable<LeaveTypeViewModel>>(leaveTypes);
+        }
+        
+        catch (Exception ex)
+        {
+            viewModels = null;
+        }
 
         return viewModels;
     }

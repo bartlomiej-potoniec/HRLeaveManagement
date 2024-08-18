@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Layout;
 using HRLeaveManagement.BlazorUI.ViewModels;
 using Microsoft.AspNetCore.Components;
 
@@ -12,11 +13,14 @@ public partial class Login
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; }
 
-    public LoginViewModel Model { get; set; }
+    [CascadingParameter]
+    protected Error Error { get; set; } 
+
+    public required LoginViewModel Model { get; set; }
 
     public string? Message { get; set; }
 
-    protected override void OnInitialized() => Model = new LoginViewModel();
+    protected override void OnInitialized() => Model = new();
 
     protected async Task HandleLogin()
     {
@@ -24,8 +28,12 @@ public partial class Login
             .AuthenticateAsync(Model.Email, Model.Password);
 
         if (authResult)
+        {
             NavigationManager.NavigateTo("/");
+            return;
+        }
 
-        Message = "Unknown combination of username and password";
+        Message = "Nieprawidłowy login lub hasło";
+        Error.HandleError(Message);
     }
 }

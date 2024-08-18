@@ -10,6 +10,7 @@ using System.Reflection;
 using Blazored.LocalStorage;
 using System.IdentityModel.Tokens.Jwt;
 using HRLeaveManagement.BlazorUI.Handlers;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -22,6 +23,8 @@ builder.Services
         client.BaseAddress = new Uri("https://localhost:7131")
     )
     .AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
+
+builder.Services.AddMudServices();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();

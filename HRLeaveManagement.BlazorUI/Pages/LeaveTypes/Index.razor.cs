@@ -1,4 +1,5 @@
 using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Layout;
 using HRLeaveManagement.BlazorUI.ViewModels.LeaveType;
 using Microsoft.AspNetCore.Components;
 
@@ -15,7 +16,10 @@ public partial class Index
     [Inject]
     public ILeaveAllocationService LeaveAllocationService { get; set; }
 
-    public IEnumerable<LeaveTypeViewModel>? LeaveTypes { get; set; }
+    [CascadingParameter]
+    public Error Error { get; set; }
+
+    public IEnumerable<LeaveTypeViewModel>? LeaveTypes { get; set; } = [];
     public string? Message { get; set; }
 
 
@@ -45,5 +49,12 @@ public partial class Index
     }
 
     protected override async Task OnInitializedAsync()
-        => LeaveTypes = await LeaveTypeService.GetAll();
+    {
+        var leaveTypes = await LeaveTypeService.GetAll();
+
+        if (leaveTypes is null)
+            Error.HandleError("Something went wrong... Please try again later");
+        else
+            LeaveTypes = leaveTypes;
+    }
 }

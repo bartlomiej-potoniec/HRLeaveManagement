@@ -1,68 +1,23 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">HRLeaveManagement.BlazorUI</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿<MudNavMenu Class="mt-8">
+    <AuthorizeView Roles="Administrator">
+        <Authorized>
+            <MudNavGroup Title="Panel Administratora" Icon="@Icons.Material.Filled.Person4" Expanded>
+                <MudNavLink Href="leavetypes/">Leave Types</MudNavLink>
+                <MudNavLink Href="leave-requests/">Leave Requests</MudNavLink>
+                <MudNavLink Href="#">Leave Allocations</MudNavLink>
+            </MudNavGroup>
+        </Authorized>
+    </AuthorizeView>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <AuthorizeView>
-            <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link">
-                        <span class="oi oi-person" aria-hidden="true"></span> @context.User?.Identity?.Name
-                    </NavLink>
-                </div>
-
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="logout">
-                        <span class="oi oi-arrow-circle-left" aria-hidden="true"></span> Logout
-                    </NavLink>
-                </div>
-
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="leavetypes/">
-                        <span class="oi oi-list-rich" aria-hidden="true"></span> Leave Types
-                    </NavLink>
-                </div>
-
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="leave-requests/">
-                        <span class="oi oi-list-rich" aria-hidden="true"></span> Leave Requests
-                    </NavLink>
-                </div>
-            </Authorized>
-
-            <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="register">
-                        <span class="oi oi-person" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
-
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="login">
-                        <span class="oi oi-person" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
-            </NotAuthorized>
-        </AuthorizeView>
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
-}
+    <AuthorizeView>
+        <Authorized>
+            @* <MudText Typo="Typo.h6">@context.User?.Identity?.Name</MudText> *@
+            @* <MudDivider Class="my-2"/> *@
+            <MudNavGroup Title="Panel Pracownika" Icon="@Icons.Material.Filled.Person" Expanded>
+                <MudNavLink Href="logout" Icon="@Icons.Material.Filled.Logout">Logout</MudNavLink>
+                <MudNavLink Href="leavetypes/" Icon="@Icons.Material.Filled.Category">Leave Types</MudNavLink>
+                <MudNavLink Href="leave-requests/" Icon="@Icons.Material.Filled.QuestionMark">Leave Requests</MudNavLink>
+            </MudNavGroup>
+        </Authorized>
+    </AuthorizeView>
+</MudNavMenu>

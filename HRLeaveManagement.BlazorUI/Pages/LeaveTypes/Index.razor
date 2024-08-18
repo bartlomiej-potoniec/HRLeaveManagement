@@ -1,51 +1,65 @@
 ﻿@page "/leavetypes/"
+@attribute [Authorize]
 
-<h3>LeaveTypes</h3>
+<MudGrid>
+    <MudItem xs="12" Style="margin-left: 35px;">
+        <MudBreadcrumbs Items="_items"></MudBreadcrumbs>
+    </MudItem>
 
-<div class="m-2 d-flex justify-content-end">
-    <button @onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
-</div>
+    <MudItem xs="12" md="8" Style="margin-left: 50px;">
+        <h3>LeaveTypes</h3>
 
-@if (string.IsNullOrEmpty(Message) is false)
-{
-    <div class="alert alert-danger">
-        @Message
-    </div>
-}
+        <div class="m-2 d-flex justify-content-end">
+            <button @onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
+        </div>
 
-@if (LeaveTypes is not null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Default Days</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var leaveType in LeaveTypes)
-            {
-                <tr>
-                    <td>@PageId</td>
-                    <td>@leaveType.Name</td>
-                    <td>@leaveType.DefaultDays</td>
-                    <td>
-                        <AuthorizeView Roles="Administrator">
-                                <button @onclick=@(() => AllocateLeaveType(leaveType.Id)) class="btn btn-dark">Allocate Leave</button>
-                                <button @onclick=@(() => EditLeaveType(leaveType.Id)) class="btn btn-warning">Edit</button>
-                                <button @onclick=@(() => DeleteLeaveType(leaveType.Id)) class="btn btn-danger">Delete</button>
+        @if (string.IsNullOrEmpty(Message) is false)
+        {
+            <div class="alert alert-danger">
+                @Message
+            </div>
+        }
+    </MudItem>
+
+    <MudItem xs="12" md="7" Style="margin-left: 50px;">
+        <MudTable Items="@LeaveTypes" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Name</MudTh>
+                <MudTh>Default Days</MudTh>
+                <MudTh>Actions</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Default days">@context.DefaultDays</MudTd>
+                <MudTd DataLabel="Actions">
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Text" Size="Size.Small">
+                        <AuthorizeView Roles="Administrator" Context="authContext">
+                            <MudButton OnClick="@(() => AllocateLeaveType(context.Id))">Allocate</MudButton>
+                            <MudButton OnClick="@(() => EditLeaveType(context.Id))">Edit</MudButton>
+                            <MudButton OnClick="@(() => DeleteLeaveType(context.Id))" Color="Color.Error">Delete</MudButton>
                         </AuthorizeView>
 
-                        <button @onclick=@(() => DetailLeaveType(leaveType.Id)) class="btn btn-info">Details</button>
-                    </td>
-                </tr>
-            }
-        </tbody> 
-    </table>
-}
-else
-{
-    <p>Loading data...</p>   
+                        <MudButton OnClick="@(() => DetailLeaveType(context.Id))">Details</MudButton>
+                    </MudButtonGroup>
+                </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                <MudText>Nie znaleziono żadnych elementów</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+                <MudText>Loading...</MudText>
+            </LoadingContent>
+        </MudTable>
+
+    </MudItem>
+</MudGrid>
+
+@code {
+    private List<BreadcrumbItem> _items = [
+        new BreadcrumbItem("Home", href: "#"),
+        new BreadcrumbItem("Link 1", href: "#"),
+        new BreadcrumbItem("Link 2", href: null, disabled: true)
+    ];
 }
