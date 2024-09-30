@@ -7,22 +7,12 @@
     </MudItem>
 
     <MudItem xs="12" md="8" Style="margin-left: 50px;">
-        <h3>LeaveTypes</h3>
-
-        <div class="m-2 d-flex justify-content-end">
-            <button @onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
-        </div>
-
-        @if (string.IsNullOrEmpty(Message) is false)
-        {
-            <div class="alert alert-danger">
-                @Message
-            </div>
-        }
+        <MudText Typo="Typo.h5">Leave Types</MudText>
+        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Outlined" Color="Color.Primary">Add Leave Type</MudButton>
     </MudItem>
 
     <MudItem xs="12" md="7" Style="margin-left: 50px;">
-        <MudTable Items="@LeaveTypes" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+        <MudTable Items="@LeaveTypes" Hover Breakpoint="Breakpoint.Sm" Loading="_isLoading" LoadingProgressColor="Color.Primary">
             <HeaderContent>
                 <MudTh>Id</MudTh>
                 <MudTh>Name</MudTh>
@@ -34,7 +24,7 @@
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd DataLabel="Default days">@context.DefaultDays</MudTd>
                 <MudTd DataLabel="Actions">
-                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Text" Size="Size.Small">
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
                         <AuthorizeView Roles="Administrator" Context="authContext">
                             <MudButton OnClick="@(() => AllocateLeaveType(context.Id))">Allocate</MudButton>
                             <MudButton OnClick="@(() => EditLeaveType(context.Id))">Edit</MudButton>
@@ -52,14 +42,5 @@
                 <MudText>Loading...</MudText>
             </LoadingContent>
         </MudTable>
-
     </MudItem>
 </MudGrid>
-
-@code {
-    private List<BreadcrumbItem> _items = [
-        new BreadcrumbItem("Home", href: "#"),
-        new BreadcrumbItem("Link 1", href: "#"),
-        new BreadcrumbItem("Link 2", href: null, disabled: true)
-    ];
-}

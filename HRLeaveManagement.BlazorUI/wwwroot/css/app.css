@@ -101,3 +101,19 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+
+.custom-nav-group {
+    background-color: #200a81 !important;
+}
+
+.custom-nav-group.mud-expanded {
+    background-color: #000860 !important;
+}
+
+.custom-nav-group.mud-expanded .mud-nav-item {
+    background-color: #000860 !important;
+}
+
+.custom-nav-group.mud-expanded .mud-nav-item:hover {
+    background-color: #000860 !important;
+}

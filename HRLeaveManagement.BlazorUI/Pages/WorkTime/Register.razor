@@ -1,0 +1,444 @@
+﻿@page "/worktime/register"
+@attribute [Authorize]
+
+<MudGrid Class="d-flex justify-space-between align-center">
+    <MudItem>
+        <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px; text-transform: uppercase;">Rejestracja czasu pracy</MudText>
+    </MudItem>
+    <MudItem Style="display: flex; align-items: center;">
+        <MudToggleIconButton @bind-Toggled="_isInFavourites" Icon="@Icons.Material.Filled.StarBorder" Color="Color.Warning" ToggledIcon="@Icons.Material.Filled.Star" Size="Size.Medium" />
+    </MudItem>
+</MudGrid>
+
+<MudDivider Class="mb-3" />
+
+<MudCalendar Items="_events" Height="1050" ShowWeek="false" ShowDay="false" DateRangeChanged="HandleMonthChange" ShowTodayButton>
+    <ToolbarContent>
+        <MudSelect T="WorkTimeView" @bind-Value="_workTimeView" Label="Widok" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="width: 220px">
+            <MudSelectItem Value="WorkTimeView.Start_End">godz. od - do</MudSelectItem>
+            <MudSelectItem Value="WorkTimeView.Start_TotalCount">godz. od / czas pracy</MudSelectItem>
+        </MudSelect>
+    </ToolbarContent>
+    <MonthTemplate>
+        <MudGrid Class="d-flex justify-center align-center">
+            @if (!((CalendarDay)context).IsEmployeeLeave &&
+                (!((CalendarDay)context).IsWeekend || (((CalendarDay)context).IsWeekend && ((CalendarDay)context).IsEmployeeExtraOvertime)) &&
+                !((CalendarDay)context).IsPublicHoliday &&
+                !((CalendarDay)context).IsLongWeekend)
+            {
+                <MudItem Class="d-flex justify-center align-center" Style="margin-top: -10px;">
+                    <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Dense" Disabled @bind-Value="@(((CalendarDay)context).StartedAt)" Style="width: 60px" />
+                    <MudText Typo="Typo.body2" Class="mr-1"> 
+                        @(_workTimeView is WorkTimeView.Start_End ? "-" : "/") 
+                    </MudText>
+                    @if (_workTimeView is WorkTimeView.Start_End)
+                    {
+                        <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Dense" Disabled @bind-Value="@(((CalendarDay)context).EndedAt)" Style="width: 60px;" />
+                    }
+                    else
+                    {
+                        <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Dense" Disabled @bind-Value="@(_totalWorkTimeText)" Style="width: 60px;" />
+                    }
+
+                </MudItem>
+            }
+            
+            @if (((CalendarDay)context).IsEditable && !((CalendarDay)context).IsAlreadyRegistered)
+            {
+                <MudItem Style="margin-top: -15px;">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small">Utwórz</MudButton>
+                </MudItem>
+            } 
+            else if (((CalendarDay)context).IsEditable)
+            {
+                <MudItem Style="margin-top: -15px;">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small">Edytuj</MudButton>
+                </MudItem>
+            } 
+
+            @if (((CalendarDay)context).IsEmployeeLeave)
+            {
+                <MudItem Style="margin-top: -5px;">
+                    <MudText Color="Color.Error" Style="font-weight: bold">@(((CalendarDay)context).EmployeeLeaveName)</MudText>
+                </MudItem>
+            }
+            else if (((CalendarDay)context).IsWeekend)
+            {
+                <MudItem Style="margin-top: -5px;">
+                    <MudText Color="Color.Warning" Style="font-weight: bold">Weekend</MudText>
+                </MudItem>
+            }
+
+            @if (((CalendarDay)context).IsEmployeeExtraOvertime)
+            {
+                <MudItem Style="margin-top: -5px;">
+                    <MudText Style="width: 200px; font-weight: bold; text-align: center;">* Nadgodziny</MudText>
+                </MudItem>
+            }
+        </MudGrid>
+    </MonthTemplate>
+</MudCalendar>
+
+@code {
+    private bool _isInFavourites;
+    private WorkTimeView _workTimeView = WorkTimeView.Start_End;
+    private string _totalWorkTimeText = "8h";
+
+    public enum WorkTimeView 
+    {
+        Start_End,
+        Start_TotalCount
+    }
+
+    public class CalendarDay : CalendarItem
+    {
+        public DateTime Today { get; set; }
+
+        public short NumberOfYear { get; set; }
+        public short NumberOfMonth { get; set; }
+        public short NumberOfDay { get; set; }
+
+        public short DaysInMonth { get; set; }
+
+        public string MonthName { get; set; }
+        public string DayName { get; set; }
+
+        public TimeSpan StartedAt { get; set; }
+        public TimeSpan EndedAt { get; set; }
+        public double TotalWorkTime { get; set; } = 8D;
+
+        public bool IsAlreadyRegistered { get; set; }
+        public bool IsEditable { get; set; }
+
+        public bool IsWeekend { get; set; }
+        public bool IsLongWeekend { get; set; }
+        public bool IsPublicHoliday { get; set; }
+        public bool IsEmployeeLeave { get; set; }
+
+        public bool IsEmployeeExtraOvertime { get; set; }
+
+        public string? EmployeeLeaveName { get; set; }
+        public string? PublicHolidayName { get; set; }
+    }
+
+    private void HandleMonthChange(DateRange dateRange)
+    {
+        // Logika po zmianie miesiąca dowolnymi przyciskami (DatePicker, Prev/Next, Today)
+        Console.WriteLine($"Zmieniony miesiąc na zakres: { dateRange.Start } - { dateRange.End }");
+        // APIMethod.GetMonthlyScheduleByDateRange(dateRange.Start, dateRange.End)
+    }
+
+    private List<CalendarDay> _events = [
+        new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 1, 0, 0, 0),
+            End = new DateTime(2024, 9, 1, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(7, 30, 0),
+            EndedAt = new TimeSpan(15, 30, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 2, 0, 0, 0),
+            End = new DateTime(2024, 9, 2, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(7, 0, 0),
+            EndedAt = new TimeSpan(15, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 3, 0, 0, 0),
+            End = new DateTime(2024, 9, 3, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(8, 0, 0),
+            EndedAt = new TimeSpan(16, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 4, 0, 0, 0),
+            End = new DateTime(2024, 9, 4, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(8, 0, 0),
+            EndedAt = new TimeSpan(16, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 5, 0, 0, 0),
+            End = new DateTime(2024, 9, 5, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(8, 0, 0),
+            EndedAt = new TimeSpan(16, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 6, 0, 0, 0),
+            End = new DateTime(2024, 9, 6, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 7, 0, 0, 0),
+            End = new DateTime(2024, 9, 7, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 8, 0, 0, 0),
+            End = new DateTime(2024, 9, 8, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(9, 0, 0),
+            EndedAt = new TimeSpan(17, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 9, 7, 0, 0),
+            End = new DateTime(2024, 9, 9, 15, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(7, 25, 0),
+            EndedAt = new TimeSpan(15, 25, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 10, 7, 0, 0),
+            End = new DateTime(2024, 9, 10, 15, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(8, 10, 0),
+            EndedAt = new TimeSpan(16, 10, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 11, 7, 0, 0),
+            End = new DateTime(2024, 9, 11, 15, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(7, 0, 0),
+            EndedAt = new TimeSpan(15, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 12, 7, 0, 0),
+            End = new DateTime(2024, 9, 12, 15, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(7, 0, 0),
+            EndedAt = new TimeSpan(15, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 13, 7, 0, 0),
+            End = new DateTime(2024, 9, 13, 15, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 14, 0, 0, 0),
+            End = new DateTime(2024, 9, 14, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 15, 0, 0, 0),
+            End = new DateTime(2024, 9, 15, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsEmployeeLeave = true,
+            EmployeeLeaveName = "Urlop wypoczynkowy",
+
+            Start = new DateTime(2024, 9, 16, 0, 0, 0),
+            End = new DateTime(2024, 9, 16, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsEmployeeLeave = true,
+            EmployeeLeaveName = "Urlop wypoczynkowy",
+
+            Start = new DateTime(2024, 9, 17, 0, 0, 0),
+            End = new DateTime(2024, 9, 17, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsEmployeeLeave = true,
+            EmployeeLeaveName = "Urlop wypoczynkowy",
+
+            Start = new DateTime(2024, 9, 18, 0, 0, 0),
+            End = new DateTime(2024, 9, 18, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsEmployeeLeave = true,
+            EmployeeLeaveName = "Urlop wypoczynkowy",
+
+            Start = new DateTime(2024, 9, 19, 0, 0, 0),
+            End = new DateTime(2024, 9, 19, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsEmployeeLeave = true,
+            EmployeeLeaveName = "Urlop wypoczynkowy",
+
+            Start = new DateTime(2024, 9, 20, 0, 0, 0),
+            End = new DateTime(2024, 9, 20, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 21, 0, 0, 0),
+            End = new DateTime(2024, 9, 21, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(8, 0, 0),
+            EndedAt = new TimeSpan(12, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+            IsWeekend = true,
+            IsEmployeeExtraOvertime = true,
+
+            Start = new DateTime(2024, 9, 22, 0, 0, 0),
+            End = new DateTime(2024, 9, 22, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+            IsEmployeeLeave = true,
+            EmployeeLeaveName = "Urlop wypoczynkowy",
+
+            Start = new DateTime(2024, 9, 23, 0, 0, 0),
+            End = new DateTime(2024, 9, 23, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+            IsEmployeeLeave = true,
+            EmployeeLeaveName = "Urlop wypoczynkowy",
+
+            Start = new DateTime(2024, 9, 24, 0, 0, 0),
+            End = new DateTime(2024, 9, 24, 0, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(7, 0, 0),
+            EndedAt = new TimeSpan(17, 0, 0),
+            IsEditable = false,
+            IsAlreadyRegistered = true,
+            IsEmployeeExtraOvertime = true,
+
+            Start = new DateTime(2024, 9, 25, 7, 0, 0),
+            End = new DateTime(2024, 9, 25, 17, 0, 0),
+        },
+
+    new()
+        {
+            StartedAt = new TimeSpan(9, 20, 0),
+            EndedAt = new TimeSpan(17, 20, 0),
+            IsEditable = true,
+            IsAlreadyRegistered = true,
+
+            Start = new DateTime(2024, 9, 26, 9, 20, 0),
+            End = new DateTime(2024, 9, 26, 17, 20, 0),
+        },
+
+    new()
+        {
+            IsEditable = true,
+            IsAlreadyRegistered = false,
+
+            Start = new DateTime(2024, 9, 27, 0, 0, 0),
+            End = new DateTime(2024, 9, 27, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 28, 0, 0, 0),
+            End = new DateTime(2024, 9, 28, 0, 0, 0),
+        },
+
+    new()
+        {
+            IsEditable = false,
+            IsAlreadyRegistered = false,
+            IsWeekend = true,
+
+            Start = new DateTime(2024, 9, 29, 0, 0, 0),
+            End = new DateTime(2024, 9, 29, 0, 0, 0),
+        }
+    ];
+}

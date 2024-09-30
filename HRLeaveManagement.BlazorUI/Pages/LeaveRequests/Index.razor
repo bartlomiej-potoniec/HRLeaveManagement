@@ -1,87 +1,82 @@
 ﻿@page "/leave-requests"
+@attribute [Authorize(Roles="Administrator")]
 
-<h3>Leave Requests</h3>
+<MudGrid>
+    
+    <MudText Typo="Typo.h6" Class="mt-7 mb-4 ml-5" Style="font-size: 17px; letter-spacing: .7px; text-transform: uppercase;">Wniosek o urlop</MudText>
 
-<div class="m-2 d-flex justify-content-end">
-    <a href="/leave-requests/create/" class="btn btn-success">Add Leave Request</a>
-</div>
+    <MudDivider Class="ml-5"/>
 
-<div class="row">
-    <div class="col-md-3">
-        <div class="card text-white bg-info" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Total Requests</h5>
-                <p class="card-text">@Model.TotalRequests</p>
-            </div>
-        </div>
-    </div>
+    <MudItem xs="12" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudText><b>All Requests</b></MudText>
+                <MudText Typo="Typo.body2">Total: @Model.TotalRequests</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-    <div class="col-md-3">
-        <div class="card text-white bg-warning" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Pending Requests</h5>
-                <p class="card-text">@Model.PendingRequests</p>
-            </div>
-        </div>
-    </div>
+    <MudItem xs="12" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudText><b>Pending Requests</b></MudText>
+                <MudText Typo="Typo.body2">Total: @Model.PendingRequests</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-    <div class="col-md-3">
-        <div class="card text-white bg-success" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Approved Requests</h5>
-                <p class="card-text">@Model.ApprovedRequests</p>
-            </div>
-        </div>
-    </div>
+    <MudItem xs="12" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudText><b>Approved Requests</b></MudText>
+                <MudText Typo="Typo.body2">Total: @Model.ApprovedRequests</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-    <div class="col-md-3">
-        <div class="card text-white bg-danger" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Rejected Requests</h5>
-                <p class="card-text">@Model.RejectedRequests</p>
-            </div>
-        </div>
-    </div>
-</div>
+    <MudItem xs="12" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudText><b>Rejected Requests</b></MudText>
+                <MudText Typo="Typo.body2">Total: @Model.RejectedRequests</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-<br /><br />
-
-<hr />
-
-<h3>Leave Request Log</h3>
-<table id="tableData" class="table">
-    <thead>
-        <tr>
-            <th>Employee Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Leave Type</th>
-            <th>Date Requested</th>
-            <th>Approval Status</th>
-            <th>Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.LeaveRequests)
-        {
-            <tr>
-                <td>@item?.Employee?.FirstName @item?.Employee?.LastName</td>
-                <td>@item.StartedAt.ToString("yyyy-MM-dd")</td>
-                <td>@item.EndedAt.ToString("yyyy-MM-dd")</td>
-                <td>@item.LeaveType.Name</td>
-                <td>@item.RequestedAt</td>
-                <td>
-                    @if (item.Canceled)
+    <MudItem xs="12" xl="8">
+        <MudTable Items="@Model.LeaveRequests" Hover Breakpoint="Breakpoint.Sm" Loading="_isLoading" LoadingProgressColor="Color.Primary" Elevation="1">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Nowy wniosek</MudText>
+                 <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Employee Name</MudTh>
+                <MudTh>Start Date</MudTh>
+                <MudTh>End Date</MudTh>
+                <MudTh>Leave Type</MudTh>
+                <MudTh>Date Requested</MudTh>
+                <MudTh>Approval Status</MudTh>
+                <MudTh>Options</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Employee name">@context?.Employee?.FirstName @context?.Employee?.LastName</MudTd>
+                <MudTd DataLabel="Start date">@context.StartedAt.ToString("yyyy-MM-dd")</MudTd>
+                <MudTd DataLabel="End date">@context.EndedAt.ToString("yyyy-MM-dd")</MudTd>
+                <MudTd DataLabel="Leave type">@context.LeaveType.Name</MudTd>
+                <MudTd DataLabel="Requested date">@context.RequestedAt</MudTd>
+                <MudTd DataLabel="Requested date">
+                    @if (context.Canceled)
                     {
                         <span class="badge bg-secondary">Cancelled</span>
                     }
 
-                    else if (item.IsApproved is not null and true)
+                    else if (context.IsApproved is not null and true)
                     {
                         <span class="badge bg-success">Approved</span>
                     }
 
-                    else if (item.IsApproved is not null and false)
+                    else if (context.IsApproved is not null and false)
                     {
                         <span class="badge bg-danger">Rejected</span>
                     }
@@ -90,16 +85,39 @@
                     {
                         <span class="badge bg-warning">Pending</span>
                     }
-                </td>
-                <td>
-                    @if (!item.Canceled)
+                </MudTd>
+                <MudTd DataLabel="Options">
+                    @if (!context.Canceled)
                     {
-                        <button class="btn btn-outline-primary" @onclick="() => GoToDetails(item.Id)">
-                            <span class="fa fa-file"></span> Review
-                        </button>
+                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Outlined" Color="Color.Primary" @onclick="() => GoToDetails(context.Id)">
+                            Review
+                        </MudButton>
                     }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </MudTd>
+                
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+            <NoRecordsContent>
+                <MudText>Nie znaleziono żadnych elementów</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+                <MudText>Loading...</MudText>
+            </LoadingContent>
+        </MudTable>
+    </MudItem>
+
+</MudGrid>
+
+
+@code {
+    private string _searchString;
+}
+
+<style>
+    .mud-card-header .mud-card-header-avatar {
+        margin-right: 8px !important;
+        margin-inline-end: 8px !important;
+    }
+</style>

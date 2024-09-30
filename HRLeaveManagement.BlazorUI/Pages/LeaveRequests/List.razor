@@ -1,0 +1,121 @@
+﻿@page "/leave-requests/list/"
+@attribute [Authorize]
+
+<MudGrid Class="d-flex justify-space-between align-center">
+    <MudItem>
+        <MudText Typo="Typo.h6" Class="mt-2 mb-4" Style="font-size: 17px; letter-spacing: .7px; text-transform: uppercase;">Lista wniosków urlopowych</MudText>
+    </MudItem>
+    <MudItem Style="display: flex; align-items: center;">
+        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.AreaChart" Size="Size.Small" Class="mr-1">Wykres</MudButton>
+        <MudButtonGroup Variant="Variant.Outlined" Size="Size.Small" Class="mr-1">
+            <MudButton StartIcon="@Icons.Material.Filled.ImportExport">Eksportuj do...</MudButton>
+            <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
+                <MudMenuItem>Eksportuj do Excela</MudMenuItem>
+                <MudMenuItem>Eksportuj do PDF</MudMenuItem>
+            </MudMenu>
+        </MudButtonGroup>
+        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.AddCircle" Size="Size.Small" Class="mr-2">Nowy wniosek</MudButton>
+
+        <MudDivider Vertical Class="ml-3 mr-1" Style="height: 30px;" />
+
+        <MudToggleIconButton @bind-Toggled="_isInFavourites" Icon="@Icons.Material.Filled.StarBorder" Color="Color.Warning" ToggledIcon="@Icons.Material.Filled.Star" Size="Size.Medium"/>
+    </MudItem>
+</MudGrid>
+<MudDivider Class="mb-3" />
+
+<MudGrid Class="d-flex justify-space-between">
+    <MudItem Class="d-flex align-center">
+        <MudSelect @bind-Value="_requestType" Label="Rodzaj wniosku" Variant="Variant.Outlined" Margin="Margin.Dense" Clearable>
+            <MudSelectItem Value="_leaves[0]">Urlop wypoczynkowy</MudSelectItem>
+            <MudSelectItem Value="_leaves[1]">Urlop okolicznościowy</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker @bind-Value="_dateFrom" Label="Data od..." Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <MudDatePicker @bind-Value="_dateTo" Label="Data do..." Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <MudSelect @bind-Value="_status" Label="Status" Variant="Variant.Outlined" Margin="Margin.Dense" Clearable>
+            <MudSelectItem Value="_statuses[0]">Oczekujący</MudSelectItem>
+            <MudSelectItem Value="_statuses[1]">Zaakceptowany</MudSelectItem>
+            <MudSelectItem Value="_statuses[2]">Odrzucony</MudSelectItem>
+        </MudSelect>
+    </MudItem>
+    <MudItem>
+        <MudTextField @bind-Value="_search" Label="Szukaj" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Margin="Margin.Dense" />
+    </MudItem>
+</MudGrid>
+
+<MudTable Items="_items" SortLabel="Sortuj według" Hover Class="mt-5">
+    <HeaderContent>
+        <MudTh Style="font-weight: bold"><MudTableSortLabel SortBy="new Func<object, object>(x => x)">Nr wniosku</MudTableSortLabel></MudTh>
+        <MudTh Style="font-weight: bold"><MudTableSortLabel SortBy="new Func<object, object>(x => x)">Rodzaj wniosku</MudTableSortLabel></MudTh>
+        <MudTh Style="font-weight: bold"><MudTableSortLabel SortBy="new Func<object, object>(x => x)">Data od - do</MudTableSortLabel></MudTh>
+        <MudTh Style="font-weight: bold">Liczba dni</MudTh>
+        <MudTh Style="font-weight: bold"><MudTableSortLabel SortBy="new Func<object, object>(x => x)">Status</MudTableSortLabel></MudTh>
+        <MudTh Style="font-weight: bold"><MudTableSortLabel SortBy="new Func<object, object>(x => x)">Data złożenia</MudTableSortLabel></MudTh>
+        <MudTh Style="font-weight: bold"><MudTableSortLabel SortBy="new Func<object, object>(x => x)">Data decyzji</MudTableSortLabel></MudTh>
+        <MudTh Style="font-weight: bold">Akcje</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr wniosku">#@context.Id</MudTd>
+        <MudTd DataLabel="Typ wniosku">@context.Type</MudTd>
+        <MudTd DataLabel="Data od-do">@context.From.ToString("dd.MM.yyyy") - @context.To.ToString("dd.MM.yyyy")</MudTd>
+        <MudTd DataLabel="Liczba dni">@context.DaysCount</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd DataLabel="Data złożenia">@context.CreatedAt</MudTd>
+        <MudTd DataLabel="Data decyzji">@context.DecidedAt</MudTd>
+        <MudTd DataLabel="Data decyzji">
+            <MudIconButton Icon="@Icons.Material.Filled.Info" aria-label="details" Size="Size.Small" />
+            <MudIconButton Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" aria-label="cancel" Size="Size.Small" />
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 15, 20, 25, 30 }" />
+    </PagerContent>
+</MudTable>
+
+@code {
+    private string? _requestType;
+    private string? _dateFrom;
+    private string? _dateTo;
+    private string? _status;
+    private string? _search;
+
+    private bool _isInFavourites;
+
+    private List<string> _leaves = ["wypoczynkowy", "okolicznościowy"];
+    private List<string> _statuses = ["oczekujący", "zaakceptowany", "odrzucony"];
+
+    private List<LeaveRequest> _items = [
+        new(1, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now),
+        new(2, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now),
+        new(3, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now),
+        new(4, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now),
+        new(5, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now),
+        new(6, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 6, 4), new DateTime(2024, 6, 15), "Zaakceptowany", DateTime.Now, DateTime.Now),
+        new(7, "Wniosek o urlop okolicznościowy", new DateTime(2024, 8, 15), new DateTime(2024, 8, 16), "Zaakceptowany", DateTime.Now, DateTime.Now),
+        new(8, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now),
+        new(9, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now),
+        new(10, "Wniosek o urlop wypoczynkowy", new DateTime(2024, 7, 23), new DateTime(2024, 7, 25), "Oczekujący", DateTime.Now)
+    ];
+
+    class LeaveRequest
+    {
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+        public int DaysCount => (int)To.Subtract(From).TotalDays;
+        public string Status { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? DecidedAt { get; set; }
+
+        public LeaveRequest(int id, string type, DateTime from, DateTime to, string status, DateTime createdAt, DateTime? decidedAt = null)
+        {
+            Id = id;
+            Type = type;
+            From = from;
+            To = to;
+            Status = status;
+            CreatedAt = createdAt;
+            DecidedAt = decidedAt;
+        }
+    }
+}

@@ -1,0 +1,161 @@
+﻿@page "/leave-requests/add/"
+@attribute [Authorize]
+
+<MudGrid>
+
+    <MudText Typo="Typo.h6" Class="mt-7 mb-4 ml-5" Style="font-size: 17px; letter-spacing: .7px; text-transform: uppercase;">Wniosek o urlop</MudText>
+
+    <MudDivider Class="ml-5" />
+
+    <MudItem xs="12" lg="8">
+        <MudForm>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.AddCircle" Size="Size.Medium" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Nowy wniosek</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Reset" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.ChangeCircle">Resetuj</MudButton>
+                        <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CheckCircle">Utwórz</MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudDivider DividerType="DividerType.Middle" />
+                <MudCardContent>
+                    <MudGrid Style="padding: 5px 18px; padding-bottom: 30px; display: flex; align-items: center;">
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Dokument</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="RequestType" Style="min-width: 230px;">Rodzaj wniosku</MudInputLabel>
+                            <MudSelect InputId="RequestType" T="string" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Clearable>
+                                <MudSelectItem Value="@("Urlop wypoczynkowy")">Urlop wypoczynkowy</MudSelectItem>
+                                <MudSelectItem Value="@("Urlop na żądanie")">Urlop na żądanie</MudSelectItem>
+                                <MudSelectItem Value="@("Urlop okolicznościowy")">Urlop okolicznościowy</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="AvailableDays" Style="margin-left: 15px; margin-right: 10px;">Dostępnych dni</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="AvailableDays" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px; width: 50px" Disabled @bind-Value="_availableDays" />
+                        </MudItem>
+
+
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Wniosek</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Employee" Style="min-width: 230px;">Pracownik</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="Employee" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled @bind-Value="_inputValue" />
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="LeaveDateFrom" Style="min-width: 230px;">Data od - do</MudInputLabel>
+                            <MudDateRangePicker Variant="Variant.Outlined" PlaceholderStart="Data rozpoczęcia" PlaceholderEnd="Data zakończenia" Margin="Margin.Dense" Style="font-size: 14px;" />
+                        </MudItem>
+                        <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="DaysCount" Style="margin-left: 15px; margin-right: 10px;">Liczba dni</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="DaysCount" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px; width: 50px;" @bind-Value="_daysCount" Disabled />
+                            <MudCheckBox @bind-Value="_isOneDayLeave">Jeden dzień</MudCheckBox>
+                        </MudItem>
+
+                        <MudItem xs="6" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="CreatedAt" Style="min-width: 230px;">Data złożenia</MudInputLabel>
+                            <MudDatePicker Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Date="(new DateTime(2024, 6, 15))" Disabled />
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Deputy" Style="min-width: 230px;">Zastępca</MudInputLabel>
+                            <MudSelect InputId="Deputy" T="string" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Clearable>
+                                <MudSelectItem Value="@("Bartłomiej Nalepa")">Bartłomiej Nalepa</MudSelectItem>
+                                <MudSelectItem Value="@("Marcin Raźny")">Marcin Raźny</MudSelectItem>
+                                <MudSelectItem Value="@("Kamil Konieczny")">Kamil Konieczny</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="ApproverComment" Style="min-width: 230px;">Komentarz</MudInputLabel>
+                            <MudTextField InputId="ApproverComment" T="string" Lines="2" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" />
+                        </MudItem>
+
+
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Decyzja</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="Approver" Style="min-width: 230px;">Zatwierdzający</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="Approver" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled @bind-Value="_inputValue" />
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="RequestStatus" Style="min-width: 230px;">Status wniosku</MudInputLabel>
+                            <MudTextField InputId="RequestStatus" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled @bind-Value="_inputValue2" />
+                        </MudItem>
+                        <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="ApproveDate" Style="margin-left: 15px; margin-right: 10px; min-width: 80px;">Data decyzji</MudInputLabel>
+                            <MudDatePicker Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled />
+                        </MudItem>
+
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="ApproverComment" Style="min-width: 230px;">Uwagi zatwierdzającego</MudInputLabel>
+                            <MudTextField InputId="ApproverComment" T="string" Lines="2" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled />
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudForm>
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <MudCard Style="min-height: 80vh;">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.History" Size="Size.Medium" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Historia wniosków</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.FormatListBulleted" Href="/request-list/">Lista wniosków</MudButton>
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudDivider DividerType="DividerType.Middle" />
+            <MudCardContent>
+                <MudText Typo="Typo.body2">There's no in this section</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+
+</MudGrid>
+
+
+@code {
+    private string _searchString;
+    private string _inputValue = "Marcin Raźny (Logistyka wew.)";
+    private string _inputValue2 = "Wprowadzony";
+    private string _inputValue3 = "";
+    private string _availableDays = "14";
+    private DateTime _startedAt;
+    private bool _isOneDayLeave;
+    private DateTime _createdAt = DateTime.Now;
+    private int _daysCount = 2;
+
+}
+
+<style>
+    .mud-card-header .mud-card-header-avatar {
+        margin-right: 8px !important;
+        margin-inline-end: 8px !important;
+    }
+</style>

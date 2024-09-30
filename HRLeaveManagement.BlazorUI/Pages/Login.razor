@@ -21,3 +21,10 @@
         </MudCardContent>
     </MudCard>
 </EditForm>
+
+@if (_isLoading)
+{
+    <div style="text-align: center; margin-top: 40px;">
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate/>
+    </div>
+}

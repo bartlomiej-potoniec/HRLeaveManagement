@@ -13,7 +13,7 @@ public partial class Error
 
     public void HandleError(string message)
     {
-        SnackbarService.Configuration.SnackbarVariant = Variant.Outlined;
+        SnackbarService.Configuration.SnackbarVariant = Variant.Filled;
         SnackbarService.Configuration.NewestOnTop = false;
         SnackbarService.Configuration.HideTransitionDuration = 500;
         SnackbarService.Configuration.ShowTransitionDuration = 500;

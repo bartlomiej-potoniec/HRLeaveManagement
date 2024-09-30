@@ -22,10 +22,16 @@ public partial class Login
 
     protected override void OnInitialized() => Model = new();
 
+    private bool _isLoading;
+
     protected async Task HandleLogin()
     {
+        _isLoading = true;
+
         var authResult = await AuthenticationService
             .AuthenticateAsync(Model.Email, Model.Password);
+
+        _isLoading = false;
 
         if (authResult)
         {

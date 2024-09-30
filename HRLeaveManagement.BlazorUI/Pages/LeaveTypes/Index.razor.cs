@@ -2,6 +2,7 @@ using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.Layout;
 using HRLeaveManagement.BlazorUI.ViewModels.LeaveType;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace HRLeaveManagement.BlazorUI.Pages.LeaveTypes;
 
@@ -22,23 +23,30 @@ public partial class Index
     public IEnumerable<LeaveTypeViewModel>? LeaveTypes { get; set; } = [];
     public string? Message { get; set; }
 
+    private List<BreadcrumbItem> _items = [
+        new BreadcrumbItem("Panel pracownika", href: "#"),
+        new BreadcrumbItem("Urlopy", href: "#"),
+        new BreadcrumbItem("Lista urlopów", href: null, disabled: true)
+    ];
+
+    private bool _isLoading;
 
     private int _pageId = 1;
     public int PageId => _pageId++;
 
     protected void CreateLeaveType()
         => NavigationManager.NavigateTo("/leavetypes/create/");
-    
+
     protected async Task AllocateLeaveType(int id)
     {
         await LeaveAllocationService.CreateLeaveAllocations(id);
     }
 
     protected void DetailLeaveType(int id)
-        => NavigationManager.NavigateTo($"/leavetypes/details/{ id }");
+        => NavigationManager.NavigateTo($"/leavetypes/details/{id}");
 
     protected void EditLeaveType(int id)
-        => NavigationManager.NavigateTo($"/leavetypes/edit/{ id }");
+        => NavigationManager.NavigateTo($"/leavetypes/edit/{id}");
 
     protected async Task DeleteLeaveType(int id)
     {
@@ -50,11 +58,16 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
+        _isLoading = true;
         var leaveTypes = await LeaveTypeService.GetAll();
 
-        if (leaveTypes is null)
+        if (leaveTypes is null) 
+        {
             Error.HandleError("Something went wrong... Please try again later");
-        else
-            LeaveTypes = leaveTypes;
+            return;
+        }
+
+        _isLoading = false;
+        LeaveTypes = leaveTypes;
     }
 }

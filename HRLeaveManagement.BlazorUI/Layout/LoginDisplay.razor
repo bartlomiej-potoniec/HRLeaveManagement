@@ -1,25 +1,26 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <MudMenu >
-
-        </MudMenu>
-
-        <MudBadge Content="4" Color="Color.Secondary" Dot>
-            <MudMenu Icon="@Icons.Material.Filled.Chat" Size="Size.Small" Color="Color.Inherit">
+        <MudBadge Content="4" Color="Color.Dark" Dot Overlap Visible="false">
+            <MudMenu Icon="@Icons.Material.Filled.ChatBubbleOutline" Size="Size.Medium" Color="Color.Dark">
             </MudMenu>
         </MudBadge>
 
 
-        <MudBadge Content="7" Color="Color.Secondary" Dot Class="ml-5">
-            <MudMenu Icon="@Icons.Material.Filled.Notifications" Color="Color.Inherit" Size="Size.Small">
+        <MudBadge Content="7" Color="Color.Dark" Dot Overlap Visible="false">
+            <MudMenu Icon="@Icons.Material.Filled.NotificationsNone" Size="Size.Medium" Color="Color.Dark">
             </MudMenu>
         </MudBadge>
 
 
-        <MudMenu Icon="@Icons.Material.Filled.Person" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopLeft" Size="Size.Medium" Color="Color.Inherit" Class="ml-4">
-            <MudMenuItem Icon="@Icons.Material.Filled.Settings" IconSize="Size.Small">Settings</MudMenuItem>
-            <MudDivider></MudDivider>
-            <MudMenuItem Href="logout" Icon="@Icons.Material.Filled.Logout" IconSize="Size.Small">Logout</MudMenuItem>
+        <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopLeft" Color="Color.Dark" Class="ml-3">
+            <ActivatorContent>
+                <MudAvatar Size="Size.Medium" Color="Color.Primary">B</MudAvatar>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem Icon="@Icons.Material.Filled.Settings" IconSize="Size.Small">Settings</MudMenuItem>
+                <MudDivider></MudDivider>
+                <MudMenuItem Href="logout" Icon="@Icons.Material.Filled.Logout" IconSize="Size.Small">Logout</MudMenuItem>
+            </ChildContent>
         </MudMenu>
     </Authorized>
 </AuthorizeView>
@@ -32,6 +33,13 @@
     .mud-list-item-icon {
         min-width: 30px;
         padding-bottom: 2px;
+    }
+
+    .mud-avatar-medium
+    {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 19px !important;
     }
 
    /*  .mud-badge.mud-badge-top.right.mud-badge-overlap {
