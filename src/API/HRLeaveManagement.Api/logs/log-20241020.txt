@@ -1,0 +1,45 @@
+2024-10-20 10:23:32.598 +02:00 [INF] Now listening on: https://localhost:7131
+2024-10-20 10:23:32.641 +02:00 [INF] Now listening on: http://localhost:5133
+2024-10-20 10:23:32.735 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-20 10:23:32.737 +02:00 [INF] Hosting environment: Development
+2024-10-20 10:23:32.738 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\HRLeaveManagement.Api
+2024-10-20 10:23:56.907 +02:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 2.1181 ms
+2024-10-20 10:23:59.654 +02:00 [INF] HTTP POST /api/Auth/login responded 200 in 2729.5844 ms
+2024-10-20 10:26:58.843 +02:00 [INF] HTTP OPTIONS /api/LeaveRequests responded 204 in 0.4755 ms
+2024-10-20 10:26:59.266 +02:00 [INF] HTTP GET /api/LeaveRequests responded 200 in 416.4799 ms
+2024-10-20 10:26:59.333 +02:00 [INF] HTTP OPTIONS /api/LeaveAllocations responded 204 in 0.0414 ms
+2024-10-20 10:26:59.366 +02:00 [INF] HTTP GET /api/LeaveAllocations responded 200 in 27.3507 ms
+2024-10-20 10:27:01.738 +02:00 [INF] HTTP OPTIONS /api/LeaveTypes responded 204 in 0.0746 ms
+2024-10-20 10:27:01.776 +02:00 [INF] Leave types were retrieved successfully
+2024-10-20 10:27:01.785 +02:00 [INF] HTTP GET /api/LeaveTypes responded 200 in 40.3292 ms
+2024-10-20 10:27:03.104 +02:00 [INF] HTTP GET /api/LeaveRequests responded 200 in 20.3118 ms
+2024-10-20 10:27:06.027 +02:00 [INF] HTTP OPTIONS /api/LeaveRequests responded 204 in 0.0649 ms
+2024-10-20 10:27:06.053 +02:00 [INF] HTTP GET /api/LeaveRequests responded 200 in 14.5651 ms
+2024-10-20 10:27:06.926 +02:00 [INF] HTTP OPTIONS /api/LeaveTypes responded 204 in 0.0535 ms
+2024-10-20 10:27:06.941 +02:00 [INF] Leave types were retrieved successfully
+2024-10-20 10:27:06.943 +02:00 [INF] HTTP GET /api/LeaveTypes responded 200 in 7.2464 ms
+2024-10-20 20:47:52.710 +02:00 [INF] Now listening on: https://localhost:7131
+2024-10-20 20:47:52.748 +02:00 [INF] Now listening on: http://localhost:5133
+2024-10-20 20:47:52.844 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-20 20:47:52.848 +02:00 [INF] Hosting environment: Development
+2024-10-20 20:47:52.849 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\HRLeaveManagement.Api
+2024-10-20 21:05:41.437 +02:00 [INF] Now listening on: https://localhost:7131
+2024-10-20 21:05:41.475 +02:00 [INF] Now listening on: http://localhost:5133
+2024-10-20 21:05:41.565 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-20 21:05:41.571 +02:00 [INF] Hosting environment: Development
+2024-10-20 21:05:41.572 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\API\HRLeaveManagement.Api
+2024-10-20 21:06:21.383 +02:00 [INF] Now listening on: https://localhost:7131
+2024-10-20 21:06:21.441 +02:00 [INF] Now listening on: http://localhost:5133
+2024-10-20 21:06:21.533 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-20 21:06:21.536 +02:00 [INF] Hosting environment: Development
+2024-10-20 21:06:21.542 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\API\HRLeaveManagement.Api
+2024-10-20 21:24:20.582 +02:00 [INF] Now listening on: https://localhost:7131
+2024-10-20 21:24:20.623 +02:00 [INF] Now listening on: http://localhost:5133
+2024-10-20 21:24:20.727 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-20 21:24:20.730 +02:00 [INF] Hosting environment: Development
+2024-10-20 21:24:20.732 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-10-20 21:25:27.588 +02:00 [INF] Now listening on: https://localhost:7131
+2024-10-20 21:25:27.637 +02:00 [INF] Now listening on: http://localhost:5133
+2024-10-20 21:25:27.785 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-20 21:25:27.796 +02:00 [INF] Hosting environment: Development
+2024-10-20 21:25:27.797 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api

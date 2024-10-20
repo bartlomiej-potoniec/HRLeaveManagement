@@ -1,0 +1,43 @@
+﻿@page "/leave-requests/details/{id:int}"
+
+<MudText Typo="Typo.h5">Details</MudText>
+
+<MudGrid>
+    <MudItem>
+        <MudText Typo="Typo.h6" Color="_mudColor">@_headingText</MudText>
+        <MudText Typo="Typo.body2"><strong>Employee Name:</strong>@Model.Employee.FirstName @Model.Employee.LastName</MudText>
+    </MudItem>
+
+    <MudDivider />
+
+    <MudItem>
+        <MudText Typo="Typo.body2"><strong>Date Requested:</strong> @Model?.RequestedAt</MudText>
+    </MudItem>
+</MudGrid>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Start Date</dt>
+        <dd class="col-sm-10">@Model.StartedAt</dd>
+
+        <dt class="col-sm-2">End Date</dt>
+        <dd class="col-sm-10">@Model.EndedAt</dd>
+
+        <dt class="col-sm-2">Leave Type</dt>
+        <dd class="col-sm-10">@Model?.LeaveType?.Name</dd>
+
+        <dt class="col-sm-2">Comments</dt>
+        <dd class="col-sm-10">@Model.RequestComments</dd>
+    </dl>
+</div>
+
+<div>
+    @if (Model.IsApproved is null)
+    {
+        <MudButton Color="Color.Success" OnClick="() => ChangeApproval(true)">Approve</MudButton>
+        <MudButton Color="Color.Error" OnClick="() => ChangeApproval(false)">Reject</MudButton>
+    }
+
+    <BackToList Target="leave-requests/" />
+</div>
