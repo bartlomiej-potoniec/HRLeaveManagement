@@ -1,15 +1,19 @@
-﻿using HRLeaveManagement.Domain.Common;
+﻿namespace HRLeaveManagement.Domain;
 
-namespace HRLeaveManagement.Domain;
-
-public class LeaveAllocation : BaseEntity
+public class LeaveAllocation
 {
-    public int NumberOfDays { get; set; }
+    public int Id { get; set; }
+    public Guid EmployeeId { get; set; }
 
     public int LeaveTypeId { get; set; }
     public LeaveType? LeaveType { get; set; }
 
     public int Period { get; set; }
 
-    public string EmployeeId { get; set; } = string.Empty;
+    public int? NumberOfDays { get; set; }
+    public int? UsedDays { get; set; }
+    public int? RemainingDays { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+    public DateTime ModifiedAt { get; set; }
 }

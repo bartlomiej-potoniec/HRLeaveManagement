@@ -1,9 +1,12 @@
-﻿using HRLeaveManagement.Domain.Common;
+﻿namespace HRLeaveManagement.Domain;
 
-namespace HRLeaveManagement.Domain;
-
-public class LeaveType : BaseEntity
+public class LeaveType
 {
-    public string Name { get; set; } = string.Empty;
-    public int DefaultDays { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; } = default!;
+    public string? Description { get; set; }
+    public int? DefaultDays { get; set; }
+    public bool IsPaid { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime ModifiedAt { get; set; }
 }
