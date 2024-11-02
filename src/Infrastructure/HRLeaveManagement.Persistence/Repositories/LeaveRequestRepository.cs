@@ -1,7 +1,7 @@
-﻿using HRLeaveManagement.Domain;
-using HRLeaveManagement.Persistence.DbContexts;
+﻿using HRLeaveManagement.Persistence.DbContexts;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore;
+using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
@@ -20,7 +20,7 @@ public sealed class LeaveRequestRepository(ApplicationDbContext context)
 
     public async Task<IReadOnlyList<LeaveRequest>> GetUserLeaveRequestsWithDetailsAsync(string userId)
         => await _context.LeaveRequests
-            .Where(lr => lr.RequestingEmployeeId == userId)
+            .Where(lr => lr.RequestingEmployeeId == Guid.Parse(userId))
             .Include(lr => lr.LeaveType)
             .ToListAsync();
 }

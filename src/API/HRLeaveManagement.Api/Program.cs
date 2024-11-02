@@ -2,7 +2,10 @@ using HRLeaveManagement.Api.Middleware;
 using HRLeaveManagement.Application.Extensions;
 using HRLeaveManagement.Identity.Extensions;
 using HRLeaveManagement.Infrastructure.Extensions;
+using HRLeaveManagement.Persistence.DbContexts;
 using HRLeaveManagement.Persistence.Extensions;
+using HRLeaveManagement.Persistence.Seeders;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +50,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Migrate pednind migrations & seed data
+using var scope = app.Services.CreateScope();
+
+var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+var pendingMigrations = dbContext.Database.GetPendingMigrations();
+
+if (pendingMigrations.Any())
+    dbContext.Database.Migrate();
+
+dbContext.SeedLeaveTypes();
+
 
 app.UseSerilogRequestLogging();
 

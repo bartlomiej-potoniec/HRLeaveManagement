@@ -1,0 +1,21 @@
+﻿using HRLeaveManagement.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace HRLeaveManagement.Persistence.Configurations;
+
+public class EmployeeContractConfiguration : IEntityTypeConfiguration<EmployeeContract>
+{
+    public void Configure(EntityTypeBuilder<EmployeeContract> builder)
+    {
+        builder
+            .HasOne(ec => ec.Employee)
+            .WithMany()
+            .HasForeignKey(ec => ec.EmployeeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+        builder.ToTable(ec =>
+            ec.HasCheckConstraint("CK_EmployeeContract_TotalDuration_GreaterThanZero", "[TotalDuration] IS NULL OR [TotalDuration] > 0"));
+    }
+}

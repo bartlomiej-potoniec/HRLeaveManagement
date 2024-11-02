@@ -1,7 +1,7 @@
-﻿using HRLeaveManagement.Domain;
-using HRLeaveManagement.Persistence.DbContexts;
+﻿using HRLeaveManagement.Persistence.DbContexts;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore;
+using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 

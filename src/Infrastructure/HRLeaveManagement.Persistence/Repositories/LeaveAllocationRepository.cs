@@ -1,5 +1,5 @@
 ﻿using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Domain;
+using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +11,7 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext context)
     public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId,
                                                                         int leaveTypeId)
         => await _context.LeaveAllocations
-            .FirstOrDefaultAsync(la => la.EmployeeId == userId && la.LeaveTypeId == leaveTypeId);
+            .FirstOrDefaultAsync(la => la.EmployeeId == Guid.Parse(userId) && la.LeaveTypeId == leaveTypeId);
 
     public async Task<LeaveAllocation?> GetLeaveAllocationWithDetailsByIdAsync(int id)
         => await _context.LeaveAllocations
@@ -20,7 +20,7 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext context)
 
     public async Task<IReadOnlyList<LeaveAllocation>> GetUserLeaveAllocationsWithDetailsAsync(string userId)
         => await _context.LeaveAllocations
-            .Where(la => la.EmployeeId == userId)
+            .Where(la => la.EmployeeId == Guid.Parse(userId))
             .Include(la => la.LeaveType)
             .ToListAsync();
 
@@ -31,9 +31,9 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext context)
 
     public async Task<bool> IsAllocationExistAsync(string userId, int leaveTypeId, int period)
         => await _context.LeaveAllocations
-            .AnyAsync(la => la.EmployeeId == userId
+            .AnyAsync(la => la.EmployeeId == Guid.Parse(userId)
                 && la.LeaveTypeId == leaveTypeId
-                && la.Period == period
+                /*&& la.Period == period*/
             );
 
     public async Task AddAllocationsAsync(IEnumerable<LeaveAllocation> leaveAllocations)

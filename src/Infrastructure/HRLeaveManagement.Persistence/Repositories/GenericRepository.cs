@@ -1,30 +1,32 @@
 ﻿using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Domain.Common;
+/*using HRLeaveManagement.Domain.Common;*/
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
 public class GenericRepository<T>(ApplicationDbContext context) 
-    : IGenericRepository<T> where T : BaseEntity
+    : IGenericRepository<T> 
 {
     protected readonly ApplicationDbContext _context = context;
 
-    public async Task<IReadOnlyList<T>> GetAllAsync() => await _context
-        .Set<T>()
-        .AsNoTracking()
-        .ToListAsync();
+    public async Task<IReadOnlyList<T>> GetAllAsync() => [];
+    /*await _context
+    .Set<T>()
+    .AsNoTracking()
+    .ToListAsync();*/
 
-    public async Task<T?> GetByIdAsync(int id) => await _context
+    public async Task<T?> GetByIdAsync(int id) => default(T);
+        /*await _context
         .Set<T>()
         .AsNoTracking()
-        .FirstOrDefaultAsync(t => t.Id == id);
+        .FirstOrDefaultAsync(t => t.Id == id);*/
 
     public async Task<int> CreateAsync(T entity)
     {
-        _context.Entry(entity).State = EntityState.Added;
+        //_context.Entry(entity).State = EntityState.Added;
 
-        await _context.AddAsync(entity);
+        //await _context.AddAsync(entity);
 
         try
         {
@@ -37,19 +39,20 @@ public class GenericRepository<T>(ApplicationDbContext context)
             throw new Exception("An error occurred while saving the entity changes. See the inner exception for details.", ex);
         }
 
-        return entity.Id;
+        //return entity.Id;
+        return 0;
     }
 
     public async Task UpdateAsync(T entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
-        _context.Update(entity);
+        //_context.Entry(entity).State = EntityState.Modified;
+        //_context.Update(entity);
 
         await SaveChangesAsync();
     }
     public async Task DeleteAsync(T entity)
     {
-        _context.Remove(entity);
+        //_context.Remove(entity);
         await SaveChangesAsync();
     }
 

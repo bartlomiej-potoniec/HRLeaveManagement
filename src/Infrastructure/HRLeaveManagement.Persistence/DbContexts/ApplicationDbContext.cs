@@ -1,38 +1,36 @@
-﻿using HRLeaveManagement.Domain;
-using HRLeaveManagement.Domain.Common;
+﻿using HRLeaveManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRLeaveManagement.Persistence.DbContexts;
 
-public class ApplicationDbContext : DbContext
+public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+    : DbContext(options)
 {
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<EmployeeContract> EmployeeContracts { get; set; }
+    public DbSet<EmployeeEducation> EmployeeEducations { get; set; }
+    public DbSet<EmployeeExperience> EmployeeExperiences { get; set; }
+
+    public DbSet<Section> Sections { get; set; }
+    public DbSet<Department> Departments { get; set; }
+
+    public DbSet<TimeRegister> TimeRegisters { get; set; }
+
     public DbSet<LeaveType> LeaveTypes { get; set; }
     public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
     public DbSet<LeaveRequest> LeaveRequests { get; set; }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
-        : base(options) { }
+    public DbSet<WorkRequest> WorkRequests { get; set; }
+    public DbSet<ExtraRemoteWorkRequest> ExtraRemoteWorkRequests { get; set; }
+    public DbSet<OvertimeRequest> OvertimeRequests { get; set; }
+    public DbSet<DelegationRequest> DelegationRequests {  get; set; }   
+
+    public DbSet<RemoteWorkLimit> RemoteWorkLimits { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-
         base.OnModelCreating(modelBuilder);
-    }
-    
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        var entityEntries = base.ChangeTracker.Entries<BaseEntity>()
-            .Where(entry => entry.State is EntityState.Added or EntityState.Modified);
-
-        foreach (var entry in entityEntries)
-        {
-            if (entry.State is EntityState.Added)
-                entry.Entity.CreatedAt = DateTime.UtcNow;
-
-            entry.Entity.ModifiedAt = DateTime.UtcNow;
-        }
-
-        return base.SaveChangesAsync(cancellationToken);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }
