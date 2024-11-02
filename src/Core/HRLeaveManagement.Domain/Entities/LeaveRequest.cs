@@ -7,18 +7,23 @@ public class LeaveRequest
     public int Id { get; private set; }
 
     public Guid RequestingEmployeeId { get; private set; }
+    public Employee RequestingEmployee { get; private set; }
 
     public int LeaveTypeId { get; private set; }
     public LeaveType? LeaveType { get; private set; }
 
-    public DateTime StartedAt { get; private set; }
-    public DateTime EndedAt { get; private set; }
+    public DateOnly StartedAt { get; private set; }
+    public DateOnly EndedAt { get; private set; }
     public int TotalDays { get; private set; }
 
     public Guid SubstitutorId { get; private set; }
+    public Employee Substitutor { get; private set; }
+
     public string? Comment { get; private set; }
 
     public Guid ApproverId { get; private set; }
+    public Employee Approver { get; set; }
+
     public string? ApproverComment { get; private set; }
 
     public string? ReasonDescription { get; private set; }
@@ -29,27 +34,27 @@ public class LeaveRequest
     public DateTime CreatedAt { get; private set; }
     public DateTime? DecidedAt { get; private set; }
 
-    private LeaveRequest() { }
+    private LeaveRequest() {}
 
 
     // Factory Methods
     public static LeaveRequest Create(Guid requestingEmployeeId,
                                       int leaveTypeId,
-                                      DateTime startedAt,
-                                      DateTime endedAt,
+                                      DateOnly startedAt,
+                                      DateOnly endedAt,
                                       Guid substitutorId,
-                                      string? comment,
                                       Guid approverId,
-                                      string? approverComment,
-                                      string? reasonDescription,
-                                      string? documentPath)
+                                      string? comment = null,
+                                      string? approverComment = null,
+                                      string? reasonDescription = null,
+                                      string? documentPath = null)
         => new()
         {
             RequestingEmployeeId = requestingEmployeeId,
             LeaveTypeId = leaveTypeId,
             StartedAt = startedAt,
             EndedAt = endedAt,
-            TotalDays = (int)(endedAt - startedAt).TotalDays,
+            TotalDays = endedAt.DayNumber - startedAt.DayNumber,
             SubstitutorId = substitutorId,
             Comment = comment,
             ApproverId = approverId,

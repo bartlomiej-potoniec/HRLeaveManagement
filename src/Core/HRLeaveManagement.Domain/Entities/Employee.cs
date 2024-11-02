@@ -10,15 +10,17 @@ public class Employee
     public Section Section { get; private set; }
 
     public Guid LeaderId { get; private set; }
+    public Employee Leader { get; private set; }
 
     public List<EmployeeEducation> EmployeeEducations { get; private set; } = [];
     public List<EmployeeContract> EmploymentContracts { get; private set; } = [];
+    public List<EmployeeExperience> EmployeeExperiences { get; private set; } = [];
 
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private Employee() { }
-
+    private Employee() {}
+    
 
     // Factory Methods
     public static Employee Create(string position,

@@ -1,31 +1,27 @@
-﻿using HRLeaveManagement.Domain.Enums;
-
-namespace HRLeaveManagement.Domain.Entities;
+﻿namespace HRLeaveManagement.Domain.Entities;
 
 public class ExtraRemoteWorkRequest : WorkRequest
 {
     public string? ReasonDescription { get; private set; }
 
-    private ExtraRemoteWorkRequest() { }
+    private ExtraRemoteWorkRequest() {}
 
 
     // Factory Methods
-    public static ExtraRemoteWorkRequest Create(Guid employeeId,
-                                                DateTime startedAt,
-                                                DateTime endedAt,
+    public static ExtraRemoteWorkRequest Create(Guid requestingEmployeeId,
+                                                DateOnly startedAt,
+                                                DateOnly endedAt,
                                                 Guid approverId,
-                                                string? approverComment,
-                                                string? reasonDescription)
-    => new()
+                                                string? approverComment = null,
+                                                string? reasonDescription = null)
     {
-        EmployeeId = employeeId,
-        StartedAt = startedAt,
-        EndedAt = endedAt,
-        TotalDays = (int)(endedAt - startedAt).TotalDays,
-        ApproverId = approverId,
-        ApproverComment = approverComment,
-        Status = RequestStatus.Pending,
-        ReasonDescription = reasonDescription,
-        CreatedAt = DateTime.UtcNow
-    };
+        var entity = new ExtraRemoteWorkRequest
+        {
+            ReasonDescription = reasonDescription
+        };
+
+        entity.InitializeBase(requestingEmployeeId, startedAt, endedAt, approverId, approverComment);
+
+        return entity;
+    }
 }

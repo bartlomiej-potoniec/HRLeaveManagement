@@ -5,15 +5,20 @@ namespace HRLeaveManagement.Domain.Entities;
 public class EmployeeEducation
 {
     public int Id { get; set; }
+
     public Guid EmployeeId { get; set; }
+    public Employee Employee { get; set; }
+
     public EducationType EducationType { get; set; }
     public string EducationDetails { get; set; }
+
     public DateOnly EnrolledAt { get; set; }
     public DateOnly GraduatedAt { get; set; }
+
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
 
-    private EmployeeEducation() { }
+    private EmployeeEducation() {}
 
 
     // Factory Methods

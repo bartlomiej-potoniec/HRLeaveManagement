@@ -3,7 +3,10 @@
 public class TimeRegister
 {
     public int Id { get; private set; }
+
     public Guid EmployeeId { get; private set; }
+    public Employee Employee { get; private set; }
+
     public DateOnly RegisterDate { get; private set; }
 
     public TimeOnly WorkStartedAt { get; private set; }
@@ -17,7 +20,7 @@ public class TimeRegister
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private TimeRegister() { }
+    private TimeRegister() {}
 
 
     // Factory Methods
@@ -25,20 +28,20 @@ public class TimeRegister
                                       DateOnly registerDate,
                                       TimeOnly workStartedAt,
                                       TimeOnly workEndedAt,
-                                      TimeSpan totalWorkTime,
-                                      TimeOnly? breakStartedAt,
-                                      TimeOnly? brakeEndedAt,
-                                      TimeSpan? totalBreakTime)
+                                      TimeOnly? breakStartedAt = null,
+                                      TimeOnly? brakeEndedAt = null)
         => new()
         {
             EmployeeId = employeeId,
             RegisterDate = registerDate,
             WorkStartedAt = workStartedAt,
             WorkEndedAt = workEndedAt,
-            TotalWorkTime = totalWorkTime,
+            TotalWorkTime = workEndedAt - workStartedAt,
             BreakStartedAt = breakStartedAt,
             BreakEndedAt = brakeEndedAt,
-            TotalBreakTime = totalBreakTime,
+            TotalBreakTime = (brakeEndedAt.HasValue && brakeEndedAt.HasValue)
+                ? brakeEndedAt - breakStartedAt
+                : null, 
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
@@ -48,19 +51,19 @@ public class TimeRegister
                               DateOnly registerDate,
                               TimeOnly workStartedAt,
                               TimeOnly workEndedAt,
-                              TimeSpan totalWorkTime,
-                              TimeOnly? breakStartedAt,
-                              TimeOnly? brakeEndedAt,
-                              TimeSpan? totalBreakTime)
+                              TimeOnly? breakStartedAt = null,
+                              TimeOnly? brakeEndedAt = null)
     {
         entity.EmployeeId = employeeId;
         entity.RegisterDate = registerDate;
         entity.WorkStartedAt = workStartedAt;
         entity.WorkEndedAt = workEndedAt;
-        entity.TotalWorkTime = totalWorkTime;
+        entity.TotalWorkTime = workEndedAt - workStartedAt;
         entity.BreakStartedAt = breakStartedAt;
         entity.BreakEndedAt = brakeEndedAt;
-        entity.TotalBreakTime = totalBreakTime;
+        entity.TotalBreakTime = (brakeEndedAt.HasValue && brakeEndedAt.HasValue)
+            ? brakeEndedAt - breakStartedAt
+            : null; 
         entity.ModifiedAt = DateTime.UtcNow;
     }
 }

@@ -4,9 +4,10 @@ public class LeaveAllocation
 {
     public int Id { get; private set; }
     public Guid EmployeeId { get; private set; }
+    public Employee Employee { get; private set; }
 
     public int LeaveTypeId { get; private set; }
-    public LeaveType? LeaveType { get; private set; }
+    public LeaveType LeaveType { get; private set; }
 
     public int Year { get; private set; }
 
@@ -17,22 +18,22 @@ public class LeaveAllocation
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private LeaveAllocation() { }
-
-
+    private LeaveAllocation() {}
+    
+    
     // Factory Methods
     public static LeaveAllocation Create(Guid employeeId,
                                          int leaveTypeId,
                                          int year,
-                                         int? availableDays)
+                                         int? availableDays = null)
         => new()
         {
             EmployeeId = employeeId,
             LeaveTypeId = leaveTypeId,
             Year = year,
-            AvailableDays = availableDays,
-            UsedDays = 0,
-            RemainingDays = availableDays,
+            AvailableDays = availableDays is not null ? availableDays : null,
+            UsedDays = availableDays is not null ? 0 : null,
+            RemainingDays = availableDays is not null ? availableDays : null,
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
@@ -41,21 +42,52 @@ public class LeaveAllocation
                               Guid employeeId,
                               int leaveTypeId,
                               int year,
-                              int? availableDays)
+                              int? availableDays = null)
     {
         entity.EmployeeId = employeeId;
         entity.LeaveTypeId = leaveTypeId;
         entity.Year = year;
+
+        if (entity.AvailableDays is null &&
+            entity.UsedDays is null &&
+            entity.RemainingDays is null &&
+            availableDays is not null)
+        {
+            entity.UsedDays = 0;
+            entity.RemainingDays = availableDays;
+        }
+
+        if (entity.AvailableDays is not null &&
+            entity.UsedDays is not null &&
+            entity.RemainingDays is not null &&
+            availableDays is not null)
+        {
+            entity.RemainingDays = availableDays - entity.UsedDays;
+        }
+
+        if (entity.AvailableDays is not null &&
+            entity.UsedDays is not null &&
+            entity.RemainingDays is not null &&
+            availableDays is null)
+        {
+            entity.UsedDays = null;   
+            entity.RemainingDays = null;
+        }
+
         entity.AvailableDays = availableDays;
-        entity.RemainingDays = availableDays - entity.UsedDays;
         entity.ModifiedAt = DateTime.UtcNow;
     }
 
-    public static void UpdateDays(LeaveAllocation entity,
-                                  int requestedDays)
+    public static void UseDays(LeaveAllocation entity,
+                               int? requestedDays = null)
     {
-        entity.AvailableDays -= requestedDays;
-        entity.UsedDays += requestedDays;
-        entity.RemainingDays = entity.AvailableDays - entity.UsedDays;
+        if (entity.AvailableDays is not null &&
+            entity.UsedDays is not null &&
+            entity.RemainingDays is not null &&
+            requestedDays is not null)
+        {
+            entity.UsedDays += requestedDays;
+            entity.RemainingDays -= requestedDays;
+        }
     }
 }

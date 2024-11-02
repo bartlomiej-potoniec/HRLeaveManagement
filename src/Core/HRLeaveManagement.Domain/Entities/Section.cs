@@ -12,13 +12,13 @@ public class Section
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private Section() { }
+    private Section() {}
 
 
     // Factory Methods
     public static Section Create(string name,
-                                 string? description,
-                                 int departmentId)
+                                 int departmentId,
+                                 string? description = null)
         => new()
         {
             Name = name,
@@ -30,8 +30,8 @@ public class Section
 
     public static void Update(Section entity,
                               string name,
-                              string? description,
-                              int departmentId)
+                              int departmentId,
+                              string? description = null)
     {
         entity.Name = name;
         entity.Description = description;

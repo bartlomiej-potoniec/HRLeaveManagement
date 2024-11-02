@@ -3,7 +3,10 @@
 public class RemoteWorkLimit
 {
     public int Id { get; private set; }
+
     public Guid EmployeeId { get; private set; }
+    public Employee Employee { get; private set; }
+
     public int Year { get; private set; }
     public int AvailableDays { get; private set; }
     public int UsedDays { get; private set; }
@@ -11,7 +14,7 @@ public class RemoteWorkLimit
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private RemoteWorkLimit() { }
+    private RemoteWorkLimit() {}
 
 
     // Factory Methods
@@ -44,8 +47,7 @@ public class RemoteWorkLimit
     public static void UpdateDays(RemoteWorkLimit entity,
                                   int requestedDays)
     {
-        entity.AvailableDays -= requestedDays;
         entity.UsedDays += requestedDays;
-        entity.RemainingDays = entity.AvailableDays - entity.UsedDays;
+        entity.RemainingDays -= requestedDays;
     }
 }

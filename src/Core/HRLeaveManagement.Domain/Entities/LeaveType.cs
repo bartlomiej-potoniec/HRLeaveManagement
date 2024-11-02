@@ -9,12 +9,12 @@ public class LeaveType
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private LeaveType() { }
+    private LeaveType() {}
 
 
     // Factory Methods
     public static LeaveType Create(string name,
-                                   string? description,
+                                   string? description = null,
                                    decimal paidFraction = 1.0M)
         => new()
         {
@@ -27,7 +27,7 @@ public class LeaveType
 
     public static void Update(LeaveType entity,
                               string name,
-                              string? description,
+                              string? description = null,
                               decimal paidFraction = 1.0M)
     {
         entity.Name = name;
@@ -35,5 +35,4 @@ public class LeaveType
         entity.PaidFraction = paidFraction;
         entity.ModifiedAt = DateTime.UtcNow;
     }
-
 }
