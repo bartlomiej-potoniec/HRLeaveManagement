@@ -11,8 +11,5 @@ public class OvertimeRequestConfiguration : IEntityTypeConfiguration<OvertimeReq
         builder
             .Property(or => or.PurposeDescription)
             .HasMaxLength(500);
-
-
-        builder.ToTable("OvertimeRequest");
     }
 }

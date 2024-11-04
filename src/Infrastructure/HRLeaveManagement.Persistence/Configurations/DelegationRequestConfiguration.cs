@@ -28,7 +28,7 @@ public class DelegationRequestConfiguration : IEntityTypeConfiguration<Delegatio
             .OnDelete(DeleteBehavior.NoAction);
 
 
-        builder.ToTable("DelegationRequest", dr => 
+        builder.ToTable(dr => 
             dr.HasCheckConstraint("CK_DelegationRequest_CashAdvance_GreaterThanOrEqualToZero", "[CashAdvance] >= 0.0"));
     }
 }

@@ -19,11 +19,8 @@ public class SectionConfigutation : IEntityTypeConfiguration<Section>
 
         builder
             .HasOne(s => s.Department)
-            .WithMany()
+            .WithMany(d => d.Sections)
             .HasForeignKey(s => s.DepartmentId)
             .OnDelete(DeleteBehavior.NoAction);
-
-
-        builder.ToTable("Section");
     }
 }

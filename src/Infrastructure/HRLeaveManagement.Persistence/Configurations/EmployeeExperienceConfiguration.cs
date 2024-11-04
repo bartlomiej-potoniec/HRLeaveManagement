@@ -10,7 +10,7 @@ public class EmployeeExperienceConfiguration : IEntityTypeConfiguration<Employee
     {
         builder
             .HasOne(ee => ee.Employee)
-            .WithMany()
+            .WithMany(e => e.EmployeeExperiences)
             .HasForeignKey(ee => ee.EmployeeId)
             .OnDelete(DeleteBehavior.Restrict);
 

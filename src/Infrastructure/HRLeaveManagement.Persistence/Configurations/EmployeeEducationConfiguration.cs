@@ -15,7 +15,7 @@ public class EmployeeEducationConfiguration : IEntityTypeConfiguration<EmployeeE
 
         builder
             .HasOne(ee => ee.Employee)
-            .WithMany()
+            .WithMany(e => e.EmployeeEducations)
             .HasForeignKey(ee => ee.EmployeeId)
             .OnDelete(DeleteBehavior.Restrict);
     }

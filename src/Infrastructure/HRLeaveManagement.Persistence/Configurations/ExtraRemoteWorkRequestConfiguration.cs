@@ -11,8 +11,5 @@ public class ExtraRemoteWorkRequestConfiguration : IEntityTypeConfiguration<Extr
         builder
             .Property(rwr => rwr.ReasonDescription)
             .HasMaxLength(500);
-
-
-        builder.ToTable("ExtraRemoteWorkRequest");
     }
 }

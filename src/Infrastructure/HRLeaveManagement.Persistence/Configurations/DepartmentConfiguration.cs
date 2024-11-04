@@ -22,8 +22,5 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
             .WithMany()
             .HasForeignKey(d => d.LeaderId)
             .OnDelete(DeleteBehavior.NoAction);
-
-
-        builder.ToTable("Department");
     }
 }
