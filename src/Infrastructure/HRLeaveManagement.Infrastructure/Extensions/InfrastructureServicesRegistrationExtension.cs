@@ -1,7 +1,7 @@
 ﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Models.Email;
-using HRLeaveManagement.Infrastructure.EmailService;
+using HRLeaveManagement.Infrastructure.Email.Settings;
+using HRLeaveManagement.Infrastructure.Email.Services;
 using HRLeaveManagement.Infrastructure.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +13,7 @@ public static class InfrastructureServicesRegistrationExtension
     public static IServiceCollection RegisterInfrastructureServices(this IServiceCollection services,
                                                                     IConfiguration configuration)
     {
-        services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+        services.Configure<EmailOptions>(configuration.GetSection("EmailSettings"));
         services.AddTransient<IEmailSender, EmailSender>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
