@@ -5,40 +5,61 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
-public sealed class LeaveAllocationRepository(ApplicationDbContext context)
-    : GenericRepository<LeaveAllocation>(context), ILeaveAllocationRepository
+public sealed class LeaveAllocationRepository(ApplicationDbContext dbContext) : ILeaveAllocationRepository
 {
-    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId,
-                                                                        int leaveTypeId)
-        => await _context.LeaveAllocations
+    private readonly ApplicationDbContext _dbContext = dbContext;
+
+    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId, int leaveTypeId)
+        => await _dbContext.LeaveAllocations
             .FirstOrDefaultAsync(la => la.EmployeeId == Guid.Parse(userId) && la.LeaveTypeId == leaveTypeId);
 
     public async Task<LeaveAllocation?> GetLeaveAllocationWithDetailsByIdAsync(int id)
-        => await _context.LeaveAllocations
+        => await _dbContext.LeaveAllocations
             .Include(la => la.LeaveType)
             .FirstOrDefaultAsync(la => la.Id == id);
 
     public async Task<IReadOnlyList<LeaveAllocation>> GetUserLeaveAllocationsWithDetailsAsync(string userId)
-        => await _context.LeaveAllocations
+        => await _dbContext.LeaveAllocations
             .Where(la => la.EmployeeId == Guid.Parse(userId))
             .Include(la => la.LeaveType)
             .ToListAsync();
 
     public async Task<IReadOnlyList<LeaveAllocation>> GetAllLeaveAllocationsWithDetailsAsync()
-        => await _context.LeaveAllocations
+        => await _dbContext.LeaveAllocations
             .Include(la => la.LeaveType)
             .ToListAsync();
 
-    public async Task<bool> IsAllocationExistAsync(string userId, int leaveTypeId, int period)
-        => await _context.LeaveAllocations
-            .AnyAsync(la => la.EmployeeId == Guid.Parse(userId)
-                && la.LeaveTypeId == leaveTypeId
-                /*&& la.Period == period*/
+    public async Task<bool> IsAllocationForUserExistAsync(Guid userId, int leaveTypeId, int year)
+        => await _dbContext.LeaveAllocations
+            .AnyAsync(la => 
+                la.EmployeeId == userId &&
+                la.LeaveTypeId == leaveTypeId &&
+                la.Year == year
             );
 
     public async Task AddAllocationsAsync(IEnumerable<LeaveAllocation> leaveAllocations)
     {
-        await _context.AddRangeAsync(leaveAllocations);
-        await _context.SaveChangesAsync();
+        await _dbContext.AddRangeAsync(leaveAllocations);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public Task<IEnumerable<LeaveAllocation>> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<LeaveAllocation?> GetByIdAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateAsync(LeaveAllocation leaveAllocation)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteAsync(LeaveAllocation leaveAllocation)
+    {
+        throw new NotImplementedException();
     }
 }
