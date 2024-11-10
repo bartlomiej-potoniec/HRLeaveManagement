@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.DTOs.Identity;
 using HRLeaveManagement.Application.Exceptions;
-using HRLeaveManagement.Application.Models.Identity;
 using HRLeaveManagement.Identity.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -22,8 +22,10 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
 
     public bool IsUserLoggedIn 
         => User?.Identity is not null && User.Identity.IsAuthenticated;
+
+    public bool IsUserInRole(string roleName) => User?.IsInRole(roleName) is not null;
     
-    public async Task<Employee> GetEmployee(string userId)
+    public async Task<UserDTO> GetUser(string userId)
     {
         var employee = await _userManager.FindByIdAsync(userId)
             ?? throw new NotFoundException($"user with id { userId } not found");
@@ -31,12 +33,12 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         return new(employee.Id, employee.Email!, employee.FirstName, employee.LastName);
     }
 
-    public async Task<IEnumerable<Employee>> GetEmployees()
+    public async Task<IEnumerable<UserDTO>> GetUsers()
     {
         var employees = await _userManager.GetUsersInRoleAsync("Employee");
 
         var employeesList = employees
-            .Select(e => new Employee(e.Id, e.Email!, e.FirstName, e.LastName))
+            .Select(e => new UserDTO(e.Id, e.Email!, e.FirstName, e.LastName))
             .ToList();
 
         return employeesList;

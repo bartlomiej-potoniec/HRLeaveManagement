@@ -1,7 +1,8 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.DTOs.Identity;
 using HRLeaveManagement.Application.Exceptions;
-using HRLeaveManagement.Application.Models.Identity;
 using HRLeaveManagement.Identity.Models;
+using HRLeaveManagement.Identity.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -13,12 +14,16 @@ namespace HRLeaveManagement.Identity.Services;
 
 public sealed class AuthService(UserManager<ApplicationUser> userManager,
                                 SignInManager<ApplicationUser> signInManager,
-                                IOptions<JwtSettings> jwtSettings) 
+                                ICredentialService credentialService,
+                                IIdentityResult identityResult, 
+                                IOptions<JwtOptions> jwtOptions)
     : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
-    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
+    private readonly ICredentialService _credentialService = credentialService;
+    private readonly IIdentityResult _identityResult = identityResult;
+    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
     public async Task<AuthResponse> Login(AuthRequest request)
     {
@@ -28,7 +33,10 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!result.Succeeded)
-            throw new BadRequestException($"Credentials for '{ request.Email }' are not valid");
+            throw new BadRequestException(
+                _identityResult.ToValidationErrors(result),
+                $"Credentials for '{ request.Email }' are not valid"
+            );
 
         var jwtSecurityToken = await GenerateJwtToken(user);
         var token = new JwtSecurityTokenHandler()
@@ -39,21 +47,34 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
 
     public async Task<RegistrationResponse> Register(RegistrationRequest request)
     {
+        string userName = _credentialService.GenerateUserLogin(
+            request.FirstName,
+            request.LastName,
+            request.DateOfBirth.ToShortDateString()
+        );
+
+        var password = _credentialService.GenerateUserPassword();
+
         var user = new ApplicationUser
         {
-            Email = request.Email,
-            UserName = request.UserName,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            EmailConfirmed = true
+            PeselNumber = request.PeselNumber,
+            DateOfBirth = request.DateOfBirth,
+            Email = request.Email,
+            UserName = userName,
+            EmailConfirmed = true // Add logic for email confirmation
         };
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+        var result = await _userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
-            throw new BadRequestException($"{ result.Errors }");
+            throw new BadRequestException(_identityResult.ToValidationErrors(result));
 
-        await _userManager.AddToRoleAsync(user, "Employee");
+        result = await _userManager.AddToRoleAsync(user, "Employee");
+
+        if (!result.Succeeded)
+            throw new BadRequestException(_identityResult.ToValidationErrors(result));
 
         return new(user.Id);
     }
@@ -63,7 +84,7 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
         var claims = await GetUserClaims(user);
 
         var symmetricSecurityKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_jwtSettings.Key)
+            Encoding.UTF8.GetBytes(_jwtOptions.Key)
         );
 
         var signingCredentials = new SigningCredentials(
@@ -72,14 +93,16 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
         );
 
         var jwtSecurityToken = new JwtSecurityToken(
-            issuer: _jwtSettings.Issuer,
-            audience: _jwtSettings.Audience,
+            issuer: _jwtOptions.Issuer,
+            audience: _jwtOptions.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+            expires: DateTime.UtcNow.AddMinutes(_jwtOptions.DurationInMinutes),
             signingCredentials: signingCredentials
         );
 
         return jwtSecurityToken;
+        /*return new JwtSecurityTokenHandler()
+            .WriteToken(jwtSecurityToken);*/
     }
 
     private async Task<IEnumerable<Claim>> GetUserClaims(ApplicationUser user)
@@ -91,13 +114,12 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
             .Select(role => new Claim(ClaimTypes.Role, role))
             .ToList();
 
-        var initialClaims = new Claim[]
-        {
-            new(JwtRegisteredClaimNames.Sub, user.UserName!),
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        Claim[] initialClaims = [
+            new(JwtRegisteredClaimNames.Sub, user.Id),
+            new(JwtRegisteredClaimNames.UniqueName, user.UserName!),
             new(JwtRegisteredClaimNames.Email, user.Email!),
             new("uid", user.Id)
-        };
+        ];
 
         var claims = initialClaims
             .Union(userClaims)
