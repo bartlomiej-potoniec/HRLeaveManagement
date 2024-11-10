@@ -9,36 +9,39 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<ApplicationUser
 {
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
-        var hasher = new PasswordHasher<ApplicationUser>();
+        builder
+            .Property(u => u.FirstName)
+            .HasMaxLength(50);
+        
+        builder
+            .Property(u => u.LastName)
+            .HasMaxLength(50);
 
-        var seedData = new ApplicationUser[]
+        builder
+            .Property(u => u.PeselNumber)
+            .HasMaxLength(11);
+        
+
+        builder.HasData(new ApplicationUser
         {
-            new()
-            {
-                Id = "ed62efd7-a3da-49de-b702-c422ec7b0165",
-                Email = "admin@localhost.com",
-                NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                FirstName = "System",
-                LastName = "Admin",
-                UserName = "admin@localhost.com",
-                NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                PasswordHash = hasher.HashPassword(null, "P@ssword1"),
-                EmailConfirmed = true
-            },
-            new()
-            {
-                Id = "9a9a289c-56e5-4dd6-917e-d892b381f815",
-                Email = "user@localhost.com",
-                NormalizedEmail = "USER@LOCALHOST.COM",
-                FirstName = "System",
-                LastName = "User",
-                UserName = "user@localhost.com",
-                NormalizedUserName = "USER@LOCALHOST.COM",
-                PasswordHash = hasher.HashPassword(null, "P@ssword1"),
-                EmailConfirmed = true
-            }
-        };
+            Id = "ed62efd7-a3da-49de-b702-c422ec7b0165",
+            Email = "admin@localhost.com",
+            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+            FirstName = "System",
+            LastName = "Admin",
+            DateOfBirth = new(),
+            UserName = "admin",
+            NormalizedUserName = "ADMIN",
+            PasswordHash = HashPassword(null, "admin"),
+            EmailConfirmed = true
+        });
+    }
 
-        builder.HasData(seedData);
+    private static string HashPassword(ApplicationUser user, string password)
+    {
+        var hasher = new PasswordHasher<ApplicationUser>();
+        var passwordHash = hasher.HashPassword(user, password);
+
+        return passwordHash;
     }
 }

@@ -1,5 +1,5 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
-using HRLeaveManagement.Application.Models.Identity;
+using HRLeaveManagement.Identity.Options;
 using HRLeaveManagement.Identity.DbContexts;
 using HRLeaveManagement.Identity.Models;
 using HRLeaveManagement.Identity.Services;
@@ -18,7 +18,8 @@ public static class IdentityServiceRegistrationExtension
     public static IServiceCollection RegisterIdentityServices(this IServiceCollection services,
                                                               IConfiguration configuration)
     {
-        services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+        services.Configure<JwtOptions>(configuration.GetSection("JwtSettings"));
+        services.Configure<CredentialOptions>(configuration.GetSection("CredentialOptions"));
 
         services.AddDbContext<ApplicationIdentityDbContext>(options =>
             options.UseSqlServer(
@@ -32,14 +33,15 @@ public static class IdentityServiceRegistrationExtension
 
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<ICredentialService, CredentialService>();
 
         services
-            .AddAuthentication(options =>
+            .AddAuthentication(options => 
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
+            .AddJwtBearer(options => 
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

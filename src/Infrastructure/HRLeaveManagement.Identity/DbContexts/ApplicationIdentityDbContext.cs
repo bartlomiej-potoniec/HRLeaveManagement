@@ -4,11 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRLeaveManagement.Identity.DbContexts;
 
-public class ApplicationIdentityDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) 
+    : IdentityDbContext<ApplicationUser>(options)
 {
-    public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) 
-        : base(options) {}
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
