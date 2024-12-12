@@ -27,10 +27,20 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
     
     public async Task<UserDTO> GetUser(string userId)
     {
-        var employee = await _userManager.FindByIdAsync(userId)
+        var user = await _userManager.FindByIdAsync(userId)
             ?? throw new NotFoundException($"user with id { userId } not found");
+       
+        var userDto = new UserDTO(
+            user.Id,
+            user.Email!,
+            user.FirstName,
+            user.LastName,
+            user.PeselNumber,
+            user.DateOfBirth,
+            user.EmployeeId
+        );
 
-        return new(employee.Id, employee.Email!, employee.FirstName, employee.LastName);
+        return userDto;
     }
 
     public async Task<IEnumerable<UserDTO>> GetUsers()
@@ -38,7 +48,15 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         var employees = await _userManager.GetUsersInRoleAsync("Employee");
 
         var employeesList = employees
-            .Select(e => new UserDTO(e.Id, e.Email!, e.FirstName, e.LastName))
+            .Select(e => new UserDTO(
+                e.Id,
+                e.Email!,
+                e.FirstName,
+                e.LastName,
+                e.PhoneNumber,
+                e.DateOfBirth,
+                e.EmployeeId
+            ))
             .ToList();
 
         return employeesList;

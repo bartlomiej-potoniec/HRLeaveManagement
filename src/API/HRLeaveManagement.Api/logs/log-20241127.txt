@@ -1,0 +1,88 @@
+2024-11-27 00:04:31.701 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-11-27 00:04:33.382 +01:00 [INF] Now listening on: https://localhost:7131
+2024-11-27 00:04:33.387 +01:00 [INF] Now listening on: http://localhost:5133
+2024-11-27 00:04:33.457 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-27 00:04:33.459 +01:00 [INF] Hosting environment: Development
+2024-11-27 00:04:33.460 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-11-27 00:06:04.976 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-11-27 00:06:06.136 +01:00 [INF] Now listening on: https://localhost:7131
+2024-11-27 00:06:06.141 +01:00 [INF] Now listening on: http://localhost:5133
+2024-11-27 00:06:06.198 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-27 00:06:06.200 +01:00 [INF] Hosting environment: Development
+2024-11-27 00:06:06.201 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-11-27 00:06:38.874 +01:00 [INF] HTTP POST /api/Auth/register responded 200 in 2053.1979 ms
+2024-11-27 16:51:28.022 +01:00 [INF] HTTP GET /api/Auth/confirm-email responded 200 in 595.1461 ms
+2024-11-27 16:51:28.389 +01:00 [INF] HTTP GET /favicon.ico responded 404 in 85.5405 ms
+2024-11-27 19:53:22.220 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-11-27 19:53:24.218 +01:00 [INF] Now listening on: https://localhost:7131
+2024-11-27 19:53:24.225 +01:00 [INF] Now listening on: http://localhost:5133
+2024-11-27 19:53:24.284 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-27 19:53:24.286 +01:00 [INF] Hosting environment: Development
+2024-11-27 19:53:24.287 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-11-27 19:55:30.012 +01:00 [INF] HTTP POST /api/Auth/register responded 200 in 2483.0811 ms
+2024-11-27 22:54:01.857 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-11-27 22:54:03.332 +01:00 [INF] Now listening on: https://localhost:7131
+2024-11-27 22:54:03.338 +01:00 [INF] Now listening on: http://localhost:5133
+2024-11-27 22:54:03.397 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-27 22:54:03.399 +01:00 [INF] Hosting environment: Development
+2024-11-27 22:54:03.400 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-11-27 22:55:08.512 +01:00 [INF] HTTP GET /api/Auth/confirm-email responded 200 in 49335.8675 ms
+2024-11-27 23:00:18.511 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-11-27 23:00:19.588 +01:00 [INF] Now listening on: https://localhost:7131
+2024-11-27 23:00:19.592 +01:00 [INF] Now listening on: http://localhost:5133
+2024-11-27 23:00:19.653 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-11-27 23:00:19.654 +01:00 [INF] Hosting environment: Development
+2024-11-27 23:00:19.655 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-11-27 23:00:46.706 +01:00 [ERR] HTTP GET /api/Auth/confirm-email responded 500 in 15851.1512 ms
+HRLeaveManagement.Application.Exceptions.BadRequestException: Email for bartpot98@gmail.com is already confirmed
+   at HRLeaveManagement.Identity.Services.AuthService.ConfirmEmail(String userId, String token) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\AuthService.cs:line 127
+   at HRLeaveManagement.Api.Controllers.AuthController.ConfirmEmail(String userId, String token) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-11-27 23:10:10.592 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 448.9983 ms
+2024-11-27 23:11:27.968 +01:00 [ERR] HTTP POST /api/Auth/login responded 500 in 130.0286 ms
+System.InvalidOperationException: Unsupported result type.
+   at HRLeaveManagement.Identity.Adapters.IdentityResultAdapter.ToValidationErrors(Object result) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Adapters\IdentityResultAdapter.cs:line 18
+   at HRLeaveManagement.Identity.Services.AuthService.Login(AuthRequest request) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\AuthService.cs:line 48
+   at HRLeaveManagement.Api.Controllers.AuthController.Login(AuthRequest request) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\AuthController.cs:line 16
+   at lambda_method209(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-11-27 23:12:27.121 +01:00 [ERR] HTTP POST /api/Auth/login responded 500 in 35699.1030 ms
+System.InvalidOperationException: Unsupported result type.
+   at HRLeaveManagement.Identity.Adapters.IdentityResultAdapter.ToValidationErrors(Object result) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Adapters\IdentityResultAdapter.cs:line 18
+   at HRLeaveManagement.Identity.Services.AuthService.Login(AuthRequest request) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\AuthService.cs:line 48
+   at HRLeaveManagement.Api.Controllers.AuthController.Login(AuthRequest request) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\AuthController.cs:line 16
+   at lambda_method209(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)

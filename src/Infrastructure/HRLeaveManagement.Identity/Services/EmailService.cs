@@ -1,0 +1,84 @@
+﻿using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
+using HRLeaveManagement.Application.DTOs.Email;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
+using HRLeaveManagement.Infrastructure.Email.Settings;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Options;
+
+namespace HRLeaveManagement.Identity.Services;
+
+public sealed class EmailService(IEmailSender emailSender,
+                                 IHttpContextAccessor httpContextAccessor,
+                                 IUrlHelperFactory urlHelperFactory,
+                                 IOptions<EmailOptions> emailOptions,
+                                 IAppLogger<EmailService> logger) 
+    : IEmailService
+{
+    private readonly IEmailSender _emailSender = emailSender;
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly IUrlHelperFactory _urlHelperFactory = urlHelperFactory;
+    private readonly IAppLogger<EmailService> _logger = logger;
+    private readonly EmailOptions _emailOptions = emailOptions.Value;
+
+    public async Task SendRegistrationEmail(string email,
+                                            string firstName,
+                                            string userName,
+                                            string password,
+                                            string confirmationLink)
+    {
+        var emailMessage = new EmailMessage
+        {
+            To = email,
+            Subject = "An account in HrManagementSystem was created for you!",
+            TemplateId = _emailOptions.TemplatesId["Registration"],
+            TemplatePlaceholders = new
+            {
+                FirstName = firstName,
+                UserName = userName,
+                Password = password,
+                ConfirmationLink = confirmationLink
+            }
+        };
+
+        _logger.LogInformation("Sending registration email to {Email}", email);
+
+        var emailResult = await _emailSender.SendEmailAsync(emailMessage);
+
+        if (!emailResult.IsSuccess)
+        {
+            _logger.LogError("Sending email failed to {Email}", email);
+            throw new InvalidOperationException(emailResult.ErrorMessage);
+        }
+
+        _logger.LogInformation("Sending email successful to {Email}", email);
+    }
+
+    public string GenerateEmailConfirmationLink(string userId, string token)
+    {
+        var httpContext = _httpContextAccessor.HttpContext
+            ?? throw new InvalidOperationException("HttpContext is not available");
+
+        var urlHelper = _urlHelperFactory.GetUrlHelper(new ActionContext
+        {
+            HttpContext = httpContext,
+            RouteData = httpContext.GetRouteData(),
+            ActionDescriptor = new ActionDescriptor()
+        });
+
+        var actionLink = urlHelper
+            .ActionLink(
+                action: "ConfirmEmail",
+                controller: "Auth",
+                values: new { userId, token },
+                protocol: httpContext.Request.Scheme
+            )
+            ?? throw new InvalidOperationException("An error occurred while creating confirmation link");
+
+        return actionLink;
+    }
+}

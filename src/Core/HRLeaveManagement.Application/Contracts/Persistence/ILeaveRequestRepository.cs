@@ -1,10 +1,13 @@
-﻿using HRLeaveManagement.Domain;
+﻿using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Application.Contracts.Persistence;
 
-public interface ILeaveRequestRepository : IGenericRepository<LeaveRequest> 
+public interface ILeaveRequestRepository
 {
+    Task<LeaveRequest?> GetByIdAsync(int id);
+    Task UpdateAsync(LeaveRequest leaveRequest);
     Task<LeaveRequest?> GetLeaveRequestWithDetailsByIdAsync(int id);
     Task<IReadOnlyList<LeaveRequest>> GetAllLeaveRequestsWithDetailsAsync();
-    Task<IReadOnlyList<LeaveRequest>> GetUserLeaveRequestsWithDetailsAsync(string userId);
+    Task<IReadOnlyList<LeaveRequest>> GetEmployeeLeaveRequestsWithDetailsAsync(Guid employeeId);
+    Task DeleteAsync(LeaveRequest leaveRequest);
 }

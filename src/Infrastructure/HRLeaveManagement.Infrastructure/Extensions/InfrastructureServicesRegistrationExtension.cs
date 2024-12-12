@@ -13,7 +13,7 @@ public static class InfrastructureServicesRegistrationExtension
     public static IServiceCollection RegisterInfrastructureServices(this IServiceCollection services,
                                                                     IConfiguration configuration)
     {
-        services.Configure<EmailOptions>(configuration.GetSection("EmailSettings"));
+        services.Configure<EmailOptions>(configuration.GetSection(nameof(EmailOptions)));
         services.AddTransient<IEmailSender, EmailSender>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));

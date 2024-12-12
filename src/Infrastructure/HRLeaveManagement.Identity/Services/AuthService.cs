@@ -1,48 +1,59 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.DTOs.Identity;
 using HRLeaveManagement.Application.Exceptions;
+using HRLeaveManagement.Identity.DbContexts;
 using HRLeaveManagement.Identity.Models;
-using HRLeaveManagement.Identity.Options;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HRLeaveManagement.Identity.Services;
 
-public sealed class AuthService(UserManager<ApplicationUser> userManager,
-                                SignInManager<ApplicationUser> signInManager,
+public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
+                                IServiceProvider serviceProvider,
                                 ICredentialService credentialService,
-                                IIdentityResult identityResult, 
-                                IOptions<JwtOptions> jwtOptions)
+                                IJwtService jwtService,
+                                IEmailService emailService,
+                                IUserService userService,
+                                IIdentityResult identityResult,
+                                IAppLogger<AuthService> logger)
     : IAuthService
 {
-    private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
     private readonly ICredentialService _credentialService = credentialService;
+    private readonly IJwtService _jwtService = jwtService;
+    private readonly IEmailService _emailService = emailService;
+    private readonly IUserService _userService = userService;
     private readonly IIdentityResult _identityResult = identityResult;
-    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
+    private readonly IAppLogger<AuthService> _logger = logger;
+
+    private readonly ApplicationIdentityDbContext _dbContext
+        = serviceProvider.GetRequiredService<ApplicationIdentityDbContext>();
 
     public async Task<AuthResponse> Login(AuthRequest request)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email)
-            ?? throw new NotFoundException($"User with e-mail: { request.Email } not found");
+        var user = await _signInManager.UserManager 
+            .FindByNameAsync(request.UserName)
+            ?? throw new NotFoundException($"User with username: { request.UserName } not found");
+
+        _logger.LogInformation("Logging in started for user {Username} with id: {Id}", user.UserName!, user.Id);
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!result.Succeeded)
+        {
+            _logger.LogError("Checking password failed for user {Username} with id: {Id}", user.UserName!, user.Id);
             throw new BadRequestException(
                 _identityResult.ToValidationErrors(result),
-                $"Credentials for '{ request.Email }' are not valid"
+                $"Credentials for '{request.UserName}' are not valid"
             );
+        }
+            
+        var jwtSecurityToken = await _jwtService.GenerateJwtToken(user.UserName!);
 
-        var jwtSecurityToken = await GenerateJwtToken(user);
-        var token = new JwtSecurityTokenHandler()
-            .WriteToken(jwtSecurityToken);
+        _logger.LogInformation("Logging in successful for user {Username} with id: {Id}", user.UserName!, user.Id);
 
-        return new(user.Id, user.UserName!, user.Email!, token);
+        return new(user.Id, user.UserName!, user.Email!, jwtSecurityToken);
     }
 
     public async Task<RegistrationResponse> Register(RegistrationRequest request)
@@ -50,7 +61,7 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
         string userName = _credentialService.GenerateUserLogin(
             request.FirstName,
             request.LastName,
-            request.DateOfBirth.ToShortDateString()
+            request.DateOfBirth.ToString("yyyyMMdd")
         );
 
         var password = _credentialService.GenerateUserPassword();
@@ -60,71 +71,130 @@ public sealed class AuthService(UserManager<ApplicationUser> userManager,
             FirstName = request.FirstName,
             LastName = request.LastName,
             PeselNumber = request.PeselNumber,
-            DateOfBirth = request.DateOfBirth,
+            DateOfBirth = DateOnly.FromDateTime(request.DateOfBirth),
             Email = request.Email,
             UserName = userName,
-            EmailConfirmed = true // Add logic for email confirmation
+            EmailConfirmed = false
         };
 
-        var result = await _userManager.CreateAsync(user, password);
+        _logger.LogInformation("Starting transaction for registering user {Username}", userName);
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
-        if (!result.Succeeded)
-            throw new BadRequestException(_identityResult.ToValidationErrors(result));
+        try
+        {
+            _logger.LogInformation("Creating account started for user {Username}", userName);
+            
+            var result = await _signInManager.UserManager.CreateAsync(user, password);
 
-        result = await _userManager.AddToRoleAsync(user, "Employee");
+            if (!result.Succeeded)
+            {
+                _logger.LogError("Creating account failed for user {Username}", userName);
+                throw new BadRequestException(
+                    _identityResult.ToValidationErrors(result),
+                    "Cannot create a new user for given credentials"
+                );
+            }
 
-        if (!result.Succeeded)
-            throw new BadRequestException(_identityResult.ToValidationErrors(result));
+            _logger.LogInformation("Creating account successful for user {Username}", userName);
+            _logger.LogInformation("Adding to roles {Roles} started for user {Username}", request.Roles, userName);
 
-        return new(user.Id);
+            result = await _signInManager.UserManager.AddToRolesAsync(user, request.Roles);
+
+            if (!result.Succeeded)
+            {
+                _logger.LogError("Adding to roles {Roles} failed for user {Username} ", request.Roles, userName);
+                throw new BadRequestException(
+                    _identityResult.ToValidationErrors(result),
+                    $"Cannot add a new user to roles '{ request.Roles }'"
+                );
+            }
+
+            _logger.LogInformation("Adding to roles {Roles} successful for user {Username} ", request.Roles, userName);
+
+            var token = await _signInManager.UserManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = _emailService.GenerateEmailConfirmationLink(user.Id, token);
+
+            await _emailService.SendRegistrationEmail(
+                request.Email,
+                request.FirstName,
+                userName,
+                password,
+                confirmationLink
+            );
+
+            await transaction.CommitAsync();
+            _logger.LogError("Transaction successful for registering user {Username}", userName);
+
+            return new(user.Id);
+        }
+
+        catch (Exception ex)
+        {
+            _logger.LogError("Transaction failed for registering user {Username}", userName);
+            await transaction.RollbackAsync();
+
+            throw;
+        }
     }
 
-    private async Task<JwtSecurityToken> GenerateJwtToken(ApplicationUser user)
+    public async Task ConfirmEmail(string? userId, string? token)
     {
-        var claims = await GetUserClaims(user);
+        if (userId is null or "" || token is null or "")
+            throw new BadRequestException("Invalid user ID or token");
+        
+        var user = await _signInManager.UserManager
+            .FindByIdAsync(userId)
+            ?? throw new NotFoundException($"No user with ID: { userId } found");
 
-        var symmetricSecurityKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_jwtOptions.Key)
-        );
+        _logger.LogInformation("Confirming email started for user {Username} with ID: {Id}", user.UserName!, userId);
 
-        var signingCredentials = new SigningCredentials(
-            symmetricSecurityKey, 
-            SecurityAlgorithms.HmacSha256
-        );
+        var isEmailConfirmed = await _signInManager.UserManager.IsEmailConfirmedAsync(user);
+        
+        if (isEmailConfirmed)
+        {
+            _logger.LogError("Confirming email failed for user {Username} with ID: {Id}", user.UserName!, userId);
+            throw new BadRequestException($"Email for { user.Email } is already confirmed");
+        }
 
-        var jwtSecurityToken = new JwtSecurityToken(
-            issuer: _jwtOptions.Issuer,
-            audience: _jwtOptions.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwtOptions.DurationInMinutes),
-            signingCredentials: signingCredentials
-        );
+        var result = await _signInManager.UserManager.ConfirmEmailAsync(user, token);
+        
+        if (!result.Succeeded)
+        {
+            _logger.LogError("Confirming email failed for user {Username} with ID: {Id}", user.UserName!, userId);
+            throw new BadRequestException(
+                _identityResult.ToValidationErrors(result),
+                $"Failed to confirm email for { user.Email }"
+            );
+        }
 
-        return jwtSecurityToken;
-        /*return new JwtSecurityTokenHandler()
-            .WriteToken(jwtSecurityToken);*/
+        _logger.LogInformation("Confirming email successful for user {Username} with ID: {Id}", user.UserName!, userId);
     }
 
-    private async Task<IEnumerable<Claim>> GetUserClaims(ApplicationUser user)
+    public async Task ChangePassword(PasswordRequest request)
     {
-        var userClaims = await _userManager.GetClaimsAsync(user);
-        var userRoles = await _userManager.GetRolesAsync(user);
+        var user = _userService.User
+            ?? throw new NotFoundException("No user found in current context");
 
-        var roleClaims = userRoles
-            .Select(role => new Claim(ClaimTypes.Role, role))
-            .ToList();
+        var applicationUser = await _signInManager.UserManager.GetUserAsync(user)
+            ?? throw new NotFoundException("No user found");
 
-        Claim[] initialClaims = [
-            new(JwtRegisteredClaimNames.Sub, user.Id),
-            new(JwtRegisteredClaimNames.UniqueName, user.UserName!),
-            new(JwtRegisteredClaimNames.Email, user.Email!),
-            new("uid", user.Id)
-        ];
+        _logger.LogInformation("Changing password started for user {Username} with ID: {Id}", applicationUser.UserName!, applicationUser.Id);
 
-        var claims = initialClaims
-            .Union(userClaims)
-            .Union(roleClaims);
+        var result = await _signInManager.UserManager.ChangePasswordAsync(
+            applicationUser,
+            request.CurrentPassword,
+            request.NewPassword
+        );
 
-        return claims;
+        if (!result.Succeeded)
+        {
+            _logger.LogError("Changing password failed for user {Username} with ID: {Id}", applicationUser.UserName!, applicationUser.Id);
+            throw new BadRequestException(
+                _identityResult.ToValidationErrors(result),
+                $"Failed to change password for user { applicationUser.Email }"
+            );
+        }
+
+        _logger.LogInformation("Changing password successful for user {Username} with ID: {Id}", applicationUser.UserName!, applicationUser.Id);
     }
 }

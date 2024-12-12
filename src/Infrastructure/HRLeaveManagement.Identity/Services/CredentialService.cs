@@ -20,12 +20,13 @@ public sealed class CredentialService(UserManager<ApplicationUser> userManager,
         var users = _userManager.Users.ToList();
 
         var input = $"{ firstname } { lastname } { dateOfBirth }";
-        var pattern = @"^(?<firstLetter>\w)\w*\s(?<lastSix>\w{6})\w*\s\d{2}(?<dob>\d{2})";
+        var pattern = @"^(?<firstLetter>\w)\w*\s(?<lastSix>[a-zA-Z-]{1,6})\S*\s\d{2}(?<dob>\d{2})";
 
         var match = Regex.Match(input, pattern);
 
         var login = $"{ match.Groups["firstLetter"].Value }{ match.Groups["lastSix"].Value }{ match.Groups["dob"].Value }"
             .Trim()
+            .Replace("-", "")
             .ToLower();
 
         while (users.Find(u => u.UserName == login) is not null)
@@ -38,7 +39,7 @@ public sealed class CredentialService(UserManager<ApplicationUser> userManager,
 
             login = login.Replace(match.Groups["dob"].Value, randomValue);
         }
-
+        
         return login;
     }
 

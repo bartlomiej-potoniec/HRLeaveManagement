@@ -1,8 +1,8 @@
-﻿using HRLeaveManagement.Application.Models.Email;
+﻿using HRLeaveManagement.Application.DTOs.Email;
 
 namespace HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 
 public interface IEmailSender
 {
-    Task<bool> SendEmailAsync(EmailMessage email);
+    Task<EmailResponse> SendEmailAsync(EmailMessage email);
 }

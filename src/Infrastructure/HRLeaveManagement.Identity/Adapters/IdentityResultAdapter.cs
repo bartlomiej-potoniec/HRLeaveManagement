@@ -15,6 +15,6 @@ public class IdentityResultAdapter : IIdentityResult
                 .ToList();
         }
 
-        throw new InvalidOperationException("Unsupported result type.");
+        throw new InvalidOperationException("Unsupported result type");
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Net;
+﻿using System.Net;
 using HRLeaveManagement.Api.Models;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Exceptions;
 
 namespace HRLeaveManagement.Api.Middleware;
@@ -9,15 +9,16 @@ public sealed class GlobalExceptionHandlerMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
 
-    public async Task InvokeAsync(HttpContext httpContext)
+    public async Task InvokeAsync(HttpContext httpContext, IAppLogger<GlobalExceptionHandlerMiddleware> logger)
     {
         try
         {
-            await _next(httpContext);
+            await _next.Invoke(httpContext);
         }
 
         catch (Exception ex)
         {
+            logger.LogError("An exception occurred: {Message}", ex.Message);
             await HandleExceptionAsync(httpContext, ex);
         }
     }

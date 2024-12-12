@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\HRLeaveManagement.Application\HRLeaveManagement.Application.csproj" />
+    <ProjectReference Include="..\HRLeaveManagement.Infrastructure\HRLeaveManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

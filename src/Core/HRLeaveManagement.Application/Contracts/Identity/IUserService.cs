@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Application.Models.Identity;
+﻿using HRLeaveManagement.Application.DTOs.Identity;
 using System.Security.Claims;
 
 namespace HRLeaveManagement.Application.Contracts.Identity;
@@ -8,6 +8,6 @@ public interface IUserService
     ClaimsPrincipal? User { get; }
     string? UserId { get; }
     bool IsUserLoggedIn { get; }
-    Task<IEnumerable<Employee>> GetEmployees();
-    Task<Employee> GetEmployee(string userId);
+    Task<IEnumerable<UserDTO>> GetUsers();
+    Task<UserDTO> GetUser(string userId);
 }

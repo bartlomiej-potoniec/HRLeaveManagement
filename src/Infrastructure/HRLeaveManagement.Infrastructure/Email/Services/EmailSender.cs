@@ -7,26 +7,34 @@ using SendGrid.Helpers.Mail;
 
 namespace HRLeaveManagement.Infrastructure.Email.Services;
 
-public sealed class EmailSender(IOptions<EmailOptions> emailSettings) : IEmailSender
+public sealed class EmailSender(IOptions<EmailOptions> emailOptions) : IEmailSender
 {
-    private readonly EmailOptions _emailSettings = emailSettings.Value;
+    private readonly EmailOptions _emailOptions = emailOptions.Value;
 
-    public async Task<bool> SendEmailAsync(EmailMessage email)
+    public async Task<EmailResponse> SendEmailAsync(EmailMessage email)
     {
-        var client = new SendGridClient(_emailSettings.ApiKey);
+        var client = new SendGridClient(_emailOptions.ApiKey);
 
         var to = new EmailAddress(email.To);
-        var from = new EmailAddress(_emailSettings.FromAddress, _emailSettings.FromName);
+        var from = new EmailAddress(_emailOptions.FromAddress, _emailOptions.FromName);
 
-        var message = MailHelper.CreateSingleEmail(
-            from: from,
-            to: to,
-            subject: email.Subject,
-            plainTextContent: email.TextContent,
-            htmlContent: email.TextContent
+        var message = MailHelper.CreateSingleTemplateEmail(
+            from,
+            to,
+            email.TemplateId,
+            email.TemplatePlaceholders
         );
 
         var response = await client.SendEmailAsync(message);
-        return response.IsSuccessStatusCode;
+
+        var emailResponse = new EmailResponse(
+            IsSuccess: response.IsSuccessStatusCode,
+            StatusCode: response.StatusCode,
+            ErrorMessage: response.IsSuccessStatusCode 
+                ? null
+                : await response.Body.ReadAsStringAsync()
+        );
+
+        return emailResponse;
     }
 }
