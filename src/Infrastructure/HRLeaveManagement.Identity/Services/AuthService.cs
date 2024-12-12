@@ -43,10 +43,7 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
         if (!result.Succeeded)
         {
             _logger.LogError("Checking password failed for user {Username} with id: {Id}", user.UserName!, user.Id);
-            throw new BadRequestException(
-                _identityResult.ToValidationErrors(result),
-                $"Credentials for '{request.UserName}' are not valid"
-            );
+            throw new BadRequestException($"Credentials for '{ request.UserName }' are not valid");
         }
             
         var jwtSecurityToken = await _jwtService.GenerateJwtToken(user.UserName!);
