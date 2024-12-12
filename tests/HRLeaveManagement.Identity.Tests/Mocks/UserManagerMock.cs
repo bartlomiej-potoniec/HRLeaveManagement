@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Security.Claims;
 
 namespace HRLeaveManagement.Identity.Tests.Mocks;
 
 public class UserManagerMock
 {
-    public static Mock<UserManager<ApplicationUser>> GetUserManagerMock()
+    public static Mock<UserManager<ApplicationUser>> Create()
         => new(
             new Mock<IUserStore<ApplicationUser>>().Object,
             new Mock<IOptions<IdentityOptions>>().Object,
@@ -21,13 +22,49 @@ public class UserManagerMock
         );
     
 
-    public static Mock<UserManager<ApplicationUser>> GetUserManagerMock(IQueryable<ApplicationUser> users)
+    public static Mock<UserManager<ApplicationUser>> Create(IQueryable<ApplicationUser> users)
     {
-        var userManagerMock = GetUserManagerMock();
+        var userManagerMock = Create();
         userManagerMock
             .Setup(u => u.Users)
             .Returns(users);
 
         return userManagerMock;
     }
+
+    public static void SetupToFindUserByName(Mock<UserManager<ApplicationUser>> userManagerMock,
+                                             ApplicationUser? user)
+        => userManagerMock
+            .Setup(um => um.FindByNameAsync(It.IsAny<string>()))
+            .ReturnsAsync(user);
+
+    public static void SetupToFindUserById(Mock<UserManager<ApplicationUser>> userManagerMock,
+                                           ApplicationUser? user)
+        => userManagerMock
+            .Setup(um => um.FindByIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(user);
+
+    public static void SetupCreateToReturnIdentityResult(Mock<UserManager<ApplicationUser>> userManagerMock,
+                                                         IdentityResult identityResult)
+        => userManagerMock
+            .Setup(um => um.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(identityResult);
+
+    public static void SetupAddToRoleToReturnIdentityResult(Mock<UserManager<ApplicationUser>> userManagerMock,
+                                                            IdentityResult identityResult)
+        => userManagerMock
+            .Setup(um => um.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(identityResult);
+
+    public static void SetupGetUserToFindByApplicationUser(Mock<UserManager<ApplicationUser>> userManagerMock,
+                                                           ApplicationUser? user)
+        => userManagerMock
+            .Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
+            .ReturnsAsync(() => user);
+
+    public static void SetupChangePasswordToReturnIdentityResult(Mock<UserManager<ApplicationUser>> userManagerMock,
+                                                               IdentityResult identityResult)
+        => userManagerMock
+            .Setup(um => um.ChangePasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(identityResult);
 }

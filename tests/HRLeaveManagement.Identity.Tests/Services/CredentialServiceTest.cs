@@ -18,8 +18,8 @@ public class CredentialServiceTest
                                                                                                                     string expectedLogin)
     {
         // Arrange
-        var userManagerMock = UserManagerMock.GetUserManagerMock();
-        var credentialOptionsMock = GetCredentialOptionsMock();
+        var userManagerMock = UserManagerMock.Create();
+        var credentialOptionsMock = CreateCredentialOptionsMock();
 
         var credentialService = new CredentialService(userManagerMock.Object, credentialOptionsMock.Object);
 
@@ -50,8 +50,8 @@ public class CredentialServiceTest
 
         List<string> userLogins = [users[0].UserName!, users[1].UserName!, users[2].UserName!];
 
-        var userManagerMock = UserManagerMock.GetUserManagerMock(users.AsQueryable());
-        var credentialOptionsMock = GetCredentialOptionsMock();
+        var userManagerMock = UserManagerMock.Create(users.AsQueryable());
+        var credentialOptionsMock = CreateCredentialOptionsMock();
 
         var credentialService = new CredentialService(userManagerMock.Object, credentialOptionsMock.Object);
 
@@ -68,8 +68,8 @@ public class CredentialServiceTest
     public void GenerateUserPassword_ForGivenAppSettingsOptions_ReturnsRandomPasswordForGivenLength()
     {
         // Arrange
-        var userManagerMock = UserManagerMock.GetUserManagerMock();
-        var credentialOptionsMock = GetCredentialOptionsMock();
+        var userManagerMock = UserManagerMock.Create();
+        var credentialOptionsMock = CreateCredentialOptionsMock();
 
         var credentialService = new CredentialService(userManagerMock.Object, credentialOptionsMock.Object);
 
@@ -86,8 +86,8 @@ public class CredentialServiceTest
     public void GenerateUserPassword_ForGivenAppSettingsOptions_ReturnsRandomPasswordContainingAllowedSpecialChars()
     {
         // Arrange
-        var userManagerMock = UserManagerMock.GetUserManagerMock();
-        var credentialOptionsMock = GetCredentialOptionsMock();
+        var userManagerMock = UserManagerMock.Create();
+        var credentialOptionsMock = CreateCredentialOptionsMock();
 
         var credentialService = new CredentialService(userManagerMock.Object, credentialOptionsMock.Object);
 
@@ -100,19 +100,30 @@ public class CredentialServiceTest
             .ContainAny("!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "~");
     }
 
-    private static Mock<IOptions<CredentialOptions>> GetCredentialOptionsMock()
+    #region Test_Factory_Methods
+
+    private static void SetupCredentialOptionsMockToReturnCredentialOptions(Mock<IOptions<CredentialOptions>> credentialOptionsMock,
+                                                                            CredentialOptions credentialOptions)
+        => credentialOptionsMock
+            .Setup(o => o.Value)
+            .Returns(credentialOptions);
+
+    private static Mock<IOptions<CredentialOptions>> CreateCredentialOptionsMock()
     {
-        var credentialOptions = new CredentialOptions
+        var credentialOptions = CreateCredentialOptions();
+        var credentialOptionsMock = new Mock<IOptions<CredentialOptions>>();
+        
+        SetupCredentialOptionsMockToReturnCredentialOptions(credentialOptionsMock, credentialOptions);
+
+        return credentialOptionsMock;
+    }
+
+    private static CredentialOptions CreateCredentialOptions()
+        => new()
         {
             Login = new LoginOptions { Length = 9, MinRandomValue = 1, MaxRandomValue = 99 },
             Password = new PasswordOptions { Length = 12, AllowedSpecialChars = "!@#$%^&*()_~" }
         };
 
-        var credentialOptionsMock = new Mock<IOptions<CredentialOptions>>();
-        credentialOptionsMock
-            .Setup(o => o.Value)
-            .Returns(credentialOptions);
-
-        return credentialOptionsMock;
-    }
+    #endregion
 }

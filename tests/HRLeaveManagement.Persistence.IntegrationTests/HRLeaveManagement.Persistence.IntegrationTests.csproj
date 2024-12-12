@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Infrastructure\HRLeaveManagement.Persistence\HRLeaveManagement.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\HRLeaveManagement.Persistence\HRLeaveManagement.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

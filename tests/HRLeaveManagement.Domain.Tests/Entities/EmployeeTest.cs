@@ -40,7 +40,6 @@ public class EmployeeTest
             );
     }
 
-
     private static Employee CreateWithDefaultValues()
         => Employee.Create("Engineer", "Engineering", 1, Guid.NewGuid());
 }

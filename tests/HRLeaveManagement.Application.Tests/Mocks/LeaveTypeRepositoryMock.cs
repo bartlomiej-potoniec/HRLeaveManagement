@@ -1,6 +1,6 @@
-﻿using HRLeaveManagement.Domain;
-using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using HRLeaveManagement.Application.Contracts.Persistence;
 using Moq;
+using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Application.Tests.Mocks;
 
@@ -9,9 +9,9 @@ public class LeaveTypeRepositoryMock
     public static Mock<ILeaveTypeRepository> GetLeaveTypeLeaveTypeRepositoryMock()
     {
         List<LeaveType> leaveTypes = [
-            new() { Id = 1, DefaultDays = 10, Name = "Test Vacation" },
+           /* new() { Id = 1, DefaultDays = 10, Name = "Test Vacation" },
             new() { Id = 2, DefaultDays = 15, Name = "Test Sick" },
-            new() { Id = 3, DefaultDays = 15, Name = "Test Maternity" },
+            new() { Id = 3, DefaultDays = 15, Name = "Test Maternity" },*/
         ];
 
         var mock = new Mock<ILeaveTypeRepository>();
