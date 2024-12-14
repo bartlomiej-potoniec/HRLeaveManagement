@@ -6,8 +6,8 @@ public class Department
     public string Name { get; private set; }
     public string? Description { get; private set; }
 
-    public Guid LeaderId { get; private set; }
-    public Employee Leader { get; private set; }
+    public Guid? LeaderId { get; private set; }
+    public Employee? Leader { get; private set; }
 
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
@@ -17,8 +17,9 @@ public class Department
     private Department() {}
 
 
-    // Factory Methods
-    public static Department Create(string name, Guid leaderId, string? description = null)
+    #region Domain_Factory_Methods
+
+    public static Department Create(string name, Guid? leaderId, string? description = null)
         => new()
         {
             Name = name,
@@ -30,7 +31,7 @@ public class Department
 
     public static void Update(Department entity,
                               string name,
-                              Guid leaderId,
+                              Guid? leaderId,
                               string? description = null)
     {
         entity.Name = name;
@@ -38,4 +39,6 @@ public class Department
         entity.LeaderId = leaderId;
         entity.ModifiedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

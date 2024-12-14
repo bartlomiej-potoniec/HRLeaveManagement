@@ -23,7 +23,8 @@ public class TimeRegister
     private TimeRegister() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static TimeRegister Create(Guid employeeId,
                                       DateOnly registerDate,
                                       TimeOnly workStartedAt,
@@ -66,4 +67,6 @@ public class TimeRegister
             : null; 
         entity.ModifiedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

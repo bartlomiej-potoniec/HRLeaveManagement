@@ -1,7 +1,6 @@
 ﻿using HRLeaveManagement.Persistence.DbContexts;
 using HRLeaveManagement.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Persistence.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +20,7 @@ public static class PersistenceServiceRegistrationExtension
         services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
         services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
         services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
         return services;
     }

@@ -21,7 +21,23 @@ public class EmployeeExperience
     private EmployeeExperience() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
+    public static EmployeeExperience Create(Employee employee,
+                                            ContractType contractType,
+                                            DateOnly employedFrom,
+                                            DateOnly employedTo)
+        => new()
+        {
+            Employee = employee,
+            ContractType = contractType,
+            EmployedFrom = employedFrom,
+            EmployedTo = employedTo,
+            TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber,
+            CreatedAt = DateTime.UtcNow,
+            ModifiedAt = DateTime.UtcNow
+        };
+
     public static EmployeeExperience Create(Guid employeeId,
                                             ContractType contractType,
                                             DateOnly employedFrom,
@@ -50,4 +66,6 @@ public class EmployeeExperience
         entity.TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber;
         entity.ModifiedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

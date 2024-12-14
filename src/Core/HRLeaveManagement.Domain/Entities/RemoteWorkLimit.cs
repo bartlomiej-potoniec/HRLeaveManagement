@@ -17,7 +17,8 @@ public class RemoteWorkLimit
     private RemoteWorkLimit() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static RemoteWorkLimit Create(Guid employeeId,
                                          int year,
                                          int availableDays)
@@ -50,4 +51,6 @@ public class RemoteWorkLimit
         entity.UsedDays += requestedDays;
         entity.RemainingDays -= requestedDays;
     }
+
+    #endregion
 }

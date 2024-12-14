@@ -18,10 +18,11 @@ public class LeaveAllocation
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private LeaveAllocation() {}
-    
-    
-    // Factory Methods
+    private LeaveAllocation() { }
+
+
+    #region Domain_Factory_Methods
+
     public static LeaveAllocation Create(Guid employeeId,
                                          int leaveTypeId,
                                          int year,
@@ -70,7 +71,7 @@ public class LeaveAllocation
             entity.RemainingDays is not null &&
             availableDays is null)
         {
-            entity.UsedDays = null;   
+            entity.UsedDays = null;
             entity.RemainingDays = null;
         }
 
@@ -90,4 +91,6 @@ public class LeaveAllocation
             entity.RemainingDays -= requestedDays;
         }
     }
+
+    #endregion
 }

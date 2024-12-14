@@ -12,7 +12,7 @@ public class LeaveType
     private LeaveType() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
     public static LeaveType Create(string name,
                                    string? description = null,
                                    decimal paidFraction = 1.0M)
@@ -35,4 +35,6 @@ public class LeaveType
         entity.PaidFraction = paidFraction;
         entity.ModifiedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

@@ -7,7 +7,8 @@ public class OvertimeRequest : WorkRequest
     private OvertimeRequest() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static OvertimeRequest Create(Guid requestingEmployeeId,
                                          DateOnly startedAt,
                                          DateOnly endedAt,
@@ -24,4 +25,6 @@ public class OvertimeRequest : WorkRequest
 
         return entity;
     }
+
+    #endregion
 }

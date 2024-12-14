@@ -13,7 +13,8 @@ public class DelegationRequest : WorkRequest
     private DelegationRequest() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static DelegationRequest Create(Guid requestingEmployeeId,
                                            DateOnly startedAt,
                                            DateOnly endedAt,
@@ -38,4 +39,6 @@ public class DelegationRequest : WorkRequest
 
         return entity;
     }
+
+    #endregion
 }

@@ -39,7 +39,8 @@ public abstract class WorkRequest
     }
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static void Approve(WorkRequest entity)
         => UpdateStatus(entity, RequestStatus.Approved);
 
@@ -54,4 +55,6 @@ public abstract class WorkRequest
         entity.Status = status;
         entity.DecidedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

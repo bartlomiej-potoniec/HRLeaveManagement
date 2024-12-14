@@ -9,8 +9,8 @@ public class Employee
     public int SectionId { get; private set; }
     public Section Section { get; private set; }
 
-    public Guid LeaderId { get; private set; }
-    public Employee Leader { get; private set; }
+    public Guid? LeaderId { get; private set; }
+    public Employee? Leader { get; private set; }
 
     public List<EmployeeEducation> EmployeeEducations { get; private set; } = [];
     public List<EmployeeContract> EmploymentContracts { get; private set; } = [];
@@ -19,14 +19,15 @@ public class Employee
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private Employee() {}
-    
+    private Employee() { }
 
-    // Factory Methods
+
+    #region Domain_Factory_Methods
+
     public static Employee Create(string position,
                                   string responsibilities,
                                   int sectionId,
-                                  Guid leaderId)
+                                  Guid? leaderId)
         => new()
         {
             Position = position,
@@ -41,7 +42,7 @@ public class Employee
                               string position,
                               string responsibilities,
                               int sectionId,
-                              Guid leaderId)
+                              Guid? leaderId)
     {
         entity.Position = position;
         entity.Responsibilities = responsibilities;
@@ -49,4 +50,6 @@ public class Employee
         entity.LeaderId = leaderId;
         entity.ModifiedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

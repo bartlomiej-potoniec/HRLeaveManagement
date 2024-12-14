@@ -21,7 +21,25 @@ public class EmployeeContract
     private EmployeeContract() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
+    public static EmployeeContract Create(Employee employee,
+                                          ContractType contractType,
+                                          DateOnly startedAt,
+                                          DateOnly? expiredAt = null)
+        => new()
+        {
+            Employee = employee,
+            ContractType = contractType,
+            StartedAt = startedAt,
+            ExpiredAt = expiredAt,
+            TotalDuration = expiredAt.HasValue
+                ? expiredAt.Value.DayNumber - startedAt.DayNumber
+                : null,
+            CreatedAt = DateTime.UtcNow,
+            ModifiedAt = DateTime.UtcNow
+        };
+
     public static EmployeeContract Create(Guid employeeId,
                                           ContractType contractType,
                                           DateOnly startedAt,
@@ -61,4 +79,6 @@ public class EmployeeContract
         entity.ExpiredAt = expiredDate;
         entity.TotalDuration = expiredDate.DayNumber - entity.StartedAt.DayNumber;
     }
+
+    #endregion
 }

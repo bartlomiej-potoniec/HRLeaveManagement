@@ -15,7 +15,8 @@ public class Section
     private Section() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static Section Create(string name,
                                  int departmentId,
                                  string? description = null)
@@ -38,4 +39,6 @@ public class Section
         entity.DepartmentId = departmentId;
         entity.ModifiedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

@@ -13,7 +13,7 @@ public class EmployeeEducation
     public string EducationDetails { get; set; }
 
     public DateOnly EnrolledAt { get; set; }
-    public DateOnly GraduatedAt { get; set; }
+    public DateOnly? GraduatedAt { get; set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
@@ -21,7 +21,24 @@ public class EmployeeEducation
     private EmployeeEducation() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
+    public static EmployeeEducation Create(Employee employee,
+                                           EducationType educationType,
+                                           string educationDetails,
+                                           DateOnly enrolledAt,
+                                           DateOnly? graduatedAt)
+        => new()
+        {
+            Employee = employee,
+            EducationType = educationType,
+            EducationDetails = educationDetails,
+            EnrolledAt = enrolledAt,
+            GraduatedAt = graduatedAt,
+            CreatedAt = DateTime.UtcNow,
+            ModifiedAt = DateTime.UtcNow
+        };
+
     public static EmployeeEducation Create(Guid employeeId,
                                            EducationType educationType,
                                            string educationDetails,
@@ -52,4 +69,6 @@ public class EmployeeEducation
         entity.GraduatedAt = graduatedAt;
         entity.ModifiedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

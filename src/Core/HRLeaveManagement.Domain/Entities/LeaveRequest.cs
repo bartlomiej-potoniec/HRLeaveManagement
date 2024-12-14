@@ -37,7 +37,8 @@ public class LeaveRequest
     private LeaveRequest() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static LeaveRequest Create(Guid requestingEmployeeId,
                                       int leaveTypeId,
                                       DateOnly startedAt,
@@ -79,4 +80,6 @@ public class LeaveRequest
         entity.Status = status;
         entity.DecidedAt = DateTime.UtcNow;
     }
+
+    #endregion
 }

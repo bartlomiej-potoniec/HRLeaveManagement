@@ -7,7 +7,8 @@ public class ExtraRemoteWorkRequest : WorkRequest
     private ExtraRemoteWorkRequest() {}
 
 
-    // Factory Methods
+    #region Domain_Factory_Methods
+
     public static ExtraRemoteWorkRequest Create(Guid requestingEmployeeId,
                                                 DateOnly startedAt,
                                                 DateOnly endedAt,
@@ -24,4 +25,6 @@ public class ExtraRemoteWorkRequest : WorkRequest
 
         return entity;
     }
+
+    #endregion
 }
