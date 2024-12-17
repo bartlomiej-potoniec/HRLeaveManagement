@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Application.DTOs.Identity;
+﻿using HRLeaveManagement.Application.DTOs.Auth;
 
 namespace HRLeaveManagement.Application.Contracts.Identity;
 

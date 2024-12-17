@@ -22,11 +22,11 @@ public sealed class UpdateLeaveAllocationCommandValidator : AbstractValidator<Up
                 .WithMessage("{PropertyName} is required")
             .GreaterThan(0)
                 .WithMessage("{PropertyName} must be greater than 0")
-            .MustAsync(async (command, numOfDays, token) =>
+          /*  .MustAsync(async (command, numOfDays, token) =>
             {
                 var leaveType = await leaveTypeRepository.GetByIdAsync(command.LeaveTypeId);
                 return numOfDays <= leaveType!.DefaultDays;
-            })
+            })*/
                 .WithMessage("{PropertyName} cannot be greater than leave type default days number");
 
         RuleFor(c => c.LeaveTypeId)

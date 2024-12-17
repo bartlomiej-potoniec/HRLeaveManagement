@@ -19,14 +19,14 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
         builder
             .HasOne(e => e.Section)
-            .WithOne()
-            .HasForeignKey<Employee>(e => e.SectionId)
+            .WithMany()
+            .HasForeignKey(e => e.SectionId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
             .HasOne(e => e.Leader)
-            .WithOne()
-            .HasForeignKey<Employee>(e => e.LeaderId)
+            .WithMany()
+            .HasForeignKey(e => e.LeaderId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HRLeaveManagement.Application.DTOs;
 using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
-using HRLeaveManagement.Domain;
+using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 
@@ -15,8 +15,8 @@ public class LeaveRequestProfile : Profile
         CreateMap<LeaveRequest, LeaveRequestDetailsDTO>().ReverseMap();
 
         CreateMap<CreateLeaveRequestCommand, LeaveRequest>()
-            .ForMember(dest => dest.RequestingEmployeeId, opt => opt.Ignore())
-            .ForMember(dest => dest.RequestedDate, opt => opt.MapFrom(src => DateTime.UtcNow));
+            .ForMember(dest => dest.RequestingEmployeeId, opt => opt.Ignore());
+            //.ForMember(dest => dest.RequestedDate, opt => opt.MapFrom(src => DateTime.UtcNow));
 
         CreateMap<UpdateLeaveRequestCommand, LeaveRequest>();
     }

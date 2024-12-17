@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.DTOs.Identity;
+using HRLeaveManagement.Application.DTOs.Auth;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Identity.DbContexts;
 using HRLeaveManagement.Identity.Models;
@@ -415,7 +415,7 @@ public class AuthServiceTest
     private static AuthRequest CreateAuthRequest() => new("jkowals95", "P@ssword1");
 
     private static RegistrationRequest CreateRegistrationRequest()
-       => new("Jan", "Kowalski", "jkowalski95@company.com", new(1995, 4, 12), "12345678911", ["Employee"]);
+       => new("Jan", "Kowalski", "jkowalski95@company.com", new(1995, 4, 12), "12345678911", "566889111", ["Employee"]);
 
     private static PasswordRequest CreatePasswordRequest(string currentPassword, string newPassword)
         => new(currentPassword, newPassword);

@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using DomainLeaveRequest = HRLeaveManagement.Domain.LeaveRequest;
+﻿using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
 using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.DTOs;
 using HRLeaveManagement.Application.Features.LeaveRequest.Queries;
-using MediatR;
 using HRLeaveManagement.Application.Exceptions;
+using MediatR;
+using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.QueryHandlers;
 
@@ -31,9 +31,9 @@ public sealed class GetAllLeaveRequestsWithDetailsQueryHandler(ILeaveRequestRepo
                 ?? throw new NotFoundException("No user found");
 
             leaveRequests = 
-                (List<DomainLeaveRequest>)await _repository.GetUserLeaveRequestsWithDetailsAsync(userId);
+                (List<DomainLeaveRequest>)await _repository.GetEmployeeLeaveRequestsWithDetailsAsync(Guid.Parse(userId));
 
-            var employee = await _userService.GetEmployee(userId);
+            var employee = await _userService.GetUserById(Guid.Parse(userId));
 
             requests = _mapper.Map<List<LeaveRequestDTO>>(leaveRequests, opt =>
                 opt.AfterMap((src, dest) => dest.Select(d => d with { Employee = employee }))
@@ -47,7 +47,7 @@ public sealed class GetAllLeaveRequestsWithDetailsQueryHandler(ILeaveRequestRepo
 
             requests = _mapper
                 .Map<List<LeaveRequestDTO>>(leaveRequests)
-                .Select(async dto => dto with { Employee = await _userService.GetEmployee(dto.RequestingEmployeeId) })
+                .Select(async dto => dto with { Employee = await _userService.GetUserById(Guid.Parse(dto.RequestingEmployeeId)) })
                 .Select(task => task.Result)
                 .ToList();   
         }

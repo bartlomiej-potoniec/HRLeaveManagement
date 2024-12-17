@@ -7,4 +7,5 @@ public sealed record UpdateLeaveRequestCommand(int Id,
                                                DateTime StartedAt,
                                                DateTime EndedAt,
                                                string RequestComment,
-                                               bool IsCanceled) : IRequest;
+                                               bool IsCanceled) 
+    : IRequest;

@@ -1,3 +1,5 @@
+using HRLeaveManagement.Api.Authorization.Handlers;
+using HRLeaveManagement.Api.Authorization.Requirements;
 using HRLeaveManagement.Api.Middleware;
 using HRLeaveManagement.Application.Extensions;
 using HRLeaveManagement.Identity.Extensions;
@@ -5,6 +7,7 @@ using HRLeaveManagement.Infrastructure.Extensions;
 using HRLeaveManagement.Persistence.DbContexts;
 using HRLeaveManagement.Persistence.Extensions;
 using HRLeaveManagement.Persistence.Seeders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -35,6 +38,14 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSingleton<IAuthorizationHandler, IsEmployeeRequirementHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IsEmployee", policy => 
+        policy.Requirements.Add(new IsEmployeeRequirement()));
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DomainLeaveType = HRLeaveManagement.Domain.LeaveType;
+using DomainLeaveType = HRLeaveManagement.Domain.Entities.LeaveType;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
 using HRLeaveManagement.Application.Validation;
@@ -32,8 +32,8 @@ public sealed class CreateLeaveTypeCommandHandler(ILeaveTypeRepository repositor
 
         var leaveType = _mapper.Map<DomainLeaveType>(request);
 
-        leaveType.CreatedAt = DateTime.UtcNow;
-        leaveType.ModifiedAt = DateTime.UtcNow;
+        /*leaveType.CreatedAt = DateTime.UtcNow;
+        leaveType.ModifiedAt = DateTime.UtcNow;*/
 
         var resultId = await _repository.CreateAsync(leaveType);
 

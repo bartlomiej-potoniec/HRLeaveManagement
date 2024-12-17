@@ -19,7 +19,9 @@ public class Department
 
     #region Domain_Factory_Methods
 
-    public static Department Create(string name, Guid? leaderId, string? description = null)
+    public static Department Create(string name,
+                                    Guid? leaderId = null,
+                                    string? description = null)
         => new()
         {
             Name = name,
@@ -31,7 +33,7 @@ public class Department
 
     public static void Update(Department entity,
                               string name,
-                              Guid? leaderId,
+                              Guid? leaderId = null,
                               string? description = null)
     {
         entity.Name = name;

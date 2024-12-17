@@ -1,11 +1,12 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
-using HRLeaveManagement.Application.DTOs.Identity;
+using HRLeaveManagement.Application.DTOs.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRLeaveManagement.Api.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public sealed class AuthController(IAuthService authService) : ControllerBase
 {
     private readonly IAuthService _authService = authService;
@@ -18,20 +19,22 @@ public sealed class AuthController(IAuthService authService) : ControllerBase
     }
 
     [HttpPost("register")]
+    //[Authorize(Roles = "Administrator")]
     public async Task<ActionResult<RegistrationResponse>> Register([FromBody] RegistrationRequest request)
     {
         var response = await _authService.Register(request);
         return Ok(response);
     }
 
-    [HttpGet("confirm-email")]
+    [HttpGet("email-confirmation")]
     public async Task<ActionResult> ConfirmEmail([FromQuery] string userId, [FromQuery] string token)
     {
         await _authService.ConfirmEmail(userId, token);
         return Ok();
     }
 
-    [HttpPost("change-password")]
+    [HttpPost("password-reset")]
+    //[Authorize(Roles = "Administrator, Employee")]
     public async Task<ActionResult> ChangePassword([FromBody] PasswordRequest request)
     {
         await _authService.ChangePassword(request);

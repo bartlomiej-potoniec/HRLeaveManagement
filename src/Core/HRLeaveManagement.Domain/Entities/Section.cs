@@ -9,6 +9,9 @@ public class Section
     public int DepartmentId { get; private set; }
     public Department Department { get; private set; }
 
+    public Guid? LeaderId { get; private set; }
+    public Employee? Leader { get; private set; }
+
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 

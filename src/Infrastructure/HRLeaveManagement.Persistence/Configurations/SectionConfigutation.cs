@@ -22,5 +22,11 @@ public class SectionConfigutation : IEntityTypeConfiguration<Section>
             .WithMany(d => d.Sections)
             .HasForeignKey(s => s.DepartmentId)
             .OnDelete(DeleteBehavior.NoAction);
+        
+        builder
+            .HasOne(s => s.Leader)
+            .WithMany()
+            .HasForeignKey(s => s.LeaderId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

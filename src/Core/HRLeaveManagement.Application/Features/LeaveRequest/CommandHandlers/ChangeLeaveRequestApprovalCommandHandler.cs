@@ -1,13 +1,12 @@
-﻿using DomainLeaveRequest = HRLeaveManagement.Domain.LeaveRequest;
+﻿using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
 
 using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
-using HRLeaveManagement.Application.Models.Email;
 using MediatR;
-using HRLeaveManagement.Domain;
+using HRLeaveManagement.Application.DTOs.Email;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.CommandHandlers;
 
@@ -24,7 +23,7 @@ public sealed class ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestReposi
 
     public async Task Handle(ChangeLeaveRequestApprovalCommand request, CancellationToken cancellationToken)
     {
-        var leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id)
+        /*var leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id)
             ?? throw new NotFoundException(nameof(LeaveRequest), request.Id);
 
         leaveRequest.IsApproved = request.IsApproved;
@@ -34,12 +33,12 @@ public sealed class ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestReposi
         if (request.IsApproved)
             await UpdateEmployeeAllocations(leaveRequest);
 
-        await TrySendEmail(request, leaveRequest);
+        await TrySendEmail(request, leaveRequest);*/
     }
 
     private async Task UpdateEmployeeAllocations(DomainLeaveRequest leaveRequest)
     {
-        var requestedDays = (int)(leaveRequest.EndedAt - leaveRequest.StartedAt).TotalDays;
+        /*var requestedDays = (int)(leaveRequest.EndedAt - leaveRequest.StartedAt).TotalDays;
 
         var allocation = await _leaveAllocationRepository
             .GetUserLeaveAllocationsByIdAsync(
@@ -52,7 +51,7 @@ public sealed class ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestReposi
 
         allocation.NumberOfDays -= requestedDays;
 
-        await _leaveAllocationRepository.UpdateAsync(allocation);
+        await _leaveAllocationRepository.UpdateAsync(allocation);*/
     }
 
     private async Task TrySendEmail(ChangeLeaveRequestApprovalCommand request,

@@ -1,0 +1,507 @@
+2024-12-16 09:47:51.226 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 09:47:52.734 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 09:47:52.736 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 09:47:52.806 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 09:47:52.808 +01:00 [INF] Hosting environment: Development
+2024-12-16 09:47:52.809 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 09:48:04.075 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 2.6757 ms
+2024-12-16 09:48:04.266 +01:00 [INF] HTTP POST /api/Auth/login responded 400 in 176.8140 ms
+2024-12-16 09:48:44.546 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 0.3682 ms
+2024-12-16 09:48:44.563 +01:00 [INF] HTTP POST /api/Auth/login responded 400 in 8.0827 ms
+2024-12-16 09:48:59.679 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 0.0516 ms
+2024-12-16 09:48:59.702 +01:00 [INF] HTTP POST /api/Auth/login responded 400 in 18.3262 ms
+2024-12-16 10:19:57.745 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 10:19:58.829 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 10:19:58.830 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 10:19:58.890 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 10:19:58.891 +01:00 [INF] Hosting environment: Development
+2024-12-16 10:19:58.893 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 10:21:00.316 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1127.8596 ms
+2024-12-16 10:21:19.050 +01:00 [ERR] HTTP GET /api/Employees/4f220d02-e595-4900-8864-2887a15f4449 responded 500 in 207.6387 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with employee ID: 4f220d02-e595-4900-8864-2887a15f4449 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserByEmployeeId(Guid employeeId) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 69
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetEmployeeWithDetailsQueryHandler.Handle(GetEmployeeWithDetailsQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetEmployeeWithDetailsQueryHandler.cs:line 26
+   at HRLeaveManagement.Api.Controllers.EmployeesController.GetWithDetails(Guid id) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 29
+   at lambda_method489(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 10:21:19.205 +01:00 [ERR] An exception occurred: No user with employee ID: 4f220d02-e595-4900-8864-2887a15f4449 found
+2024-12-16 10:21:59.204 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2024-12-16 10:21:59.294 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 142.5989 ms
+2024-12-16 11:35:54.043 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 11:35:55.297 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 11:35:55.298 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 11:35:55.363 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 11:35:55.365 +01:00 [INF] Hosting environment: Development
+2024-12-16 11:35:55.366 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 11:36:09.243 +01:00 [ERR] HTTP GET /api/Employees responded 500 in 1108.7336 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No leader with employee ID: 1131063c-f66b-47f6-3f1d-08dd1bca1d33 found
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.<>c__DisplayClass5_0.<Handle>b__1(Employee employee) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 42
+   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.SelectListIterator`2.ToList()
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 35
+   at HRLeaveManagement.Api.Controllers.EmployeesController.GetAll() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 20
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 11:36:09.402 +01:00 [ERR] An exception occurred: No leader with employee ID: 1131063c-f66b-47f6-3f1d-08dd1bca1d33 found
+2024-12-16 11:38:48.713 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 11:38:49.841 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 11:38:49.864 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 11:38:49.980 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 11:38:50.000 +01:00 [INF] Hosting environment: Development
+2024-12-16 11:38:50.000 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 11:38:55.321 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1021.6544 ms
+2024-12-16 12:09:03.231 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 12:09:04.301 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 12:09:04.303 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 12:09:04.363 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 12:09:04.365 +01:00 [INF] Hosting environment: Development
+2024-12-16 12:09:04.366 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 12:09:10.471 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1074.1242 ms
+2024-12-16 12:09:21.425 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2024-12-16 12:09:21.622 +01:00 [ERR] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 500 in 290.2507 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with employee ID: 26ea2f0e-bf0e-41f3-b901-4092dc19492a found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserByEmployeeId(Guid employeeId) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 53
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetEmployeeWithDetailsQueryHandler.Handle(GetEmployeeWithDetailsQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetEmployeeWithDetailsQueryHandler.cs:line 32
+   at HRLeaveManagement.Api.Controllers.EmployeesController.GetWithDetails(Guid id) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 29
+   at lambda_method489(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 12:09:21.767 +01:00 [ERR] An exception occurred: No user with employee ID: 26ea2f0e-bf0e-41f3-b901-4092dc19492a found
+2024-12-16 12:15:17.941 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 12:15:18.997 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 12:15:18.998 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 12:15:19.068 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 12:15:19.069 +01:00 [INF] Hosting environment: Development
+2024-12-16 12:15:19.070 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 12:15:27.678 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1036.3885 ms
+2024-12-16 12:15:48.768 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2024-12-16 12:15:48.829 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 159.7777 ms
+2024-12-16 12:19:54.356 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 12:19:55.394 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 12:19:55.399 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 12:19:55.455 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 12:19:55.457 +01:00 [INF] Hosting environment: Development
+2024-12-16 12:19:55.458 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 12:20:12.088 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1083.1107 ms
+2024-12-16 12:20:30.883 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2024-12-16 12:22:35.982 +01:00 [INF] HTTP GET /api/Employees/11852ec5-9845-4fc6-8e3d-cca237b4b979 responded 200 in 128605.6388 ms
+2024-12-16 12:22:52.414 +01:00 [INF] HTTP GET /api/Employees/11852ec5-9845-4fc6-8e3d-cca237b4b979 responded 200 in 1672.0941 ms
+2024-12-16 12:23:24.705 +01:00 [INF] HTTP GET /api/Employees/11852ec5-9845-4fc6-8e3d-cca237b4b979 responded 200 in 2405.5590 ms
+2024-12-16 12:23:43.364 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 12:23:44.505 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 12:23:44.507 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 12:23:44.578 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 12:23:44.596 +01:00 [INF] Hosting environment: Development
+2024-12-16 12:23:44.597 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 12:23:50.368 +01:00 [INF] HTTP GET /api/Employees responded 200 in 986.6408 ms
+2024-12-16 12:24:01.054 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2024-12-16 12:24:01.122 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 152.2169 ms
+2024-12-16 12:24:24.837 +01:00 [INF] HTTP GET /api/Employees/11852ec5-9845-4fc6-8e3d-cca237b4b979 responded 200 in 25.5584 ms
+2024-12-16 12:57:45.124 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 12:57:46.197 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 12:57:46.202 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 12:57:46.263 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 12:57:46.265 +01:00 [INF] Hosting environment: Development
+2024-12-16 12:57:46.266 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 12:57:58.173 +01:00 [INF] Fetching all employees started by user: null with ID: null
+2024-12-16 12:57:58.179 +01:00 [INF] Fetching all users started
+2024-12-16 12:57:58.685 +01:00 [INF] Fetching all users successful
+2024-12-16 12:57:58.687 +01:00 [INF] Fetching all users started
+2024-12-16 12:57:58.694 +01:00 [INF] Fetching all users successful
+2024-12-16 12:57:58.952 +01:00 [INF] Fetching all employees by user: null with ID: null successful
+2024-12-16 12:57:58.988 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1080.8473 ms
+2024-12-16 12:58:40.575 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: null
+2024-12-16 12:58:40.579 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2024-12-16 12:58:40.593 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2024-12-16 12:58:40.595 +01:00 [INF] Fetching all users started
+2024-12-16 12:58:40.602 +01:00 [INF] Fetching all users successful
+2024-12-16 12:58:40.641 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2024-12-16 12:58:40.703 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: null successful
+2024-12-16 12:58:40.723 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 186.2479 ms
+2024-12-16 14:28:28.350 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 14:28:29.473 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 14:28:29.475 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 14:28:29.535 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 14:28:29.537 +01:00 [INF] Hosting environment: Development
+2024-12-16 14:28:29.538 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 14:29:10.721 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 14:29:11.818 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 14:29:11.823 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 14:29:11.890 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 14:29:11.892 +01:00 [INF] Hosting environment: Development
+2024-12-16 14:29:11.893 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 14:32:24.578 +01:00 [INF] HTTP POST /api/Employees responded 400 in 159.1931 ms
+2024-12-16 14:33:02.567 +01:00 [INF] HTTP POST /api/Employees responded 400 in 10.2168 ms
+2024-12-16 14:33:31.825 +01:00 [INF] HTTP POST /api/Employees responded 400 in 4.7848 ms
+2024-12-16 14:34:38.236 +01:00 [INF] HTTP POST /api/Employees responded 400 in 1.5593 ms
+2024-12-16 14:38:02.732 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 14:38:03.871 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 14:38:03.872 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 14:38:03.946 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 14:38:03.950 +01:00 [INF] Hosting environment: Development
+2024-12-16 14:38:03.951 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 14:39:17.119 +01:00 [INF] HTTP POST /api/Employees responded 400 in 157.0847 ms
+2024-12-16 14:39:53.766 +01:00 [INF] Starting transaction for creating new employee for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 14:39:53.779 +01:00 [INF] Creating new employee for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 14:39:54.239 +01:00 [INF] Creating new employee successful for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 14:39:54.240 +01:00 [INF] Updating new employee with ID: "aeaef92b-fd67-40d7-2afd-08dd1dd71f66" with user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 14:39:54.242 +01:00 [INF] Updating user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with employee ID: "aeaef92b-fd67-40d7-2afd-08dd1dd71f66" started
+2024-12-16 14:39:54.724 +01:00 [INF] Updating user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with employee ID: "aeaef92b-fd67-40d7-2afd-08dd1dd71f66" successful
+2024-12-16 14:39:54.726 +01:00 [INF] Updating new employee with ID: "aeaef92b-fd67-40d7-2afd-08dd1dd71f66" with user ID: "a656fde0-99c0-4d47-84be-f21334bef50b" successful
+2024-12-16 14:39:54.728 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" started
+2024-12-16 14:39:54.730 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" successful
+2024-12-16 14:39:54.733 +01:00 [INF] Sending Employee-Creation email to poagata@o2.pl
+2024-12-16 14:39:55.604 +01:00 [INF] Sending email successful to poagata@o2.pl
+2024-12-16 14:39:55.606 +01:00 [INF] Transaction successful for creating new employee for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 14:39:55.621 +01:00 [INF] HTTP POST /api/Employees responded 200 in 1894.3900 ms
+2024-12-16 14:44:19.552 +01:00 [INF] Fetching all employees started by user: null with ID: null
+2024-12-16 14:44:19.556 +01:00 [INF] Fetching all users started
+2024-12-16 14:44:19.637 +01:00 [INF] Fetching all users successful
+2024-12-16 14:44:19.639 +01:00 [INF] Fetching all users started
+2024-12-16 14:44:19.646 +01:00 [INF] Fetching all users successful
+2024-12-16 14:44:19.762 +01:00 [INF] Fetching all employees by user: null with ID: null successful
+2024-12-16 14:44:19.773 +01:00 [INF] HTTP GET /api/Employees responded 200 in 441.3795 ms
+2024-12-16 23:11:19.144 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:11:19.371 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:11:58.565 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:12:21.334 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:12:21.545 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:12:37.939 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:15:28.271 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:15:28.505 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:16:50.490 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:18:21.528 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:18:23.067 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 23:18:23.071 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 23:18:23.139 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 23:18:23.142 +01:00 [INF] Hosting environment: Development
+2024-12-16 23:18:23.142 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 23:26:04.785 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 488.7875 ms
+FluentValidation.AsyncValidatorInvokedSynchronouslyException: Validator "CreateEmployeeWithDetailsCommandValidator" contains asynchronous rules but was invoked synchronously. Please call ValidateAsync rather than Validate.
+   at FluentValidation.AbstractValidator`1.Validate(ValidationContext`1 context) in /_/src/FluentValidation/AbstractValidator.cs:line 207
+   at FluentValidation.AbstractValidator`1.Validate(T instance) in /_/src/FluentValidation/AbstractValidator.cs:line 167
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 36
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:26:04.882 +01:00 [ERR] An exception occurred: Validator "CreateEmployeeWithDetailsCommandValidator" contains asynchronous rules but was invoked synchronously. Please call ValidateAsync rather than Validate.
+2024-12-16 23:27:30.115 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:27:31.261 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 23:27:31.272 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 23:27:31.370 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 23:27:31.389 +01:00 [INF] Hosting environment: Development
+2024-12-16 23:27:31.396 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 23:28:09.529 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 359.6743 ms
+FluentValidation.AsyncValidatorInvokedSynchronouslyException: Validator "CreateEmployeeWithDetailsCommandValidator" contains asynchronous rules but was invoked synchronously. Please call ValidateAsync rather than Validate.
+   at FluentValidation.AbstractValidator`1.Validate(ValidationContext`1 context) in /_/src/FluentValidation/AbstractValidator.cs:line 207
+   at FluentValidation.AbstractValidator`1.Validate(T instance) in /_/src/FluentValidation/AbstractValidator.cs:line 167
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 35
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:28:09.600 +01:00 [ERR] An exception occurred: Validator "CreateEmployeeWithDetailsCommandValidator" contains asynchronous rules but was invoked synchronously. Please call ValidateAsync rather than Validate.
+2024-12-16 23:29:15.924 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:29:16.952 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 23:29:16.957 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 23:29:17.024 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 23:29:17.025 +01:00 [INF] Hosting environment: Development
+2024-12-16 23:29:17.026 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 23:29:33.970 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 446.5068 ms
+System.NotImplementedException: The method or operation is not implemented.
+   at HRLeaveManagement.Persistence.Repositories.SectionRepository.GetByIdAsync(Int32 id) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Persistence\Repositories\SectionRepository.cs:line 10
+   at HRLeaveManagement.Application.Validation.CreateEmployeeWithDetailsCommandValidator.<>c__DisplayClass0_0.<<-ctor>b__4>d.MoveNext() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Validation\CreateEmployeeWithDetailsCommandValidator.cs:line 33
+--- End of stack trace from previous location ---
+   at FluentValidation.Internal.RuleComponent`2.ValidateAsync(ValidationContext`1 context, TProperty value, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/RuleComponent.cs:line 71
+   at FluentValidation.Internal.PropertyRule`2.ValidateAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/PropertyRule.cs:line 156
+   at FluentValidation.AbstractValidator`1.ValidateInternalAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 246
+   at FluentValidation.AbstractValidator`1.ValidateAsync(ValidationContext`1 context, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 220
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 32
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:29:34.043 +01:00 [ERR] An exception occurred: The method or operation is not implemented.
+2024-12-16 23:33:06.469 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:33:07.571 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 23:33:07.576 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 23:33:07.635 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 23:33:07.659 +01:00 [INF] Hosting environment: Development
+2024-12-16 23:33:07.660 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 23:33:39.445 +01:00 [INF] Fetching user with employee ID: "a656fde0-99c0-4d47-84be-f21334befccc" started
+2024-12-16 23:33:39.951 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 1040.0188 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with employee ID: a656fde0-99c0-4d47-84be-f21334befccc found
+   at HRLeaveManagement.Identity.Services.UserService.IsUserInManagerRole(Guid employeeId) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 58
+   at HRLeaveManagement.Application.Validation.CreateEmployeeWithDetailsCommandValidator.<>c__DisplayClass0_0.<<-ctor>b__6>d.MoveNext() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Validation\CreateEmployeeWithDetailsCommandValidator.cs:line 39
+--- End of stack trace from previous location ---
+   at FluentValidation.Internal.RuleComponent`2.ValidateAsync(ValidationContext`1 context, TProperty value, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/RuleComponent.cs:line 71
+   at FluentValidation.Internal.PropertyRule`2.ValidateAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/PropertyRule.cs:line 156
+   at FluentValidation.AbstractValidator`1.ValidateInternalAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 246
+   at FluentValidation.AbstractValidator`1.ValidateAsync(ValidationContext`1 context, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 220
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 32
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:33:40.130 +01:00 [ERR] An exception occurred: No user with employee ID: a656fde0-99c0-4d47-84be-f21334befccc found
+2024-12-16 23:34:48.277 +01:00 [INF] Fetching user with employee ID: "a656fde0-99c0-4d47-84be-f21334befccc" started
+2024-12-16 23:34:48.491 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 52244.6628 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with employee ID: a656fde0-99c0-4d47-84be-f21334befccc found
+   at HRLeaveManagement.Identity.Services.UserService.IsUserInManagerRole(Guid employeeId) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 58
+   at HRLeaveManagement.Application.Validation.CreateEmployeeWithDetailsCommandValidator.<>c__DisplayClass0_0.<<-ctor>b__6>d.MoveNext() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Validation\CreateEmployeeWithDetailsCommandValidator.cs:line 39
+--- End of stack trace from previous location ---
+   at FluentValidation.Internal.RuleComponent`2.ValidateAsync(ValidationContext`1 context, TProperty value, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/RuleComponent.cs:line 71
+   at FluentValidation.Internal.PropertyRule`2.ValidateAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/PropertyRule.cs:line 156
+   at FluentValidation.AbstractValidator`1.ValidateInternalAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 246
+   at FluentValidation.AbstractValidator`1.ValidateAsync(ValidationContext`1 context, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 220
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 32
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:34:48.588 +01:00 [ERR] An exception occurred: No user with employee ID: a656fde0-99c0-4d47-84be-f21334befccc found
+2024-12-16 23:34:55.590 +01:00 [INF] Fetching user with employee ID: "a656fde0-99c0-4d47-84be-f21334befccc" started
+2024-12-16 23:34:55.764 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 1827.9252 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with employee ID: a656fde0-99c0-4d47-84be-f21334befccc found
+   at HRLeaveManagement.Identity.Services.UserService.IsUserInManagerRole(Guid employeeId) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 58
+   at HRLeaveManagement.Application.Validation.CreateEmployeeWithDetailsCommandValidator.<>c__DisplayClass0_0.<<-ctor>b__6>d.MoveNext() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Validation\CreateEmployeeWithDetailsCommandValidator.cs:line 39
+--- End of stack trace from previous location ---
+   at FluentValidation.Internal.RuleComponent`2.ValidateAsync(ValidationContext`1 context, TProperty value, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/RuleComponent.cs:line 71
+   at FluentValidation.Internal.PropertyRule`2.ValidateAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/Internal/PropertyRule.cs:line 156
+   at FluentValidation.AbstractValidator`1.ValidateInternalAsync(ValidationContext`1 context, Boolean useAsync, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 246
+   at FluentValidation.AbstractValidator`1.ValidateAsync(ValidationContext`1 context, CancellationToken cancellation) in /_/src/FluentValidation/AbstractValidator.cs:line 220
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 32
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:34:55.879 +01:00 [ERR] An exception occurred: No user with employee ID: a656fde0-99c0-4d47-84be-f21334befccc found
+2024-12-16 23:35:34.294 +01:00 [ERR] Validation error occurred while proccessing CreateEmployeeWithDetailsCommand
+2024-12-16 23:35:34.394 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 2779.8804 ms
+HRLeaveManagement.Application.Exceptions.BadRequestException: Invalid employee request
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 37
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:35:34.534 +01:00 [ERR] An exception occurred: Invalid employee request
+2024-12-16 23:36:39.194 +01:00 [ERR] Validation error occurred while proccessing CreateEmployeeWithDetailsCommand
+2024-12-16 23:36:39.280 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 1743.3886 ms
+HRLeaveManagement.Application.Exceptions.BadRequestException: Invalid employee request
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 37
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:36:39.376 +01:00 [ERR] An exception occurred: Invalid employee request
+2024-12-16 23:37:21.544 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-16 23:37:22.711 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-16 23:37:22.713 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-16 23:37:22.788 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-16 23:37:22.796 +01:00 [INF] Hosting environment: Development
+2024-12-16 23:37:22.816 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-16 23:37:41.438 +01:00 [ERR] Validation error occurred while proccessing CreateEmployeeWithDetailsCommand
+2024-12-16 23:37:41.587 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 819.9878 ms
+HRLeaveManagement.Application.Exceptions.BadRequestException: Invalid employee request
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\CommandHandlers\CreateEmployeeWithDetailsCommandHandler.cs:line 37
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:37:41.729 +01:00 [ERR] An exception occurred: Invalid employee request
+2024-12-16 23:39:04.173 +01:00 [ERR] Validation error occurred while proccessing CreateEmployeeWithDetailsCommand
+2024-12-16 23:39:04.295 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 208.7773 ms
+HRLeaveManagement.Application.Exceptions.BadRequestException: Invalid employee request
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken)
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method224(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:39:04.399 +01:00 [ERR] An exception occurred: Invalid employee request
+2024-12-16 23:39:53.464 +01:00 [ERR] Validation error occurred while proccessing CreateEmployeeWithDetailsCommand
+2024-12-16 23:39:53.571 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 130.2267 ms
+HRLeaveManagement.Application.Exceptions.BadRequestException: Invalid employee request
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken)
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method224(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:39:53.691 +01:00 [ERR] An exception occurred: Invalid employee request
+2024-12-16 23:40:44.978 +01:00 [ERR] Validation error occurred while proccessing CreateEmployeeWithDetailsCommand
+2024-12-16 23:40:45.087 +01:00 [ERR] HTTP POST /api/Employees responded 500 in 120.9732 ms
+HRLeaveManagement.Application.Exceptions.BadRequestException: Invalid employee request
+   at HRLeaveManagement.Application.Features.Employee.CommandHandlers.CreateEmployeeWithDetailsCommandHandler.Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken)
+   at HRLeaveManagement.Api.Controllers.EmployeesController.CreateWithDetails(CreateEmployeeWithDetailsCommand command) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeesController.cs:line 36
+   at lambda_method224(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-16 23:40:45.208 +01:00 [ERR] An exception occurred: Invalid employee request
+2024-12-16 23:41:41.023 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" started
+2024-12-16 23:41:41.266 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" successful
+2024-12-16 23:41:41.271 +01:00 [INF] Starting transaction for creating new employee for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 23:41:41.283 +01:00 [INF] Creating new employee for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 23:41:41.583 +01:00 [INF] Creating new employee successful for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 23:41:41.584 +01:00 [INF] Updating new employee with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" with user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 23:41:41.588 +01:00 [INF] Updating user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2024-12-16 23:41:41.676 +01:00 [INF] Updating user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2024-12-16 23:41:41.680 +01:00 [INF] Updating new employee with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" with user ID: "a656fde0-99c0-4d47-84be-f21334bef50b" successful
+2024-12-16 23:41:41.686 +01:00 [INF] Sending Employee-Creation email to poagata@o2.pl
+2024-12-16 23:41:42.759 +01:00 [INF] Sending email successful to poagata@o2.pl
+2024-12-16 23:41:42.761 +01:00 [INF] Transaction successful for creating new employee for user ID: "a656fde0-99c0-4d47-84be-f21334bef50b"
+2024-12-16 23:41:42.782 +01:00 [INF] HTTP POST /api/Employees responded 200 in 1770.6823 ms

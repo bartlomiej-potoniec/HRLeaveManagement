@@ -1,0 +1,249 @@
+2024-12-14 00:00:55.502 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 00:00:56.849 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 00:00:56.854 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 00:00:56.923 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 00:00:56.924 +01:00 [INF] Hosting environment: Development
+2024-12-14 00:00:56.925 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 00:01:44.294 +01:00 [INF] Starting transaction for creating new employee for user ID: "4f220d02-e595-4900-8864-2887a15f4449"
+2024-12-14 00:01:44.311 +01:00 [INF] Creating new employee for user ID: "4f220d02-e595-4900-8864-2887a15f4449"
+2024-12-14 00:01:44.772 +01:00 [INF] Creating new employee successful for user ID: "4f220d02-e595-4900-8864-2887a15f4449"
+2024-12-14 00:01:44.774 +01:00 [INF] Updating new employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" with user ID: "4f220d02-e595-4900-8864-2887a15f4449"
+2024-12-14 00:01:45.278 +01:00 [INF] Updating new employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" with user ID: "4f220d02-e595-4900-8864-2887a15f4449" successful
+2024-12-14 00:01:45.280 +01:00 [INF] Transaction successful for creating new employee for user ID: "4f220d02-e595-4900-8864-2887a15f4449"
+2024-12-14 00:01:45.301 +01:00 [INF] HTTP POST /api/Employee responded 200 in 1174.2103 ms
+2024-12-14 09:02:51.321 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 09:02:52.925 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 09:02:52.930 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 09:02:52.986 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 09:02:52.988 +01:00 [INF] Hosting environment: Development
+2024-12-14 09:02:52.989 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 09:03:13.103 +01:00 [ERR] HTTP GET /api/Employee responded 500 in 1348.8002 ms
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+   at lambda_method484(Closure, Object, EmployeeDTO, ResolutionContext)
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.<>c__DisplayClass5_0.<Handle>b__1(Employee employee) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 40
+   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.SelectListIterator`2.ToList()
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 34
+   at HRLeaveManagement.Api.Controllers.EmployeeController.GetAll() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeeController.cs:line 20
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-14 09:03:13.440 +01:00 [ERR] An exception occurred: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+2024-12-14 09:05:41.915 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 09:05:43.138 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 09:05:43.143 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 09:05:43.203 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 09:05:43.205 +01:00 [INF] Hosting environment: Development
+2024-12-14 09:05:43.206 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 09:05:54.541 +01:00 [ERR] HTTP GET /api/Employee responded 500 in 1405.0957 ms
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+   at lambda_method484(Closure, Object, EmployeeDTO, ResolutionContext)
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.<>c__DisplayClass5_0.<Handle>b__1(Employee employee) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 40
+   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.SelectListIterator`2.ToList()
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 34
+   at HRLeaveManagement.Api.Controllers.EmployeeController.GetAll() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeeController.cs:line 20
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-14 09:05:54.712 +01:00 [ERR] An exception occurred: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+2024-12-14 09:06:58.938 +01:00 [ERR] HTTP GET /api/Employee responded 500 in 46730.0476 ms
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+   at lambda_method484(Closure, Object, EmployeeDTO, ResolutionContext)
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.<>c__DisplayClass5_0.<Handle>b__1(Employee employee) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 40
+   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.SelectListIterator`2.ToList()
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 34
+   at HRLeaveManagement.Api.Controllers.EmployeeController.GetAll() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeeController.cs:line 20
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-14 09:09:50.225 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 09:09:51.324 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 09:09:51.329 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 09:09:51.386 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 09:09:51.388 +01:00 [INF] Hosting environment: Development
+2024-12-14 09:09:51.389 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 09:10:07.140 +01:00 [ERR] HTTP GET /api/Employee responded 500 in 5204.9180 ms
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+   at lambda_method484(Closure, Object, EmployeeDTO, ResolutionContext)
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.<>c__DisplayClass5_0.<Handle>b__1(Employee employee) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 40
+   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.SelectListIterator`2.ToList()
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 34
+   at HRLeaveManagement.Api.Controllers.EmployeeController.GetAll() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeeController.cs:line 20
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-14 09:10:07.295 +01:00 [ERR] An exception occurred: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+2024-12-14 09:19:16.845 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 09:19:18.172 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 09:19:18.174 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 09:19:18.233 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 09:19:18.235 +01:00 [INF] Hosting environment: Development
+2024-12-14 09:19:18.236 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 09:19:26.682 +01:00 [ERR] HTTP GET /api/Employee responded 500 in 2854.9765 ms
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+   at lambda_method484(Closure, Object, EmployeeDTO, ResolutionContext)
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.<>c__DisplayClass5_0.<Handle>b__1(Employee employee) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 40
+   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.SelectListIterator`2.ToList()
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 34
+   at HRLeaveManagement.Api.Controllers.EmployeeController.GetAll() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeeController.cs:line 20
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-14 09:19:26.905 +01:00 [ERR] An exception occurred: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+2024-12-14 09:25:15.386 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 09:25:16.513 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 09:25:16.519 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 09:25:16.618 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 09:25:16.639 +01:00 [INF] Hosting environment: Development
+2024-12-14 09:25:16.641 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 09:25:24.981 +01:00 [ERR] HTTP GET /api/Employee responded 500 in 3813.7307 ms
+AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+   at lambda_method484(Closure, Object, EmployeeDTO, ResolutionContext)
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.<>c__DisplayClass5_0.<Handle>b__1(Employee employee) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 42
+   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.SelectListIterator`2.ToList()
+   at HRLeaveManagement.Application.Features.Employee.QueryHandlers.GetAllEmployeesQueryHandler.Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Core\HRLeaveManagement.Application\Features\Employee\QueryHandlers\GetAllEmployeesQueryHandler.cs:line 35
+   at HRLeaveManagement.Api.Controllers.EmployeeController.GetAll() in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\EmployeeController.cs:line 20
+   at lambda_method24(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-12-14 09:25:25.108 +01:00 [ERR] An exception occurred: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ValueTuple`3 -> EmployeeDTO
+System.ValueTuple`3[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[HRLeaveManagement.Domain.Entities.Employee, HRLeaveManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IEnumerable`1[[HRLeaveManagement.Application.DTOs.Identity.UserDTO, HRLeaveManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] -> HRLeaveManagement.Application.DTOs.Employees.EmployeeDTO
+2024-12-14 09:27:27.325 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 09:27:28.415 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 09:27:28.417 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 09:27:28.477 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 09:27:28.479 +01:00 [INF] Hosting environment: Development
+2024-12-14 09:27:28.480 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 09:27:41.715 +01:00 [INF] HTTP GET /api/Employee responded 200 in 1073.6348 ms
+2024-12-14 12:24:56.189 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 12:24:57.599 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 12:24:57.604 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 12:24:57.660 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 12:24:57.662 +01:00 [INF] Hosting environment: Development
+2024-12-14 12:24:57.663 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 12:25:24.908 +01:00 [INF] HTTP GET /api/Employee responded 200 in 20831.5479 ms
+2024-12-14 12:51:08.867 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 12:51:10.043 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 12:51:10.050 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 12:51:10.115 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 12:51:10.117 +01:00 [INF] Hosting environment: Development
+2024-12-14 12:51:10.118 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 12:51:20.036 +01:00 [INF] HTTP GET /api/Employee responded 200 in 1116.2596 ms
+2024-12-14 12:54:52.884 +01:00 [INF] HTTP GET /api/Employee responded 200 in 25.3972 ms
+2024-12-14 12:55:41.286 +01:00 [INF] HTTP GET /api/Employee responded 200 in 35.1843 ms
+2024-12-14 12:56:40.827 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-12-14 12:56:41.964 +01:00 [INF] Now listening on: https://localhost:7131
+2024-12-14 12:56:41.969 +01:00 [INF] Now listening on: http://localhost:5133
+2024-12-14 12:56:42.021 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-12-14 12:56:42.023 +01:00 [INF] Hosting environment: Development
+2024-12-14 12:56:42.025 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2024-12-14 12:56:49.736 +01:00 [INF] HTTP GET /api/Employee responded 200 in 1030.8504 ms
+2024-12-14 12:58:14.296 +01:00 [INF] HTTP GET /api/Employee responded 200 in 25.8620 ms

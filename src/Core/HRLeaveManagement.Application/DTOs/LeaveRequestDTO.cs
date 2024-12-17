@@ -1,11 +1,11 @@
-﻿using HRLeaveManagement.Application.Models.Identity;
+﻿using HRLeaveManagement.Application.DTOs.User;
 
 namespace HRLeaveManagement.Application.DTOs;
 
 public sealed record LeaveRequestDTO
 {
     public required int Id { get; init; }
-    public required Employee Employee { get; init; }
+    public required UserDTO Employee { get; init; }
     public required string RequestingEmployeeId { get; init; }
     public required LeaveTypeDTO LeaveType { get; init; }
     public required DateTime RequestedAt { get; init; }

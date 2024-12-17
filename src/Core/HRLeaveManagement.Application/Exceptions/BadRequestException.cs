@@ -11,4 +11,11 @@ public class BadRequestException : Exception
 
     public BadRequestException(string message, ValidationResult validationResult) : base(message)
         => ValidationErrors = validationResult.ToDictionary();
+
+    public BadRequestException(IEnumerable<ValidationError> validationErrors, string? message = null) 
+        : base(message)
+            => ValidationErrors = validationErrors.ToDictionary(
+                error => error.Key,
+                error => error.Messages
+            );
 }

@@ -1,7 +1,7 @@
-﻿using HRLeaveManagement.Domain;
-using HRLeaveManagement.Application.DTOs;
+﻿using HRLeaveManagement.Application.DTOs;
 using AutoMapper;
 using HRLeaveManagement.Application.Features.LeaveAllocation.Commands;
+using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 

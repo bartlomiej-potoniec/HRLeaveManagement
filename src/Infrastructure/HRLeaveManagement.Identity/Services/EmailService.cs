@@ -58,6 +58,33 @@ public sealed class EmailService(IEmailSender emailSender,
         _logger.LogInformation("Sending email successful to {Email}", email);
     }
 
+    public async Task SendEmployeeCreationEmail(string email, string firstname)
+    {
+        var emailMessage = new EmailMessage
+        {
+            To = email,
+            Subject = "An Employee informations in HrManagementSystem was completed for your account!",
+            TemplateId = _emailOptions.TemplatesId["EmployeeCreation"],
+            TemplatePlaceholders = new
+            {
+                FirstName = firstname,
+                ManualDownloadLink = "" /* Manual PDF from FTP server in feature */
+            }
+        };
+
+        _logger.LogInformation("Sending Employee-Creation email to {Email}", email);
+
+        var emailResult = await _emailSender.SendEmailAsync(emailMessage);
+
+        if (!emailResult.IsSuccess)
+        {
+            _logger.LogError("Sending email failed to {Email}", email);
+            throw new InvalidOperationException(emailResult.ErrorMessage);
+        }
+
+        _logger.LogInformation("Sending email successful to {Email}", email);
+    }
+
     public string GenerateEmailConfirmationLink(string userId, string token)
     {
         var httpContext = _httpContextAccessor.HttpContext

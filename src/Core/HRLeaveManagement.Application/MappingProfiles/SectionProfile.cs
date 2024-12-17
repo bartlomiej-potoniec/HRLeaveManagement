@@ -1,0 +1,15 @@
+﻿using HRLeaveManagement.Domain.Entities;
+using HRLeaveManagement.Application.DTOs.Sections;
+using AutoMapper;
+
+namespace HRLeaveManagement.Application.MappingProfiles;
+
+public class SectionProfile : Profile
+{
+    public SectionProfile()
+    {
+        CreateMap<Section, SectionDTO>()
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
+            .ReverseMap();
+    }
+}

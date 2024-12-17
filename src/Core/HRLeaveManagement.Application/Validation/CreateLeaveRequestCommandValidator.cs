@@ -38,7 +38,7 @@ public sealed class CreateLeaveRequestCommandValidator : AbstractValidator<Creat
             .GreaterThanOrEqualTo(c => c.StartedAt)
                 .WithMessage("{PropertyName} must be at least {ComparisonValue}");
 
-        RuleFor(c => c)
+       /* RuleFor(c => c)
             .CustomAsync(async (command, context, token) =>
             {
                 var allocation = await leaveAllocationRepository.GetUserLeaveAllocationsByIdAsync(employeeId, command.LeaveTypeId);
@@ -46,6 +46,6 @@ public sealed class CreateLeaveRequestCommandValidator : AbstractValidator<Creat
 
                 if (daysRequested > allocation?.NumberOfDays)
                     context.AddFailure("No days enough for this leave request");
-            });
+            });*/
     }
 }

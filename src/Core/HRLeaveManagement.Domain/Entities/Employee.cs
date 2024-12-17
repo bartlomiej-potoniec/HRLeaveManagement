@@ -6,8 +6,8 @@ public class Employee
     public string Position { get; private set; }
     public string? Responsibilities { get; private set; }
 
-    public int SectionId { get; private set; }
-    public Section Section { get; private set; }
+    public int? SectionId { get; private set; }
+    public Section? Section { get; private set; }
 
     public Guid? LeaderId { get; private set; }
     public Employee? Leader { get; private set; }
@@ -26,7 +26,7 @@ public class Employee
 
     public static Employee Create(string position,
                                   string responsibilities,
-                                  int sectionId,
+                                  int? sectionId,
                                   Guid? leaderId)
         => new()
         {
@@ -41,7 +41,7 @@ public class Employee
     public static void Update(Employee entity,
                               string position,
                               string responsibilities,
-                              int sectionId,
+                              int? sectionId,
                               Guid? leaderId)
     {
         entity.Position = position;

@@ -79,17 +79,14 @@ namespace HRLeaveManagement.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("SectionId")
+                    b.Property<int?>("SectionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LeaderId")
-                        .IsUnique()
-                        .HasFilter("[LeaderId] IS NOT NULL");
+                    b.HasIndex("LeaderId");
 
-                    b.HasIndex("SectionId")
-                        .IsUnique();
+                    b.HasIndex("SectionId");
 
                     b.ToTable("Employees");
                 });
@@ -432,6 +429,9 @@ namespace HRLeaveManagement.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<Guid?>("LeaderId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -443,6 +443,8 @@ namespace HRLeaveManagement.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("LeaderId");
 
                     b.ToTable("Sections");
                 });
@@ -633,15 +635,14 @@ namespace HRLeaveManagement.Persistence.Migrations
             modelBuilder.Entity("HRLeaveManagement.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("HRLeaveManagement.Domain.Entities.Employee", "Leader")
-                        .WithOne()
-                        .HasForeignKey("HRLeaveManagement.Domain.Entities.Employee", "LeaderId")
+                        .WithMany()
+                        .HasForeignKey("LeaderId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("HRLeaveManagement.Domain.Entities.Section", "Section")
-                        .WithOne()
-                        .HasForeignKey("HRLeaveManagement.Domain.Entities.Employee", "SectionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Leader");
 
@@ -754,7 +755,14 @@ namespace HRLeaveManagement.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("HRLeaveManagement.Domain.Entities.Employee", "Leader")
+                        .WithMany()
+                        .HasForeignKey("LeaderId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Department");
+
+                    b.Navigation("Leader");
                 });
 
             modelBuilder.Entity("HRLeaveManagement.Domain.Entities.TimeRegister", b =>

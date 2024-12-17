@@ -1,10 +1,9 @@
-﻿using DomainLeaveRequest = HRLeaveManagement.Domain.LeaveRequest;
+﻿using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
 using HRLeaveManagement.Application.Validation;
-using HRLeaveManagement.Application.Models.Email;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 using HRLeaveManagement.Application.Contracts.Identity;
 using MediatR;
@@ -33,7 +32,7 @@ public sealed class CreateLeaveRequestCommandHandler(ILeaveRequestRepository lea
     public async Task<int> Handle(CreateLeaveRequestCommand request,
                                   CancellationToken cancellationToken)
     {
-        var employeeId = _userService.UserId
+        /*var employeeId = _userService.UserId
             ?? throw new NotFoundException("No user claim exists in actual context");
 
         var validator = new CreateLeaveRequestCommandValidator(
@@ -60,7 +59,7 @@ public sealed class CreateLeaveRequestCommandHandler(ILeaveRequestRepository lea
         {
             var email = new EmailMessage
             {
-                To = string.Empty, /* Get email from employee record */
+                To = string.Empty, *//* Get email from employee record *//*
                 TextContent = $"Your leave request for {request.StartedAt:D} to {request.EndedAt:D}" +
                               $"has been submitted successfully.",
                 Subject = $"Leave request with ID: {leaveRequestId} submitted"
@@ -74,6 +73,7 @@ public sealed class CreateLeaveRequestCommandHandler(ILeaveRequestRepository lea
             _logger.LogWarning(ex.Message);
         }
 
-        return leaveRequestId;
+        return leaveRequestId;*/
+        return 0;
     }
 }

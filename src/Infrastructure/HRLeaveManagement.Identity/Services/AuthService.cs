@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.DTOs.Identity;
+using HRLeaveManagement.Application.DTOs.Auth;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Identity.DbContexts;
 using HRLeaveManagement.Identity.Models;
@@ -68,6 +68,7 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
             FirstName = request.FirstName,
             LastName = request.LastName,
             PeselNumber = request.PeselNumber,
+            PhoneNumber = request.PhoneNumber,
             DateOfBirth = DateOnly.FromDateTime(request.DateOfBirth),
             Email = request.Email,
             UserName = userName,
@@ -120,7 +121,7 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
             );
 
             await transaction.CommitAsync();
-            _logger.LogError("Transaction successful for registering user {Username}", userName);
+            _logger.LogInformation("Transaction successful for registering user {Username}", userName);
 
             return new(user.Id);
         }

@@ -1,6 +1,4 @@
-﻿using HRLeaveManagement.Application.DTOs.Identity;
-
-namespace HRLeaveManagement.Application.Contracts.Identity;
+﻿namespace HRLeaveManagement.Application.Contracts.Identity;
 
 public interface IJwtService
 {

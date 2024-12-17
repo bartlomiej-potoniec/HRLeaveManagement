@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DomainLeaveType = HRLeaveManagement.Domain.LeaveType;
+using DomainLeaveType = HRLeaveManagement.Domain.Entities.LeaveType;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
 using MediatR;
