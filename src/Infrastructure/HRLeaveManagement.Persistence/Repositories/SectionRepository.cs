@@ -9,6 +9,11 @@ public sealed class SectionRepository(ApplicationDbContext dbContext) : ISection
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
+    public async Task<IEnumerable<Section>> GetAllAsync()
+        => await _dbContext.Sections
+            .Include(s => s.Department)
+            .ToListAsync();
+
     public async Task<Section?> GetByIdAsync(int id)
         => await _dbContext.Sections
             .Include(s => s.Department)
@@ -21,4 +26,16 @@ public sealed class SectionRepository(ApplicationDbContext dbContext) : ISection
             .Include(s => s.Leader)
             .Where(s => s.DepartmentId == departmentId)
             .ToListAsync();
+
+    public async Task CreateAsync(Section section)
+    {
+        await _dbContext.Sections.AddAsync(section);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Section section)
+    {
+        _dbContext.Update(section);
+        await _dbContext.SaveChangesAsync();
+    }
 }

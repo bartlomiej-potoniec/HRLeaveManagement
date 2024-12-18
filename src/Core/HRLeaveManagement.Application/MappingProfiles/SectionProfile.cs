@@ -11,5 +11,9 @@ public class SectionProfile : Profile
         CreateMap<Section, SectionDTO>()
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
             .ReverseMap();
+
+        CreateMap<Section, SectionDetailsDTO>()
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
+            .ReverseMap();
     }
 }

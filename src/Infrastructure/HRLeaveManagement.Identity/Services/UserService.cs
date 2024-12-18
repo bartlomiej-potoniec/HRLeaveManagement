@@ -51,7 +51,7 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         return result;
     }
 
-    public async Task<bool> IsUserInManagerRole(Guid employeeId)
+    public async Task<bool> IsUserInManagerRoleByEmployeeId(Guid employeeId)
     {
         _logger.LogInformation("Fetching user with employee ID: {Id} started", employeeId);
 

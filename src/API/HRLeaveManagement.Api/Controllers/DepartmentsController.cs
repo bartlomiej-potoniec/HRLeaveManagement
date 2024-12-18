@@ -9,7 +9,7 @@ namespace HRLeaveManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DepartmentsController(ISender sender) : ControllerBase
+public sealed class DepartmentsController(ISender sender) : ControllerBase
 {
     private readonly ISender _sender = sender;
 

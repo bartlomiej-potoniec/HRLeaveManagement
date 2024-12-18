@@ -22,12 +22,14 @@ public class Section
 
     public static Section Create(string name,
                                  int departmentId,
+                                 Guid? leaderId,
                                  string? description = null)
         => new()
         {
             Name = name,
             Description = description,
             DepartmentId = departmentId,
+            LeaderId = leaderId,
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
@@ -35,11 +37,13 @@ public class Section
     public static void Update(Section entity,
                               string name,
                               int departmentId,
+                              Guid? leaderId,
                               string? description = null)
     {
         entity.Name = name;
         entity.Description = description;
         entity.DepartmentId = departmentId;
+        entity.LeaderId = leaderId;
         entity.ModifiedAt = DateTime.UtcNow;
     }
 

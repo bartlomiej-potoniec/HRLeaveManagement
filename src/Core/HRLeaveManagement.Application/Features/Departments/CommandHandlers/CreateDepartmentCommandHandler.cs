@@ -5,25 +5,26 @@ using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.Departments.Commands;
 using HRLeaveManagement.Application.Validation;
 using MediatR;
+using HRLeaveManagement.Application.Contracts.Identity;
 
 namespace HRLeaveManagement.Application.Features.Departments.CommandHandlers;
 
 public sealed class CreateDepartmentCommandHandler(IDepartmentRepository departmentRepository,
-                                                   IEmployeeRepository employeeRepository,
+                                                   IUserService userService,
                                                    IAppLogger<CreateDepartmentCommandHandler> logger)
     : IRequestHandler<CreateDepartmentCommand, int>
 {
     private readonly IDepartmentRepository _departmentRepository = departmentRepository;
-    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    private readonly IUserService _userService = userService;
     private readonly IAppLogger<CreateDepartmentCommandHandler> _logger = logger;
 
     public async Task<int> Handle(CreateDepartmentCommand request,
                                   CancellationToken cancellationToken)
     {
-        var validator = new CreateDepartmentCommandValidator(_employeeRepository);
+        var validator = new CreateDepartmentCommandValidator(_userService);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-        if (validationResult.IsValid)
+        if (!validationResult.IsValid)
         {
             _logger.LogError("Validation error occurred while proccessing {Command}", nameof(CreateDepartmentCommand));
             throw new BadRequestException("Invalid department creation request", validationResult);

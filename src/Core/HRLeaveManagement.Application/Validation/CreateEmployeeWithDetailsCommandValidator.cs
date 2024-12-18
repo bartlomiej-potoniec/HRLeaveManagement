@@ -34,7 +34,7 @@ public sealed class CreateEmployeeWithDetailsCommandValidator : AbstractValidato
                 .WithMessage("Section for given ID does not exist");
 
         RuleFor(c => c.LeaderId)
-            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRole(id.Value))
+            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeId(id.Value))
                 .WithMessage("Leader for given ID does not exist");
 
 

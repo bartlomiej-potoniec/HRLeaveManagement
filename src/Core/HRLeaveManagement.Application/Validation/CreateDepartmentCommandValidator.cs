@@ -1,13 +1,21 @@
 ﻿using HRLeaveManagement.Application.Features.Departments.Commands;
+using HRLeaveManagement.Application.Contracts.Identity;
 using FluentValidation;
-using HRLeaveManagement.Application.Contracts.Persistence;
 
 namespace HRLeaveManagement.Application.Validation;
 
 public sealed class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartmentCommand>
 {
-    public CreateDepartmentCommandValidator(IEmployeeRepository employeeRepository)
+    public CreateDepartmentCommandValidator(IUserService userService)
     {
-        
+        RuleFor(c => c.Name)
+            .NotNull()
+                .WithMessage("{PropertyName} is required")
+            .NotEmpty()
+                .WithMessage("{PropertyName} cannot be empty");
+
+        RuleFor(c => c.LeaderId)
+            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeId(id.Value))
+                .WithMessage("Leader for given ID does not exist");
     }
 }

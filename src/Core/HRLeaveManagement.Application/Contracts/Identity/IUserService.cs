@@ -12,7 +12,7 @@ public interface IUserService
     
     bool IsUserInRole(string roleName);
     Task<bool> IsUserInRole(Guid userId, string roleName);
-    Task<bool> IsUserInManagerRole(Guid employeeId);
+    Task<bool> IsUserInManagerRoleByEmployeeId(Guid employeeId);
 
     Task<IEnumerable<UserDTO>> GetAllUsersInRole(string role);
     Task<UserDTO> GetUserById(Guid id);

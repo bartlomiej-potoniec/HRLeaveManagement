@@ -34,7 +34,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     public async Task<ActionResult> CreateWithDetails([FromBody] CreateEmployeeWithDetailsCommand command)
     {
         var employeeId = await _sender.Send(command);
-        return Ok(employeeId);
+        return CreatedAtAction(nameof(GetWithDetails), new { employeeId }, command);
     }
     
     [HttpPatch("{id}")]
