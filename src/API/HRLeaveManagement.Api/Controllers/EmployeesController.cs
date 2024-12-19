@@ -1,8 +1,10 @@
 ﻿using HRLeaveManagement.Application.Features.Employee.Commands;
 using HRLeaveManagement.Application.Features.Employee.Queries;
 using HRLeaveManagement.Application.Features.RemoteWorkLimits.Queries;
+using HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
 using HRLeaveManagement.Application.DTOs.Employees;
 using HRLeaveManagement.Application.DTOs.RemoteWorkLimits;
+using HRLeaveManagement.Application.DTOs.LeaveAllocations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
@@ -164,5 +166,14 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
             .Send(new GetAllRemoteWorkLimitsForEmployeeQuery(employeeId));
 
         return Ok(remoteWorkLimits);
+    }
+
+    [HttpGet("{employeeId}/leaveAllocations")]
+    public async Task<ActionResult<IEnumerable<LeaveAllocationDetailsDTO>>> GetAllLeaveAllocationsForEmployee([FromRoute] Guid employeeId)
+    {
+        var leaveAllocations = await _sender
+            .Send(new GetAllLeaveAllocationsForEmployeeQuery(employeeId));
+
+        return Ok(leaveAllocations);
     }
 }

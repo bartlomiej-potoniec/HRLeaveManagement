@@ -17,7 +17,7 @@ public sealed class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLe
                 .WithMessage("{PropertyName} must be less than 70");
 
         RuleFor(c => c.Description)
-            .MaximumLength(100)
+            .MaximumLength(300)
                 .WithMessage("{PropertyName} must be less than 100");
 
         RuleFor(c => c.PaidFraction)

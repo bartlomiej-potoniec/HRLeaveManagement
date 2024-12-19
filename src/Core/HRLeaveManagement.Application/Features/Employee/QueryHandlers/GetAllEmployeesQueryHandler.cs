@@ -46,7 +46,7 @@ public sealed class GetAllEmployeesQueryHandler(IEmployeeRepository employeeRepo
                 var employeeDto = _mapper.Map<EmployeeDTO>(
                     (user, employee),
                     opt => opt.Items["LeaderName"] = leaderUser is not null 
-                        ? $"{ leaderUser.FirstName } { leaderUser.FirstName }" 
+                        ? $"{ leaderUser.FirstName } { leaderUser.LastName }" 
                         : null
                 );
 

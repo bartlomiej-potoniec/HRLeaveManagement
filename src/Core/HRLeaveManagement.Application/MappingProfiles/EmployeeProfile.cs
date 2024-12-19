@@ -25,7 +25,9 @@ public class EmployeeProfile : Profile
             ))
             .ForMember(dest => dest.IsCurrentlyEmployed, opt => opt.MapFrom<IsCurrentlyEmployedResolver>())
             .ForMember(dest => dest.LeaderId, opt => opt.MapFrom(src => src.employee.LeaderId))
-            .AfterMap((src, dest, context) => dest = dest with { LeaderName = context.Items["LeaderName"] as string })
+            .ForMember(dest => dest.LeaderName, opt => 
+                opt.MapFrom((src, dest, destMember, context) => 
+                    context.Items.TryGetValue("LeaderName", out object? value) ? value as string : null))
             .ReverseMap();
 
         CreateMap<(UserDTO userDto, Employee employee), EmployeeDetailsDTO>()
@@ -81,7 +83,9 @@ public class EmployeeProfile : Profile
             ))
             .ForMember(dest => dest.IsCurrentlyEmployed, opt => opt.MapFrom<IsCurrentlyEmployedResolver>())
             .ForMember(dest => dest.LeaderId, opt => opt.MapFrom(src => src.employee.LeaderId))
-            .AfterMap((src, dest, context) => dest = dest with { LeaderName = context.Items["LeaderName"] as string })
+            .ForMember(dest => dest.LeaderName, opt =>
+                opt.MapFrom((src, dest, destMember, context) =>
+                    context.Items.TryGetValue("LeaderName", out object? value) ? value as string : null))
             .ReverseMap();
 
         CreateMap<EmployeeContract, EmployeeContractRequest>().ReverseMap();

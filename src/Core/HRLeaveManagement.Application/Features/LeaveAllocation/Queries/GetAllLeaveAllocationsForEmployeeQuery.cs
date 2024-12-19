@@ -3,4 +3,5 @@ using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
 
-public sealed record GetAllLeaveAllocationsQuery : IRequest<IEnumerable<LeaveAllocationDTO>>;
+public sealed record GetAllLeaveAllocationsForEmployeeQuery(Guid EmployeeId)
+    : IRequest<IEnumerable<LeaveAllocationDetailsDTO>>;

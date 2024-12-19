@@ -39,16 +39,8 @@ public class LeaveAllocation
             ModifiedAt = DateTime.UtcNow
         };
 
-    public static void Update(LeaveAllocation entity,
-                              Guid employeeId,
-                              int leaveTypeId,
-                              int year,
-                              int? availableDays = null)
+    public static void Update(LeaveAllocation entity, int? availableDays = null)
     {
-        entity.EmployeeId = employeeId;
-        entity.LeaveTypeId = leaveTypeId;
-        entity.Year = year;
-
         if (entity.AvailableDays is null &&
             entity.UsedDays is null &&
             entity.RemainingDays is null &&

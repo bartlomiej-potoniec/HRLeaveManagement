@@ -1,7 +1,6 @@
-﻿using HRLeaveManagement.Application.DTOs;
+﻿using HRLeaveManagement.Domain.Entities;
+using HRLeaveManagement.Application.DTOs.LeaveAllocations;
 using AutoMapper;
-using HRLeaveManagement.Application.Features.LeaveAllocation.Commands;
-using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 
@@ -9,10 +8,15 @@ public class LeaveAllocationProfile : Profile
 {
     public LeaveAllocationProfile()
     {
-        CreateMap<LeaveAllocation, LeaveAllocationDTO>().ReverseMap();
+        CreateMap<LeaveAllocation, LeaveAllocationDTO>()
+            .ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(src => src.LeaveType.Name))
+            .ForMember(dest => dest.EmployeeName, opt =>
+                opt.MapFrom((src, dest, destMember, context) => 
+                    context.Items.TryGetValue("EmployeeName", out object? value) ? value as string : null
+                )
+            )
+            .ReverseMap();
+        
         CreateMap<LeaveAllocation, LeaveAllocationDetailsDTO>().ReverseMap();
-
-        CreateMap<CreateLeaveAllocationCommand, LeaveAllocation>();
-        CreateMap<UpdateLeaveAllocationCommand, LeaveAllocation>();
     }
 }
