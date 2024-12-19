@@ -1,7 +1,7 @@
-﻿using HRLeaveManagement.Persistence.DbContexts;
+﻿using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using HRLeaveManagement.Domain.Entities;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
@@ -9,31 +9,30 @@ public sealed class LeaveTypeRepository(ApplicationDbContext dbContext) : ILeave
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public Task<int> CreateAsync(LeaveType leaveType)
+    public async Task<IEnumerable<LeaveType>> GetAllAsync()
+        => await _dbContext.LeaveTypes.ToListAsync();
+
+    public async Task<LeaveType?> GetByIdAsync(int id)
+        => await _dbContext.LeaveTypes.FirstOrDefaultAsync(lt => lt.Id == id);
+
+    public async Task<bool> IsLeaveTypeUniqueAsync(string name)
+        => !(await _dbContext.LeaveTypes.AnyAsync(lt => lt.Name == name));
+
+    public async Task CreateAsync(LeaveType leaveType)
     {
-        throw new NotImplementedException();
+        await _dbContext.LeaveTypes.AddAsync(leaveType);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(LeaveType leaveType)
+    public async Task UpdateAsync(LeaveType leaveType)
     {
-        throw new NotImplementedException();
+        _dbContext.Update(leaveType);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<LeaveType>> GetAllAsync()
+    public async Task DeleteAsync(LeaveType leaveType)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<LeaveType> GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<bool> IsLeaveTypeUnique(string name)
-        => !await _dbContext.LeaveTypes.AnyAsync(lt => lt.Name == name);
-
-    public Task UpdateAsync(LeaveType leaveType)
-    {
-        throw new NotImplementedException();
+        _dbContext.LeaveTypes.Remove(leaveType);
+        await _dbContext.SaveChangesAsync();
     }
 }

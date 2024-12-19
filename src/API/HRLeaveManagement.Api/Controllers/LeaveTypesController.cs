@@ -1,8 +1,8 @@
 ﻿using HRLeaveManagement.Application.Features.LeaveType.Commands;
 using HRLeaveManagement.Application.Features.LeaveType.Queries;
+using HRLeaveManagement.Application.DTOs.LeaveTypes;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using HRLeaveManagement.Application.DTOs;
 
 namespace HRLeaveManagement.Api.Controllers;
 
@@ -15,27 +15,27 @@ public sealed class LeaveTypesController(ISender sender) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<LeaveTypeDTO>>> GetAll()
     {
-        var leaveTypeDtos = await _sender.Send(new GetAllLeaveTypesQuery());
-        return Ok(leaveTypeDtos);
+        var leaveTypes = await _sender.Send(new GetAllLeaveTypesQuery());
+        return Ok(leaveTypes);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<LeaveTypeDetailsDTO>> GetById([FromRoute] int id)
+    public async Task<ActionResult<LeaveTypeDetailsDTO>> GetWithDetails([FromRoute] int id)
     {
-        var leaveTypeDetailsDto = await _sender.Send(new GetLeaveTypeDetailsQuery(id));
-        return Ok(leaveTypeDetailsDto);
+        var leaveTypeDetails = await _sender.Send(new GetLeaveTypeWithDetailsQuery(id));
+        return Ok(leaveTypeDetails);
     }
 
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] CreateLeaveTypeCommand command)
     {
-        var resultId = await _sender.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = resultId }, command);
+        var leaveTypeId = await _sender.Send(command);
+        return CreatedAtAction(nameof(GetWithDetails), new { id = leaveTypeId }, command);
     }
 
     [HttpPatch("{id}")]
     public async Task<ActionResult> Update([FromRoute] int id,
-                                            [FromBody] UpdateLeaveTypeCommand command)
+                                           [FromBody] UpdateLeaveTypeCommand command)
     {
         await _sender.Send(command with { Id = id });
         return NoContent();

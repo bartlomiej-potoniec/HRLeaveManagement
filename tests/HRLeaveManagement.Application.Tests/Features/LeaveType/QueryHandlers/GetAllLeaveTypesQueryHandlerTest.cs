@@ -2,7 +2,7 @@
 using FluentAssertions;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.DTOs;
+using HRLeaveManagement.Application.DTOs.LeaveTypes;
 using HRLeaveManagement.Application.Features.LeaveType.Queries;
 using HRLeaveManagement.Application.Features.LeaveType.QueryHandlers;
 using HRLeaveManagement.Application.MappingProfiles;

@@ -20,15 +20,15 @@ public sealed class GetDepartmentWithDetailsQueryHandler(IDepartmentRepository d
     public async Task<DepartmentDetailsDTO> Handle(GetDepartmentWithDetailsQuery request,
                                                    CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Fetching department with ID: {Id} started", request.DepartmentId);
+        _logger.LogInformation("Fetching department with ID: {Id} started", request.Id);
 
         var department = await _departmentRepository
-            .GetByIdAsync(request.DepartmentId)
-            ?? throw new NotFoundException($"No department with ID: {request.DepartmentId} found");
+            .GetByIdAsync(request.Id)
+            ?? throw new NotFoundException($"No department with ID: { request.Id } found");
 
         var departmentDto = _mapper.Map<DepartmentDetailsDTO>(department);
 
-        _logger.LogInformation("Fetching department with ID: {Id} successful", request.DepartmentId);
+        _logger.LogInformation("Fetching department with ID: {Id} successful", request.Id);
 
         return departmentDto;
     }

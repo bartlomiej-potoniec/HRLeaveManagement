@@ -6,10 +6,12 @@ namespace HRLeaveManagement.Application.Validation;
 
 public sealed class DeleteLeaveTypeCommandValidator : AbstractValidator<DeleteLeaveTypeCommand>
 {
-    public DeleteLeaveTypeCommandValidator(ILeaveTypeRepository repository)
+    public DeleteLeaveTypeCommandValidator(ILeaveTypeRepository leaveTypeRepository)
     {
         RuleFor(c => c.Id)
-            .MustAsync(async (id, token) => await repository.GetByIdAsync(id) is not null)
-                .WithMessage("Leave type does not exists");
+            .NotNull()
+                .WithMessage("{PropertyName} is required")
+            .MustAsync(async (id, token) => await leaveTypeRepository.GetByIdAsync(id) is not null)
+                .WithMessage("Leave type with given ID does not exists");
     }
 }

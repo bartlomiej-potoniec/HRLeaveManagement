@@ -1,30 +1,30 @@
 ﻿using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.DTOs;
 using HRLeaveManagement.Application.Features.LeaveType.Queries;
 using MediatR;
 using AutoMapper;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
+using HRLeaveManagement.Application.DTOs.LeaveTypes;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.QueryHandlers;
 
-public sealed class GetAllLeaveTypesQueryHandler(ILeaveTypeRepository repository,
+public sealed class GetAllLeaveTypesQueryHandler(ILeaveTypeRepository leaveTypeRepository,
                                                  IMapper mapper,
                                                  IAppLogger<GetAllLeaveTypesQueryHandler> logger) 
     : IRequestHandler<GetAllLeaveTypesQuery, IEnumerable<LeaveTypeDTO>>
 {
-    private readonly ILeaveTypeRepository _repository = repository;
+    private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
     private readonly IMapper _mapper = mapper;
     private readonly IAppLogger<GetAllLeaveTypesQueryHandler> _logger = logger;
 
     public async Task<IEnumerable<LeaveTypeDTO>> Handle(GetAllLeaveTypesQuery request,
                                                         CancellationToken cancellationToken)
     {
-        var leaveTypes = await _repository.GetAllAsync()
-            ?? throw new Exception();
+        _logger.LogInformation("Fetching all leave types started");
 
+        var leaveTypes = await _leaveTypeRepository.GetAllAsync();
         var leaveTypeDtos = _mapper.Map<IEnumerable<LeaveTypeDTO>>(leaveTypes);
 
-        _logger.LogInformation("Leave types were retrieved successfully");
+        _logger.LogInformation("Fetching all leave types successful");
 
         return leaveTypeDtos;
     }

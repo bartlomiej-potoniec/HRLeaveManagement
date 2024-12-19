@@ -1,4 +1,5 @@
-﻿using HRLeaveManagement.Application.DTOs.User;
+﻿using HRLeaveManagement.Application.DTOs.LeaveTypes;
+using HRLeaveManagement.Application.DTOs.User;
 
 namespace HRLeaveManagement.Application.DTOs;
 

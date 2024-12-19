@@ -2,4 +2,8 @@
 
 namespace HRLeaveManagement.Application.Features.LeaveType.Commands;
 
-public sealed record UpdateLeaveTypeCommand(int Id, string Name, int DefaultDays) : IRequest;
+public sealed record UpdateLeaveTypeCommand(int Id,
+                                            string Name,
+                                            string? Description,
+                                            decimal PaidFraction) 
+    : IRequest;

@@ -20,13 +20,13 @@ public sealed class RemoteWorkLimitRepository(ApplicationDbContext dbContext) : 
     public async Task<RemoteWorkLimit?> GetByIdAsync(int id)
         => await _dbContext.RemoteWorkLimits.FirstOrDefaultAsync(rml => rml.Id == id);
 
-    public async Task Create(RemoteWorkLimit remoteWorkLimit)
+    public async Task CreateAsync(RemoteWorkLimit remoteWorkLimit)
     {
         await _dbContext.RemoteWorkLimits.AddAsync(remoteWorkLimit);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task Update(RemoteWorkLimit remoteWorkLimit)
+    public async Task UpdateAsync(RemoteWorkLimit remoteWorkLimit)
     {
         _dbContext.RemoteWorkLimits.Update(remoteWorkLimit);
         await _dbContext.SaveChangesAsync();

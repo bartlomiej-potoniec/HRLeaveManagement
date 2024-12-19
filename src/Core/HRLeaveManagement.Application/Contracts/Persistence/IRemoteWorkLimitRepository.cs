@@ -8,6 +8,6 @@ public interface IRemoteWorkLimitRepository
     Task<IEnumerable<RemoteWorkLimit>> GetAllRemoteWorkLimitsByEmployeeIdAsync(Guid employeeId);
     Task<RemoteWorkLimit?> GetByIdAsync(int id);
 
-    Task Create(RemoteWorkLimit remoteWorkLimit);
-    Task Update(RemoteWorkLimit remoteWorkLimit);
+    Task CreateAsync(RemoteWorkLimit remoteWorkLimit);
+    Task UpdateAsync(RemoteWorkLimit remoteWorkLimit);
 }

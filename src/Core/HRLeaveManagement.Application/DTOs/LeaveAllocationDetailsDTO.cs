@@ -1,4 +1,6 @@
-﻿namespace HRLeaveManagement.Application.DTOs;
+﻿using HRLeaveManagement.Application.DTOs.LeaveTypes;
+
+namespace HRLeaveManagement.Application.DTOs;
 
 public sealed record LeaveAllocationDetailsDTO
 {

@@ -46,7 +46,7 @@ public sealed class UpdateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
 
         _logger.LogInformation("Updating informations about remote work limit with ID: {Id} started", request.Id);
 
-        await _remoteWorkLimitRepository.Update(remoteWorkLimit);
+        await _remoteWorkLimitRepository.UpdateAsync(remoteWorkLimit);
 
         _logger.LogInformation("Updating informations about remote work limit with ID: {Id} successful", request.Id);
     }

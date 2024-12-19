@@ -37,7 +37,7 @@ public sealed class CreateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
 
         _logger.LogInformation("Creating new remote work limit for employee with ID: {EmployeeId} started", request.EmployeeId);
 
-        await _remoteWorkLimitRepository.Create(remoteWorkLimit);
+        await _remoteWorkLimitRepository.CreateAsync(remoteWorkLimit);
 
         _logger.LogInformation("Creating new remote work limit for employee with ID: {EmployeeId} successful", request.EmployeeId);
 
