@@ -19,10 +19,10 @@ public sealed class RemoteWorkLimitsController(ISender sender) : ControllerBase
         return Ok(remoteWorkLimits);
     }
 
-    [HttpGet("{remoteWorkLimitId}")]
-    public async Task<ActionResult<RemoteWorkLimitDetailsDTO>> GetWithDetails([FromRoute] int remoteWorkLimitId)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<RemoteWorkLimitDetailsDTO>> GetWithDetails([FromRoute] int id)
     {
-        var remoteWorkLimit = await _sender.Send(new GetRemoteWorkLimitWithDetailsQuery(remoteWorkLimitId));
+        var remoteWorkLimit = await _sender.Send(new GetRemoteWorkLimitWithDetailsQuery(id));
         return Ok(remoteWorkLimit);
     }
 

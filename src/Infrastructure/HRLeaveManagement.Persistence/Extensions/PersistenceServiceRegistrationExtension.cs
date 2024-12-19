@@ -23,6 +23,7 @@ public static class PersistenceServiceRegistrationExtension
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<ISectionRepository, SectionRepository>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<IRemoteWorkLimitRepository, RemoteWorkLimitRepository>();
 
         return services;
     }

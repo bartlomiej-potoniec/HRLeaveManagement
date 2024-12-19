@@ -157,7 +157,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
 
     // RemoteWorkLimit subentity
 
-    [HttpGet("{employeeId}/remote-work-limits")]
+    [HttpGet("{employeeId}/remoteWorkLimits")]
     public async Task<ActionResult<IEnumerable<RemoteWorkLimitDTO>>> GetAllRemoteWorkLimitsForEmployee([FromRoute] Guid employeeId)
     {
         var remoteWorkLimits = await _sender

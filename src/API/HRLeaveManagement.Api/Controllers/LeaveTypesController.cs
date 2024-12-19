@@ -27,8 +27,6 @@ public sealed class LeaveTypesController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Create([FromBody] CreateLeaveTypeCommand command)
     {
         var resultId = await _sender.Send(command);
@@ -36,10 +34,6 @@ public sealed class LeaveTypesController(ISender sender) : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
     public async Task<ActionResult> Update([FromRoute] int id,
                                             [FromBody] UpdateLeaveTypeCommand command)
     {
@@ -47,11 +41,7 @@ public sealed class LeaveTypesController(ISender sender) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")] 
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         await _sender.Send(new DeleteLeaveTypeCommand(id));
