@@ -1,0 +1,19 @@
+﻿<MudCard Style="@($"min-height: { Height }px;")">
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudIcon Style="margin-top: 5px;" Icon="@Icon" Size="Size.Medium" />
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">@Title</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            @HeaderChildContent
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudDivider DividerType="DividerType.Middle" />
+    <MudCardContent>
+        <MudGrid Style="padding: 5px 18px; padding-bottom: 30px; display: flex; align-items: center;">
+            @BodyChildContent
+        </MudGrid>
+    </MudCardContent>
+</MudCard>

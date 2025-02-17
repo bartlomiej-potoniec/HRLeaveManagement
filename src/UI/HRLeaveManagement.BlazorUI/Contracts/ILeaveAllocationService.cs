@@ -4,5 +4,5 @@ namespace HRLeaveManagement.BlazorUI.Contracts;
 
 public interface ILeaveAllocationService
 {
-    Task<Response<Guid>> CreateLeaveAllocations(int leaveTypeId);
+    Task<Response> CreateLeaveAllocations(int leaveTypeId);
 }

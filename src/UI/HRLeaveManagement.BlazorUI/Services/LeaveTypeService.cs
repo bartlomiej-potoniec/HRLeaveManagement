@@ -40,9 +40,9 @@ public sealed class LeaveTypeService(IClient client,
         return viewModel;
     }
 
-    public async Task<Response<Guid>> Create(LeaveTypeViewModel leaveType)
+    public async Task<Response> Create(LeaveTypeViewModel leaveType)
     {
-        Response<Guid> response;
+        Response response;
 
         try
         {
@@ -60,9 +60,9 @@ public sealed class LeaveTypeService(IClient client,
         return response;
     } 
 
-    public async Task<Response<Guid>> Update(int id, LeaveTypeViewModel leaveType)
+    public async Task<Response> Update(int id, LeaveTypeViewModel leaveType)
     {
-        Response<Guid> response;
+        Response response;
 
         try
         {
@@ -80,9 +80,9 @@ public sealed class LeaveTypeService(IClient client,
         return response;
     }
 
-    public async Task<Response<Guid>> Delete(int id)
+    public async Task<Response> Delete(int id)
     {
-        Response<Guid> response;
+        Response response;
 
         try
         {

@@ -28,8 +28,7 @@ public partial class Login
     {
         _isLoading = true;
 
-        var authResult = await AuthenticationService
-            .AuthenticateAsync(Model.Email, Model.Password);
+        var authResult = await AuthenticationService.AuthenticateAsync(Model.Email, Model.Password);
 
         _isLoading = false;
 

@@ -1,0 +1,97 @@
+﻿@using HRLeaveManagement.BlazorUI.Services.Base;
+@using HRLeaveManagement.BlazorUI.Validation
+
+<MudDialog>
+    <TitleContent>
+        <MudItem Class="d-inline-flex align-center">
+            <MudIcon Icon="@Icons.Material.Filled.AddCircle" Size="Size.Medium" Style="margin-right: 7px;" />
+            <MudText Inline Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">@Title</MudText>
+        </MudItem>
+    </TitleContent>
+
+    <DialogContent>
+        <MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)">
+            <MudText Typo="Typo.subtitle1">Dodaj do listy doświadczenie zawodowe pracownika <b>@EmployeeFullName</b> </MudText>
+            <MudDivider />
+
+            <MudGrid Class="mt-5">
+                <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudSelect T="ContractType?" Label="Wybierz typ umowy" @bind-Value="Model.ContractType" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => Model.ContractType)" Immediate Clearable>
+                        @foreach (var item in Model.ContractTypes)
+                        {
+                            <MudSelectItem Value="@item.Key">@item.Value</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudTextField T="string" Label="Poprzednia firma pracownika" @bind-Value="@Model.PreviousCompanyName" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => Model.PreviousCompanyName)" Immediate Clearable />
+                </MudItem>
+
+                <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudTextField T="string" Lines="3" Label="Stanowisko w poprzedniej firmie" @bind-Value="@Model.Position" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => Model.Position)" Immediate Clearable />
+                </MudItem>
+
+                <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudDateRangePicker Label="Data zatrudnienia i odejścia" @bind-DateRange="@Model.EmploymentDateRange" Required RequiredError="Pole 'Data zatrudnienia' nie może być puste" MaxDate="_maxDate"
+                                        Variant="Variant.Outlined" Margin="Margin.Dense" Clearable />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Text" Color="Color.Default" OnClick="Cancel">Anuluj</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Confirm">Potwierdź</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public string EmployeeFullName { get; set; }
+
+    [Parameter]
+    public EmployeeExperienceViewModel Model { get; set; }
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [CascadingParameter]
+    private Error Error { get; set; }
+
+    private MudForm Form { get; set; }
+
+    private string Title => "Dodawanie danych do listy";
+
+    private EmployeeExperienceViewModelValidator Validator { get; set; } = new();
+
+    private DateTime? _maxDate = DateTime.Now;
+
+    protected override void OnInitialized()
+    {
+        MudDialog.Options.CloseButton = true;
+        MudDialog.Options.CloseOnEscapeKey = true;
+        MudDialog.Options.BackdropClick = false;
+        MudDialog.Options.Position = DialogPosition.Center;
+        MudDialog.Options.FullWidth = true;
+
+        MudDialog.SetOptions(MudDialog.Options);
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Confirm()
+    {
+        await Form.Validate();
+
+        if (!Form.IsValid)
+        {
+            var message = $"Wystąpił błąd w walidacji formularza : { string.Join(", ", Form.Errors) }";
+            Error.HandleError(message);
+
+            return;
+        }
+        
+        MudDialog.Close(DialogResult.Ok(Model));
+    }
+}

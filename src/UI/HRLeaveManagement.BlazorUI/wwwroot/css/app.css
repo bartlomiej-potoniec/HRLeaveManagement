@@ -1,5 +1,6 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #fefefe !important;
 }
 
 h1:focus {
@@ -116,4 +117,25 @@ code {
 
 .custom-nav-group.mud-expanded .mud-nav-item:hover {
     background-color: #000860 !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+input::-moz-placeholder,
+input:-moz-placeholder,
+input:-ms-input-placeholder {
+    font-size: 14px !important;
+}
+
+label {
+    font-size: 14px !important;
+}
+
+.mud-input,
+.mud-input-input {
+    font-size: 15px !important;
+}
+
+.mud-select-input {
+    font-size: 14px !important;
 }

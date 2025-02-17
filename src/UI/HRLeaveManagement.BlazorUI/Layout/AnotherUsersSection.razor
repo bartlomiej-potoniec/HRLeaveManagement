@@ -1,0 +1,43 @@
+﻿<MudCard Style="@($"height: { Height }px;")">
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.SupervisedUserCircle" Size="Size.Medium" />
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Inni użytkownicy</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.FormatListBulleted" Href="/users/list">Pełna lista</MudButton>
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudDivider DividerType="DividerType.Middle" />
+    <MudCardContent Class="overflow-scroll">
+        @if (Users.Any())
+        {
+            @foreach (var user in Users)
+            {
+                if (user.Id != ActualUserId)
+                {
+                    <MudCard Style="margin-bottom: 10px">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.subtitle2">@user.FirstName @user.LastName &lt;@user.Email&gt;</MudText>
+                            </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default" />
+                            </CardHeaderActions>
+                        </MudCardHeader>
+                        <MudCardContent Style="margin-top: -30px;">
+                            <MudText>Telefon: @user.PhoneNumber</MudText>
+                            <MudText>Status: <span style="color: green;">Aktywny teraz</span></MudText>
+                        </MudCardContent>
+                    </MudCard>
+                }
+            }
+        }
+        else
+        {
+            <MudText Typo="Typo.body2">There's no in this section</MudText>
+        }
+    </MudCardContent>
+</MudCard>

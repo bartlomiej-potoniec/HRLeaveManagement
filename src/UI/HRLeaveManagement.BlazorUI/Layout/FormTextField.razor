@@ -1,0 +1,5 @@
+﻿<MudItem xs="@Xs" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="@ForId" Style="min-width: 230px;">@Label</MudInputLabel>
+    <MudTextField T="string" Typo="Typo.body2" InputId="@ForId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;"
+                  @bind-Value="@Value" For="@For" Immediate Clearable />
+</MudItem>

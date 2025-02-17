@@ -13,13 +13,13 @@ public sealed class LeaveAllocationService(IClient client,
 {
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Response<Guid>> CreateLeaveAllocations(int leaveTypeId)
+    public async Task<Response> CreateLeaveAllocations(int leaveTypeId)
     {
-        Response<Guid> response;
+        Response response;
 
 		try
 		{
-            var command = new CreateLeaveAllocationCommand { LeaveTypeId = leaveTypeId };
+            var command = new CreateLeaveAllocationsCommand {  };
             await _client.LeaveAllocationsPOSTAsync(command);
 
             response = base.GenerateSuccessResponse("Leave allocations created successfully");

@@ -1,0 +1,169 @@
+﻿@page "/auth/register-user"
+@attribute [Authorize(Roles = "Administrator")]
+
+<Header Title="Utwórz nowego użytkownika" />
+
+<MudGrid Class="mt-1">
+    <MudItem xs="12" lg="8">
+        <MudCard>
+            <MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)">
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.AddCircle" Size="Size.Medium" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Nowy użytkownik</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Reset" Variant="Variant.Filled" StartIcon="@Icons.Material.Rounded.RestartAlt">Resetuj</MudButton>
+                        <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Rounded.Create" OnClick="@(async () => await HandleValidSubmit())">Utwórz</MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudDivider DividerType="DividerType.Middle" />
+                <MudCardContent>
+                    <MudGrid Style="padding: 5px 18px; padding-bottom: 30px; display: flex; align-items: center;">
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Podstawowe informacje</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="FirstName" Style="min-width: 230px;">Imię</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="FirstName" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.FirstName" For="@(() => Model.FirstName)" Immediate />
+                        </MudItem>
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="LastName" Style="min-width: 230px;">Nazwisko</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="LastName" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.LastName" For="@(() => Model.LastName)" Immediate />
+                        </MudItem>
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Email" Style="min-width: 230px;">E-mail</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="Email" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.Email" For="@(() => Model.Email)" Immediate />
+                        </MudItem>
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="DateOfBirth" Style="min-width: 230px;">Data urodzenia</MudInputLabel>
+                            <MudDatePicker Variant="Variant.Outlined" Placeholder="Data urodzenia" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Date="Model.DateOfBirth" For="@(() => Model.DateOfBirth)" ImmediateText />
+                        </MudItem>
+
+                        <MudItem xs="9" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Pesel" Style="min-width: 230px;">Numer PESEL</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="Pesel" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.PeselNumber" 
+                                            For="@(() => Model.PeselNumber)" Disabled="@(!_hasPesel)" Immediate/>
+                        </MudItem>
+                        <MudItem xs="3" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudCheckBox @bind-Value="_hasPesel">@HasPeselText</MudCheckBox>
+                        </MudItem>
+
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="PhoneNumber" Style="min-width: 230px;">Numer telefonu</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="PhoneNumber" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.PhoneNumber" For="@(() => Model.PhoneNumber)" Immediate/>
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Role użytkownika</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+
+                        <MudItem xs="9" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Deputy" Style="min-width: 230px;">Wybierz role</MudInputLabel>
+                            <MudAutocomplete T="string" @bind-Value="SelectedRole" CoerceText="true" OnKeyDown="HandleKeyDown" ResetValueOnEmptyText="true" SearchFunc="SearchRoles"
+                                                Placeholder="Wpisz lub wybierz rolę" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;">
+                            </MudAutocomplete>
+                        </MudItem>
+
+                        <MudItem xs="3" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddRoleFromButton" Disabled="@IsAddRoleDisabled">
+                                Dodaj rolę
+                            </MudButton>
+                        </MudItem>
+
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Deputy" Style="min-width: 230px; margin-top: 20px;">Wybrane role</MudInputLabel>
+                            <div style="margin-top: 1rem;">
+                                @if (Model.Roles.Any())
+                                {
+                                    @foreach (var role in Model.Roles)
+                                    {
+                                        <MudChip T="string" Color="Color.Default" Closeable="true" OnClose="() => RemoveRole(role)">
+                                            @role
+                                        </MudChip>
+                                    }
+                                }
+                                else
+                                {
+                                    <MudText>Nie wybrano żadnych roli dla użytkownika</MudText>
+                                }
+                            </div>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudForm>
+        </MudCard>
+
+        <MudCard Style="height: 300px; margin-top: 20px; margin-bottom: 50px;">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.Feed" Size="Size.Medium" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Logi</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudDivider DividerType="DividerType.Middle" />
+            <MudCardContent Class="overflow-scroll">
+
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <MudCard Style="height: 937px;">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.SupervisedUserCircle" Size="Size.Medium" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Inni użytkownicy</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.FormatListBulleted" Href="users/list/">Pełna lista</MudButton>
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudDivider DividerType="DividerType.Middle" />
+            <MudCardContent Class="overflow-scroll">
+                @if (Users.Any())
+                {
+                    @foreach (var user in Users)
+                    {
+                        <MudCard Style="margin-bottom: 10px">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.subtitle2">@user.FirstName @user.LastName &lt;@user.Email&gt;</MudText>
+                                </CardHeaderContent>
+                                <CardHeaderActions>
+                                    <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default" />
+                                </CardHeaderActions>
+                            </MudCardHeader>
+                            <MudCardContent Style="margin-top: -30px;">
+                                <MudText>Telefon: @user.PhoneNumber</MudText>
+                                <MudText>Status: <span style="color: green;">Aktywny teraz</span></MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    } 
+                }
+                else 
+                {
+                    <MudText Typo="Typo.body2">There's no in this section</MudText>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<style>
+    .mud-card-header .mud-card-header-avatar {
+        margin-right: 8px !important;
+        margin-inline-end: 8px !important;
+    }
+</style>

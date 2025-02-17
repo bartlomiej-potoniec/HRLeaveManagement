@@ -1,18 +1,28 @@
 ﻿<AuthorizeView>
     <Authorized>
         <MudBadge Content="4" Color="Color.Dark" Dot Overlap Visible="false">
-            <MudMenu Icon="@Icons.Material.Filled.ChatBubbleOutline" Size="Size.Medium" Color="Color.Dark">
+            <MudMenu Icon="@Icons.Material.Filled.Language" Size="Size.Medium" Color="Color.Default">
+            </MudMenu>
+        </MudBadge>
+        
+        <MudBadge Content="4" Color="Color.Primary" Overlap Visible="false">
+            @* <MudIcon Icon="@Icons.Material.Filled.Chat" Size="Size.Medium" Color="Color.Default" /> *@
+            <MudMenu Icon="@Icons.Material.Filled.Chat" Size="Size.Medium" Color="Color.Default">
             </MudMenu>
         </MudBadge>
 
-
-        <MudBadge Content="7" Color="Color.Dark" Dot Overlap Visible="false">
-            <MudMenu Icon="@Icons.Material.Filled.NotificationsNone" Size="Size.Medium" Color="Color.Dark">
+        <MudBadge Content="7" Color="Color.Dark" Overlap Visible="false">
+            @* <MudIcon Icon="@Icons.Material.Filled.NotificationsNone" Size="Size.Medium" Color="Color.Default" /> *@
+            <MudMenu Icon="@Icons.Material.Filled.NotificationsNone" Size="Size.Medium" Color="Color.Default">
             </MudMenu>
         </MudBadge>
+        
+        <MudDivider Vertical DividerType="DividerType.Middle" Class="ml-3 mr-1" Style="height: 30px;" />
+        
+        <MudText Typo="Typo.subtitle1" Color="Color.Dark" Class="ml-4">Wyloguj</MudText>
 
 
-        <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopLeft" Color="Color.Dark" Class="ml-3">
+ @*        <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopLeft" Color="Color.Dark" Class="ml-3">
             <ActivatorContent>
                 <MudAvatar Size="Size.Medium" Color="Color.Primary">B</MudAvatar>
             </ActivatorContent>
@@ -21,7 +31,7 @@
                 <MudDivider></MudDivider>
                 <MudMenuItem Href="logout" Icon="@Icons.Material.Filled.Logout" IconSize="Size.Small">Logout</MudMenuItem>
             </ChildContent>
-        </MudMenu>
+        </MudMenu> *@
     </Authorized>
 </AuthorizeView>
 

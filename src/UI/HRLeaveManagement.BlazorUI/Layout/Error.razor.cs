@@ -15,8 +15,8 @@ public partial class Error
     {
         SnackbarService.Configuration.SnackbarVariant = Variant.Filled;
         SnackbarService.Configuration.NewestOnTop = false;
-        SnackbarService.Configuration.HideTransitionDuration = 500;
-        SnackbarService.Configuration.ShowTransitionDuration = 500;
+        SnackbarService.Configuration.HideTransitionDuration = 200;
+        SnackbarService.Configuration.ShowTransitionDuration = 200;
 
         SnackbarService.Add(message, Severity.Error);
 

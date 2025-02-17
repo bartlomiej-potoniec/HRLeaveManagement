@@ -2,9 +2,9 @@
 using HRLeaveManagement.BlazorUI.Models;
 using HRLeaveManagement.BlazorUI.Services.Base;
 using HRLeaveManagement.BlazorUI.ViewModels.LeaveRequests;
+using HRLeaveManagement.BlazorUI.ViewModels.LeaveAllocations;
 using Blazored.LocalStorage;
 using AutoMapper;
-using HRLeaveManagement.BlazorUI.ViewModels.LeaveAllocations;
 
 namespace HRLeaveManagement.BlazorUI.Services;
 
@@ -53,9 +53,9 @@ public sealed class LeaveRequestService(IClient client,
         return viewModel;
     }
 
-    public async Task<Response<Guid>> CreateAsync(LeaveRequestViewModel leaveRequest)
+    public async Task<Response> CreateAsync(LeaveRequestViewModel leaveRequest)
     {
-        Response<Guid> response;
+        Response response;
 
 		try
 		{
@@ -73,9 +73,9 @@ public sealed class LeaveRequestService(IClient client,
 		return response;
     }
 
-    public async Task<Response<Guid>> Cancel(int id)
+    public async Task<Response> Cancel(int id)
     {
-        Response<Guid> response;
+        Response response;
 
         try
         {
@@ -93,9 +93,9 @@ public sealed class LeaveRequestService(IClient client,
         return response;
     }
 
-    public async Task<Response<Guid>> ApproveAsync(int id, bool approvalStatus)
+    public async Task<Response> ApproveAsync(int id, bool approvalStatus)
     {
-        Response<Guid> response;
+        Response response;
 
         try
         {

@@ -1,5 +1,5 @@
 ﻿@page "/worktime/register"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Administrator")]
 
 <MudGrid Class="d-flex justify-space-between align-center">
     <MudItem>

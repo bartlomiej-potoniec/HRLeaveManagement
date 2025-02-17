@@ -1,0 +1,242 @@
+﻿@page "/employees/create"
+@attribute [Authorize(Roles = "HR")]
+
+@using HRLeaveManagement.BlazorUI.Services.Base
+@using HRLeaveManagement.BlazorUI.ViewModels.Users
+
+<Header Title="Utwórz nowego pracownika"/>
+
+<MudGrid Class="mt-2">
+    <MudItem xs="12" lg="8">
+        <MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)">
+            <Section Title="Nowy pracownik" Icon="@Icons.Material.Filled.AddCircle" Height="590">
+                <HeaderChildContent>
+                    <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Reset" Variant="Variant.Filled" StartIcon="@Icons.Material.Rounded.RestartAlt">Resetuj</MudButton>
+                    <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Rounded.Create" OnClick="@(async () => await HandleValidSubmit())">Utwórz</MudButton>
+                </HeaderChildContent>
+                <BodyChildContent>
+                    <FormDivider Text="Użytkownik" />
+
+                    <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="User" Style="min-width: 230px;">Wybierz użytkownika</MudInputLabel>
+                        @if (Users.Any())
+                        {
+                            <MudSelect T="UserDetailsViewModel" InputId="User" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Clearable ValueChanged="@(value => SelectedChanged(value))">
+                                @foreach (var user in Users)
+                                {
+                                    <MudSelectItem Value="@user">@user.FullName</MudSelectItem>
+                                }
+                            </MudSelect>
+                        }
+                        else 
+                        {
+                            <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">Brak obecnie pracowników do utworzenia. <MudLink Href="#">Wyślij prośbę o utworzenie użytkownika do administratora</MudLink></MudText>
+                        }
+                    </MudItem>
+
+                    <FormDivider Text="Informacje o pracowniku" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Position" Style="min-width: 230px;">Stanowisko</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="Position" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                      @bind-Value="Model.Position" For="@(() => Model.Position)" Immediate Clearable Disabled="@(User is null)" />
+                    </MudItem>
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Responsibilities" Style="min-width: 230px;">Obowiązki</MudInputLabel>
+                        <MudTextField InputId="Responsibilities" T="string" Lines="2" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" 
+                                      @bind-Value="Model.Responsibilities" For="@(() => Model.Responsibilities)" Immediate Clearable Disabled="@(User is null)" />
+                    </MudItem>
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Section" Style="min-width: 230px;">Dział i sekcja</MudInputLabel>
+                        @if (Sections.Any())
+                        {
+                            <MudSelect T="int?" @bind-Value="@Model.SectionId" For="@(() => Model.SectionId)" InputId="Section" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Clearable Disabled="@(User is null)">
+                                @foreach (var sect in Sections)
+                                {
+                                    <MudSelectItem Value="@(sect.Id as int?)">@sect.Name / @sect.DepartmentName</MudSelectItem>
+                                }
+                            </MudSelect>
+                        }
+                        else 
+                        {
+                            <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">Brak działów i sekcji. <MudLink Href="/departments/create">Dodaj dział i sekcję</MudLink></MudText>
+                        }
+                    </MudItem>
+                    
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Leader" Style="min-width: 230px;">Przełożony</MudInputLabel>
+                        @if (Leaders.Any())
+                        {
+                            <MudSelect T="Guid?" @bind-Value="@Model.LeaderId" For="@(() => Model.LeaderId)" InputId="Leader" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Clearable Disabled="@(User is null)">
+                                @foreach (var leader in Leaders)
+                                {
+                                    <MudSelectItem Value="@(leader.EmployeeId as Guid?)">@leader.FirstName @leader.LastName (@leader.Position / @leader.Section / @leader.Department)</MudSelectItem>
+                                }
+                            </MudSelect>
+                        }
+                        else 
+                        {
+                            <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">Brak przełożonych. <MudLink Href="#">Wyślij prośbę o utworzenie Managera do administratora</MudLink></MudText>
+                        }
+                    </MudItem>
+
+                    <FormDivider Text="Wykształcenie i kwalifikacje" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Leader" Style="min-width: 230px;">Historia wykształcenia</MudInputLabel>
+                        <MudPaper Width="100%">
+                            <MudList T="string" Dense Padding Disabled="@(User is null)">
+                                <MudListSubheader Class="d-flex align-center justify-space-between">
+                                    <MudText Inline Typo="Typo.subtitle2">Lista wykształcenia i kwalifikacji pracownika</MudText>
+                                    <MudButton ButtonType="ButtonType.Button" Size="Size.Small" OnClick="AddEducationToListDialog" StartIcon="@Icons.Material.Filled.AddCircle" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(User is null)">Dodaj</MudButton>
+                                </MudListSubheader>
+                                @if (Model.Educations.Any())
+                                {
+                                    @foreach (var education in Model.Educations)
+                                    {
+                                        <MudListItem Text="@($"{ @education.EducationDetails } ({ @education.EducationTypes[@education.EducationType] })")" Icon="@Icons.Material.Filled.School" IconColor="Color.Dark">
+                                            <NestedList>
+                                                <MudGrid Style="padding-left: 45px;">
+                                                    <MudItem xs="10">
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.LocationCity" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>@education.EducationTypes[@education.EducationType]</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.Details" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>@education.EducationDetails</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            @if (@education.GraduatedAt.HasValue)
+                                                            {
+                                                                <MudText Inline>Data rozpoczęcia-zakończenia: @education.EnrolledAt.Value.ToShortDateString() - @education.GraduatedAt.Value.ToShortDateString()</MudText>
+                                                            }
+                                                            else
+                                                            {
+                                                                <MudText Inline>Data rozpoczęcia-zakończenia: @education.EnrolledAt.Value.ToShortDateString() - <MudText Inline Color="Color.Tertiary">W trakcie nauki</MudText></MudText>
+                                                            }
+                                                        </MudItem>
+                                                    </MudItem>
+                                                    <MudItem xs="2">
+                                                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz">
+                                                            <MudMenuItem Icon="@Icons.Material.Filled.Edit" OnClick="() => UpdateEducationInListDialog(education)" IconColor="Color.Warning"></MudMenuItem>
+                                                            <MudDivider />
+                                                            <MudMenuItem Icon="@Icons.Material.Filled.Delete" OnClick="() => RemoveEducationFromListDialog(education)" IconColor="Color.Error"></MudMenuItem>
+                                                        </MudMenu>
+                                                    </MudItem>
+                                                </MudGrid>
+                                            </NestedList>
+                                        </MudListItem>
+                                    }
+                                }
+                                else 
+                                {
+                                    <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">Nie dodano żadnych informacji o wykształceniu. Dodaj informacje</MudText>
+                                }
+                            </MudList>
+                        </MudPaper>
+                    </MudItem>
+
+                    <FormDivider Text="Doświadczenie zawodowe" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Leader" Style="min-width: 230px;">Historia zawodowa</MudInputLabel>
+                        <MudPaper Width="100%">
+                            <MudList T="string" Dense Padding Disabled="@(User is null)">
+                                <MudListSubheader Class="d-flex align-center justify-space-between">
+                                    <MudText Inline Typo="Typo.subtitle2">Lista doświadczenia zawodowego pracownika</MudText>
+                                    <MudButton ButtonType="ButtonType.Button" Size="Size.Small" OnClick="AddExperienceToListDialog" StartIcon="@Icons.Material.Filled.AddCircle" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(User is null)">Dodaj</MudButton>
+                                </MudListSubheader>
+                                @if (Model.Experiences.Any())
+                                {
+                                    @foreach (var experience in Model.Experiences)
+                                    {
+                                        <MudListItem Text="@($"{ @experience.PreviousCompanyName } ({ experience.Position })")" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Dark">
+                                            <NestedList>
+                                                <MudGrid Style="padding-left: 45px;">
+                                                    <MudItem xs="10">
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.HomeWork" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>@experience.PreviousCompanyName</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.Details" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>Typ umowy: @experience.ContractTypes[experience.ContractType]</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>Data od-do: @experience.EmployedFrom!.Value.ToShortDateString() - @experience.EmployedTo!.Value.ToShortDateString()</MudText>
+                                                        </MudItem>
+                                                    </MudItem>
+                                                    <MudItem xs="2">
+                                                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz">
+                                                            <MudMenuItem Icon="@Icons.Material.Filled.Edit" OnClick="() => UpdateExperienceInListDialog(experience)" IconColor="Color.Warning"></MudMenuItem>
+                                                            <MudDivider />
+                                                            <MudMenuItem Icon="@Icons.Material.Filled.Delete" OnClick="() => RemoveExperienceFromListDialog(experience)" IconColor="Color.Error"></MudMenuItem>
+                                                        </MudMenu>
+                                                    </MudItem>
+                                                </MudGrid>
+                                            </NestedList>
+                                        </MudListItem>
+                                    }
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">Nie dodano żadnych informacji o doświadczeniu zawodowym. Dodaj informacje</MudText>
+                                }
+                            </MudList>
+                        </MudPaper>
+                    </MudItem>
+
+                    <FormDivider Text="Aktualna umowa" />
+
+                    <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="ContractType" Style="min-width: 230px;">Typ umowy</MudInputLabel>
+                        <MudSelect T="ContractType?" @bind-Value="@Model.Contract.ContractType" For="@(() => Model.Contract.ContractType)" InputId="ContractType" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Clearable Disabled="@(User is null)">
+                            @foreach (var item in Model.Contract.ContractTypes)
+                            {
+                                <MudSelectItem Value="@item.Key">@item.Value</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudFlexBreak />
+
+                    <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="StartedAt" Style="min-width: 230px;">Data rozpoczęcia</MudInputLabel>
+                        <MudDatePicker @bind-Date="@Model.Contract.EmployedFrom" For="@(() => Model.Contract.EmployedFrom)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled="@(User is null)" Clearable/>
+                    </MudItem>
+                    <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudCheckBox T="bool" ValueChanged="@(value => SelectedCheckBoxChanged(value))" Disabled="@(User is null)">Na czas nieokreślony</MudCheckBox>
+                    </MudItem>
+                     
+                    @if (!_isCheckBoxSelected)
+                    {
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="ExpiredAt" Style="min-width: 230px;">Data wygaśnięcia</MudInputLabel>
+                            <MudDatePicker @bind-Date="@Model.Contract.EmployedTo" For="@(() => Model.Contract.EmployedTo)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled="@(User is null)" Clearable/>
+                        </MudItem>
+                    }
+                </BodyChildContent>
+            </Section>
+        </MudForm>
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <UserInfoSection Model="@User" Height="1010" />
+    </MudItem>
+
+    <MudItem xs="12" lg="8" Style="margin-bottom: 50px;">
+        <LogSection Height="350" />
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <AnotherEmployeesSection />
+    </MudItem>
+</MudGrid>

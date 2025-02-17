@@ -1,0 +1,196 @@
+﻿@page "/employees/{id}/details"
+@attribute [Authorize(Roles = "HR")]
+
+<Header Title="@($"Szczegóły pracownika { Model.FirstName } { Model.LastName }")" />
+
+<MudGrid Class="mt-2">
+    <MudItem xs="12" lg="8">
+        <MudForm Model="@Model">
+            <Section Title="Informacje o pracowniku" Icon="@Icons.Material.Filled.Info" Height="590">
+                <HeaderChildContent>
+                    <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Rounded.Create" Href="@($"employees/{ Id }/edit/")">Edytuj</MudButton>
+                </HeaderChildContent>
+                <BodyChildContent>
+                    <FormDivider Text="Użytkownik" />
+
+                    <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="User" Style="min-width: 230px;">Użytkownik</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="User" Variant="Variant.Text" Margin="Margin.Normal" Value="@($"{ Model.FirstName } { Model.LastName }")" ReadOnly />
+                    </MudItem>
+
+                    <FormDivider Text="Informacje o pracowniku" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Position" Style="min-width: 230px;">Stanowisko</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="Position" Variant="Variant.Text" Margin="Margin.Normal" Value="Model.Position" ReadOnly />
+                    </MudItem>
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Responsibilities" Style="min-width: 230px;">Obowiązki</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" Lines="3" InputId="Responsibilities" Variant="Variant.Outlined" Margin="Margin.Normal" Value="Model.Responsibilities" ReadOnly />
+                    </MudItem>
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Section" Style="min-width: 230px;">Dział i sekcja</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="Section" Variant="Variant.Text" Margin="Margin.Normal" Value="@($"{ Model.Section } / { Model.Department }")" ReadOnly />
+                    </MudItem>
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Leader" Style="min-width: 230px;">Przełożony</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="Leader" Variant="Variant.Text" Margin="Margin.Normal" Value="Model.LeaderName" ReadOnly />
+                    </MudItem>
+
+                    <FormDivider Text="Wykształcenie i kwalifikacje" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Leader" Style="min-width: 230px;">Historia wykształcenia</MudInputLabel>
+                        <MudPaper Width="100%">
+                            <MudList T="string" Dense Padding>
+                                <MudListSubheader Class="d-flex align-center justify-space-between">
+                                    <MudText Inline Typo="Typo.subtitle2">Lista wykształcenia i kwalifikacji pracownika</MudText>
+                                </MudListSubheader>
+                                @if (Model.Educations.Any())
+                                {
+                                    @foreach (var education in Model.Educations)
+                                    {
+                                        <MudListItem Text="@($"{ @education.EducationDetails } ({ @education.EducationTypes[@education.EducationType] })")" Icon="@Icons.Material.Filled.School" IconColor="Color.Dark">
+                                            <NestedList>
+                                                <MudGrid Style="padding-left: 45px;">
+                                                    <MudItem xs="10">
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.LocationCity" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>@education.EducationTypes[@education.EducationType]</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.Details" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>@education.EducationDetails</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            @if (@education.GraduatedAt.HasValue)
+                                                            {
+                                                                <MudText Inline>Data rozpoczęcia-zakończenia: @education.EnrolledAt.Value.ToShortDateString() - @education.GraduatedAt.Value.ToShortDateString()</MudText>
+                                                            }
+                                                            else
+                                                            {
+                                                                <MudText Inline>Data rozpoczęcia-zakończenia: @education.EnrolledAt.Value.ToShortDateString() - <MudText Inline Color="Color.Tertiary">W trakcie nauki</MudText></MudText>
+                                                            }
+                                                        </MudItem>
+                                                    </MudItem>
+                                                </MudGrid>
+                                            </NestedList>
+                                        </MudListItem>
+                                    }
+                                }
+                                else 
+                                {
+                                    <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">Brak informacji o wykształceniu.</MudText>
+                                }
+
+                            </MudList>
+                        </MudPaper>
+                    </MudItem>
+
+                    <FormDivider Text="Doświadczenie zawodowe" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Leader" Style="min-width: 230px;">Historia zawodowa</MudInputLabel>
+                        <MudPaper Width="100%">
+                            <MudList T="string" Dense Padding>
+                                <MudListSubheader Class="d-flex align-center justify-space-between">
+                                    <MudText Inline Typo="Typo.subtitle2">Lista doświadczenia zawodowego pracownika</MudText>
+                                </MudListSubheader>
+                                @if (Model.Experiences.Any())
+                                {
+                                    @foreach (var experience in Model.Experiences)
+                                    {
+                                        <MudListItem Text="@($"{ @experience.PreviousCompanyName } ({ experience.Position })")" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Dark">
+                                            <NestedList>
+                                                <MudGrid Style="padding-left: 45px;">
+                                                    <MudItem xs="10">
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.HomeWork" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>@experience.PreviousCompanyName</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.Details" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>Typ umowy: @experience.ContractTypes[experience.ContractType]</MudText>
+                                                        </MudItem>
+                                                        <MudFlexBreak />
+                                                        <MudItem Class="d-inline-flex align-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="margin-right: 7px;" />
+                                                            <MudText Inline>Data od-do: @experience.EmployedFrom.Value.ToShortDateString() - @experience.EmployedTo.Value.ToShortDateString()</MudText>
+                                                        </MudItem>
+                                                    </MudItem>
+                                                </MudGrid>
+                                            </NestedList>
+                                        </MudListItem>
+                                    }
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">Brak informacji o doświadczeniu zawodowym.</MudText>
+                                }
+                            </MudList>
+                        </MudPaper>
+                    </MudItem>
+
+                    <FormDivider Text="Kontrakty" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Leader" Style="min-width: 230px;">Historia kontraktów</MudInputLabel>
+                        <MudPaper Width="100%">
+                            <MudList T="string" Dense Padding>
+                                <MudListSubheader Class="d-flex align-center justify-space-between">
+                                    <MudText Inline Typo="Typo.subtitle2">Lista kontraktów pracownika</MudText>
+                                </MudListSubheader>
+                                @foreach (var contract in Model.Contracts)
+                                {
+                                    <MudListItem Text="@($"{ @contract.ContractTypes[contract.ContractType] } ({ contract.ContractDescription })")" Icon="@Icons.Material.Filled.Work" IconColor="Color.Dark">
+                                        <NestedList>
+                                            <MudGrid Style="padding-left: 45px;">
+                                                <MudItem xs="10">
+                                                    <MudItem Class="d-inline-flex align-center">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Details" Size="Size.Small" Style="margin-right: 7px;" />
+                                                        <MudText Inline>Typ umowy: @contract.ContractTypes[contract.ContractType]</MudText>
+                                                    </MudItem>
+                                                    <MudFlexBreak />
+                                                    <MudItem Class="d-inline-flex align-center">
+                                                        <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="margin-right: 7px;" />
+                                                        @if (@contract.ExpiredAt.HasValue)
+                                                        {
+                                                            <MudText Inline>Data od-do: @contract.StartedAt.Value.ToShortDateString() - @contract.ExpiredAt.Value.ToShortDateString()</MudText>
+                                                        }
+                                                        else 
+                                                        {
+                                                            <MudText Inline>Data od-do: @contract.StartedAt.Value.ToShortDateString() - <MudText Inline Color="Color.Tertiary">aktualnie trwa</MudText></MudText>
+                                                        }
+                                                    </MudItem>
+                                                </MudItem>
+                                            </MudGrid>
+                                        </NestedList>
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        </MudPaper>
+                    </MudItem>
+                </BodyChildContent>
+            </Section>
+        </MudForm>
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <UserInfoSection Model="@User" Height="1090" />
+    </MudItem>
+
+    <MudItem xs="12" lg="8" Style="margin-bottom: 50px;">
+        <LogSection Height="350" />
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <AnotherEmployeesSection ActualEmployeeId="@Model.EmployeeId" />
+    </MudItem>
+</MudGrid>

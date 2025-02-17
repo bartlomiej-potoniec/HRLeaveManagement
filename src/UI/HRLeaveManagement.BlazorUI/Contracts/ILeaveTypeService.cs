@@ -8,7 +8,7 @@ public interface ILeaveTypeService
     Task<IEnumerable<LeaveTypeViewModel>> GetAll();
     Task<LeaveTypeViewModel> GetDetails(int id);
 
-    Task<Response<Guid>> Create(LeaveTypeViewModel leaveType);
-    Task<Response<Guid>> Update(int id, LeaveTypeViewModel leaveType);
-    Task<Response<Guid>> Delete(int id);
+    Task<Response> Create(LeaveTypeViewModel leaveType);
+    Task<Response> Update(int id, LeaveTypeViewModel leaveType);
+    Task<Response> Delete(int id);
 }

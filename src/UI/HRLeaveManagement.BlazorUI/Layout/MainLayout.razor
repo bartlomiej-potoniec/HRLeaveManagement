@@ -1,21 +1,25 @@
 ﻿@inherits LayoutComponentBase
 
+@* background-color: #200a81 *@
 <MudLayout>
-    <MudAppBar Elevation="0" Style="background-color: white; box-shadow" class="my-box-shadow">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Dark" Edge="Edge.Start" Style="height: 50px;" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-
-        <LoginDisplay />
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="4" Width="320px" Style="background-color: #200a81;">
-        <MudDrawerHeader Style="background-color: white; min-height: 56px;">
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="4" Width="320px">
+        <MudDrawerHeader Style="min-height: 56px; background-color: #200a81;">
             <MudIcon Icon="@Icons.Material.Filled.AlternateEmail" Color="Color.Dark" Title="HR Management" Class="mr-1 ml-3" />
             <MudText Typo="Typo.h6" Color="Color.Primary">HR Management</MudText>
         </MudDrawerHeader>
 
         <NavMenu />
     </MudDrawer>
-    <MudMainContent>
+
+    <MudAppBar Elevation="0" Style="background-color: transparent;" Fixed="false">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Dark" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Placeholder="Szukaj na stronie" Margin="Margin.Dense" Clearable />
+        <MudSpacer />
+        <LoginDisplay />
+    </MudAppBar>
+
+    <MudMainContent Style="margin-top: -45px;">
         <MudContainer>
             @Body
         </MudContainer>
@@ -29,6 +33,7 @@
 
 @code {
     bool _drawerOpen = true;
+    string? searchString;
 
     void DrawerToggle() => _drawerOpen = !_drawerOpen;
 }

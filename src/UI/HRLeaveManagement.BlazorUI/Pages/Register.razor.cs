@@ -20,17 +20,17 @@ public partial class Register
 
     protected async Task HandleRegister()
     {
-        var authResult = await AuthenticationService.RegisterAsync(
+        /*var authResult = await AuthenticationService.RegisterAsync(
             Model.FirstName!,
             Model.LastName!,
             Model.UserName!,
             Model.Email!,
             Model.Password!
-        );
+        );*/
 
-        if (authResult)
+        /*if (authResult)
             NavigationManager.NavigateTo("/");
 
-        Message = "Something went wrong, please try again";
+        Message = "Something went wrong, please try again";*/
     }
 }

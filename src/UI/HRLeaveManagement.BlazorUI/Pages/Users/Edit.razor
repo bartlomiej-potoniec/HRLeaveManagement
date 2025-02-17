@@ -1,0 +1,103 @@
+﻿@page "/users/{id}/edit"
+@attribute [Authorize(Roles = "Administrator")]
+
+<Header Title="@($"Edytuj użytkownika { Model.UserName }")" />
+
+<MudGrid>
+    <MudItem xs="12" lg="8">
+        <MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)">
+            <Section Title="Edycja użytkownika" Icon="@Icons.Material.Filled.Edit" Height="590">
+                <HeaderChildContent>
+                    <MudButton Href="@($"/users/{ Model.Id }/details")" Style="margin-top: 8px;" ButtonType="ButtonType.Reset" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel">Odrzuć</MudButton>
+                    <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Rounded.Create" OnClick="@(() => SaveChangesAsync())">Zapisz</MudButton>
+                </HeaderChildContent>
+                <BodyChildContent>
+                    <FormDivider Text="Podstawowe informacje" />
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="FirstName" Style="min-width: 230px;">Imię</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="FirstName" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.FirstName" For="@(() => Model.FirstName)" Immediate Clearable />
+                    </MudItem>
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="LastName" Style="min-width: 230px;">Nazwisko</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="LastName" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.LastName" For="@(() => Model.LastName)" Immediate Clearable />
+                    </MudItem>
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Email" Style="min-width: 230px;">E-mail</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="Email" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.Email" For="@(() => Model.Email)" Immediate Clearable />
+                    </MudItem>
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="DateOfBirth" Style="min-width: 230px;">Data urodzenia</MudInputLabel>
+                        <MudDatePicker Variant="Variant.Outlined" Placeholder="Data urodzenia" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Date="Model.DateOfBirth" For="@(() => Model.DateOfBirth)" ImmediateText Editable Clearable />
+                    </MudItem>
+                    <MudItem xs="9" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Pesel" Style="min-width: 230px;">Numer PESEL</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="Pesel" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.PeselNumber"
+                                      For="@(() => Model.PeselNumber)" Disabled="@(!_hasPesel)" Immediate Clearable />
+                    </MudItem>
+                    <MudItem xs="3" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudCheckBox @bind-Value="_hasPesel">@HasPeselText</MudCheckBox>
+                    </MudItem>
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="PhoneNumber" Style="min-width: 230px;">Numer telefonu</MudInputLabel>
+                        <MudTextField Typo="Typo.body2" InputId="PhoneNumber" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" @bind-Value="Model.PhoneNumber" For="@(() => Model.PhoneNumber)" Immediate Clearable />
+                    </MudItem>
+
+                    <FormDivider Text="Role użytkownika"/>
+
+                    <MudItem xs="9" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Deputy" Style="min-width: 230px;">Wybierz role</MudInputLabel>
+                        <MudAutocomplete T="string" @bind-Value="SelectedRole" CoerceText="true" OnKeyDown="HandleKeyDown" ResetValueOnEmptyText="true" SearchFunc="SearchRoles" Clearable
+                                         Placeholder="Wpisz lub wybierz rolę" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;">
+                        </MudAutocomplete>
+                    </MudItem>
+
+                    <MudItem xs="3" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddRoleFromButton" Disabled="@IsAddRoleDisabled">
+                            Dodaj rolę
+                        </MudButton>
+                    </MudItem>
+
+                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudInputLabel ForId="Deputy" Style="min-width: 230px; margin-top: 20px;">Wybrane role</MudInputLabel>
+                        <div style="margin-top: 1rem;">
+                            @if (Model.Roles.Any())
+                            {
+                                @foreach (var role in Model.Roles)
+                                {
+                                    <MudChip T="string" Color="Color.Default" Closeable="true" OnClose="() => RemoveRole(role)">
+                                        @role
+                                    </MudChip>
+                                }
+                            }
+                            else
+                            {
+                                <MudText>Nie wybrano żadnych roli dla użytkownika</MudText>
+                            }
+                        </div>
+                    </MudItem>
+                </BodyChildContent>
+            </Section>
+        </MudForm>
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <UserAccountInfoSection Model="@Model" Height="630" />
+    </MudItem>
+
+    <MudItem xs="12" lg="8" Style="margin-bottom: 50px;">
+        <LogSection Height="350" />
+    </MudItem>
+
+    <MudItem xs="12" lg="4" Style="margin-bottom: 50px;">
+        <AnotherUsersSection ActualUserId="Model.Id" Height="350" />
+    </MudItem>
+</MudGrid>
+
+<style>
+    .mud-card-header .mud-card-header-avatar {
+        margin-right: 8px !important;
+        margin-inline-end: 8px !important;
+    }
+</style>

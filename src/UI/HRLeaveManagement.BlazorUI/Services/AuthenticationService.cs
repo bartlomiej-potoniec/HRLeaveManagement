@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Models;
 using HRLeaveManagement.BlazorUI.Providers;
 using HRLeaveManagement.BlazorUI.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -13,13 +14,13 @@ public sealed class AuthenticationService(IClient client,
 {
     private readonly AuthenticationStateProvider _authenticationStateProvider = authenticationStateProvider;
 
-    public async Task<bool> AuthenticateAsync(string email, string password)
+    public async Task<bool> AuthenticateAsync(string userName, string password)
     {
         try
         {
             var authRequest = new AuthRequest
             {
-                Email = email,
+                UserName = userName,
                 Password = password
             };
 
@@ -40,24 +41,39 @@ public sealed class AuthenticationService(IClient client,
         }
     }
 
-    public async Task<bool> RegisterAsync(string firstName,
-                                          string lastName,
-                                          string userName,
-                                          string email,
-                                          string password)
+    public async Task<Response<RegistrationResponse>> RegisterAsync(string firstName,
+                                                                    string lastName,
+                                                                    string email,
+                                                                    DateTime dateOfBirth,
+                                                                    string? peselNumber,
+                                                                    string phoneNumber,
+                                                                    List<string> roles)
     {
-        var registrationRequest = new RegistrationRequest
+        Response<RegistrationResponse> response;
+
+        try
         {
-            FirstName = firstName,
-            LastName = lastName,
-            UserName = userName,
-            Email = email,
-            Password = password
-        };
+            var request = new RegistrationRequest
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                DateOfBirth = dateOfBirth,
+                PeselNumber = peselNumber,
+                PhoneNumber = phoneNumber,
+                Roles = roles
+            };
 
-        var registrationResponse = await _client.RegisterAsync(registrationRequest);
+            var data = await _client.RegisterAsync(request);
+            response = base.GenerateSuccessResponse("User created successfully", data);
+        }
 
-        return !string.IsNullOrEmpty(registrationResponse.UserId);
+        catch (ApiException ex)
+        {
+            response = base.ConvertApiExceptions<RegistrationResponse>(ex);
+        }
+
+        return response;
     }
 
     public async Task Logout()
