@@ -37,7 +37,5 @@ public class DepartmentTest
             );
     }
 
-
-    private static Department CreateWithDefaultValues()
-        => Department.Create("R&D", Guid.NewGuid());
+    private static Department CreateWithDefaultValues() => Department.Create("R&D", Guid.NewGuid());
 }

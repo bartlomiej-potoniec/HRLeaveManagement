@@ -38,7 +38,6 @@ public class EmployeeEducationTest
         // Act
         EmployeeEducation.Update(
             employeeEducation,
-            emloyeeId,
             educationType,
             educationDetails,
             enrolledAt,
@@ -49,7 +48,6 @@ public class EmployeeEducationTest
         employeeEducation
             .Should()
             .BeEquivalentTo(expectedEmployeeEducation, options => options
-                .Including(ee => ee.EmployeeId)
                 .Including(ee => ee.EducationType)
                 .Including(ee => ee.EducationDetails)
                 .Including(ee => ee.EnrolledAt)
@@ -57,6 +55,44 @@ public class EmployeeEducationTest
             );
     }
 
+    [Fact]
+    public void Update_ForGivenDateTimeParams_UpdatesPropertiesOfExistingInstance()
+    {
+        // Arrange
+        Guid emloyeeId = Guid.NewGuid();
+        EducationType educationType = EducationType.Higher;
+        string educationDetails = "Details";
+        DateTime enrolledAt = new();
+        DateTime? graduatedAt = new();
+
+        var employeeEducation = CreateWithDefaultValues();
+        var expectedEmployeeEducation = EmployeeEducation.Create(
+            emloyeeId,
+            educationType,
+            educationDetails,
+            enrolledAt,
+            graduatedAt
+        );
+
+        // Act
+        EmployeeEducation.Update(
+            employeeEducation,
+            educationType,
+            educationDetails,
+            enrolledAt,
+            graduatedAt
+        );
+
+        // Assert
+        employeeEducation
+            .Should()
+            .BeEquivalentTo(expectedEmployeeEducation, options => options
+                .Including(ee => ee.EducationType)
+                .Including(ee => ee.EducationDetails)
+                .Including(ee => ee.EnrolledAt)
+                .Including(ee => ee.GraduatedAt)
+            );
+    }
 
     private static EmployeeEducation CreateWithDefaultValues()
         =>
@@ -66,5 +102,15 @@ public class EmployeeEducationTest
                 educationDetails: string.Empty,
                 enrolledAt: new DateOnly(),
                 graduatedAt: new DateOnly()
+            );
+
+    private static EmployeeEducation CreateWithDateTimeValues()
+        =>
+            EmployeeEducation.Create(
+                employeeId: Guid.NewGuid(),
+                educationType: EducationType.Secondary,
+                educationDetails: string.Empty,
+                enrolledAt: new DateTime(),
+                graduatedAt: new DateTime()
             );
 }

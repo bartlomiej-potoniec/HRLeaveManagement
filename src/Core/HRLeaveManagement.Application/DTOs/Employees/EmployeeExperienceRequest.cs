@@ -3,5 +3,7 @@
 namespace HRLeaveManagement.Application.DTOs.Employees;
 
 public record EmployeeExperienceRequest(ContractType ContractType,
-                                        DateOnly EmployedFrom,
-                                        DateOnly EmployedTo);
+                                        string PreviousCompanyName,
+                                        string Position,
+                                        DateTime EmployedFrom,
+                                        DateTime EmployedTo);

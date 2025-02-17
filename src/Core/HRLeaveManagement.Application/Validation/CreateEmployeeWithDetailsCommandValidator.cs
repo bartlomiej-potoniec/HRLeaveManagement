@@ -13,7 +13,11 @@ public sealed class CreateEmployeeWithDetailsCommandValidator : AbstractValidato
     {
         RuleFor(c => c.UserId)
             .NotNull()
-                .WithMessage("{PropertyName} is required");
+                .WithMessage("{PropertyName} is required")
+            .MustAsync(async (id, token) => await userService.GetUserById(id) is not null)
+                .WithMessage("User for given ID does not exist")
+            .MustAsync(async (id, token) => (await userService.GetUserById(id)).EmployeeId is null)
+                .WithMessage("Employee account for user with given ID already exist");
 
         RuleFor(c => c.Position)
             .NotNull()

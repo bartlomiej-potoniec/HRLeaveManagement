@@ -6,8 +6,10 @@ public record EmployeeExperienceDetailsDTO
 {
     public required int Id { get; init; }
     public required ContractType ContractType { get; init; }
-    public required DateOnly EmployedFrom { get; init; }
-    public required DateOnly EmployedTo { get; init; }
+    public required string PreviousCompanyName { get; init; }
+    public required string Position { get; init; }
+    public required DateTime EmployedFrom { get; init; }
+    public required DateTime EmployedTo { get; init; }
     public required int TotalEmployment { get; init; }
 
     public required DateTime CreatedAt { get; init; }

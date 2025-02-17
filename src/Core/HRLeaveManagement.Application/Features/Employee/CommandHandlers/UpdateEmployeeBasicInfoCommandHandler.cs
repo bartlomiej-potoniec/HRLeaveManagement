@@ -33,7 +33,7 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
 
         if (!validationResult.IsValid)
         {
-            _logger.LogError("Validation error occurred while proccessing {command}", nameof(CreateEmployeeWithDetailsCommand));
+            _logger.LogError("Validation error occurred while proccessing {Command}", nameof(CreateEmployeeWithDetailsCommand));
             throw new BadRequestException("Invalid employee update request", validationResult);
         }
 

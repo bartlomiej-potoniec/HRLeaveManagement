@@ -104,10 +104,9 @@ public class LeaveAllocationTest
             .Be(expectedRemainingDays);
     }
 
-
     private static LeaveAllocation CreateWithAvailableDays(int? availableDays = null)
         => LeaveAllocation.Create(Guid.NewGuid(), 1, 2024, availableDays);
 
     private static void UpdateWithAvailableDays(LeaveAllocation entity, int? availableDays = null)
-        => LeaveAllocation.Update(entity, Guid.NewGuid(), 2, 2024, availableDays);
+        => LeaveAllocation.Update(entity, availableDays);
 }

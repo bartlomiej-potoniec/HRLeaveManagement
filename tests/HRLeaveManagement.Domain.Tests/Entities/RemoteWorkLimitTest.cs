@@ -57,7 +57,6 @@ public class RemoteWorkLimitTest
             .Be(expectedRemainingDays);
     }
 
-
     private static RemoteWorkLimit CreateWithDefaultValues()
         => RemoteWorkLimit.Create(Guid.NewGuid(), 2024, 26);
 }

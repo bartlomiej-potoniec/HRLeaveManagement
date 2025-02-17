@@ -6,8 +6,8 @@ public record EmployeeContractDetailsDTO
 {
     public required int Id { get; init; }
     public required ContractType ContractType { get; init; }
-    public required DateOnly StartedAt { get; init; }
-    public DateOnly? ExpiredAt { get; init; }
+    public required DateTime StartedAt { get; init; }
+    public DateTime? ExpiredAt { get; init; }
     public int? TotalDuration { get; init; }
 
     public required DateTime CreatedAt { get; init; }

@@ -47,6 +47,27 @@ public sealed class EmployeeRepository(ApplicationDbContext dbContext) : IEmploy
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task UpdateWithDetailsAsync(Employee employee,
+                                             IEnumerable<EmployeeContract> contractsToCreate,
+                                             IEnumerable<EmployeeEducation> educationsToCreate,
+                                             IEnumerable<EmployeeExperience> experiencesToCreate,
+                                             IEnumerable<EmployeeContract> contractsToUpdate,
+                                             IEnumerable<EmployeeEducation> educationsToUpdate,
+                                             IEnumerable<EmployeeExperience> experiencesToUpdate)
+    {
+        _dbContext.Employees.Update(employee);
+
+        _dbContext.EmployeeContracts.UpdateRange(contractsToUpdate);
+        _dbContext.EmployeeEducations.UpdateRange(educationsToUpdate);
+        _dbContext.EmployeeExperiences.UpdateRange(experiencesToUpdate);
+
+        await _dbContext.EmployeeContracts.AddRangeAsync(contractsToCreate);
+        await _dbContext.EmployeeEducations.AddRangeAsync(educationsToCreate);
+        await _dbContext.EmployeeExperiences.AddRangeAsync(experiencesToCreate);
+
+        await _dbContext.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<EmployeeContract>> GetAllContractsByEmployeeIdAsync(Guid employeeId)
         => await _dbContext.EmployeeContracts
             .Where(ec => ec.EmployeeId == employeeId)

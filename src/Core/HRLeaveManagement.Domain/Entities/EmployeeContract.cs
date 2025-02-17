@@ -40,6 +40,25 @@ public class EmployeeContract
             ModifiedAt = DateTime.UtcNow
         };
 
+    public static EmployeeContract Create(Employee employee,
+                                          ContractType contractType,
+                                          DateTime startedAt,
+                                          DateTime? expiredAt = null)
+        => new()
+        {
+            Employee = employee,
+            ContractType = contractType,
+            StartedAt = DateOnly.FromDateTime(startedAt),
+            ExpiredAt = expiredAt.HasValue 
+                ? DateOnly.FromDateTime(expiredAt.Value) 
+                : null,
+            TotalDuration = expiredAt.HasValue
+                ? (expiredAt - startedAt).Value.Days
+                : null,
+            CreatedAt = DateTime.UtcNow,
+            ModifiedAt = DateTime.UtcNow
+        };
+
     public static EmployeeContract Create(Guid employeeId,
                                           ContractType contractType,
                                           DateOnly startedAt,
@@ -58,17 +77,31 @@ public class EmployeeContract
         };
 
     public static void Update(EmployeeContract entity,
-                              Guid employeeId,
                               ContractType contractType,
                               DateOnly startedAt,
                               DateOnly? expiredAt = null)
     {
-        entity.EmployeeId = employeeId;
         entity.ContractType = contractType;
         entity.StartedAt = startedAt;
         entity.ExpiredAt = expiredAt;
         entity.TotalDuration = expiredAt.HasValue
             ? expiredAt.Value.DayNumber - startedAt.DayNumber
+            : null;
+        entity.ModifiedAt = DateTime.UtcNow;
+    }
+
+    public static void Update(EmployeeContract entity,
+                              ContractType contractType,
+                              DateTime startedAt,
+                              DateTime? expiredAt = null)
+    {
+        entity.ContractType = contractType;
+        entity.StartedAt = DateOnly.FromDateTime(startedAt);
+        entity.ExpiredAt = expiredAt.HasValue
+            ? DateOnly.FromDateTime(expiredAt.Value)
+            : null;
+        entity.TotalDuration = expiredAt.HasValue
+            ? (expiredAt- startedAt).Value.Days
             : null;
         entity.ModifiedAt = DateTime.UtcNow;
     }

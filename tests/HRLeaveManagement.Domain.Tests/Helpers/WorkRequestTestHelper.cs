@@ -1,6 +1,4 @@
-﻿using HRLeaveManagement.Domain.Entities;
-
-namespace HRLeaveManagement.Domain.Tests.Helpers;
+﻿namespace HRLeaveManagement.Domain.Tests.Helpers;
 
 public class WorkRequestTestHelper : WorkRequest
 {

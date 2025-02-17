@@ -39,11 +39,29 @@ public class EmployeeEducation
             ModifiedAt = DateTime.UtcNow
         };
 
+    public static EmployeeEducation Create(Employee employee,
+                                           EducationType educationType,
+                                           string educationDetails,
+                                           DateTime enrolledAt,
+                                           DateTime? graduatedAt)
+        => new()
+        {
+            Employee = employee,
+            EducationType = educationType,
+            EducationDetails = educationDetails,
+            EnrolledAt = DateOnly.FromDateTime(enrolledAt),
+            GraduatedAt = graduatedAt.HasValue 
+                ? DateOnly.FromDateTime(graduatedAt.Value) 
+                : null,
+            CreatedAt = DateTime.UtcNow,
+            ModifiedAt = DateTime.UtcNow
+        };
+
     public static EmployeeEducation Create(Guid employeeId,
                                            EducationType educationType,
                                            string educationDetails,
                                            DateOnly enrolledAt,
-                                           DateOnly graduatedAt)
+                                           DateOnly? graduatedAt)
         => new()
         {
             EmployeeId = employeeId,
@@ -55,18 +73,49 @@ public class EmployeeEducation
             ModifiedAt = DateTime.UtcNow
         };
 
+    public static EmployeeEducation Create(Guid employeeId,
+                                           EducationType educationType,
+                                           string educationDetails,
+                                           DateTime enrolledAt,
+                                           DateTime? graduatedAt)
+        => new()
+        {
+            EmployeeId = employeeId,
+            EducationType = educationType,
+            EducationDetails = educationDetails,
+            EnrolledAt = DateOnly.FromDateTime(enrolledAt),
+            GraduatedAt = graduatedAt.HasValue 
+                ? DateOnly.FromDateTime(graduatedAt.Value) 
+                : null,
+            CreatedAt = DateTime.UtcNow,
+            ModifiedAt = DateTime.UtcNow
+        };
+
     public static void Update(EmployeeEducation entity,
-                              Guid employeeId,
                               EducationType educationType,
                               string educationDetails,
                               DateOnly enrolledAt,
-                              DateOnly graduatedAt)
+                              DateOnly? graduatedAt)
     {
-        entity.EmployeeId = employeeId;
         entity.EducationType = educationType;
         entity.EducationDetails = educationDetails;
         entity.EnrolledAt = enrolledAt;
         entity.GraduatedAt = graduatedAt;
+        entity.ModifiedAt = DateTime.UtcNow;
+    }
+
+    public static void Update(EmployeeEducation entity,
+                              EducationType educationType,
+                              string educationDetails,
+                              DateTime enrolledAt,
+                              DateTime? graduatedAt)
+    {
+        entity.EducationType = educationType;
+        entity.EducationDetails = educationDetails;
+        entity.EnrolledAt = DateOnly.FromDateTime(enrolledAt);
+        entity.GraduatedAt = graduatedAt.HasValue
+            ? DateOnly.FromDateTime(graduatedAt.Value)
+            : null;
         entity.ModifiedAt = DateTime.UtcNow;
     }
 

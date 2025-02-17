@@ -2,7 +2,7 @@
 using HRLeaveManagement.Application.DTOs.Employees;
 using AutoMapper;
 using HRLeaveManagement.Application.MappingResolvers;
-using HRLeaveManagement.Application.DTOs.User;
+using HRLeaveManagement.Application.DTOs.Users;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 
@@ -19,12 +19,23 @@ public class EmployeeProfile : Profile
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.userDto.PhoneNumber))
             .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.employee.Position))
             .ForMember(dest => dest.Section, opt => opt.MapFrom(src => src.employee.Section.Name))
+            .ForMember(dest => dest.Responsibilities, opt => opt.MapFrom(src => src.employee.Responsibilities))
             .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.employee.Section.Department.Name))
             .ForMember(dest => dest.Contracts, opt => opt.MapFrom(src => src.employee.EmploymentContracts
-                .Select(ec => new EmployeeContractResponse(ec.Id, ec.ContractType, ec.StartedAt, ec.ExpiredAt))
+                .Select(ec => new EmployeeContractResponse(
+                    ec.Id, ec.ContractType, 
+                    ec.StartedAt.ToDateTime(new TimeOnly()), 
+                    ec.ExpiredAt.HasValue 
+                        ? ec.ExpiredAt.Value.ToDateTime(new TimeOnly()) 
+                        : null
+                    )
+                )
             ))
             .ForMember(dest => dest.IsCurrentlyEmployed, opt => opt.MapFrom<IsCurrentlyEmployedResolver>())
             .ForMember(dest => dest.LeaderId, opt => opt.MapFrom(src => src.employee.LeaderId))
+            .ForMember(dest => dest.IsLeader, opt => 
+                opt.MapFrom((src, dest, destMember, context) => 
+                    context.Items.TryGetValue("IsLeader", out object? value) ? value as bool? : null))
             .ForMember(dest => dest.LeaderName, opt => 
                 opt.MapFrom((src, dest, destMember, context) => 
                     context.Items.TryGetValue("LeaderName", out object? value) ? value as string : null))
@@ -40,15 +51,20 @@ public class EmployeeProfile : Profile
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.userDto.PhoneNumber))
             .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.userDto.DateOfBirth))
             .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.employee.Position))
+            .ForMember(dest => dest.SectionId, opt => opt.MapFrom(src => src.employee.Section.Id))
             .ForMember(dest => dest.Section, opt => opt.MapFrom(src => src.employee.Section.Name))
+            .ForMember(dest => dest.Responsibilities, opt => opt.MapFrom(src => src.employee.Responsibilities))
+            .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.employee.Section.Department.Id))
             .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.employee.Section.Department.Name))
             .ForMember(dest => dest.Contracts, opt => opt.MapFrom(src => src.employee.EmploymentContracts
                 .Select(ec => new EmployeeContractDetailsDTO
                 {
                     Id = ec.Id,
                     ContractType = ec.ContractType,
-                    StartedAt = ec.StartedAt,
-                    ExpiredAt = ec.ExpiredAt,
+                    StartedAt = ec.StartedAt.ToDateTime(new TimeOnly()),
+                    ExpiredAt = ec.ExpiredAt.HasValue 
+                        ? ec.ExpiredAt.Value.ToDateTime(new TimeOnly()) 
+                        : null,
                     TotalDuration = ec.TotalDuration,
                     CreatedAt = ec.CreatedAt,
                     ModifiedAt = ec.ModifiedAt
@@ -61,8 +77,10 @@ public class EmployeeProfile : Profile
                     Id = ee.Id,
                     EducationType = ee.EducationType,
                     EducationDetails = ee.EducationDetails,
-                    EnrolledAt = ee.EnrolledAt,
-                    GraduatedAt = ee.GraduatedAt,
+                    EnrolledAt = ee.EnrolledAt.ToDateTime(new TimeOnly()),
+                    GraduatedAt = ee.GraduatedAt.HasValue 
+                        ? ee.GraduatedAt.Value.ToDateTime(new TimeOnly())
+                        : null,
                     CreatedAt = ee.CreatedAt,
                     ModifiedAt = ee.ModifiedAt
                 })
@@ -73,8 +91,10 @@ public class EmployeeProfile : Profile
                 {
                     Id = ee.Id,
                     ContractType = ee.ContractType,
-                    EmployedFrom = ee.EmployedFrom,
-                    EmployedTo = ee.EmployedTo,
+                    PreviousCompanyName = ee.PreviousCompanyName,
+                    Position = ee.Position,
+                    EmployedFrom = ee.EmployedFrom.ToDateTime(new TimeOnly()),
+                    EmployedTo = ee.EmployedTo.ToDateTime(new TimeOnly()),
                     TotalEmployment = ee.TotalEmployment,
                     CreatedAt = ee.CreatedAt,
                     ModifiedAt = ee.ModifiedAt

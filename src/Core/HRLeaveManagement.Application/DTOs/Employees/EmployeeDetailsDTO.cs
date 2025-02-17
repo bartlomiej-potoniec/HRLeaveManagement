@@ -10,11 +10,14 @@ public record EmployeeDetailsDTO
     public required string Email { get; init; }
     public string? PeselNumber { get; init; }
     public required string PhoneNumber { get; init; }
-    public required DateOnly DateOfBirth { get; init; }
+    public required DateTime DateOfBirth { get; init; }
 
     public required string Position { get; init; }
+    public required int SectionId { get; init; }
     public required string Section { get; init; }
+    public required int DepartmentId { get; init; }
     public required string Department { get; init; }
+    public required string Responsibilities { get; init; }
 
     public bool IsCurrentlyEmployed { get; init; }
     public List<EmployeeContractDetailsDTO> Contracts { get; init; } = [];

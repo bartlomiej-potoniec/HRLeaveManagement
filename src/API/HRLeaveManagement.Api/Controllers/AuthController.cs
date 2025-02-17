@@ -1,6 +1,5 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.DTOs.Auth;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRLeaveManagement.Api.Controllers;

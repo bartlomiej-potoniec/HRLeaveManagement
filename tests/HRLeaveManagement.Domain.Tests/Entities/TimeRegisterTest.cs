@@ -54,7 +54,6 @@ public class TimeRegisterTest
             [new TimeOnly(12, 45), new TimeOnly(13, 0), new TimeSpan(0, 15, 0)]
         ];
 
-
     private static TimeRegister CreateForEmployeeBreak(TimeOnly? breakStartedAt = null,
                                                        TimeOnly? brakeEndedAt = null)
         =>

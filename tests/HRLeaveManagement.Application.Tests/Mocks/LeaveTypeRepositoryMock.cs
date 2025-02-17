@@ -20,14 +20,14 @@ public class LeaveTypeRepositoryMock
             .Setup(mock => mock.GetAllAsync())
             .ReturnsAsync(leaveTypes);
 
-        mock
+        /*mock
             .Setup(mock => mock.CreateAsync(It.IsAny<LeaveType>()))
             .ReturnsAsync((LeaveType leaveType) =>
             {
                 leaveTypes.Add(leaveType);
                 return leaveType.Id;
             });
-
+*/
         return mock;
     }
 }

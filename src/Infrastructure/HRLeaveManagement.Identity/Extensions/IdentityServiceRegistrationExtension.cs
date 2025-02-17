@@ -38,9 +38,10 @@ public static class IdentityServiceRegistrationExtension
             .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
             .AddDefaultTokenProviders();
 
+        services.AddTransient<ICredentialService, CredentialService>();
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IUserService, UserService>();
-        services.AddTransient<ICredentialService, CredentialService>();
+        services.AddTransient<IRoleService, RoleService>();
         services.AddTransient<IJwtService, JwtService>();
         services.AddTransient<IEmailService, EmailService>();
         services.AddTransient<IIdentityResult, IdentityResultAdapter>();

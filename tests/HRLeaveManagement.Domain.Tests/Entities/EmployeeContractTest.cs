@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.Domain.Enums;
+using HRLeaveManagement.Domain.Tests.Helpers;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
 
@@ -11,7 +12,23 @@ public class EmployeeContractTest
                                                                                  int? expectedTotalDuration)
     {
         // Act
-        var employeeContract = CreateWithEmploymentDates(startedAt, expiredAt);
+        var employeeContract = CreateWithEmploymentDatesByGuid(startedAt, expiredAt);
+
+        // Assert
+        employeeContract
+            .TotalDuration
+            .Should()
+            .Be(expectedTotalDuration);
+    }
+
+    [Theory]
+    [MemberData(nameof(GetDataForDateTime))]
+    public void Create_ForDateTimeParams_SetsAppropriateTotalDuratonValue(DateTime startedAt,
+                                                                          DateTime? expiredAt,
+                                                                          int? expectedTotalDuration)
+    {
+        // Act
+        var employeeContract = CreateWithEmploymentDateTimes(startedAt, expiredAt);
 
         // Assert
         employeeContract
@@ -27,12 +44,11 @@ public class EmployeeContractTest
                                                                                  int? expectedTotalDuration)
     {
         // Arrange
-        var employeeContract = CreateWithEmploymentDates();
+        var employeeContract = CreateWithEmploymentDatesByGuid();
 
         // Act
         EmployeeContract.Update(
             employeeContract,
-            employeeContract.EmployeeId,
             employeeContract.ContractType,
             startedAt,
             expiredAt
@@ -53,7 +69,7 @@ public class EmployeeContractTest
         DateOnly expiredDate = new(2024, 06, 20);
         int expectedTotalDuration = 366;
 
-        var employeeContract = CreateWithEmploymentDates(startedAt);
+        var employeeContract = CreateWithEmploymentDatesByGuid(startedAt);
 
         // Act
         EmployeeContract.Terminate(employeeContract, expiredDate);
@@ -71,9 +87,24 @@ public class EmployeeContractTest
             [new DateOnly(2023, 6, 12), new DateOnly(2024, 6, 12), 366]
         ];
 
+    public static IEnumerable<object[]?> GetDataForDateTime()
+        => [
+            [new DateTime(2023, 6, 12), null, null],
+            [new DateTime(2023, 6, 12), new DateTime(2024, 6, 12), 366]
+        ];
 
     private static EmployeeContract CreateWithEmploymentDates(DateOnly startedAt = new(),
                                                               DateOnly? expiredAt = null)
+        =>
+            EmployeeContract.Create(EmployeeHelper.CreateEmployee(), ContractType.Employment, startedAt, expiredAt);
+
+    private static EmployeeContract CreateWithEmploymentDateTimes(DateTime startedAt = new(),
+                                                                  DateTime? expiredAt = null)
+        =>
+            EmployeeContract.Create(EmployeeHelper.CreateEmployee(), ContractType.Employment, startedAt, expiredAt);
+
+    private static EmployeeContract CreateWithEmploymentDatesByGuid(DateOnly startedAt = new(),
+                                                                    DateOnly? expiredAt = null)
         =>
             EmployeeContract.Create(Guid.NewGuid(), ContractType.Employment, startedAt, expiredAt);
 }

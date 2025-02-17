@@ -1,4 +1,4 @@
-﻿namespace HRLeaveManagement.Application.DTOs.User;
+﻿namespace HRLeaveManagement.Application.DTOs.Users;
 
 public record UserDTO
 {
@@ -8,6 +8,6 @@ public record UserDTO
     public required string LastName { get; init; }
     public string? PeselNumber { get; init; }
     public required string PhoneNumber { get; init; }
-    public required DateOnly DateOfBirth { get; init; }
+    public required DateTime DateOfBirth { get; init; }
     public required Guid? EmployeeId { get; init; }
 }

@@ -66,6 +66,8 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             .Select(ee => EmployeeExperience.Create(
                 employee,
                 ee.ContractType,
+                ee.PreviousCompanyName,
+                ee.Position,
                 ee.EmployedFrom,
                 ee.EmployedTo
             ))

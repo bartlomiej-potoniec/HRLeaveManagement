@@ -32,7 +32,7 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
 
     public async Task<AuthResponse> Login(AuthRequest request)
     {
-        var user = await _signInManager.UserManager 
+        var user = await _signInManager.UserManager
             .FindByNameAsync(request.UserName)
             ?? throw new NotFoundException($"User with username: { request.UserName } not found");
 

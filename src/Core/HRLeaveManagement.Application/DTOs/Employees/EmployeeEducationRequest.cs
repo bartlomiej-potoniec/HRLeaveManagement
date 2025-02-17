@@ -4,5 +4,5 @@ namespace HRLeaveManagement.Application.DTOs.Employees;
 
 public record EmployeeEducationRequest(EducationType EducationType,
                                        string EducationDetails,
-                                       DateOnly EnrolledAt,
-                                       DateOnly? GraduatedAt = null);
+                                       DateTime EnrolledAt,
+                                       DateTime? GraduatedAt = null);
