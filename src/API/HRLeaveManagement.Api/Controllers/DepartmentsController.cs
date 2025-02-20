@@ -1,5 +1,5 @@
-﻿using HRLeaveManagement.Application.Features.Departments.Queries;
-using HRLeaveManagement.Application.Features.Departments.Commands;
+﻿using HRLeaveManagement.Application.Features.Department.Queries;
+using HRLeaveManagement.Application.Features.Department.Commands;
 using HRLeaveManagement.Application.DTOs.Departments;
 using HRLeaveManagement.Application.DTOs.Sections;
 using Microsoft.AspNetCore.Mvc;

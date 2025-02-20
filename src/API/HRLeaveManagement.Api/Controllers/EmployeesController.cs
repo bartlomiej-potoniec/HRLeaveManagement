@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.Features.Employee.Commands;
 using HRLeaveManagement.Application.Features.Employee.Queries;
-using HRLeaveManagement.Application.Features.RemoteWorkLimits.Queries;
+using HRLeaveManagement.Application.Features.RemoteWorkLimit.Queries;
 using HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
 using HRLeaveManagement.Application.DTOs.Employees;
 using HRLeaveManagement.Application.DTOs.RemoteWorkLimits;
@@ -55,7 +55,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
         return NoContent();
     }
 
-/*    [HttpPut("{id}")]
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -64,7 +64,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     {
         await _sender.Send(command with { Id = id });
         return NoContent();
-    }*/
+    }
 
     // Contract subentity
     
@@ -95,7 +95,6 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
         return CreatedAtAction(nameof(GetContractWithDetails), new { employeeId, contractId }, command);
     }
 
-    
     [HttpPut("{employeeId}/contracts/{contractId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

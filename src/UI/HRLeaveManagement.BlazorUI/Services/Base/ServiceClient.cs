@@ -162,21 +162,39 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsAsync(System.Guid employeeId, CreateEmployeeContractCommand body);
+        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsPOSTAsync(System.Guid employeeId, CreateEmployeeContractCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsAsync(System.Guid employeeId, CreateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsPOSTAsync(System.Guid employeeId, CreateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractAsync(System.Guid employeeId, int contractId);
+        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsGETAsync(System.Guid employeeId, int contractId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractAsync(System.Guid employeeId, int contractId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsGETAsync(System.Guid employeeId, int contractId, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ContractsPUTAsync(System.Guid employeeId, int contractId, UpdateEmployeeContractCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ContractsPUTAsync(System.Guid employeeId, int contractId, UpdateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task TerminateAsync(System.Guid employeeId, int contractId, TerminateEmployeeContractCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task TerminateAsync(System.Guid employeeId, int contractId, TerminateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1774,15 +1792,15 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsAsync(System.Guid employeeId, CreateEmployeeContractCommand body)
+        public virtual System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsPOSTAsync(System.Guid employeeId, CreateEmployeeContractCommand body)
         {
-            return ContractsAsync(employeeId, body, System.Threading.CancellationToken.None);
+            return ContractsPOSTAsync(employeeId, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsAsync(System.Guid employeeId, CreateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsPOSTAsync(System.Guid employeeId, CreateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (employeeId == null)
                 throw new System.ArgumentNullException("employeeId");
@@ -1881,15 +1899,15 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractAsync(System.Guid employeeId, int contractId)
+        public virtual System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsGETAsync(System.Guid employeeId, int contractId)
         {
-            return ContractAsync(employeeId, contractId, System.Threading.CancellationToken.None);
+            return ContractsGETAsync(employeeId, contractId, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractAsync(System.Guid employeeId, int contractId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<EmployeeContractDetailsDTO> ContractsGETAsync(System.Guid employeeId, int contractId, System.Threading.CancellationToken cancellationToken)
         {
             if (employeeId == null)
                 throw new System.ArgumentNullException("employeeId");
@@ -1908,10 +1926,10 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/Employees/{employeeId}/contract/{contractId}"
+                    // Operation Path: "api/Employees/{employeeId}/contracts/{contractId}"
                     urlBuilder_.Append("api/Employees/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(employeeId, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/contract/");
+                    urlBuilder_.Append("/contracts/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(contractId, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -1945,6 +1963,217 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task ContractsPUTAsync(System.Guid employeeId, int contractId, UpdateEmployeeContractCommand body)
+        {
+            return ContractsPUTAsync(employeeId, contractId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task ContractsPUTAsync(System.Guid employeeId, int contractId, UpdateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (employeeId == null)
+                throw new System.ArgumentNullException("employeeId");
+
+            if (contractId == null)
+                throw new System.ArgumentNullException("contractId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/Employees/{employeeId}/contracts/{contractId}"
+                    urlBuilder_.Append("api/Employees/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(employeeId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/contracts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(contractId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task TerminateAsync(System.Guid employeeId, int contractId, TerminateEmployeeContractCommand body)
+        {
+            return TerminateAsync(employeeId, contractId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task TerminateAsync(System.Guid employeeId, int contractId, TerminateEmployeeContractCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (employeeId == null)
+                throw new System.ArgumentNullException("employeeId");
+
+            if (contractId == null)
+                throw new System.ArgumentNullException("contractId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/Employees/{employeeId}/contracts/{contractId}/terminate"
+                    urlBuilder_.Append("api/Employees/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(employeeId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/contracts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(contractId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/terminate");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -5821,6 +6050,18 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TerminateEmployeeContractCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeeId")]
+        public System.Guid EmployeeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractId")]
+        public int ContractId { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UnlockUserAccountRequest
     {
 
@@ -5865,6 +6106,27 @@ namespace HRLeaveManagement.BlazorUI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("leaderId")]
         public System.Guid? LeaderId { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateEmployeeContractCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeeId")]
+        public System.Guid EmployeeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractId")]
+        public int ContractId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("contractType")]
+        public ContractType ContractType { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeedFrom")]
+        public System.DateTime EmployeedFrom { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeedTo")]
+        public System.DateTime? EmployeedTo { get; set; }
 
     }
 

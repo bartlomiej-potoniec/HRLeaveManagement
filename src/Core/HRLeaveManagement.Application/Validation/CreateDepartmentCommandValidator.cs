@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Application.Features.Departments.Commands;
+﻿using HRLeaveManagement.Application.Features.Department.Commands;
 using HRLeaveManagement.Application.Contracts.Identity;
 using FluentValidation;
 

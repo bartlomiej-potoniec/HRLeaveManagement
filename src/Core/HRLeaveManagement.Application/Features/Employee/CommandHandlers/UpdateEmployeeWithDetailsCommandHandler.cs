@@ -51,10 +51,13 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
 
         List<EmployeeEducation> educationsToCreate = [];
         List<EmployeeEducation> educationsToUpdate = [];
+        List<EmployeeEducation> educationsToDelete = [];
         List<EmployeeExperience> experiencesToCreate = [];
         List<EmployeeExperience> experiencesToUpdate = [];
+        List<EmployeeExperience> experiencesToDelete = [];
         List<EmployeeContract> contractsToCreate = [];
         List<EmployeeContract> contractsToUpdate = [];
+        List<EmployeeContract> contractsToDelete = [];
 
         request.EmployeeEducations.ForEach(ree =>
         {
@@ -76,6 +79,10 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             EmployeeEducation.Update(existingEducation, ree.EducationType, ree.EducationDetails, ree.EnrolledAt, ree.GraduatedAt);
             educationsToUpdate.Add(existingEducation);
         });
+
+        educationsToDelete = employeeWithDetails.EmployeeEducations
+            .Except(educationsToUpdate)
+            .ToList();
 
         request.EmployeeExperiences.ForEach(ree => 
         {
@@ -107,6 +114,10 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             experiencesToUpdate.Add(existingExperience);
         });
 
+        experiencesToDelete = employeeWithDetails.EmployeeExperiences
+            .Except(experiencesToUpdate)
+            .ToList();
+
         request.EmployeeContracts.ForEach(rec =>
         {
             var existingContracts = employeeWithDetails.EmploymentContracts.FirstOrDefault(ec => ec.Id == rec.Id);
@@ -127,6 +138,10 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             contractsToUpdate.Add(existingContracts);
         });
 
+        contractsToDelete = employeeWithDetails.EmploymentContracts
+            .Except(contractsToUpdate)
+            .ToList();
+
         await _employeeRepository.UpdateWithDetailsAsync(
             employeeWithDetails,
             contractsToCreate,
@@ -134,7 +149,10 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             experiencesToCreate,
             contractsToUpdate,
             educationsToUpdate,
-            experiencesToUpdate
+            experiencesToUpdate,
+            contractsToDelete,
+            educationsToDelete,
+            experiencesToDelete
         );
     }
 }

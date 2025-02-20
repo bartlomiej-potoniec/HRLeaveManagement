@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.DTOs.Sections;
-using HRLeaveManagement.Application.Features.Sections.Queries;
-using HRLeaveManagement.Application.Features.Sections.Commands;
+using HRLeaveManagement.Application.Features.Section.Queries;
+using HRLeaveManagement.Application.Features.Section.Commands;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 

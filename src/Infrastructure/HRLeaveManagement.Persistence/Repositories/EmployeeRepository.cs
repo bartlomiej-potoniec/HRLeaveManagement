@@ -53,13 +53,20 @@ public sealed class EmployeeRepository(ApplicationDbContext dbContext) : IEmploy
                                              IEnumerable<EmployeeExperience> experiencesToCreate,
                                              IEnumerable<EmployeeContract> contractsToUpdate,
                                              IEnumerable<EmployeeEducation> educationsToUpdate,
-                                             IEnumerable<EmployeeExperience> experiencesToUpdate)
+                                             IEnumerable<EmployeeExperience> experiencesToUpdate,
+                                             IEnumerable<EmployeeContract> contractsToDelete,
+                                             IEnumerable<EmployeeEducation> educationsToDelete,
+                                             IEnumerable<EmployeeExperience> experiencesToDelete)
     {
         _dbContext.Employees.Update(employee);
 
         _dbContext.EmployeeContracts.UpdateRange(contractsToUpdate);
         _dbContext.EmployeeEducations.UpdateRange(educationsToUpdate);
         _dbContext.EmployeeExperiences.UpdateRange(experiencesToUpdate);
+
+        _dbContext.EmployeeContracts.RemoveRange(contractsToDelete);
+        _dbContext.EmployeeEducations.RemoveRange(educationsToDelete);
+        _dbContext.EmployeeExperiences.RemoveRange(experiencesToDelete);
 
         await _dbContext.EmployeeContracts.AddRangeAsync(contractsToCreate);
         await _dbContext.EmployeeEducations.AddRangeAsync(educationsToCreate);

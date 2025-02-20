@@ -18,7 +18,10 @@ public interface IEmployeeRepository
                                 IEnumerable<EmployeeExperience> experiencesToCreate,
                                 IEnumerable<EmployeeContract> contractsToUpdate,
                                 IEnumerable<EmployeeEducation> educationsToUpdate,
-                                IEnumerable<EmployeeExperience> experiencesToUpdate);
+                                IEnumerable<EmployeeExperience> experiencesToUpdate,
+                                IEnumerable<EmployeeContract> contractsToDelete,
+                                IEnumerable<EmployeeEducation> educationsToDelete,
+                                IEnumerable<EmployeeExperience> experiencesToDelete);
 
     Task<IEnumerable<EmployeeContract>> GetAllContractsByEmployeeIdAsync(Guid employeeId);
     Task<EmployeeContract?> GetContractByIdAsync(int contractId);

@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Application.Features.RemoteWorkLimits.Commands;
+﻿using HRLeaveManagement.Application.Features.RemoteWorkLimit.Commands;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using FluentValidation;
 
