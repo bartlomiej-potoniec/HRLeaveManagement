@@ -21,8 +21,8 @@ public sealed class GetAllLeaveRequestsWithDetailsQueryHandler(ILeaveRequestRepo
     public async Task<IEnumerable<LeaveRequestDTO>> Handle(GetAllLeaveRequestsWithDetailsQuery request,
                                                            CancellationToken cancellationToken)
     {
-        var leaveRequests = new List<DomainLeaveRequest>();
-        var requests = new List<LeaveRequestDTO>();
+        List<DomainLeaveRequest> leaveRequests = [];
+        List<LeaveRequestDTO> requests = [];
 
         // TODO: Check if it is logged in employee
         if (_userService.IsUserLoggedIn)
@@ -30,10 +30,11 @@ public sealed class GetAllLeaveRequestsWithDetailsQueryHandler(ILeaveRequestRepo
             var userId = _userService.UserId
                 ?? throw new NotFoundException("No user found");
 
-            leaveRequests = 
-                (List<DomainLeaveRequest>)await _repository.GetEmployeeLeaveRequestsWithDetailsAsync(Guid.Parse(userId));
+            leaveRequests = (await _repository
+                .GetEmployeeLeaveRequestsWithDetailsAsync(Guid.Parse(userId), cancellationToken))
+                .ToList();
 
-            var employee = await _userService.GetUserById(Guid.Parse(userId));
+            var employee = await _userService.GetUserByIdAsync(Guid.Parse(userId), cancellationToken);
 
             requests = _mapper.Map<List<LeaveRequestDTO>>(leaveRequests, opt =>
                 opt.AfterMap((src, dest) => dest.Select(d => d with { Employee = employee }))
@@ -42,12 +43,16 @@ public sealed class GetAllLeaveRequestsWithDetailsQueryHandler(ILeaveRequestRepo
 
         else
         {
-            leaveRequests = 
-                (List<DomainLeaveRequest>)await _repository.GetAllLeaveRequestsWithDetailsAsync();
+            leaveRequests = (await _repository
+                .GetAllLeaveRequestsWithDetailsAsync(cancellationToken))
+                .ToList();
 
             requests = _mapper
                 .Map<List<LeaveRequestDTO>>(leaveRequests)
-                .Select(async dto => dto with { Employee = await _userService.GetUserById(Guid.Parse(dto.RequestingEmployeeId)) })
+                .Select(async dto => 
+                    dto with { Employee = 
+                        await _userService.GetUserByIdAsync(Guid.Parse(dto.RequestingEmployeeId), cancellationToken) }
+                )
                 .Select(task => task.Result)
                 .ToList();   
         }

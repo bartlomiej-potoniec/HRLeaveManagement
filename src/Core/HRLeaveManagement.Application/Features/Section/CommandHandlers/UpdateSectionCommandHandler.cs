@@ -37,7 +37,7 @@ public sealed class UpdateSectionCommandHandler(ISectionRepository sectionReposi
         }
 
         var section = await _sectionRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No section with ID: { request.Id } found");
 
         DomainSection.Update(
@@ -50,7 +50,7 @@ public sealed class UpdateSectionCommandHandler(ISectionRepository sectionReposi
 
         _logger.LogInformation("Updating informations about section with ID: {Id} started", request.Id);
 
-        await _sectionRepository.UpdateAsync(section);
+        await _sectionRepository.UpdateAsync(section, cancellationToken);
 
         _logger.LogInformation("Updating informations about section with ID: {Id} successful", request.Id);
     }

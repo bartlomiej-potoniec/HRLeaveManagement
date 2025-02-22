@@ -12,13 +12,13 @@ public sealed class UpdateRemoteWorkLimitCommandValidator : AbstractValidator<Up
         RuleFor(c => c.Id)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await remoteWorkLimitRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await remoteWorkLimitRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Remote work limit for given ID does not exist");
 
         RuleFor(c => c.EmployeeId)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Employee for given ID does not exist");
 
         RuleFor(c => c.Year)

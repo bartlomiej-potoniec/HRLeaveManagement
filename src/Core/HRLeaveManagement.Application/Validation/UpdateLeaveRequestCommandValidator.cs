@@ -14,7 +14,7 @@ public sealed class UpdateLeaveRequestCommandValidator : AbstractValidator<Updat
                 .WithMessage("{PropertyName} is required")
             .GreaterThan(0)
                 .WithMessage("{PropertyName} must be greater than 0")
-            .MustAsync(async (id, token) => await leaveRequestRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await leaveRequestRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Leave request does not exist");
 
         RuleFor(c => c.RequestComment)

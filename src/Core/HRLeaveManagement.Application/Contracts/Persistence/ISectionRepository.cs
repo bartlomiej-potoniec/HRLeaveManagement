@@ -4,10 +4,10 @@ namespace HRLeaveManagement.Application.Contracts.Persistence;
 
 public interface ISectionRepository
 {
-    Task<IEnumerable<Section>> GetAllAsync();
-    Task<IEnumerable<Section>> GetAllByDepartmentIdAsync(int departmentId);
-    Task<Section?> GetByIdAsync(int id);
+    Task<IEnumerable<Section>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Section>> GetAllByDepartmentIdAsync(int departmentId, CancellationToken cancellationToken = default);
+    Task<Section?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
-    Task CreateAsync(Section section);
-    Task UpdateAsync(Section section);
+    Task CreateAsync(Section section, CancellationToken cancellationToken = default);
+    Task UpdateAsync(Section section, CancellationToken cancellationToken = default);
 }

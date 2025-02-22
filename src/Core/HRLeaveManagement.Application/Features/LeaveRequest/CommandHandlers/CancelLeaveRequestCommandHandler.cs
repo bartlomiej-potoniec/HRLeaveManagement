@@ -1,11 +1,11 @@
-﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
+﻿using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
-using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
-using MediatR;
 using HRLeaveManagement.Application.DTOs.Email;
+using HRLeaveManagement.Application.Exceptions;
+using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.CommandHandlers;
 
@@ -44,7 +44,7 @@ public sealed class CancelLeaveRequestCommandHandler(ILeaveRequestRepository lea
         await TrySendEmail(leaveRequest);*/
     }
 
-    private async Task TrySendEmail(DomainLeaveRequest leaveRequest)
+    private async Task TrySendEmail(DomainLeaveRequest leaveRequest, CancellationToken cancellationToken)
     {
         try
         {
@@ -56,7 +56,7 @@ public sealed class CancelLeaveRequestCommandHandler(ILeaveRequestRepository lea
                 Subject = $"Leave request with ID: {leaveRequest.Id} submitted"
             };
 
-            await _emailSender.SendEmailAsync(email);
+            await _emailSender.SendEmailAsync(email, cancellationToken);
         }
 
         catch (Exception ex)

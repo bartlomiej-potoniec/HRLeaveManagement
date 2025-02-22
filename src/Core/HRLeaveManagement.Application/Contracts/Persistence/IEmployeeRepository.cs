@@ -4,13 +4,14 @@ namespace HRLeaveManagement.Application.Contracts.Persistence;
 
 public interface IEmployeeRepository
 {
-    Task<IEnumerable<Employee>> GetAllAsync();
-    Task<Employee?> GetByIdAsync(Guid id);
+    Task<IEnumerable<Employee>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<Employee?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task CreateWithDetailsAsync(Employee employee,
                                 EmployeeContract employeeContract,
                                 IEnumerable<EmployeeEducation> employeeEducations,
-                                IEnumerable<EmployeeExperience> employeeExperiences);
-    Task UpdateBasicInfoAsync(Employee employee);
+                                IEnumerable<EmployeeExperience> employeeExperiences,
+                                CancellationToken cancellationToken = default);
+    Task UpdateBasicInfoAsync(Employee employee, CancellationToken cancellationToken = default);
 
     Task UpdateWithDetailsAsync(Employee employee,
                                 IEnumerable<EmployeeContract> contractsToCreate,
@@ -21,9 +22,11 @@ public interface IEmployeeRepository
                                 IEnumerable<EmployeeExperience> experiencesToUpdate,
                                 IEnumerable<EmployeeContract> contractsToDelete,
                                 IEnumerable<EmployeeEducation> educationsToDelete,
-                                IEnumerable<EmployeeExperience> experiencesToDelete);
+                                IEnumerable<EmployeeExperience> experiencesToDelete,
+                                CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<EmployeeContract>> GetAllContractsByEmployeeIdAsync(Guid employeeId);
-    Task<EmployeeContract?> GetContractByIdAsync(int contractId);
-    Task CreateEmployeeContract(EmployeeContract employeeContract);
+    Task<IEnumerable<EmployeeContract>> GetAllContractsByEmployeeIdAsync(Guid employeeId,
+                                                                         CancellationToken cancellationToken = default);
+    Task<EmployeeContract?> GetContractByIdAsync(int contractId, CancellationToken cancellationToken = default);
+    Task CreateEmployeeContract(EmployeeContract employeeContract, CancellationToken cancellationToken = default);
 }

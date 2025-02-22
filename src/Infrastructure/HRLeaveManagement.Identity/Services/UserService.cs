@@ -50,18 +50,22 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
 
     public bool IsUserInRole(string roleName) => User?.IsInRole(roleName) is not null;
 
-    public async Task<bool> IsUserEmployeeByEmployeeId(Guid employeeId)
+    public async Task<bool> IsUserEmployeeByEmployeeIdAsync(Guid employeeId,
+                                                            CancellationToken cancellationToken = default)
     {
-        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+        var user = await _userManager.Users
+            .FirstOrDefaultAsync(x => x.EmployeeId == employeeId, cancellationToken);
+
         return user is not null;
     }
 
-    public async Task<bool> IsUserInManagerRoleByEmployeeId(Guid employeeId)
+    public async Task<bool> IsUserInManagerRoleByEmployeeIdAsync(Guid employeeId,
+                                                                 CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching user with employee ID: {Id} started", employeeId);
 
         var user = await _userManager.Users
-            .FirstOrDefaultAsync(x => x.EmployeeId == employeeId)
+            .FirstOrDefaultAsync(x => x.EmployeeId == employeeId, cancellationToken)
             ?? throw new NotFoundException($"No user with employee ID: { employeeId } found");
 
         _logger.LogInformation("Fetching user with employee ID: {Id} successful", employeeId);
@@ -74,14 +78,14 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         return result;
     }
 
-    public async Task<IEnumerable<UserDTO>> GetAllUsers()
+    public async Task<IEnumerable<UserDTO>> GetAllUsersAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching all users started");
 
-        var users = await _userManager.Users.ToListAsync();
+        var users = await _userManager.Users.ToListAsync(cancellationToken);
 
         var userDtos = users
-            .Select(ApplicationUser.Create)
+            .Select(ApplicationUser.CreateUserDTO)
             .ToList();
 
         _logger.LogInformation("Fetching all users successful");
@@ -89,25 +93,27 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         return userDtos;
     }
 
-    public async Task<PagedResult<UserDetailsDTO>> GetAllPagedUsers(int? pageSize = null,
-                                                                    int? pageNumber = null,
-                                                                    string? sorts = null,
-                                                                    string? filters = null)
+    public async Task<PagedResult<UserDetailsDTO>> GetAllPagedUsersAsync(int? pageSize = null,
+                                                                         int? pageNumber = null,
+                                                                         string? sorts = null,
+                                                                         string? filters = null,
+                                                                         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching all users with details started");
 
-        var users = await _userManager.Users.ToListAsync();
+        var users = await _userManager.Users.ToListAsync(cancellationToken);
 
         var userDtos = new ConcurrentBag<UserDetailsDTO>();
 
-        await Parallel.ForEachAsync(users, async (user, token) =>
+        await Parallel.ForEachAsync(users, cancellationToken, async (user, token) =>
         {
+            if (token.IsCancellationRequested) return;
+
             using var scope = _serviceScopeFactory.CreateScope();
-            var scopedUserManager = scope.ServiceProvider
-                .GetRequiredService<UserManager<ApplicationUser>>();
+            var scopedUserManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             var userRoles = await scopedUserManager.GetRolesAsync(user);
-            var userDto = ApplicationUser.CreateWithDetails(user, userRoles);
+            var userDto = ApplicationUser.CreateUserDetailsDTO(user, userRoles);
 
             userDtos.Add(userDto);
         });
@@ -131,7 +137,8 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         return paginatedResult;
     }
 
-    public async Task<UserDetailsDTO> GetUserWithDetailsById(Guid id)
+    public async Task<UserDetailsDTO> GetUserWithDetailsByIdAsync(Guid id,
+                                                                  CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching user with ID: {Id} with details started", id);
 
@@ -141,21 +148,22 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
 
         var userRoles = await _userManager.GetRolesAsync(user);
 
-        var userDetailsDto = ApplicationUser.CreateWithDetails(user, userRoles);
+        var userDetailsDto = ApplicationUser.CreateUserDetailsDTO(user, userRoles);
 
         _logger.LogInformation("Fetching user with ID: {Id} with details successful", id);
 
         return userDetailsDto;
     }
 
-    public async Task<IEnumerable<UserDTO>> GetAllUsersInRole(string role)
+    public async Task<IEnumerable<UserDTO>> GetAllUsersInRoleAsync(string role,
+                                                                   CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching all users in role {Role} started", role);
 
         var users = await _userManager.GetUsersInRoleAsync(role);
 
         var userDtos = users
-            .Select(ApplicationUser.Create)
+            .Select(ApplicationUser.CreateUserDTO)
             .ToList();
 
         _logger.LogInformation("Fetching all users in role {Role} successful", role);
@@ -163,7 +171,7 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         return userDtos;
     }
 
-    public async Task<UserDTO> GetUserById(Guid id)
+    public async Task<UserDTO> GetUserByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching user with ID: {Id} started", id);
 
@@ -171,29 +179,32 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
             .FindByIdAsync(id.ToString())
             ?? throw new NotFoundException($"No user with ID: { id } found");
 
-        var userDto = ApplicationUser.Create(user);
+        var userDto = ApplicationUser.CreateUserDTO(user);
 
         _logger.LogInformation("Fetching user with ID: {Id} successful", id);
 
         return userDto;
     }
 
-    public async Task<UserDTO> GetUserByEmployeeId(Guid employeeId)
+    public async Task<UserDTO> GetUserByEmployeeIdAsync(Guid employeeId,
+                                                        CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching user with employee ID: {Id} started", employeeId);
 
         var user = await _userManager.Users
-            .FirstOrDefaultAsync(x => x.EmployeeId == employeeId)
+            .FirstOrDefaultAsync(x => x.EmployeeId == employeeId, cancellationToken)
             ?? throw new NotFoundException($"No user with employee ID: { employeeId } found");
 
-        var userDto = ApplicationUser.Create(user);
+        var userDto = ApplicationUser.CreateUserDTO(user);
 
         _logger.LogInformation("Fetching user with employee ID: {Id} successful", employeeId);
 
         return userDto;
     }
 
-    public async Task UpdateUserEmployeeId(Guid userId, Guid employeeId)
+    public async Task UpdateUserEmployeeIdAsync(Guid userId,
+                                                Guid employeeId,
+                                                CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Updating user with ID: {UserId} with employee ID: {EmployeeId} started", userId, employeeId);
 
@@ -201,7 +212,7 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
             .FindByIdAsync(userId.ToString())
             ?? throw new NotFoundException($"No user with ID: {userId} found");
 
-        user.EmployeeId = employeeId;
+        ApplicationUser.UpdateUserEmployeeId(user, employeeId);
         var result = await _userManager.UpdateAsync(user);
 
         if (!result.Succeeded)
@@ -216,7 +227,7 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         _logger.LogInformation("Updating user with ID: {UserId} with employee ID: {EmployeeId} successful", userId, employeeId);
     }
 
-    public async Task Update(UpdateUserRequest request)
+    public async Task UpdateAsync(UpdateUserRequest request, CancellationToken cancellationToken = default)
     {
         var user = await _userManager
             .FindByIdAsync(request.Id.ToString())
@@ -225,7 +236,7 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         ApplicationUser.Update(user, request);
         
         _logger.LogInformation("Starting transaction for updating user with ID {UserId}", user.Id);
-        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+        await using var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
 
         try
         {
@@ -273,20 +284,21 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
 
             _logger.LogInformation("Adding new roles {Roles} successfull for user with ID {UserId}", request.Roles, user.Id);
 
-            await transaction.CommitAsync();
+            await transaction.CommitAsync(cancellationToken);
             _logger.LogInformation("Transaction successful for updating user with ID {UserId}", user.Id);
         }
 
         catch (Exception ex)
         {
             _logger.LogError("Transaction failed for updating user with ID {UserId}", user.Id);
-            await transaction.RollbackAsync();
+            await transaction.RollbackAsync(cancellationToken);
 
             throw;
         }
     }
 
-    public async Task LockoutUserAccountById(LockoutUserAccountRequest request)
+    public async Task LockoutUserAccountByIdAsync(LockoutUserAccountRequest request,
+                                                  CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Locking user account with ID: {UserId} started", request.UserId);
 
@@ -294,7 +306,7 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
             .FindByIdAsync(request.UserId.ToString())
             ?? throw new NotFoundException($"No user with ID: { request.UserId } found");
 
-        user.LockoutEnd = request.LockoutEnd;
+        ApplicationUser.LockoutUserUntilDateTime(user, request.LockoutEnd);
         var result = await _userManager.UpdateAsync(user);
 
         if (!result.Succeeded)
@@ -309,7 +321,8 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
         _logger.LogInformation("Locking user account with ID: {UserId} successful", request.UserId);
     }
 
-    public async Task UnlockUserAccountById(UnlockUserAccountRequest request)
+    public async Task UnlockUserAccountByIdAsync(UnlockUserAccountRequest request,
+                                                 CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Unlocking user account with ID: {UserId} started", request.UserId);
 
@@ -317,7 +330,7 @@ public sealed class UserService(UserManager<ApplicationUser> userManager,
             .FindByIdAsync(request.UserId.ToString())
             ?? throw new NotFoundException($"No user with ID: {request.UserId} found");
 
-        user.LockoutEnd = null;
+        ApplicationUser.UnlockUser(user);
         var result = await _userManager.UpdateAsync(user);
 
         if (!result.Succeeded)

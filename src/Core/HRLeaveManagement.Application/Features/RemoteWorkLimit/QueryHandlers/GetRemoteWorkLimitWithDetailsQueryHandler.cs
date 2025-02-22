@@ -21,7 +21,7 @@ public sealed class GetRemoteWorkLimitWithDetailsQueryHandler(IRemoteWorkLimitRe
     {
         _logger.LogInformation("Fetching department with ID: {Id} started", request.Id);
 
-        var remoteWorkLimit = await _remoteWorkLimitRepository.GetByIdAsync(request.Id);
+        var remoteWorkLimit = await _remoteWorkLimitRepository.GetByIdAsync(request.Id, cancellationToken);
         var remoteWorkLimitDto = _mapper.Map<RemoteWorkLimitDetailsDTO>(remoteWorkLimit);
 
         _logger.LogInformation("Fetching department with ID: {Id} successful", request.Id);

@@ -15,8 +15,7 @@ public sealed class UpdateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
     private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
     private readonly IAppLogger<UpdateLeaveTypeCommandHandler> _logger = logger;
 
-    public async Task Handle(UpdateLeaveTypeCommand request,
-                             CancellationToken cancellationToken)
+    public async Task Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
         var validator = new UpdateLeaveTypeCommandValidator(_leaveTypeRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -28,7 +27,7 @@ public sealed class UpdateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
         }
 
         var leaveType = await _leaveTypeRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No leave type with ID: { request.Id } found");
 
         DomainLeaveType.Update(
@@ -40,7 +39,7 @@ public sealed class UpdateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
         
         _logger.LogInformation("Updating informations about leave type with ID: {Id} started", request.Id);
 
-        await _leaveTypeRepository.UpdateAsync(leaveType);
+        await _leaveTypeRepository.UpdateAsync(leaveType, cancellationToken);
 
         _logger.LogInformation("Updating informations about leave type with ID: {Id} successful", request.Id);
     }

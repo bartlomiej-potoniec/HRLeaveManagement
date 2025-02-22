@@ -20,8 +20,7 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
     private readonly IUserService _userService = userService;
     private readonly IAppLogger<UpdateEmployeeBasicInfoCommandHandler> _logger = logger;
 
-    public async Task Handle(UpdateEmployeeBasicInfoCommand request,
-                             CancellationToken cancellationToken)
+    public async Task Handle(UpdateEmployeeBasicInfoCommand request, CancellationToken cancellationToken)
     {
         var validator = new UpdateEmployeeBasicInfoCommandValidator(
             _employeeRepository,
@@ -38,7 +37,7 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
         }
 
         var employee =  await _employeeRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No user with ID: { request.Id } found");
 
         DomainEmployee.Update(
@@ -51,7 +50,7 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
 
         _logger.LogInformation("Updating informations about employee with ID: {UserId} started", request.Id);
 
-        await _employeeRepository.UpdateBasicInfoAsync(employee);
+        await _employeeRepository.UpdateBasicInfoAsync(employee, cancellationToken);
 
         _logger.LogInformation("Updating informations about employee with ID: {UserId} successful", request.Id);
     }

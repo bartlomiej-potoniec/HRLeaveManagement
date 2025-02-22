@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
+﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.DTOs.LeaveTypes;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveType.Queries;
 using MediatR;
+using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.QueryHandlers;
 
@@ -23,7 +23,7 @@ public sealed class GetLeaveTypeWithDetailsQueryHandler(ILeaveTypeRepository lea
         _logger.LogInformation("Fetching leave type with ID: {Id} started", request.Id);
 
         var leaveType = await _leaveTypeRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No leave type with ID: { request.Id } found");
         
         var leaveTypeDetailsDto = _mapper.Map<LeaveTypeDetailsDTO>(leaveType);

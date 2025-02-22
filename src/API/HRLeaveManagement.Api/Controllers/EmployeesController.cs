@@ -13,24 +13,25 @@ namespace HRLeaveManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize(Roles = "HR")]
+[Authorize(Roles = "HR")]
 public sealed class EmployeesController(ISender sender) : ControllerBase
 {
     private readonly ISender _sender = sender;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetAll()
+    public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetAll(CancellationToken cancellationToken)
     {
-        var employees = await _sender.Send(new GetAllEmployeesQuery());
+        var employees = await _sender.Send(new GetAllEmployeesQuery(), cancellationToken);
         return Ok(employees);
     }
 
     [HttpGet("{employeeId}")]
-    //[Authorize(Roles = "HR", Policy = "IsEmployee")]
+    [Authorize(Roles = "HR", Policy = "IsEmployee")]
     //[ValidateGuid]
-    public async Task<ActionResult<EmployeeDetailsDTO>> GetWithDetails([FromRoute] Guid employeeId)
+    public async Task<ActionResult<EmployeeDetailsDTO>> GetWithDetails([FromRoute] Guid employeeId,
+                                                                       CancellationToken cancellationToken)
     {
-        var employee = await _sender.Send(new GetEmployeeWithDetailsQuery(employeeId));
+        var employee = await _sender.Send(new GetEmployeeWithDetailsQuery(employeeId), cancellationToken);
         return Ok(employee);
     }
 
@@ -38,9 +39,10 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<EmployeeDetailsDTO>> CreateWithDetails([FromBody] CreateEmployeeWithDetailsCommand command)
+    public async Task<ActionResult<EmployeeDetailsDTO>> CreateWithDetails([FromBody] CreateEmployeeWithDetailsCommand command,
+                                                                          CancellationToken cancellationToken)
     {
-        var employeeId = await _sender.Send(command);
+        var employeeId = await _sender.Send(command, cancellationToken);
         return CreatedAtAction(nameof(GetWithDetails), new { employeeId }, command);
     }
     
@@ -49,9 +51,10 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateBasicInfo([FromRoute] Guid id,
-                                                    [FromBody] UpdateEmployeeBasicInfoCommand command)
+                                                    [FromBody] UpdateEmployeeBasicInfoCommand command,
+                                                    CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { Id = id });
+        await _sender.Send(command with { Id = id }, cancellationToken);
         return NoContent();
     }
 
@@ -60,27 +63,34 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateWithDetails([FromRoute] Guid id,
-                                                      [FromBody] UpdateEmployeeWithDetailsCommand command)
+                                                      [FromBody] UpdateEmployeeWithDetailsCommand command,
+                                                      CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { Id = id });
+        await _sender.Send(command with { Id = id }, cancellationToken);
         return NoContent();
     }
 
     // Contract subentity
     
     [HttpGet("{employeeId}/contracts")]
-    public async Task<ActionResult<IEnumerable<EmployeeContractDetailsDTO>>> GetAllContracts([FromRoute] Guid employeeId)
+    public async Task<ActionResult<IEnumerable<EmployeeContractDetailsDTO>>> GetAllContracts([FromRoute] Guid employeeId,
+                                                                                             CancellationToken cancellationToken)
     {
-        var contracts = await _sender.Send(new GetAllEmployeeContractsQuery(employeeId));
+        var contracts = await _sender.Send(new GetAllEmployeeContractsQuery(employeeId), cancellationToken);
         return Ok(contracts);
     }
     
     [HttpGet("{employeeId}/contracts/{contractId}")]
     //[Authorize(Roles = "HR", Policy = "IsEmployeeContract")]
     public async Task<ActionResult<EmployeeContractDetailsDTO>> GetContractWithDetails([FromRoute] Guid employeeId,
-                                                                                       [FromRoute] int contractId)
+                                                                                       [FromRoute] int contractId,
+                                                                                       CancellationToken cancellationToken)
     {
-        var contract = await _sender.Send(new GetEmployeeContractWithDetailsCommand(employeeId, contractId));
+        var contract = await _sender.Send(
+            new GetEmployeeContractWithDetailsCommand(employeeId, contractId), 
+            cancellationToken
+        );
+
         return Ok(contract);
     }
     
@@ -89,9 +99,10 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<EmployeeContractDetailsDTO>> CreateContract([FromRoute] Guid employeeId,
-                                                                               [FromBody] CreateEmployeeContractCommand command)
+                                                                               [FromBody] CreateEmployeeContractCommand command,
+                                                                               CancellationToken cancellationToken)
     {
-        var contractId = await _sender.Send(command with { EmployeeId = employeeId });
+        var contractId = await _sender.Send(command with { EmployeeId = employeeId }, cancellationToken);
         return CreatedAtAction(nameof(GetContractWithDetails), new { employeeId, contractId }, command);
     }
 
@@ -101,9 +112,14 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateContract([FromRoute] Guid employeeId,
                                                    [FromRoute] int contractId,
-                                                   [FromBody] UpdateEmployeeContractCommand command)
+                                                   [FromBody] UpdateEmployeeContractCommand command,
+                                                   CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { EmployeeId = employeeId, ContractId = contractId });
+        await _sender.Send(
+            command with { EmployeeId = employeeId, ContractId = contractId },
+            cancellationToken
+        );
+
         return NoContent();
     }
 
@@ -113,9 +129,14 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> TerminateContract([FromRoute] Guid employeeId,
                                                       [FromRoute] int contractId,
-                                                      [FromBody] TerminateEmployeeContractCommand command)
+                                                      [FromBody] TerminateEmployeeContractCommand command,
+                                                      CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { EmployeeId = employeeId, ContractId = contractId });
+        await _sender.Send(
+            command with { EmployeeId = employeeId, ContractId = contractId },
+            cancellationToken
+        );
+
         return NoContent();
     }
 
@@ -195,19 +216,25 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     // RemoteWorkLimit subentity
 
     [HttpGet("{employeeId}/remoteWorkLimits")]
-    public async Task<ActionResult<IEnumerable<RemoteWorkLimitDTO>>> GetAllRemoteWorkLimitsForEmployee([FromRoute] Guid employeeId)
+    public async Task<ActionResult<IEnumerable<RemoteWorkLimitDTO>>> GetAllRemoteWorkLimitsForEmployee([FromRoute] Guid employeeId,
+                                                                                                       CancellationToken cancellationToken)
     {
-        var remoteWorkLimits = await _sender
-            .Send(new GetAllRemoteWorkLimitsForEmployeeQuery(employeeId));
+        var remoteWorkLimits = await _sender.Send(
+            new GetAllRemoteWorkLimitsForEmployeeQuery(employeeId),
+            cancellationToken
+        );
 
         return Ok(remoteWorkLimits);
     }
 
     [HttpGet("{employeeId}/leaveAllocations")]
-    public async Task<ActionResult<IEnumerable<LeaveAllocationDetailsDTO>>> GetAllLeaveAllocationsForEmployee([FromRoute] Guid employeeId)
+    public async Task<ActionResult<IEnumerable<LeaveAllocationDetailsDTO>>> GetAllLeaveAllocationsForEmployee([FromRoute] Guid employeeId,
+                                                                                                              CancellationToken cancellationToken)
     {
-        var leaveAllocations = await _sender
-            .Send(new GetAllLeaveAllocationsForEmployeeQuery(employeeId));
+        var leaveAllocations = await _sender.Send(
+            new GetAllLeaveAllocationsForEmployeeQuery(employeeId),
+            cancellationToken
+        );
 
         return Ok(leaveAllocations);
     }

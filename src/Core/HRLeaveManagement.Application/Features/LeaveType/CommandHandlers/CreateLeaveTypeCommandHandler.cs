@@ -15,15 +15,14 @@ public sealed class CreateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
     private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
     private readonly IAppLogger<CreateLeaveTypeCommandHandler> _logger = logger;
  
-    public async Task<int> Handle(CreateLeaveTypeCommand request,
-                                  CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
         var validator = new CreateLeaveTypeCommandValidator(_leaveTypeRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
-            _logger.LogWarning("Validation errors in create request for {0}", nameof(LeaveType));
+            _logger.LogWarning("Validation errors in create request for {LeaveType}", nameof(LeaveType));
             throw new BadRequestException("Invalid leave type creating request", validationResult);
         }
 
@@ -35,7 +34,7 @@ public sealed class CreateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
 
         _logger.LogInformation("Creating new leave type '{Name}' started", request.Name);
 
-        await _leaveTypeRepository.CreateAsync(leaveType);
+        await _leaveTypeRepository.CreateAsync(leaveType, cancellationToken);
 
         _logger.LogInformation("Creating new leave type '{Name}' successsful", request.Name);
 

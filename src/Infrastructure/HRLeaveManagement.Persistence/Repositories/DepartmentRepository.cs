@@ -9,22 +9,22 @@ public sealed class DepartmentRepository(ApplicationDbContext dbContext) : IDepa
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public async Task<IEnumerable<Department>> GetAllAsync()
-        => await _dbContext.Departments.ToListAsync();
+    public async Task<IEnumerable<Department>> GetAllAsync(CancellationToken cancellationToken = default)
+        => await _dbContext.Departments.ToListAsync(cancellationToken);
 
-    public async Task<Department?> GetByIdAsync(int departmentId)
+    public async Task<Department?> GetByIdAsync(int departmentId, CancellationToken cancellationToken = default)
         => await _dbContext.Departments
-            .FirstOrDefaultAsync(d => d.Id == departmentId);
+            .FirstOrDefaultAsync(d => d.Id == departmentId, cancellationToken);
 
-    public async Task CreateAsync(Department department)
+    public async Task CreateAsync(Department department, CancellationToken cancellationToken = default)
     {
-        await _dbContext.Departments.AddAsync(department);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Departments.AddAsync(department, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(Department department)
+    public async Task UpdateAsync(Department department, CancellationToken cancellationToken = default)
     {
         _dbContext.Departments.Update(department);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

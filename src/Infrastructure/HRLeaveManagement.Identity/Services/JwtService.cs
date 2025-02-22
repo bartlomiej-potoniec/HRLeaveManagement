@@ -18,13 +18,13 @@ public sealed class JwtService(UserManager<ApplicationUser> userManager,
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    public async Task<string> GenerateJwtToken(string userName)
+    public async Task<string> GenerateJwtTokenAsync(string userName, CancellationToken cancellationToken = default)
     {
         var user = await _userManager
             .FindByNameAsync(userName)
             ?? throw new NotFoundException($"User with username: { userName } not found");
 
-        var claims = await GetUserClaims(user);
+        var claims = await GetUserClaimsAsync(user);
 
         var symmetricSecurityKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_jwtOptions.Key)
@@ -47,7 +47,7 @@ public sealed class JwtService(UserManager<ApplicationUser> userManager,
             .WriteToken(jwtSecurityToken);
     }
 
-    private async Task<IEnumerable<Claim>> GetUserClaims(ApplicationUser user)
+    private async Task<IEnumerable<Claim>> GetUserClaimsAsync(ApplicationUser user)
     {
         var userClaims = await _userManager.GetClaimsAsync(user);
         var userRoles = await _userManager.GetRolesAsync(user);

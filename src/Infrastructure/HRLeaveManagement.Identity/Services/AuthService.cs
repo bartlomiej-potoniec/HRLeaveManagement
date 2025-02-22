@@ -26,11 +26,10 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
     private readonly IUserService _userService = userService;
     private readonly IIdentityResult _identityResult = identityResult;
     private readonly IAppLogger<AuthService> _logger = logger;
-
     private readonly ApplicationIdentityDbContext _dbContext
         = serviceProvider.GetRequiredService<ApplicationIdentityDbContext>();
 
-    public async Task<AuthResponse> Login(AuthRequest request)
+    public async Task<AuthResponse> LoginAsync(AuthRequest request, CancellationToken cancellationToken = default)
     {
         var user = await _signInManager.UserManager
             .FindByNameAsync(request.UserName)
@@ -46,14 +45,15 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
             throw new BadRequestException($"Credentials for '{ request.UserName }' are not valid");
         }
             
-        var jwtSecurityToken = await _jwtService.GenerateJwtToken(user.UserName!);
+        var jwtSecurityToken = await _jwtService.GenerateJwtTokenAsync(user.UserName, cancellationToken);
 
-        _logger.LogInformation("Logging in successful for user {Username} with id: {Id}", user.UserName!, user.Id);
+        _logger.LogInformation("Logging in successful for user {Username} with id: {Id}", user.UserName, user.Id);
 
-        return new(user.Id, user.UserName!, user.Email!, jwtSecurityToken);
+        return new(user.Id, user.UserName, user.Email, jwtSecurityToken);
     }
 
-    public async Task<RegistrationResponse> Register(RegistrationRequest request)
+    public async Task<RegistrationResponse> RegisterAsync(RegistrationRequest request,
+                                                          CancellationToken cancellationToken = default)
     {
         string userName = _credentialService.GenerateUserLogin(
             request.FirstName,
@@ -63,20 +63,19 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
 
         var password = _credentialService.GenerateUserPassword();
 
-        var user = new ApplicationUser
-        {
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            PeselNumber = request.PeselNumber,
-            PhoneNumber = request.PhoneNumber,
-            DateOfBirth = DateOnly.FromDateTime(request.DateOfBirth),
-            Email = request.Email,
-            UserName = userName,
-            EmailConfirmed = false
-        };
+        var user = ApplicationUser.Create(
+            request.FirstName,
+            request.LastName,
+            request.PeselNumber,
+            request.PhoneNumber,
+            request.DateOfBirth,
+            request.Email,
+            userName,
+            isEmailConfirmed: false
+        );
 
         _logger.LogInformation("Starting transaction for registering user {Username}", userName);
-        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+        await using var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
 
         try
         {
@@ -110,17 +109,18 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
             _logger.LogInformation("Adding to roles {Roles} successful for user {Username} ", request.Roles, userName);
 
             var token = await _signInManager.UserManager.GenerateEmailConfirmationTokenAsync(user);
-            var confirmationLink = _emailService.GenerateEmailConfirmationLink(user.Id, token);
+            var confirmationLink = _emailService.GenerateEmailConfirmationLinkAsync(user.Id, token, cancellationToken);
 
-            await _emailService.SendRegistrationEmail(
+            await _emailService.SendRegistrationEmailAsync(
                 request.Email,
                 request.FirstName,
                 userName,
                 password,
-                confirmationLink
+                confirmationLink,
+                cancellationToken
             );
 
-            await transaction.CommitAsync();
+            await transaction.CommitAsync(cancellationToken);
             _logger.LogInformation("Transaction successful for registering user {Username}", userName);
 
             return new(user.Id);
@@ -129,13 +129,13 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
         catch (Exception ex)
         {
             _logger.LogError("Transaction failed for registering user {Username}", userName);
-            await transaction.RollbackAsync();
+            await transaction.RollbackAsync(cancellationToken);
 
             throw;
         }
     }
 
-    public async Task ConfirmEmail(string? userId, string? token)
+    public async Task ConfirmEmailAsync(string? userId, string? token, CancellationToken cancellationToken = default)
     {
         if (userId is null or "" || token is null or "")
             throw new BadRequestException("Invalid user ID or token");
@@ -144,7 +144,7 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
             .FindByIdAsync(userId)
             ?? throw new NotFoundException($"No user with ID: { userId } found");
 
-        _logger.LogInformation("Confirming email started for user {Username} with ID: {Id}", user.UserName!, userId);
+        _logger.LogInformation("Confirming email started for user {Username} with ID: {Id}", user.UserName, userId);
 
         var isEmailConfirmed = await _signInManager.UserManager.IsEmailConfirmedAsync(user);
         
@@ -168,7 +168,7 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
         _logger.LogInformation("Confirming email successful for user {Username} with ID: {Id}", user.UserName!, userId);
     }
 
-    public async Task ChangePassword(PasswordRequest request)
+    public async Task ChangePasswordAsync(PasswordRequest request, CancellationToken cancellationToken = default)
     {
         var user = _userService.User
             ?? throw new NotFoundException("No user found in current context");

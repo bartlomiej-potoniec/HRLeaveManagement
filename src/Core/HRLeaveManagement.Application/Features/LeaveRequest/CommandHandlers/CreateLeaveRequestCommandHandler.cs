@@ -29,8 +29,7 @@ public sealed class CreateLeaveRequestCommandHandler(ILeaveRequestRepository lea
     private readonly IAppLogger<CreateLeaveRequestCommand> _logger = logger;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<int> Handle(CreateLeaveRequestCommand request,
-                                  CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
         /*var employeeId = _userService.UserId
             ?? throw new NotFoundException("No user claim exists in actual context");

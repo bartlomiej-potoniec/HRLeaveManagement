@@ -25,11 +25,12 @@ public sealed class EmailService(IEmailSender emailSender,
     private readonly IAppLogger<EmailService> _logger = logger;
     private readonly EmailOptions _emailOptions = emailOptions.Value;
 
-    public async Task SendRegistrationEmail(string email,
-                                            string firstName,
-                                            string userName,
-                                            string password,
-                                            string confirmationLink)
+    public async Task SendRegistrationEmailAsync(string email,
+                                                 string firstName,
+                                                 string userName,
+                                                 string password,
+                                                 string confirmationLink,
+                                                 CancellationToken cancellationToken = default)
     {
         var emailMessage = new EmailMessage
         {
@@ -47,7 +48,7 @@ public sealed class EmailService(IEmailSender emailSender,
 
         _logger.LogInformation("Sending registration email to {Email}", email);
 
-        var emailResult = await _emailSender.SendEmailAsync(emailMessage);
+        var emailResult = await _emailSender.SendEmailAsync(emailMessage, cancellationToken);
 
         if (!emailResult.IsSuccess)
         {
@@ -58,7 +59,9 @@ public sealed class EmailService(IEmailSender emailSender,
         _logger.LogInformation("Sending email successful to {Email}", email);
     }
 
-    public async Task SendEmployeeCreationEmail(string email, string firstname)
+    public async Task SendEmployeeCreationEmailAsync(string email,
+                                                     string firstname,
+                                                     CancellationToken cancellationToken = default)
     {
         var emailMessage = new EmailMessage
         {
@@ -74,7 +77,7 @@ public sealed class EmailService(IEmailSender emailSender,
 
         _logger.LogInformation("Sending Employee-Creation email to {Email}", email);
 
-        var emailResult = await _emailSender.SendEmailAsync(emailMessage);
+        var emailResult = await _emailSender.SendEmailAsync(emailMessage, cancellationToken);
 
         if (!emailResult.IsSuccess)
         {
@@ -85,7 +88,9 @@ public sealed class EmailService(IEmailSender emailSender,
         _logger.LogInformation("Sending email successful to {Email}", email);
     }
 
-    public string GenerateEmailConfirmationLink(string userId, string token)
+    public string GenerateEmailConfirmationLinkAsync(string userId,
+                                                     string token,
+                                                     CancellationToken cancellationToken = default)
     {
         var httpContext = _httpContextAccessor.HttpContext
             ?? throw new InvalidOperationException("HttpContext is not available");

@@ -23,7 +23,7 @@ public sealed class GetSectionWithDetailsQueryHandler(ISectionRepository section
         _logger.LogInformation("Fetching section with ID: {Id} started", request.Id);
 
         var section = await _sectionRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No section with ID: { request.Id } found");
 
         var sectionDto = _mapper.Map<SectionDetailsDTO>(section);

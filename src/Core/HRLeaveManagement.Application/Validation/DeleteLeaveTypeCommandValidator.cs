@@ -11,7 +11,7 @@ public sealed class DeleteLeaveTypeCommandValidator : AbstractValidator<DeleteLe
         RuleFor(c => c.Id)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await leaveTypeRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await leaveTypeRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Leave type with given ID does not exists");
     }
 }

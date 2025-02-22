@@ -4,9 +4,9 @@ namespace HRLeaveManagement.Application.Contracts.Persistence;
 
 public interface IDepartmentRepository
 {
-    Task<IEnumerable<Department>> GetAllAsync();
-    Task<Department?> GetByIdAsync(int departmentId);
+    Task<IEnumerable<Department>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<Department?> GetByIdAsync(int departmentId, CancellationToken cancellationToken = default);
 
-    Task CreateAsync(Department department);
-    Task UpdateAsync(Department department);
+    Task CreateAsync(Department department, CancellationToken cancellationToken = default);
+    Task UpdateAsync(Department department, CancellationToken cancellationToken = default);
 }

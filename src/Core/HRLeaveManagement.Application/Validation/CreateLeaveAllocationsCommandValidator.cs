@@ -13,7 +13,7 @@ public sealed class CreateLeaveAllocationsCommandValidator : AbstractValidator<C
         RuleFor(c => c.EmployeeId)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Employee for given ID does not exist");
 
         RuleFor(c => c.Year)
@@ -45,7 +45,7 @@ public sealed class CreateLeaveAllocationsCommandValidator : AbstractValidator<C
                     .RuleFor(a => a.LeaveTypeId)
                         .NotNull()
                             .WithMessage("{PropertyName} is required")
-                        .MustAsync(async (id, token) => await leaveTypeRepository.GetByIdAsync(id) is not null)
+                        .MustAsync(async (id, token) => await leaveTypeRepository.GetByIdAsync(id, token) is not null)
                             .WithMessage("Leave Type for given ID does not exist");
 
                 allocation

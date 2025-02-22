@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace HRLeaveManagement.Application.Validation;
 
-public class CreateSectionCommandValidator : AbstractValidator<CreateSectionCommand>
+public sealed class CreateSectionCommandValidator : AbstractValidator<CreateSectionCommand>
 {
     public CreateSectionCommandValidator(IUserService userService,
                                          IDepartmentRepository departmentRepository)
@@ -23,7 +23,7 @@ public class CreateSectionCommandValidator : AbstractValidator<CreateSectionComm
                 .WithMessage("Department for given ID does not exist");
 
         RuleFor(c => c.LeaderId)
-            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeId(id.Value))
+            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeIdAsync(id.Value, token))
                 .WithMessage("Leader for given ID does not exist");
     }
 }

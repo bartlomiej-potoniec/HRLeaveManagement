@@ -21,7 +21,7 @@ public sealed class GetAllSectionsByDepartmentIdQueryHandler(ISectionRepository 
     {
         _logger.LogInformation("Fetching all sections for department with ID: {Id} started", request.DepartmentId);
 
-        var sections = await _sectionRepository.GetAllByDepartmentIdAsync(request.DepartmentId);
+        var sections = await _sectionRepository.GetAllByDepartmentIdAsync(request.DepartmentId, cancellationToken);
         var sectionDtos = _mapper.Map<IEnumerable<SectionDTO>>(sections);
 
         _logger.LogInformation("Fetching all sections for department with ID: {Id} successful", request.DepartmentId);

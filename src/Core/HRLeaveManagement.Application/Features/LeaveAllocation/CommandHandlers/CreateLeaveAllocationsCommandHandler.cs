@@ -40,7 +40,7 @@ public sealed class CreateLeaveAllocationsCommandHandler(ILeaveAllocationReposit
 
         _logger.LogInformation("Creating new leave allocations for employee with ID: {Id} started", request.EmployeeId);
 
-        await _leaveAllocationRepository.CreateRangeAsync(leaveAllocations);
+        await _leaveAllocationRepository.CreateRangeAsync(leaveAllocations, cancellationToken);
 
         _logger.LogInformation("Creating new leave allocations for employee with ID: {Id} successful", request.EmployeeId);
     }

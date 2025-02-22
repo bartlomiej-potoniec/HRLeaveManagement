@@ -17,13 +17,12 @@ public sealed class GetDepartmentWithDetailsQueryHandler(IDepartmentRepository d
     private readonly IMapper _mapper = mapper;
     private readonly IAppLogger<GetDepartmentWithDetailsQueryHandler> _logger = logger;
 
-    public async Task<DepartmentDetailsDTO> Handle(GetDepartmentWithDetailsQuery request,
-                                                   CancellationToken cancellationToken)
+    public async Task<DepartmentDetailsDTO> Handle(GetDepartmentWithDetailsQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Fetching department with ID: {Id} started", request.Id);
 
         var department = await _departmentRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No department with ID: { request.Id } found");
 
         var departmentDto = _mapper.Map<DepartmentDetailsDTO>(department);

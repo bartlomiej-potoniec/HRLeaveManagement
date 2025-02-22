@@ -11,7 +11,7 @@ public sealed class CreateRemoteWorkLimitCommandValidator : AbstractValidator<Cr
         RuleFor(c => c.EmployeeId)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Employee for given ID does not exist");
 
         RuleFor(c => c.Year)

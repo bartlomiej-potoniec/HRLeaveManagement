@@ -13,7 +13,7 @@ public sealed class UpdateLeaveAllocationCommandValidator : AbstractValidator<Up
                 .WithMessage("{PropertyName} is required")
             .GreaterThan(0)
                 .WithMessage("{PropertyName} must be greater than 0")
-            .MustAsync(async (id, token) => await leaveAllocationRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await leaveAllocationRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Leave allocation does not exist");
 
         RuleFor(c => c.AvailableDays)

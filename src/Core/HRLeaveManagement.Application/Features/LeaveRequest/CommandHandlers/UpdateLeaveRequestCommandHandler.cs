@@ -26,15 +26,12 @@ public sealed class UpdateLeaveRequestCommandHandler(ILeaveRequestRepository lea
 
     public async Task Handle(UpdateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
-        var leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id)
-            ?? throw new NotFoundException(nameof(LeaveRequest), request.Id);
-
         var validator = new UpdateLeaveRequestCommandValidator(
             _leaveRequestRepository,
             _leaveTypeRepository
         );
 
-        var validationResult = await validator.ValidateAsync(request);
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
@@ -42,9 +39,12 @@ public sealed class UpdateLeaveRequestCommandHandler(ILeaveRequestRepository lea
             throw new BadRequestException("Leave request is invalid", validationResult);
         }
 
+        var leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id, cancellationToken)
+            ?? throw new NotFoundException(nameof(LeaveRequest), request.Id);
+
         _mapper.Map(request, leaveRequest);
 
-        await _leaveRequestRepository.UpdateAsync(leaveRequest);
+        await _leaveRequestRepository.UpdateAsync(leaveRequest, cancellationToken);
 
         try
         {
@@ -56,7 +56,7 @@ public sealed class UpdateLeaveRequestCommandHandler(ILeaveRequestRepository lea
                 Subject = $"Leave request with ID: {request.Id} updated"
             };
 
-            await _emailSender.SendEmailAsync(email);
+            await _emailSender.SendEmailAsync(email, cancellationToken);
         }
         
         catch (Exception ex)

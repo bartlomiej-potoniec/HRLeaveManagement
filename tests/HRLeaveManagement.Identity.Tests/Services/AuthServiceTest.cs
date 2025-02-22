@@ -23,7 +23,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "User with username: jkowals95 not found";
 
         // Act
-        Func<Task> login = () => authService.Login(authRequest);
+        Func<Task> login = () => authService.LoginAsync(authRequest);
 
         // Assert
         await login
@@ -50,7 +50,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Credentials for 'jkowals95' are not valid";
 
         // Act
-        Func<Task> login = () => authService.Login(authRequest);
+        Func<Task> login = () => authService.LoginAsync(authRequest);
 
         // Assert
         await login
@@ -83,7 +83,7 @@ public class AuthServiceTest
         var expectedAuthResponse = new AuthResponse(user.Id, user.UserName!, user.Email!, token);
 
         // Act
-        var authResponse = await authService.Login(authRequest);
+        var authResponse = await authService.LoginAsync(authRequest);
 
         // Assert
         authResponse
@@ -111,7 +111,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Cannot create a new user for given credentials";
 
         // Act
-        Func<Task> result = () => authService.Register(registrationRequest);
+        Func<Task> result = () => authService.RegisterAsync(registrationRequest);
 
         // Assert
         await result
@@ -141,7 +141,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Cannot add a new user to role 'Employee'";
 
         // Act
-        Func<Task> result = () => authService.Register(registrationRequest);
+        Func<Task> result = () => authService.RegisterAsync(registrationRequest);
 
         // Assert
         await result
@@ -180,7 +180,7 @@ public class AuthServiceTest
         var authService = CreateAuthService(signInManagerMock, credentialServiceMock, emailServiceMock);
 
         // Act
-        var registrationResponse = await authService.Register(registrationRequest);
+        var registrationResponse = await authService.RegisterAsync(registrationRequest);
 
         // Assert
         registrationResponse
@@ -201,7 +201,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Invalid user ID or token";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmail(userId, token);
+        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
@@ -226,7 +226,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "No user with ID: user_id found";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmail(userId, token);
+        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
@@ -256,7 +256,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Email for jkowalski95@company.com is already confirmed";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmail(userId, token);
+        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
@@ -290,7 +290,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Failed to confirm email for jkowalski95@company.com";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmail(userId, token);
+        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
@@ -316,7 +316,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "No user found in current context";
 
         // Act
-        Func<Task> result = () => authService.ChangePassword(passwordRequest);
+        Func<Task> result = () => authService.ChangePasswordAsync(passwordRequest);
 
         // Assert
         await result
@@ -344,7 +344,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "No user found";
 
         // Act
-        Func<Task> result = () => authService.ChangePassword(passwordRequest);
+        Func<Task> result = () => authService.ChangePasswordAsync(passwordRequest);
 
         // Assert
         await result
@@ -378,7 +378,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Failed to change password for user jkowalski95@company.com";
 
         // Act
-        Func<Task> result = () => authService.ChangePassword(passwordRequest);
+        Func<Task> result = () => authService.ChangePasswordAsync(passwordRequest);
 
         // Assert
         await result

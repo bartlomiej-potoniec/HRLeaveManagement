@@ -4,5 +4,5 @@ namespace HRLeaveManagement.Application.Contracts.Identity;
 
 public interface IRoleService
 {
-    Task<IEnumerable<RoleDTO>> GetAllRoles(); 
+    Task<IEnumerable<RoleDTO>> GetAllRolesAsync(CancellationToken cancellationToken); 
 }

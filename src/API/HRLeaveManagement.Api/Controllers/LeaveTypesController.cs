@@ -13,38 +13,41 @@ public sealed class LeaveTypesController(ISender sender) : ControllerBase
     private readonly ISender _sender = sender;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LeaveTypeDTO>>> GetAll()
+    public async Task<ActionResult<IEnumerable<LeaveTypeDTO>>> GetAll(CancellationToken cancellationToken)
     {
-        var leaveTypes = await _sender.Send(new GetAllLeaveTypesQuery());
+        var leaveTypes = await _sender.Send(new GetAllLeaveTypesQuery(), cancellationToken);
         return Ok(leaveTypes);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<LeaveTypeDetailsDTO>> GetWithDetails([FromRoute] int id)
+    public async Task<ActionResult<LeaveTypeDetailsDTO>> GetWithDetails([FromRoute] int id,
+                                                                        CancellationToken cancellationToken)
     {
-        var leaveTypeDetails = await _sender.Send(new GetLeaveTypeWithDetailsQuery(id));
+        var leaveTypeDetails = await _sender.Send(new GetLeaveTypeWithDetailsQuery(id), cancellationToken);
         return Ok(leaveTypeDetails);
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody] CreateLeaveTypeCommand command)
+    public async Task<ActionResult> Create([FromBody] CreateLeaveTypeCommand command,
+                                           CancellationToken cancellationToken)
     {
-        var leaveTypeId = await _sender.Send(command);
+        var leaveTypeId = await _sender.Send(command, cancellationToken);
         return CreatedAtAction(nameof(GetWithDetails), new { id = leaveTypeId }, command);
     }
 
     [HttpPatch("{id}")]
     public async Task<ActionResult> Update([FromRoute] int id,
-                                           [FromBody] UpdateLeaveTypeCommand command)
+                                           [FromBody] UpdateLeaveTypeCommand command,
+                                           CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { Id = id });
+        await _sender.Send(command with { Id = id }, cancellationToken);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete([FromRoute] int id)
+    public async Task<ActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
     {
-        await _sender.Send(new DeleteLeaveTypeCommand(id));
+        await _sender.Send(new DeleteLeaveTypeCommand(id), cancellationToken);
         return NoContent();
     }
 }

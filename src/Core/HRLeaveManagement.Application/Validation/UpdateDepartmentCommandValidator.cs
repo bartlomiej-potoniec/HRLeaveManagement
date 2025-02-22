@@ -13,7 +13,7 @@ public sealed class UpdateDepartmentCommandValidator : AbstractValidator<UpdateD
         RuleFor(c => c.Id)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await departmentRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await departmentRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Department for given ID does not exist");
 
         RuleFor(c => c.Name)
@@ -23,7 +23,7 @@ public sealed class UpdateDepartmentCommandValidator : AbstractValidator<UpdateD
                .WithMessage("{PropertyName} cannot be empty");
 
         RuleFor(c => c.LeaderId)
-            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeId(id.Value))
+            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeIdAsync(id.Value, token))
                 .WithMessage("Leader for given ID does not exist");
     }
 }

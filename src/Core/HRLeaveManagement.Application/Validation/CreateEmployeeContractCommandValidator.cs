@@ -5,14 +5,14 @@ using HRLeaveManagement.Domain.Enums;
 
 namespace HRLeaveManagement.Application.Validation;
 
-public class CreateEmployeeContractCommandValidator : AbstractValidator<CreateEmployeeContractCommand>
+public sealed class CreateEmployeeContractCommandValidator : AbstractValidator<CreateEmployeeContractCommand>
 {
     public CreateEmployeeContractCommandValidator(IEmployeeRepository employeeRepository)
     {
         RuleFor(c => c.EmployeeId)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Employee for given ID does not exist");
 
         RuleFor(c => c.ContractType)

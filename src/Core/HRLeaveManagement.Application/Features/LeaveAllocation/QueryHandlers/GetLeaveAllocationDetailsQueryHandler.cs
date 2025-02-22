@@ -23,7 +23,7 @@ public sealed class GetLeaveAllocationWithDetailsQueryHandler(ILeaveAllocationRe
         _logger.LogInformation("Fetching leave allocation with ID: {Id} started", request.Id);
 
         var leaveAllocation = await _leaveAllocationRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No leave allocation with id: {request.Id} found");
 
         var leaveAllocationDto = _mapper.Map<LeaveAllocationDetailsDTO>(leaveAllocation);

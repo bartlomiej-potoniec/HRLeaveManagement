@@ -1,12 +1,11 @@
 ﻿using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
-
+using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Exceptions;
-using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
-using MediatR;
 using HRLeaveManagement.Application.DTOs.Email;
+using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.CommandHandlers;
 
@@ -36,7 +35,7 @@ public sealed class ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestReposi
         await TrySendEmail(request, leaveRequest);*/
     }
 
-    private async Task UpdateEmployeeAllocations(DomainLeaveRequest leaveRequest)
+    private async Task UpdateEmployeeAllocations(DomainLeaveRequest leaveRequest, CancellationToken cancellationToken)
     {
         /*var requestedDays = (int)(leaveRequest.EndedAt - leaveRequest.StartedAt).TotalDays;
 
@@ -55,7 +54,8 @@ public sealed class ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestReposi
     }
 
     private async Task TrySendEmail(ChangeLeaveRequestApprovalCommand request,
-                                    DomainLeaveRequest leaveRequest)
+                                    DomainLeaveRequest leaveRequest, 
+                                    CancellationToken cancellationToken)
     {
         try
         {
@@ -67,7 +67,7 @@ public sealed class ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestReposi
                 Subject = $"Status of leave request with ID: { leaveRequest.Id } changed"
             };
 
-            await _emailSender.SendEmailAsync(email);
+            await _emailSender.SendEmailAsync(email, cancellationToken);
         }
         catch (Exception ex)
         {

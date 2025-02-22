@@ -22,7 +22,7 @@ public sealed class GetAllRemoteWorkLimitsForEmployeeQueryHandler(IRemoteWorkLim
         _logger.LogInformation("Fetching all remote work limits for employee with ID: {EmployeeId} started", request.EmployeeId);
 
         var remoteWorkLimits = await _remoteWorkLimitRepository
-            .GetAllRemoteWorkLimitsByEmployeeIdAsync(request.EmployeeId);
+            .GetAllRemoteWorkLimitsByEmployeeIdAsync(request.EmployeeId, cancellationToken);
 
         var remoteWorkLimitDtos = _mapper.Map<IEnumerable<RemoteWorkLimitDTO>>(remoteWorkLimits);
 

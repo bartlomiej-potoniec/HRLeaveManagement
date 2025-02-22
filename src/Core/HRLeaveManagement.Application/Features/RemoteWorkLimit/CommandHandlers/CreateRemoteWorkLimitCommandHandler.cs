@@ -17,8 +17,7 @@ public sealed class CreateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IAppLogger<CreateRemoteWorkLimitCommandHandler> _logger = logger;
 
-    public async Task<int> Handle(CreateRemoteWorkLimitCommand request,
-                                  CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateRemoteWorkLimitCommand request, CancellationToken cancellationToken)
     {
         var validator = new CreateRemoteWorkLimitCommandValidator(_employeeRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -37,7 +36,7 @@ public sealed class CreateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
 
         _logger.LogInformation("Creating new remote work limit for employee with ID: {EmployeeId} started", request.EmployeeId);
 
-        await _remoteWorkLimitRepository.CreateAsync(remoteWorkLimit);
+        await _remoteWorkLimitRepository.CreateAsync(remoteWorkLimit, cancellationToken);
 
         _logger.LogInformation("Creating new remote work limit for employee with ID: {EmployeeId} successful", request.EmployeeId);
 

@@ -17,11 +17,11 @@ public sealed class GetAllRemoteWorkLimitsQueryHandler(IRemoteWorkLimitRepositor
     private readonly IAppLogger<GetAllRemoteWorkLimitsQueryHandler> _logger = logger;
 
     public async Task<IEnumerable<RemoteWorkLimitDTO>> Handle(GetAllRemoteWorkLimitsQuery request,
-                                                        CancellationToken cancellationToken)
+                                                              CancellationToken cancellationToken)
     {
         _logger.LogInformation("Fetching all remote work limits started");
 
-        var remoteWorkLimits = await _remoteWorkLimitRepository.GetAllAsync();
+        var remoteWorkLimits = await _remoteWorkLimitRepository.GetAllAsync(cancellationToken);
         var remoteWorkLimitDtos = _mapper.Map<IEnumerable<RemoteWorkLimitDTO>>(remoteWorkLimits);
 
         _logger.LogInformation("Fetching all remote work limits successful");

@@ -21,7 +21,7 @@ public sealed class GetAllDepartmentsQueryHandler(IDepartmentRepository departme
     {
         _logger.LogInformation("Fetching all departments started");
 
-        var departments = await _departmentRepository.GetAllAsync();
+        var departments = await _departmentRepository.GetAllAsync(cancellationToken);
         var departmentsDto = _mapper.Map<IEnumerable<DepartmentDTO>>(departments);
 
         _logger.LogInformation("Fetching all departments successful");

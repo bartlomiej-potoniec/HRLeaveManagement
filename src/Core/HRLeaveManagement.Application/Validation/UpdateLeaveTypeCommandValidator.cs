@@ -11,7 +11,7 @@ public sealed class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLe
         RuleFor(c => c.Id)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await leaveTypeRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await leaveTypeRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("Leave type with given ID already exists");
 
         RuleFor(c => c.Name)
@@ -35,7 +35,7 @@ public sealed class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLe
                 .WithMessage("{PropertyName} must be less than or equal to 1.0");
 
         RuleFor(c => c)
-            .MustAsync(async (command, token) => await leaveTypeRepository.IsLeaveTypeUniqueAsync(command.Name))
+            .MustAsync(async (command, token) => await leaveTypeRepository.IsLeaveTypeUniqueAsync(command.Name, token))
                 .WithMessage("Leave type with given name already exists");
     }
 }

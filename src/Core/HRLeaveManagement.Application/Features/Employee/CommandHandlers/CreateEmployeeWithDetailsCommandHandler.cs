@@ -24,8 +24,7 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
     private readonly IEmailService _emailService = emailService;
     private readonly IAppLogger<CreateEmployeeWithDetailsCommandHandler> _logger = logger;
 
-    public async Task<Guid> Handle(CreateEmployeeWithDetailsCommand request,
-                                   CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken)
     {
         var validator = new CreateEmployeeWithDetailsCommandValidator(_sectionRepository, _userService);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -36,7 +35,7 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             throw new BadRequestException("Invalid employee creation request", validationResult);
         }
 
-        var user = await _userService.GetUserById(request.UserId);
+        var user = await _userService.GetUserByIdAsync(request.UserId, cancellationToken);
 
         var employee = DomainEmployee.Create(
             request.Position,
@@ -84,17 +83,18 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
                 employee,
                 employeeContract,
                 employeeEducations,
-                employeeExperiences
+                employeeExperiences,
+                cancellationToken
             );
 
             _logger.LogInformation("Creating new employee successful for user ID: {UserId}", request.UserId);
             _logger.LogInformation("Updating new employee with ID: {EmployeeId} with user ID: {UserId}", employee.Id, request.UserId);
 
-            await _userService.UpdateUserEmployeeId(request.UserId, employee.Id);
+            await _userService.UpdateUserEmployeeIdAsync(request.UserId, employee.Id, cancellationToken);
 
             _logger.LogInformation("Updating new employee with ID: {EmployeeId} with user ID: {UserId} successful", employee.Id, request.UserId);
 
-            await _emailService.SendEmployeeCreationEmail(user.Email, user.FirstName);
+            await _emailService.SendEmployeeCreationEmailAsync(user.Email, user.FirstName, cancellationToken);
 
             transactionScope.Complete();
             _logger.LogInformation("Transaction successful for creating new employee for user ID: {UserId}", request.UserId);

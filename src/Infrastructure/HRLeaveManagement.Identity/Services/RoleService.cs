@@ -13,25 +13,22 @@ public sealed class RoleService(RoleManager<IdentityRole> roleManager,
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
     private readonly IAppLogger<RoleService> _logger = logger;
 
-    public async Task<IEnumerable<RoleDTO>> GetAllRoles()
+    public async Task<IEnumerable<RoleDTO>> GetAllRolesAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Fetching Identity roles started");
 
-        var identityRoles = await _roleManager.Roles.ToListAsync();
+        var identityRoles = await _roleManager.Roles.ToListAsync(cancellationToken);
         
         var roles = identityRoles
-            .Select(ConvertIdentityRoleToRoleDTO)
+            .Select(identityRole => new RoleDTO 
+            { 
+                Id = Guid.Parse(identityRole.Id), 
+                Name = identityRole.Name
+            })
             .ToList();
 
         _logger.LogInformation("Fetching Identity roles started");
 
         return roles;
     }
-
-    private RoleDTO ConvertIdentityRoleToRoleDTO(IdentityRole role)
-        => new()
-        {
-            Id = Guid.Parse(role.Id),
-            Name = role.Name!
-        };
 }

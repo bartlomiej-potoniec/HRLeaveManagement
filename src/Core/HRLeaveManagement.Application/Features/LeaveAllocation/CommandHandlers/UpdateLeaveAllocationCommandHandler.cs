@@ -29,14 +29,14 @@ public sealed class UpdateLeaveAllocationCommandHandler(ILeaveTypeRepository lea
         }
 
         var leaveAllocation = await _leaveAllocationRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No leave allocation with ID: { request.Id } found");
 
         DomainLeaveAllocation.Update(leaveAllocation, request.AvailableDays);
 
         _logger.LogInformation("Updating informations about leave allocation with ID: {Id} started", request.Id);
 
-        await _leaveAllocationRepository.UpdateAsync(leaveAllocation);
+        await _leaveAllocationRepository.UpdateAsync(leaveAllocation, cancellationToken);
 
         _logger.LogInformation("Updating informations about leave allocation with ID: {Id} successful", request.Id);
     }

@@ -25,8 +25,8 @@ public sealed class GetAllLeaveAllocationsQueryHandler(ILeaveAllocationRepositor
     {
         _logger.LogInformation("Fetching all departments started");
 
-        var users = await _userService.GetAllUsersInRole("Employee");
-        var leaveAllocations = await _leaveAllocationRepository.GetAllAsync();
+        var users = await _userService.GetAllUsersInRoleAsync("Employee", cancellationToken);
+        var leaveAllocations = await _leaveAllocationRepository.GetAllAsync(cancellationToken);
 
         var leaveAllocationDtos = leaveAllocations.Select(allocation =>
         {

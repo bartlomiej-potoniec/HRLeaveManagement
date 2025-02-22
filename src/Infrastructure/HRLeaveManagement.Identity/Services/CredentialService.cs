@@ -15,6 +15,15 @@ public sealed class CredentialService(UserManager<ApplicationUser> userManager,
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly CredentialOptions _credentialOptions = credentialOptions.Value;
 
+    /// <summary>
+    /// Generates a unique username based on the user's first name, last name, and date of birth.
+    /// </summary>
+    /// <param name="firstname">The user's first name.</param>
+    /// <param name="lastname">The user's last name.</param>
+    /// <param name="dateOfBirth">The user's date of birth in a string format.</param>
+    /// <returns>
+    /// A unique username format
+    /// </returns>
     public string GenerateUserLogin(string firstname, string lastname, string dateOfBirth)
     {
         var users = _userManager.Users.ToList();
@@ -43,6 +52,13 @@ public sealed class CredentialService(UserManager<ApplicationUser> userManager,
         return login;
     }
 
+    /// <summary> 
+    /// Generates a random password based on the configured password options.
+    /// </summary>
+    /// <returns>
+    /// A randomly generated password string that includes numbers, lowercase letters, 
+    /// uppercase letters, and special characters according to the defined rules.
+    /// </returns>
     public string GenerateUserPassword()
     {
         Random random = new();
@@ -55,21 +71,28 @@ public sealed class CredentialService(UserManager<ApplicationUser> userManager,
             switch (randomValue)
             {
                 case 0:
-                    var randomNumber = random.Next(1, 9);
+                    // Generates a random digit (1-9)
+                    var randomNumber = random.Next(1, 10);
                     passwordBuilder.Append(randomNumber);
 
                     break;
                 case 1:
-                    var randomSmallLetter = (char)random.Next(98, 123);
+                    // Generates a random lowercase letter (a-z)
+                    // ASCII codes: 'a' = 97, 'z' = 122
+                    var randomSmallLetter = (char)random.Next(97, 123);
                     passwordBuilder.Append(randomSmallLetter);
 
                     break;
                 case 2:
-                    var randomCapitalLetter = (char)random.Next(66, 91);
+                    // Generates a random UPPERCASE letter (A-Z)
+                    // ASCII codes: 'A' = 65, 'Z' = 90
+                    var randomCapitalLetter = (char)random.Next(65, 91);
                     passwordBuilder.Append(randomCapitalLetter);
 
                     break;
+                case 3:
                 default:
+                    // Select a random special character from the allowed set
                     var randomIndexer = random.Next(_credentialOptions.Password.AllowedSpecialChars.Length);
                     var randomSpecialChar = _credentialOptions.Password.AllowedSpecialChars[randomIndexer];
                     passwordBuilder.Append(randomSpecialChar);

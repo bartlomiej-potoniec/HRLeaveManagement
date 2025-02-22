@@ -11,9 +11,9 @@ public sealed class RolesController(IRoleService roleService) : ControllerBase
     private readonly IRoleService _roleService = roleService;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RoleDTO>>> GetAll()
+    public async Task<ActionResult<IEnumerable<RoleDTO>>> GetAll(CancellationToken cancellationToken)
     {
-        var roles = await _roleService.GetAllRoles();
+        var roles = await _roleService.GetAllRolesAsync(cancellationToken);
         return Ok(roles);
     }
 }

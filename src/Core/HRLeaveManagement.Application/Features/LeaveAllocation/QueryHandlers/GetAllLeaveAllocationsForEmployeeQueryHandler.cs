@@ -23,7 +23,7 @@ public sealed class GetAllLeaveAllocationsForEmployeeQueryHandler(ILeaveAllocati
         _logger.LogInformation("Fetching leave allocations for employee with ID: {Id} started", request.EmployeeId);
 
         var leaveAllocations = await _leaveAllocationRepository
-            .GetAllByEmployeeIdAsync(request.EmployeeId)
+            .GetAllByEmployeeIdAsync(request.EmployeeId, cancellationToken)
             ?? throw new NotFoundException($"No leave allocations for employee with ID: {request.EmployeeId} found");
 
         var leaveAllocationDtos = _mapper.Map<IEnumerable<LeaveAllocationDetailsDTO>>(leaveAllocations);

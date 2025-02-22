@@ -9,10 +9,52 @@ public class ApplicationUser : IdentityUser
     public required string LastName { get; set; }
     public string? PeselNumber { get; set; }
     public required DateOnly DateOfBirth { get; set; }
-
     public Guid? EmployeeId { get; set; }
 
-    public static UserDTO Create(ApplicationUser user)
+
+    #region Identity_Factory_Methods
+
+    public static ApplicationUser Create(string firstName,
+                                         string lastName,
+                                         string? peselNumber,
+                                         string phoneNumber,
+                                         DateOnly dateOfBirth,
+                                         string email,
+                                         string userName,
+                                         bool isEmailConfirmed = false)
+        => new()
+        {
+            FirstName = firstName,
+            LastName = lastName,
+            PeselNumber = peselNumber,
+            PhoneNumber = phoneNumber,
+            DateOfBirth = dateOfBirth,
+            Email = email,
+            UserName = userName,
+            EmailConfirmed = isEmailConfirmed
+        };
+
+    public static ApplicationUser Create(string firstName,
+                                         string lastName,
+                                         string? peselNumber,
+                                         string phoneNumber,
+                                         DateTime dateOfBirth,
+                                         string email,
+                                         string userName,
+                                         bool isEmailConfirmed = false)
+        => new()
+        {
+            FirstName = firstName,
+            LastName = lastName,
+            PeselNumber = peselNumber,
+            PhoneNumber = phoneNumber,
+            DateOfBirth = DateOnly.FromDateTime(dateOfBirth),
+            Email = email,
+            UserName = userName,
+            EmailConfirmed = isEmailConfirmed
+        };
+
+    public static UserDTO CreateUserDTO(ApplicationUser user)
         => new()
         {
             Id = Guid.Parse(user.Id),
@@ -25,7 +67,7 @@ public class ApplicationUser : IdentityUser
             EmployeeId = user.EmployeeId
         };
 
-    public static UserDetailsDTO CreateWithDetails(ApplicationUser user, IEnumerable<string> userRoles)
+    public static UserDetailsDTO CreateUserDetailsDTO(ApplicationUser user, IEnumerable<string> userRoles)
         => new()
         {
             Id = Guid.Parse(user.Id),
@@ -58,4 +100,15 @@ public class ApplicationUser : IdentityUser
         user.PeselNumber = request.PeselNumber;
         user.PhoneNumber = request.PhoneNumber;
     }
+
+    public static void UpdateUserEmployeeId(ApplicationUser user, Guid employeeId)
+        => user.EmployeeId = employeeId;
+
+    public static void LockoutUserUntilDateTime(ApplicationUser user, DateTime lockoutEnd)
+        => user.LockoutEnd = lockoutEnd;
+
+    public static void UnlockUser(ApplicationUser user)
+        => user.LockoutEnd = null;
+
+    #endregion
 }

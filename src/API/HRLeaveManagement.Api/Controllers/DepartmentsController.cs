@@ -14,38 +14,42 @@ public sealed class DepartmentsController(ISender sender) : ControllerBase
     private readonly ISender _sender = sender;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DepartmentDTO>>> GetAll()
+    public async Task<ActionResult<IEnumerable<DepartmentDTO>>> GetAll(CancellationToken cancellationToken)
     {
-        var departments = await _sender.Send(new GetAllDepartmentsQuery());
+        var departments = await _sender.Send(new GetAllDepartmentsQuery(), cancellationToken);
         return Ok(departments);
     }
 
     [HttpGet("{departmentId}")]
-    public async Task<ActionResult<DepartmentDetailsDTO>> GetWithDetails([FromRoute] int departmentId)
+    public async Task<ActionResult<DepartmentDetailsDTO>> GetWithDetails([FromRoute] int departmentId,
+                                                                         CancellationToken cancellationToken)
     {
-        var department = await _sender.Send(new GetDepartmentWithDetailsQuery(departmentId));
+        var department = await _sender.Send(new GetDepartmentWithDetailsQuery(departmentId), cancellationToken);
         return Ok(department);
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> Create([FromBody] CreateDepartmentCommand command)
+    public async Task<ActionResult<int>> Create([FromBody] CreateDepartmentCommand command,
+                                                CancellationToken cancellationToken)
     {
-        var departmentId = await _sender.Send(command);
+        var departmentId = await _sender.Send(command, cancellationToken);
         return CreatedAtAction(nameof(GetWithDetails), new { departmentId }, command);
     }
 
     [HttpPut("{departmentId}")]
     public async Task<ActionResult> Update([FromRoute] int departmentId,
-                                           [FromBody] UpdateDepartmentCommand command)
+                                           [FromBody] UpdateDepartmentCommand command,
+                                           CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { Id = departmentId });
+        await _sender.Send(command with { Id = departmentId }, cancellationToken);
         return NoContent();
     }
 
     [HttpGet("{departmentId}/sections")]
-    public async Task<ActionResult<IEnumerable<SectionDTO>>> GetAllSectionsByDepartmentId([FromRoute] int departmentId)
+    public async Task<ActionResult<IEnumerable<SectionDTO>>> GetAllSectionsByDepartmentId([FromRoute] int departmentId,
+                                                                                          CancellationToken cancellationToken)
     {
-        var sections = await _sender.Send(new GetAllSectionsByDepartmentIdQuery(departmentId));
+        var sections = await _sender.Send(new GetAllSectionsByDepartmentIdQuery(departmentId), cancellationToken);
         return Ok(sections);
     }
 }

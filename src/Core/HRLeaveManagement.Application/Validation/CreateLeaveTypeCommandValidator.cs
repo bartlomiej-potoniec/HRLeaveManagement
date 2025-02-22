@@ -29,7 +29,7 @@ public sealed class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLe
                 .WithMessage("{PropertyName} must be less than or equal to 1.0");
 
         RuleFor(c => c)
-            .MustAsync(async (command, token) => await leaveTypeRepository.IsLeaveTypeUniqueAsync(command.Name))
+            .MustAsync(async (command, token) => await leaveTypeRepository.IsLeaveTypeUniqueAsync(command.Name, token))
                 .WithMessage("Leave type with given name already exists");
     }
 }

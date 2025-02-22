@@ -4,16 +4,24 @@ namespace HRLeaveManagement.Application.Contracts.Persistence;
 
 public interface ILeaveAllocationRepository
 {
-    Task<IEnumerable<LeaveAllocation>> GetAllAsync();
-    Task<IEnumerable<LeaveAllocation>> GetAllByEmployeeIdAsync(Guid employeeId);
-    Task<LeaveAllocation?> GetByIdAsync(int id);
-    Task<LeaveAllocation?> GetLeaveAllocationWithDetailsByIdAsync(int id);
-    Task<IReadOnlyList<LeaveAllocation>> GetAllLeaveAllocationsWithDetailsAsync();
-    Task<IReadOnlyList<LeaveAllocation>> GetUserLeaveAllocationsWithDetailsAsync(string userId);
-    Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId, int leaveTypeId);
+    Task<IEnumerable<LeaveAllocation>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<LeaveAllocation>> GetAllByEmployeeIdAsync(Guid employeeId,
+                                                               CancellationToken cancellationToken = default);
+    Task<LeaveAllocation?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<LeaveAllocation?> GetLeaveAllocationWithDetailsByIdAsync(int id,
+                                                                  CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<LeaveAllocation>> GetAllLeaveAllocationsWithDetailsAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<LeaveAllocation>> GetUserLeaveAllocationsWithDetailsAsync(string userId,
+                                                                                 CancellationToken cancellationToken = default);
+    Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId,
+                                                            int leaveTypeId,
+                                                            CancellationToken cancellationToken = default);
 
-    Task<bool> IsAllocationForEmployeeExistAsync(Guid employeeId, int leaveTypeId, int year);
+    Task<bool> IsAllocationForEmployeeExistAsync(Guid employeeId,
+                                                 int leaveTypeId,
+                                                 int year,
+                                                 CancellationToken cancellationToken = default);
     
-    Task CreateRangeAsync(IEnumerable<LeaveAllocation> leaveAllocations);
-    Task UpdateAsync(LeaveAllocation leaveAllocation);
+    Task CreateRangeAsync(IEnumerable<LeaveAllocation> leaveAllocations, CancellationToken cancellationToken = default);
+    Task UpdateAsync(LeaveAllocation leaveAllocation, CancellationToken cancellationToken = default);
 }

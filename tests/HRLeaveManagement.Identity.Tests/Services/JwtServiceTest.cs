@@ -24,7 +24,7 @@ public class JwtServiceTest
         var expectedExceptionMessage = "User with username: jkowals65 not found";
 
         // Act
-        Func<Task> result = () => jwtService.GenerateJwtToken(userName);
+        Func<Task> result = () => jwtService.GenerateJwtTokenAsync(userName);
 
         // Assert
         await result
@@ -56,7 +56,7 @@ public class JwtServiceTest
         var jwtService = CreateJwtService(userManagerMock);
 
         // Act
-        var result = await jwtService.GenerateJwtToken(userName);
+        var result = await jwtService.GenerateJwtTokenAsync(userName);
 
         // Assert
         result

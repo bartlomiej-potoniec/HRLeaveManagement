@@ -15,7 +15,7 @@ public sealed class UpdateEmployeeWithDetailsCommandValidator : AbstractValidato
         RuleFor(c => c.Id)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id) is not null)
+            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id, token) is not null)
                 .WithMessage("User for given ID does not exist");
 
         RuleFor(c => c.Position)
@@ -33,11 +33,11 @@ public sealed class UpdateEmployeeWithDetailsCommandValidator : AbstractValidato
         RuleFor(c => c.SectionId)
             .GreaterThan(0)
                 .WithMessage("{PropertyName} must be greater than 0")
-            .MustAsync(async (id, token) => id is null || await sectionRepository.GetByIdAsync(id.Value) is not null)
+            .MustAsync(async (id, token) => id is null || await sectionRepository.GetByIdAsync(id.Value, token) is not null)
                 .WithMessage("Section for given ID does not exist");
 
         RuleFor(c => c.LeaderId)
-            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeId(id.Value))
+            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeIdAsync(id.Value, token))
                 .WithMessage("Leader for given ID does not exist");
 
 
@@ -81,10 +81,11 @@ public sealed class UpdateEmployeeWithDetailsCommandValidator : AbstractValidato
 
 
         RuleFor(c => c.EmployeeEducations)
-            .Must(educations => educations
-                .Where(e => e.Id.HasValue)
-                .GroupBy(e => e.Id)
-                .All(group => group.Count() == 1)
+            .Must(educations => 
+                educations
+                    .Where(e => e.Id.HasValue)
+                    .GroupBy(e => e.Id)
+                    .All(group => group.Count() == 1)
             )
                 .WithMessage("Each {PropertyName} must have a unique Id");
 

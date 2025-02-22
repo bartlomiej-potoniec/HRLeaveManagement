@@ -17,8 +17,7 @@ public sealed class UpdateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IAppLogger<UpdateRemoteWorkLimitCommandHandler> _logger = logger;
 
-    public async Task Handle(UpdateRemoteWorkLimitCommand request,
-                             CancellationToken cancellationToken)
+    public async Task Handle(UpdateRemoteWorkLimitCommand request, CancellationToken cancellationToken)
     {
         var validator = new UpdateRemoteWorkLimitCommandValidator(
             _employeeRepository,
@@ -34,7 +33,7 @@ public sealed class UpdateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
         }
 
         var remoteWorkLimit = await _remoteWorkLimitRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No remote work limit with ID: { request.Id } found");
 
         DomainRemoteWorkLimit.Update(
@@ -46,7 +45,7 @@ public sealed class UpdateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
 
         _logger.LogInformation("Updating informations about remote work limit with ID: {Id} started", request.Id);
 
-        await _remoteWorkLimitRepository.UpdateAsync(remoteWorkLimit);
+        await _remoteWorkLimitRepository.UpdateAsync(remoteWorkLimit, cancellationToken);
 
         _logger.LogInformation("Updating informations about remote work limit with ID: {Id} successful", request.Id);
     }

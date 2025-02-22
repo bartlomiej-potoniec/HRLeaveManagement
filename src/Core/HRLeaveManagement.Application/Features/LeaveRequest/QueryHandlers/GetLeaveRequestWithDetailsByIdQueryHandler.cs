@@ -17,7 +17,7 @@ public sealed class GetLeaveRequestWithDetailsByIdQueryHandler(ILeaveRequestRepo
     public async Task<LeaveRequestDetailsDTO> Handle(GetLeaveRequestWithDetailsByIdQuery request,
                                               CancellationToken cancellationToken)
     {
-        var leaveRequest = await _repository.GetLeaveRequestWithDetailsByIdAsync(request.Id)
+        var leaveRequest = await _repository.GetLeaveRequestWithDetailsByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException(nameof(LeaveRequest), request.Id);
 
         var leaveRequestDto = _mapper.Map<LeaveRequestDetailsDTO>(leaveRequest);

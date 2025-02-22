@@ -34,7 +34,7 @@ public class EmailServiceTest
         var expectedExceptionMessage = "Cannot send an email";
 
         // Act
-        Func<Task> result = () => emailService.SendRegistrationEmail(email, firstName, userName, password, confirmationLink);
+        Func<Task> result = () => emailService.SendRegistrationEmailAsync(email, firstName, userName, password, confirmationLink);
 
         // Assert
         await result
@@ -55,7 +55,7 @@ public class EmailServiceTest
         var expectedExceptionMessage = "HttpContext is not available";
 
         // Act
-        Action result = () => emailService.GenerateEmailConfirmationLink(userId, token);
+        Action result = () => emailService.GenerateEmailConfirmationLinkAsync(userId, token);
 
         // Assert
         result
@@ -92,7 +92,7 @@ public class EmailServiceTest
         var expectedExceptionMessage = "An error occurred while creating confirmation link";
 
         // Act
-        Action result = () => emailService.GenerateEmailConfirmationLink(userId, token);
+        Action result = () => emailService.GenerateEmailConfirmationLinkAsync(userId, token);
 
         // Assert
         result
@@ -129,7 +129,7 @@ public class EmailServiceTest
         );
 
         // Act
-        var result = emailService.GenerateEmailConfirmationLink(userId, token);
+        var result = emailService.GenerateEmailConfirmationLinkAsync(userId, token);
 
         // Assert
         result

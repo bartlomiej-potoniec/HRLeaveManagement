@@ -21,7 +21,7 @@ public sealed class GetAllSectionsQueryHandler(ISectionRepository sectionReposit
     {
         _logger.LogInformation("Fetching all sections started");
 
-        var sections = await _sectionRepository.GetAllAsync();
+        var sections = await _sectionRepository.GetAllAsync(cancellationToken);
         var sectionDtos = _mapper.Map<IEnumerable<SectionDTO>>(sections);
 
         _logger.LogInformation("Fetching all sections successful");

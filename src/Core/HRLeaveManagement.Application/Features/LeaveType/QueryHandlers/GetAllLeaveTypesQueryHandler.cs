@@ -1,9 +1,9 @@
 ﻿using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Features.LeaveType.Queries;
-using MediatR;
-using AutoMapper;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.DTOs.LeaveTypes;
+using MediatR;
+using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.QueryHandlers;
 
@@ -21,7 +21,7 @@ public sealed class GetAllLeaveTypesQueryHandler(ILeaveTypeRepository leaveTypeR
     {
         _logger.LogInformation("Fetching all leave types started");
 
-        var leaveTypes = await _leaveTypeRepository.GetAllAsync();
+        var leaveTypes = await _leaveTypeRepository.GetAllAsync(cancellationToken);
         var leaveTypeDtos = _mapper.Map<IEnumerable<LeaveTypeDTO>>(leaveTypes);
 
         _logger.LogInformation("Fetching all leave types successful");

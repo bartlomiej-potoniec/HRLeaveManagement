@@ -40,7 +40,7 @@ public sealed class CreateSectionCommandHandler(ISectionRepository sectionReposi
 
         _logger.LogInformation("Creating new section '{Name}' started", request.Name);
 
-        await _sectionRepository.CreateAsync(section);
+        await _sectionRepository.CreateAsync(section, cancellationToken);
 
         _logger.LogInformation("Creating new section '{Name}' successful", request.Name);
 

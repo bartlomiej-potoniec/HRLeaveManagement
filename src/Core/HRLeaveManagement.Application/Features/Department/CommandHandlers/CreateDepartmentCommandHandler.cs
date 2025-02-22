@@ -18,8 +18,7 @@ public sealed class CreateDepartmentCommandHandler(IDepartmentRepository departm
     private readonly IUserService _userService = userService;
     private readonly IAppLogger<CreateDepartmentCommandHandler> _logger = logger;
 
-    public async Task<int> Handle(CreateDepartmentCommand request,
-                                  CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
     {
         var validator = new CreateDepartmentCommandValidator(_userService);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -34,7 +33,7 @@ public sealed class CreateDepartmentCommandHandler(IDepartmentRepository departm
 
         _logger.LogInformation("Creating new department '{Name}' started", request.Name);
 
-        await _departmentRepository.CreateAsync(department);
+        await _departmentRepository.CreateAsync(department, cancellationToken);
 
         _logger.LogInformation("Creating new department '{Name}' successful", request.Name);
 

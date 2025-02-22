@@ -2,11 +2,12 @@
 
 public interface IEmailService
 {
-    Task SendRegistrationEmail(string email,
+    Task SendRegistrationEmailAsync(string email,
                                string firstName,
                                string userName,
                                string password,
-                               string confirmationLink);
-    Task SendEmployeeCreationEmail(string email, string firstname);
-    string GenerateEmailConfirmationLink(string userId, string token);
+                               string confirmationLink,
+                               CancellationToken cancellationToken);
+    Task SendEmployeeCreationEmailAsync(string email, string firstname, CancellationToken cancellationToken);
+    string GenerateEmailConfirmationLinkAsync(string userId, string token, CancellationToken cancellationToken);
 }

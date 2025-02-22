@@ -4,8 +4,8 @@ namespace HRLeaveManagement.Application.Contracts.Identity;
 
 public interface IAuthService
 {
-    Task<AuthResponse> Login(AuthRequest request);
-    Task<RegistrationResponse> Register(RegistrationRequest request);
-    Task ConfirmEmail(string userId, string token);
-    Task ChangePassword(PasswordRequest request);
+    Task<AuthResponse> LoginAsync(AuthRequest request, CancellationToken cancellationToken);
+    Task<RegistrationResponse> RegisterAsync(RegistrationRequest request, CancellationToken cancellationToken);
+    Task ConfirmEmailAsync(string userId, string token, CancellationToken cancellationToken);
+    Task ChangePasswordAsync(PasswordRequest request, CancellationToken cancellationToken);
 }

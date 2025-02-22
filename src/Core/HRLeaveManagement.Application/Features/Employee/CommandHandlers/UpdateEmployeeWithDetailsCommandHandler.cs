@@ -38,7 +38,7 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
         }
 
         var employeeWithDetails = await _employeeRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No employee with ID: { request.Id } found");
 
         DomainEmployee.Update(
@@ -152,7 +152,8 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             experiencesToUpdate,
             contractsToDelete,
             educationsToDelete,
-            experiencesToDelete
+            experiencesToDelete,
+            cancellationToken
         );
     }
 }

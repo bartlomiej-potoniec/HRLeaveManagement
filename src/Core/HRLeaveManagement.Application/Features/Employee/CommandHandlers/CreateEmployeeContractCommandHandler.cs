@@ -18,8 +18,7 @@ public sealed class CreateEmployeeContractCommandHandler(IEmployeeRepository emp
     private readonly IMapper _mapper = mapper;
     private readonly IAppLogger<CreateEmployeeContractCommandHandler> _logger = logger;
 
-    public async Task<int> Handle(CreateEmployeeContractCommand request,
-                                  CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateEmployeeContractCommand request, CancellationToken cancellationToken)
     {
         var validator = new CreateEmployeeContractCommandValidator(_employeeRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -39,7 +38,7 @@ public sealed class CreateEmployeeContractCommandHandler(IEmployeeRepository emp
 
         _logger.LogInformation("Creating new employee contract for employee ID: {UserId} started", request.EmployeeId);
 
-        await _employeeRepository.CreateEmployeeContract(employeeContract);
+        await _employeeRepository.CreateEmployeeContract(employeeContract, cancellationToken);
 
         _logger.LogInformation("Creating new employee contract for employee ID: {UserId} successful", request.EmployeeId);
 

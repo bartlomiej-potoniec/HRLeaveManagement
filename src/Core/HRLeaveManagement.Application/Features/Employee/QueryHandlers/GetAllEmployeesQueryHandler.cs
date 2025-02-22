@@ -23,30 +23,31 @@ public sealed class GetAllEmployeesQueryHandler(IEmployeeRepository employeeRepo
     private readonly IMapper _mapper = mapper;
     private readonly IAppLogger<GetAllEmployeesQueryHandler> _logger = logger;
 
-    public async Task<IEnumerable<EmployeeDTO>> Handle(GetAllEmployeesQuery request,
-                                                       CancellationToken cancellationToken)
+    public async Task<IEnumerable<EmployeeDTO>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Fetching all employees started by user: {Username} with ID: {UserId}", _userService.UserName, _userService.UserId);
 
-        var employees = await _employeeRepository.GetAllAsync();
-        var employeesDtos = new ConcurrentBag<EmployeeDTO>();
+        var employees = await _employeeRepository.GetAllAsync(cancellationToken);
+        var employeeDtos = new ConcurrentBag<EmployeeDTO>();
 
         await Parallel.ForEachAsync(employees, async (employee, token) =>
         {
+            if (cancellationToken.IsCancellationRequested) return;
+
             using var scope = _serviceProvider.CreateScope();
             var scopedUserService = scope.ServiceProvider.GetRequiredService<IUserService>();
 
-            var isUserEmployee = await scopedUserService.IsUserEmployeeByEmployeeId(employee.Id);
+            var isUserEmployee = await scopedUserService.IsUserEmployeeByEmployeeIdAsync(employee.Id, cancellationToken);
             if (isUserEmployee is false) return;
 
-            var user = await scopedUserService.GetUserByEmployeeId(employee.Id);
+            var user = await scopedUserService.GetUserByEmployeeIdAsync(employee.Id, cancellationToken);
             if (user is null) return;
 
             var userLeader = employee.LeaderId.HasValue 
-                ? await scopedUserService.GetUserByEmployeeId(employee.LeaderId.Value) 
+                ? await scopedUserService.GetUserByEmployeeIdAsync(employee.LeaderId.Value, cancellationToken) 
                 : null;
 
-            var isLeader = await scopedUserService.IsUserInManagerRoleByEmployeeId(employee.Id);
+            var isLeader = await scopedUserService.IsUserInManagerRoleByEmployeeIdAsync(employee.Id, cancellationToken);
 
             var employeeDto = _mapper.Map<EmployeeDTO>(
                 (user, employee),
@@ -60,11 +61,11 @@ public sealed class GetAllEmployeesQueryHandler(IEmployeeRepository employeeRepo
                 } 
             );
 
-            employeesDtos.Add(employeeDto);
+            employeeDtos.Add(employeeDto);
         });
 
         _logger.LogInformation("Fetching all employees by user: {Username} with ID: {UserId} successful", _userService.UserName, _userService.UserId);
 
-        return [.. employeesDtos];
+        return [.. employeeDtos];
     }
 }

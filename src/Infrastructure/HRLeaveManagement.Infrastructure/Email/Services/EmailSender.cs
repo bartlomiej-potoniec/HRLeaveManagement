@@ -11,7 +11,7 @@ public sealed class EmailSender(IOptions<EmailOptions> emailOptions) : IEmailSen
 {
     private readonly EmailOptions _emailOptions = emailOptions.Value;
 
-    public async Task<EmailResponse> SendEmailAsync(EmailMessage email)
+    public async Task<EmailResponse> SendEmailAsync(EmailMessage email, CancellationToken cancellationToken = default)
     {
         var client = new SendGridClient(_emailOptions.ApiKey);
 
@@ -25,14 +25,14 @@ public sealed class EmailSender(IOptions<EmailOptions> emailOptions) : IEmailSen
             email.TemplatePlaceholders
         );
 
-        var response = await client.SendEmailAsync(message);
+        var response = await client.SendEmailAsync(message, cancellationToken);
 
         var emailResponse = new EmailResponse(
             IsSuccess: response.IsSuccessStatusCode,
             StatusCode: response.StatusCode,
             ErrorMessage: response.IsSuccessStatusCode 
                 ? null
-                : await response.Body.ReadAsStringAsync()
+                : await response.Body.ReadAsStringAsync(cancellationToken)
         );
 
         return emailResponse;

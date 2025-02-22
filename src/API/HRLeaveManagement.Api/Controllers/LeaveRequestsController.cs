@@ -15,10 +15,14 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<IEnumerable<LeaveRequestDTO>>> GetAllWithDetails(
-        [FromRoute] bool isUserLoggedIn = false) 
+    public async Task<ActionResult<IEnumerable<LeaveRequestDTO>>> GetAllWithDetails([FromRoute] bool isUserLoggedIn,
+                                                                                    CancellationToken cancellationToken)
     {
-        var leaveRequests = await _sender.Send(new GetAllLeaveRequestsWithDetailsQuery(isUserLoggedIn));
+        var leaveRequests = await _sender.Send(
+            new GetAllLeaveRequestsWithDetailsQuery(isUserLoggedIn),
+            cancellationToken
+        );
+
         return Ok(leaveRequests);
     }
 
@@ -26,9 +30,10 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<LeaveRequestDetailsDTO>> GetWithDetailsById([FromRoute] int id)
+    public async Task<ActionResult<LeaveRequestDetailsDTO>> GetWithDetailsById([FromRoute] int id,
+                                                                               CancellationToken cancellationToken)
     {
-        var leaveRequest = await _sender.Send(new GetLeaveRequestWithDetailsByIdQuery(id));
+        var leaveRequest = await _sender.Send(new GetLeaveRequestWithDetailsByIdQuery(id), cancellationToken);
         return Ok(leaveRequest);
     }
 
@@ -37,9 +42,10 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> Create([FromBody] CreateLeaveRequestCommand command)
+    public async Task<ActionResult> Create([FromBody] CreateLeaveRequestCommand command,
+                                           CancellationToken cancellationToken)
     {
-        var leaveRequestId = await _sender.Send(command);
+        var leaveRequestId = await _sender.Send(command, cancellationToken);
         return CreatedAtAction(nameof(GetWithDetailsById), new { id = leaveRequestId }, command);
     }
 
@@ -49,9 +55,10 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Update([FromRoute] int id,
-                                            [FromBody] UpdateLeaveRequestCommand command)
+                                           [FromBody] UpdateLeaveRequestCommand command,
+                                           CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { Id = id });
+        await _sender.Send(command with { Id = id }, cancellationToken);
         return NoContent();
     }
 
@@ -59,23 +66,25 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> Delete([FromRoute] int id)
+    public async Task<ActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
     {
-        await _sender.Send(new DeleteLeaveRequestCommand(id));
+        await _sender.Send(new DeleteLeaveRequestCommand(id), cancellationToken);
         return NoContent();
     }
 
     [HttpPatch("cancel")]
-    public async Task<ActionResult> Cancel([FromBody] CancelLeaveRequestCommand command)
+    public async Task<ActionResult> Cancel([FromBody] CancelLeaveRequestCommand command,
+                                           CancellationToken cancellationToken)
     {
-        await _sender.Send(command);
+        await _sender.Send(command, cancellationToken);
         return NoContent();
     }
 
     [HttpPatch("approve")]
-    public async Task<ActionResult> Approve([FromBody] ChangeLeaveRequestApprovalCommand command)
+    public async Task<ActionResult> Approve([FromBody] ChangeLeaveRequestApprovalCommand command,
+                                            CancellationToken cancellationToken)
     {
-        await _sender.Send(command);
+        await _sender.Send(command, cancellationToken);
         return NoContent();
     }
 }

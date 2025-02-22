@@ -18,8 +18,7 @@ public sealed class UpdateDepartmentCommandHandler(IDepartmentRepository departm
     private readonly IUserService _userService = userService;
     private readonly IAppLogger<UpdateDepartmentCommandHandler> _logger = logger;
 
-    public async Task Handle(UpdateDepartmentCommand request,
-                             CancellationToken cancellationToken)
+    public async Task Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
     {
         var validator = new UpdateDepartmentCommandValidator(_userService, _departmentRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -32,13 +31,13 @@ public sealed class UpdateDepartmentCommandHandler(IDepartmentRepository departm
 
         var department = await _departmentRepository
             .GetByIdAsync(request.Id)
-            ?? throw new NotFoundException($"No department with ID {request.Id} found");
+            ?? throw new NotFoundException($"No department with ID { request.Id } found");
 
         DomainDepartment.Update(department, request.Name, request.LeaderId, request.Description);
 
         _logger.LogInformation("Updating informations about department with ID: {Id} started", request.Id);
 
-        await _departmentRepository.UpdateAsync(department);
+        await _departmentRepository.UpdateAsync(department, cancellationToken);
 
         _logger.LogInformation("Updating informations about department with ID: {Id} successful", request.Id);
     }

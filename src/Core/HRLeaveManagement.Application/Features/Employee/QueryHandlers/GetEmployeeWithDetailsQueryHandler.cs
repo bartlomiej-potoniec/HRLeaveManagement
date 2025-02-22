@@ -20,16 +20,15 @@ public sealed class GetEmployeeWithDetailsQueryHandler(IEmployeeRepository repos
     private readonly IMapper _mapper = mapper;
     private readonly IAppLogger<GetEmployeeWithDetailsQueryHandler> _logger = logger;
 
-    public async Task<EmployeeDetailsDTO> Handle(GetEmployeeWithDetailsQuery request,
-                                                 CancellationToken cancellationToken)
+    public async Task<EmployeeDetailsDTO> Handle(GetEmployeeWithDetailsQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Fetching employee with ID: {EmployeeId} started by user: {Username} with ID: {UserId}", request.Id, _userService.UserName, _userService.UserId);
 
-        var user = await _userService.GetUserByEmployeeId(request.Id);
-        var usersInRoleManager = await _userService.GetAllUsersInRole("Manager");
+        var user = await _userService.GetUserByEmployeeIdAsync(request.Id, cancellationToken);
+        var usersInRoleManager = await _userService.GetAllUsersInRoleAsync("Manager", cancellationToken);
        
         var employee = await _repository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No employee for ID: { request.Id } found");
 
         var leaderUser = usersInRoleManager.FirstOrDefault(l => l.EmployeeId == employee.LeaderId);

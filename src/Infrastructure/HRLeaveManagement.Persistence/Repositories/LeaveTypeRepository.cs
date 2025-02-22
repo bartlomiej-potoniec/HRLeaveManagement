@@ -9,30 +9,30 @@ public sealed class LeaveTypeRepository(ApplicationDbContext dbContext) : ILeave
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public async Task<IEnumerable<LeaveType>> GetAllAsync()
-        => await _dbContext.LeaveTypes.ToListAsync();
+    public async Task<IEnumerable<LeaveType>> GetAllAsync(CancellationToken cancellationToken = default)
+        => await _dbContext.LeaveTypes.ToListAsync(cancellationToken);
 
-    public async Task<LeaveType?> GetByIdAsync(int id)
-        => await _dbContext.LeaveTypes.FirstOrDefaultAsync(lt => lt.Id == id);
+    public async Task<LeaveType?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        => await _dbContext.LeaveTypes.FirstOrDefaultAsync(lt => lt.Id == id, cancellationToken);
 
-    public async Task<bool> IsLeaveTypeUniqueAsync(string name)
-        => !(await _dbContext.LeaveTypes.AnyAsync(lt => lt.Name == name));
+    public async Task<bool> IsLeaveTypeUniqueAsync(string name, CancellationToken cancellationToken = default)
+        => !(await _dbContext.LeaveTypes.AnyAsync(lt => lt.Name == name, cancellationToken));
 
-    public async Task CreateAsync(LeaveType leaveType)
+    public async Task CreateAsync(LeaveType leaveType, CancellationToken cancellationToken = default)
     {
-        await _dbContext.LeaveTypes.AddAsync(leaveType);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.LeaveTypes.AddAsync(leaveType, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(LeaveType leaveType)
+    public async Task UpdateAsync(LeaveType leaveType, CancellationToken cancellationToken = default)
     {
         _dbContext.Update(leaveType);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(LeaveType leaveType)
+    public async Task DeleteAsync(LeaveType leaveType, CancellationToken cancellationToken = default)
     {
         _dbContext.LeaveTypes.Remove(leaveType);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

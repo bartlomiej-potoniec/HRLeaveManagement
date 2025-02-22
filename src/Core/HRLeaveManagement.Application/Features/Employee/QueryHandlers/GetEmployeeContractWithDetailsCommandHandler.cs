@@ -23,7 +23,7 @@ public sealed class GetEmployeeContractWithDetailsCommandHandler(IEmployeeReposi
         _logger.LogInformation("Fetching employee contract with ID: {ContractId} for employee with ID: {EmployeeId} started", request.ContractId, request.EmployeeId);
 
         var employeeContract = await _employeeRepository
-            .GetContractByIdAsync(request.ContractId)
+            .GetContractByIdAsync(request.ContractId, cancellationToken)
             ?? throw new NotFoundException($"No contract with ID: { request.ContractId } found");
 
         var employeeContractDto = _mapper.Map<EmployeeContractDetailsDTO>(employeeContract);

@@ -4,12 +4,12 @@ namespace HRLeaveManagement.Application.Contracts.Persistence;
 
 public interface ILeaveTypeRepository
 {
-    Task<IEnumerable<LeaveType>> GetAllAsync();
-    Task<LeaveType?> GetByIdAsync(int id);
+    Task<IEnumerable<LeaveType>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<LeaveType?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
-    Task CreateAsync(LeaveType leaveType);
-    Task UpdateAsync(LeaveType leaveType);
-    Task DeleteAsync(LeaveType leaveType);
+    Task CreateAsync(LeaveType leaveType, CancellationToken cancellationToken = default);
+    Task UpdateAsync(LeaveType leaveType, CancellationToken cancellationToken = default);
+    Task DeleteAsync(LeaveType leaveType, CancellationToken cancellationToken = default);
 
-    Task<bool> IsLeaveTypeUniqueAsync(string name);
+    Task<bool> IsLeaveTypeUniqueAsync(string name, CancellationToken cancellationToken = default);
 }

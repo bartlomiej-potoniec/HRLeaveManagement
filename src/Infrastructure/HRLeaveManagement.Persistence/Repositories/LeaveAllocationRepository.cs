@@ -9,59 +9,71 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext dbContext) : 
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
-    public async Task<IEnumerable<LeaveAllocation>> GetAllAsync()
+    public async Task<IEnumerable<LeaveAllocation>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .Include(la => la.LeaveType)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-    public async Task<IEnumerable<LeaveAllocation>> GetAllByEmployeeIdAsync(Guid employeeId)
+    public async Task<IEnumerable<LeaveAllocation>> GetAllByEmployeeIdAsync(Guid employeeId,
+                                                                            CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .Include(la => la.LeaveType)
             .Where(la => la.EmployeeId == employeeId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-    public async Task<LeaveAllocation?> GetByIdAsync(int id)
+    public async Task<LeaveAllocation?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .Include(la => la.LeaveType)
-            .FirstOrDefaultAsync(la => la.Id == id);
+            .FirstOrDefaultAsync(la => la.Id == id, cancellationToken);
 
-    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId, int leaveTypeId)
+    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId,
+                                                                         int leaveTypeId,
+                                                                         CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
-            .FirstOrDefaultAsync(la => la.EmployeeId == Guid.Parse(userId) && la.LeaveTypeId == leaveTypeId);
+            .FirstOrDefaultAsync(
+                la => la.EmployeeId == Guid.Parse(userId) && la.LeaveTypeId == leaveTypeId,
+                cancellationToken
+            );
 
-    public async Task<LeaveAllocation?> GetLeaveAllocationWithDetailsByIdAsync(int id)
+    public async Task<LeaveAllocation?> GetLeaveAllocationWithDetailsByIdAsync(int id,
+                                                                               CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .Include(la => la.LeaveType)
-            .FirstOrDefaultAsync(la => la.Id == id);
+            .FirstOrDefaultAsync(la => la.Id == id, cancellationToken);
 
-    public async Task<IReadOnlyList<LeaveAllocation>> GetUserLeaveAllocationsWithDetailsAsync(string userId)
+    public async Task<IReadOnlyList<LeaveAllocation>> GetUserLeaveAllocationsWithDetailsAsync(string userId,
+                                                                                              CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .Where(la => la.EmployeeId == Guid.Parse(userId))
             .Include(la => la.LeaveType)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-    public async Task<IReadOnlyList<LeaveAllocation>> GetAllLeaveAllocationsWithDetailsAsync()
+    public async Task<IReadOnlyList<LeaveAllocation>> GetAllLeaveAllocationsWithDetailsAsync(CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .Include(la => la.LeaveType)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-    public async Task<bool> IsAllocationForEmployeeExistAsync(Guid employeeId, int leaveTypeId, int year)
+    public async Task<bool> IsAllocationForEmployeeExistAsync(Guid employeeId,
+                                                              int leaveTypeId,
+                                                              int year,
+                                                              CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .AnyAsync(la => 
                 la.EmployeeId == employeeId &&
                 la.LeaveTypeId == leaveTypeId &&
-                la.Year == year
+                la.Year == year,
+                cancellationToken
             );
 
-    public async Task CreateRangeAsync(IEnumerable<LeaveAllocation> leaveAllocations)
+    public async Task CreateRangeAsync(IEnumerable<LeaveAllocation> leaveAllocations, CancellationToken cancellationToken = default)
     {
-        await _dbContext.AddRangeAsync(leaveAllocations);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AddRangeAsync(leaveAllocations, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(LeaveAllocation leaveAllocation)
+    public async Task UpdateAsync(LeaveAllocation leaveAllocation, CancellationToken cancellationToken = default)
     {
         _dbContext.LeaveAllocations.Update(leaveAllocation);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
