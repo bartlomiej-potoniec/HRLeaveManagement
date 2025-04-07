@@ -1,7 +1,7 @@
-﻿using System.Net;
-using HRLeaveManagement.Api.Models;
+﻿using HRLeaveManagement.Api.Models;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Exceptions;
+using System.Net;
 
 namespace HRLeaveManagement.Api.Middleware;
 
@@ -22,7 +22,7 @@ public sealed class GlobalExceptionHandlerMiddleware(RequestDelegate next)
             await HandleExceptionAsync(httpContext, ex);
         }
     }
-
+    
     private async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
     {
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;

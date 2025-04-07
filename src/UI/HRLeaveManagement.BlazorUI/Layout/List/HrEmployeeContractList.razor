@@ -1,0 +1,80 @@
+﻿@using HRLeaveManagement.BlazorUI.ViewModels.Employees
+
+<MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="Leader" Style="min-width: 230px;">Contract history</MudInputLabel>
+    <MudPaper Width="100%">
+        <MudList T="string" Dense Padding>
+            <MudListSubheader Class="d-flex align-center justify-space-between">
+                <MudText Inline Typo="Typo.subtitle2">List of employee's contracts</MudText>
+                @if (HasOptionsButtons)
+                {
+                    <MudButton ButtonType="ButtonType.Button" 
+                               Size="Size.Small" 
+                               OnClick="AddContractToListDialogAsync" 
+                               StartIcon="@Icons.Material.Filled.AddCircle" 
+                               Variant="Variant.Filled" 
+                               Color="Color.Primary" 
+                               Disabled="@IsDisabled">
+                        Add
+                    </MudButton>
+                }
+            </MudListSubheader>
+            @if (Contracts.Any())
+            {
+                @foreach (var contract in Contracts)
+                {
+                    <MudListItem Text="@($"{ @contract.ContractTypes[contract.ContractType] } ({ contract.ContractDescription })")" 
+                    Icon="@Icons.Material.Filled.Work" 
+                    IconColor="Color.Dark">
+                        <NestedList>
+                            <MudGrid Style="padding-left: 45px;">
+                                <MudItem xs="10">
+                                    <MudItem Class="d-inline-flex align-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.Details" Size="Size.Small" Style="margin-right: 7px;" />
+                                        <MudText Inline>Contract type: @contract.ContractTypes[contract.ContractType]</MudText>
+                                    </MudItem>
+                                    <MudFlexBreak />
+                                    <MudItem Class="d-inline-flex align-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="margin-right: 7px;" />
+                                        <MudText>From-To date: @contract.StartedAtShortDate - @GetContractDateEndMarkup(contract)</MudText>
+                                    </MudItem>
+                                </MudItem>
+                                @if (HasOptionsForItems)
+                                {
+                                    <MudItem xs="2">
+                                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz">
+                                            <MudMenuItem Icon="@Icons.Material.Filled.Edit" 
+                                                         OnClick="() => UpdateContractInListDialogAsync(contract)" 
+                                                         IconColor="Color.Warning">
+                                            </MudMenuItem>
+                                            <MudDivider />
+                                            <MudMenuItem Icon="@Icons.Material.Filled.Delete" 
+                                                         OnClick="() => RemoveContractFromListDialogAsync(contract)" 
+                                                         IconColor="Color.Error">
+                                            </MudMenuItem>
+                                        </MudMenu>
+                                    </MudItem>
+                                }
+                            </MudGrid>
+                        </NestedList>
+                    </MudListItem>
+                }
+            }
+            else
+            {
+                <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">
+                    No information about agreements and contracts has been added.
+                    <MudLink OnClick="AddContractToListDialogAsync">Add information</MudLink>
+                </MudText>
+            }
+        </MudList>
+    </MudPaper>
+</MudItem>
+
+@code {
+    private MarkupString GetContractDateEndMarkup(EmployeeContractViewModel contract)
+        => new(contract.ExpiredAt.HasValue 
+            ? $" { contract.ExpiredAtShortDate }"
+            : "<span style=\"color: green; margin-left: 2px;\"><b>currently ongoing</b></span>"
+        );
+}

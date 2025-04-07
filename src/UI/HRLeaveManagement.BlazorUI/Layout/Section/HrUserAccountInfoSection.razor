@@ -1,0 +1,83 @@
+﻿<HrSection Title="Account information" 
+           Icon="@Icons.Material.Filled.Info" 
+           Height="@Height" 
+           MinHeight="@MinHeight"
+           HasLoader
+           IsLoading="@_isLoading">
+    <HeaderChildContent>
+        <MudButtonGroup Style="margin-top: 8px;" Color="Color.Default" Variant="Variant.Filled">
+            <MudButton ButtonType="ButtonType.Button" 
+                       Variant="Variant.Outlined" 
+                       StartIcon="@Icons.Material.Filled.ManageAccounts" 
+                       Disabled="@_isLoading">
+                Actions
+            </MudButton>
+            <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;" Disabled="@_isLoading">
+                <HrUserAccountLockMenuItem UserId="@Model.Id.ToString()" UserName="@Model.UserName" IsUserLockout="@Model.IsLockout" />
+                <MudDivider />
+                <HrUserAccountDeleteMenuItem UserId="@Model.Id.ToString()" UserName="@Model.UserName" />
+            </MudMenu>
+        </MudButtonGroup>
+    </HeaderChildContent>
+    <BodyChildContent>
+        <HrFormDivider Text="User account" />
+
+        <HrFormTextInput InputId="AccountId" 
+                         Label="Account identifier" 
+                         Value="@Model.Id" 
+                         Variant="Variant.Text" 
+                         Margin="Margin.Normal" 
+                         MinLabelWith="180px" 
+                         IsReadOnly />
+
+        <HrFormTextInput InputId="UserName"
+                         Label="Username"
+                         Value="@Model.UserName"
+                         Variant="Variant.Text"
+                         Margin="Margin.Normal"
+                         MinLabelWith="180px"
+                         IsReadOnly />
+
+        <HrFormTextInput InputId="AccountConfirmationStatus"
+                         Label="Account confirmation"
+                         Value="@Model.AccountConfirmationStatus" 
+                         Variant="Variant.Text"
+                         Margin="Margin.Normal"
+                         MinLabelWith="180px"
+                         IsReadOnly />
+
+        <HrFormTextInput InputId="AccountStatus"
+                         Label="Account status"
+                         Value="@Model.AccountLockoutStatus"
+                         Variant="Variant.Text"
+                         Margin="Margin.Normal"
+                         MinLabelWith="180px"
+                         IsReadOnly />
+
+        <HrFormTextInput InputId="AccountBlock"
+                         Label="Account lockout"
+                         Value="@Model.AccountLockoutDurationStatus"
+                         Variant="Variant.Text"
+                         Margin="Margin.Normal"
+                         MinLabelWith="180px"
+                         IsReadOnly />
+
+        <HrFormDivider Text="Employee account" />
+
+        <HrFormTextInput InputId="EmployeeAccountId"
+                         Label="Account identifier"
+                         Value="@(Model.EmployeeId is null ? "none" : $"{ Model.EmployeeId }")"
+                         Variant="Variant.Text"
+                         Margin="Margin.Normal"
+                         MinLabelWith="180px"
+                         IsReadOnly />
+
+        <HrFormTextInput InputId="EmployeeAccountStatus"
+                         Label="Account status"
+                         Value="@Model.EmployeeAccountStatus"
+                         Variant="Variant.Text"
+                         Margin="Margin.Normal"
+                         MinLabelWith="180px"
+                         IsReadOnly />
+    </BodyChildContent>
+</HrSection>

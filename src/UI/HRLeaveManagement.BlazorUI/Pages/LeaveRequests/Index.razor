@@ -1,12 +1,15 @@
 ﻿@page "/leave-requests"
-@attribute [Authorize(Roles="Administrator")]
+@attribute [Authorize(Roles="Employee")]
+
+<HrUnderConstructionAlert />
+
+<HrHeader>
+    <HeaderChildContent>
+        Leave request
+    </HeaderChildContent>
+</HrHeader>
 
 <MudGrid>
-    
-    <MudText Typo="Typo.h6" Class="mt-7 mb-4 ml-5" Style="font-size: 17px; letter-spacing: .7px; text-transform: uppercase;">Wniosek o urlop</MudText>
-
-    <MudDivider Class="ml-5"/>
-
     <MudItem xs="12" lg="3">
         <MudCard>
             <MudCardContent>
@@ -46,9 +49,9 @@
     <MudItem xs="12" xl="8">
         <MudTable Items="@Model.LeaveRequests" Hover Breakpoint="Breakpoint.Sm" Loading="_isLoading" LoadingProgressColor="Color.Primary" Elevation="1">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Nowy wniosek</MudText>
-                 <MudSpacer />
-                <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudText Typo="Typo.h6">New request</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" />
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Employee Name</MudTh>
@@ -100,24 +103,15 @@
                 <MudTablePager />
             </PagerContent>
             <NoRecordsContent>
-                <MudText>Nie znaleziono żadnych elementów</MudText>
+                <MudText>No item has been found</MudText>
             </NoRecordsContent>
             <LoadingContent>
                 <MudText>Loading...</MudText>
             </LoadingContent>
         </MudTable>
     </MudItem>
-
 </MudGrid>
-
 
 @code {
     private string _searchString;
 }
-
-<style>
-    .mud-card-header .mud-card-header-avatar {
-        margin-right: 8px !important;
-        margin-inline-end: 8px !important;
-    }
-</style>

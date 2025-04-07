@@ -1,167 +1,100 @@
 ﻿@page "/users/{id}/details"
 @attribute [Authorize(Roles = "Administrator")]
 
-<Header Title="@($"Szczegóły użytkownika { Model.FirstName } { Model.LastName }")" />
+<PageTitle>Details of user @Model.UserName</PageTitle>
 
-<MudGrid>
-    <MudItem xs="12" lg="8">
-        <MudCard Style="min-height: 590px;">
-            <MudCardHeader>
-                <CardHeaderAvatar>
-                    <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.Info" Size="Size.Medium" />
-                </CardHeaderAvatar>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Informacje o użytkowniku</MudText>
-                </CardHeaderContent>
-                <CardHeaderActions>
-                    <MudButton Href="@($"users/{ Model.Id }/edit")" Style="margin-top: 8px;" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit">Edytuj</MudButton>
-                </CardHeaderActions>
-            </MudCardHeader>
-            <MudDivider DividerType="DividerType.Middle" />
-            <MudCardContent>
-                <MudGrid Style="padding: 5px 18px; padding-bottom: 30px; display: flex; align-items: center;">
-                    <MudItem xs="12">
-                        <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Podstawowe informacje</MudText>
-                        <MudDivider Class="mb-3" />
-                    </MudItem>
-                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                        <MudInputLabel ForId="FirstName" Style="min-width: 230px;">Imię</MudInputLabel>
-                        <MudTextField Typo="Typo.body2" InputId="FirstName" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" Value="Model.FirstName" ReadOnly />
-                    </MudItem>
-                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                        <MudInputLabel ForId="LastName" Style="min-width: 230px;">Nazwisko</MudInputLabel>
-                        <MudTextField Typo="Typo.body2" InputId="LastName" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" Value="Model.LastName" ReadOnly />
-                    </MudItem>
-                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                        <MudInputLabel ForId="Email" Style="min-width: 230px;">E-mail</MudInputLabel>
-                        <MudTextField Typo="Typo.body2" InputId="Email" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" Value="Model.Email" ReadOnly />
-                    </MudItem>
-                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                        <MudInputLabel ForId="DateOfBirth" Style="min-width: 230px;">Data urodzenia</MudInputLabel>
-                        <MudDatePicker Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" @bind-Date="Model.DateOfBirth" ReadOnly />
-                    </MudItem>
+<MudOverlay Visible="@_isLoading" LightBackground>
+    <HrProgressCircular />
+</MudOverlay>
 
-                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                        <MudInputLabel ForId="Pesel" Style="min-width: 230px;">Numer PESEL</MudInputLabel>
-                        <MudTextField Typo="Typo.body2" InputId="Pesel" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" Value="Model.PeselNumber" ReadOnly />
-                    </MudItem>
+@if (!_isLoading)
+{
+    <HrHeader>
+        <HeaderChildContent>
+            Details of user @Model.UserName
+        </HeaderChildContent>
+    </HrHeader>
 
-                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                        <MudInputLabel ForId="PhoneNumber" Style="min-width: 230px;">Numer telefonu</MudInputLabel>
-                        <MudTextField Typo="Typo.body2" InputId="PhoneNumber" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" Value="Model.PhoneNumber" ReadOnly />
-                    </MudItem>
+    <MudGrid Class="mt-2">
+        <MudItem xs="12" lg="8">
+            <HrSection Title="User information" Icon="@Icons.Material.Filled.Info" MinHeight="590px">
+                <HeaderChildContent>
+                    <MudButton Href="@($"users/{ Model.Id }/edit")"
+                               Style="margin-top: 8px;"
+                               ButtonType="ButtonType.Button"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Edit">
+                        Edit
+                    </MudButton>
+                </HeaderChildContent>
+                <BodyChildContent>
+                    <HrFormDivider Text="Basic information" />
 
-                    <MudItem xs="12">
-                        <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Role użytkownika</MudText>
-                        <MudDivider Class="mb-3" />
-                    </MudItem>
+                    <HrFormTextInput T="string"
+                                     Label="Firstname"
+                                     InputId="FirstName"
+                                     Value="@Model.FirstName"
+                                     Variant="Variant.Text"
+                                     Margin="Margin.Normal"
+                                     IsReadOnly />
 
-                    <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                        <MudInputLabel ForId="Deputy" Style="min-width: 230px; margin-top: 20px;">Przypisane role</MudInputLabel>
-                        <div style="margin-top: 1rem;">
-                            @foreach (var role in Model.Roles)
-                            {
-                                <MudChip T="string" Color="Color.Primary">
-                                    @role
-                                </MudChip>
-                            }
-                        </div>
-                    </MudItem>
-                </MudGrid>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
+                    <HrFormTextInput T="string"
+                                     Label="Lastname"
+                                     InputId="LastName"
+                                     Value="@Model.LastName"
+                                     Variant="Variant.Text"
+                                     Margin="Margin.Normal"
+                                     IsReadOnly />
 
-    <MudItem xs="12" lg="4">
-        <MudItem xs="12" lg="12">
-            <MudCard Style="min-height: 590px;">
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.Info" Size="Size.Medium" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Informacje o koncie</MudText>
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudButtonGroup Style="margin-top: 8px;" Color="Color.Default" Variant="Variant.Filled">
-                            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.ManageAccounts">Akcje</MudButton>
-                            <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
-                                @if (Model.IsLockout)
-                                {
-                                    <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle">Odblokuj konto</MudMenuItem>
-                                }
-                                else 
-                                {
-                                    <MudMenuItem Icon="@Icons.Material.Filled.Block">Zablokuj konto</MudMenuItem>
-                                }
-                                <MudMenuItem Icon="@Icons.Material.Filled.Delete">Usuń konto</MudMenuItem>
-                            </MudMenu>
-                        </MudButtonGroup>
-                    </CardHeaderActions>
-                </MudCardHeader>
-                <MudDivider DividerType="DividerType.Middle" />
-                <MudCardContent>
-                    <MudGrid Style="padding: 5px 18px; padding-bottom: 30px; display: flex; align-items: center;">
-                        <MudItem xs="12">
-                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Konto użytkownika</MudText>
-                            <MudDivider Class="mb-3" />
-                        </MudItem>
-                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                            <MudInputLabel Style="min-width: 180px;">Identyfikator konta</MudInputLabel>
-                            <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" Value="Model.Id" ReadOnly />
-                        </MudItem>
-                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                            <MudInputLabel Style="min-width: 180px;">Nazwa użytkownika</MudInputLabel>
-                            <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" Value="Model.UserName" ReadOnly />
-                        </MudItem>
-                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                            <MudInputLabel Style="min-width: 180px;">Zatwierdzenie konta</MudInputLabel>
-                            <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;"
-                                          Value="@(Model.IsEmailConfirmed ? "Zatwierdzone" : "Niezatwierdzone")" ReadOnly />
-                        </MudItem>
-                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                            <MudInputLabel Style="min-width: 180px;">Status konta</MudInputLabel>
-                            <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" 
-                                          Value="@(Model.IsLockout ? "Zablokowane" : "Aktywne")" ReadOnly />
-                        </MudItem>
-                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                            <MudInputLabel Style="min-width: 180px;">Blokada konta</MudInputLabel>
-                            <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;"
-                                          Value="@(Model.LockoutEnd is null ? "Wyłączona" : $"do { Model.LockoutEnd.Value.Date }")" ReadOnly />
-                        </MudItem>
+                    <HrFormTextInput T="string"
+                                     Label="E-mail"
+                                     InputId="Email"
+                                     Value="@Model.Email"
+                                     Variant="Variant.Text"
+                                     Margin="Margin.Normal"
+                                     IsReadOnly />
 
-                        <MudItem xs="12">
-                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Konto pracownika</MudText>
-                            <MudDivider Class="mb-3" />
-                        </MudItem>
-                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                            <MudInputLabel Style="min-width: 180px;">Identyfikator konta</MudInputLabel>
-                            <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;" 
-                                          Value="@(Model.EmployeeId is null ? "brak" : Model.EmployeeId.ToString())" ReadOnly />
-                        </MudItem>
-                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
-                            <MudInputLabel Style="min-width: 180px;">Status konta</MudInputLabel>
-                            <MudTextField Typo="Typo.body2" Variant="Variant.Text" Margin="Margin.Normal" Style="font-size: 14px;"
-                                          Value="@(Model.EmployeeId is null ? "Nieutworzone" : "Utworzone")" ReadOnly />
-                        </MudItem>
-                    </MudGrid>
-                </MudCardContent>
-            </MudCard>
+                    <HrFormDateInput Label="Date of birth"
+                                     InputId="DateOfBirth"
+                                     Date="@Model.DateOfBirth"
+                                     Variant="Variant.Text"
+                                     Margin="Margin.Normal"
+                                     IsReadOnly />
+
+                    <HrFormTextInput T="string"
+                                     Label="PESEL number"
+                                     InputId="Pesel"
+                                     Value="@Model.PeselNumber"
+                                     Variant="Variant.Text"
+                                     Margin="Margin.Normal"
+                                     IsReadOnly />
+
+                    <HrFormTextInput T="string"
+                                     Label="Phone number"
+                                     InputId="PhoneNumber"
+                                     Value="@Model.PhoneNumber"
+                                     Variant="Variant.Text"
+                                     Margin="Margin.Normal"
+                                     IsReadOnly />
+
+                    <HrFormDivider Text="User roles" />
+
+                    <HrRoleDisplay Roles="Model.Roles" ChipColor="Color.Primary" MarginTop="20px" IsReadOnly />
+                </BodyChildContent>
+            </HrSection>
         </MudItem>
-    </MudItem>
 
-    <MudItem xs="12" lg="8" Style="margin-bottom: 50px;">
-        <LogSection Height="350" />
-    </MudItem>
+        <MudItem xs="12" lg="4">
+            <HrUserAccountInfoSection UserId="@Model.Id.ToString()" Height="100%" />
+        </MudItem>
 
-    <MudItem xs="12" lg="4" Style="margin-bottom: 50px;">
-        <AnotherUsersSection ActualUserId="Model.Id" Height="350" />
-    </MudItem>
-</MudGrid>
+        <MudItem xs="12" lg="8">
+            <HrLogSection Height="350px" />
+        </MudItem>
 
-<style>
-    .mud-card-header .mud-card-header-avatar {
-        margin-right: 8px !important;
-        margin-inline-end: 8px !important;
-    }
-</style>
+        <MudItem xs="12" lg="4">
+            <HrAnotherUsersSection ActualUserId="@Model.Id.ToString()" Height="350px" />
+        </MudItem>
+    </MudGrid>
+}

@@ -1,36 +1,51 @@
 ﻿using HRLeaveManagement.BlazorUI.Contracts;
-using HRLeaveManagement.BlazorUI.ViewModels.Users;
-using HRLeaveManagement.BlazorUI.ViewModels;
 using Microsoft.AspNetCore.Components;
+using HRLeaveManagement.BlazorUI.Layout;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
 
 namespace HRLeaveManagement.BlazorUI.Pages.Employees;
 
 public partial class Details
 {
-    [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    [Inject] private IEmployeeService EmployeeService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
-    [Inject]
-    private IUserService UserService { get; set; }
+    [CascadingParameter] protected Message Message { get; set; }
 
-    [Inject]
-    private IEmployeeService EmployeeService { get; set; }
+    [Parameter] public string Id { get; set; }
 
-
-    [Parameter]
-    public string Id { get; set; }
-
-    private UserDetailsViewModel User { get; set; } = new();
     private EmployeeDetailsViewModel Model { get; set; } = new();
 
+    private bool _isLoading = true;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        Model = (await EmployeeService.GetWithDetailsByIdAsync(Guid.Parse(Id))).Data;
-        User = await UserService.GetWithDetailsByIdAsync(Model.UserId);
+        _isLoading = true;
+
+        var isValidId = Guid.TryParse(Id, out Guid id);
+
+        if (!isValidId)
+        {
+            Message.HandleError("Cannot convert given employee ID");
+            return;
+        }
+
+        var response = await EmployeeService.GetWithDetailsByIdAsync(id);
+
+        if (!response.IsSuccess)
+        {
+            Message.HandleError("Cannot find an employee with given ID");
+            return;
+        }
+
+        Model = response.Data;
 
         Model.Educations = [.. Model.Educations.OrderByDescending(x => x.EnrolledAt)];
         Model.Experiences = [.. Model.Experiences.OrderByDescending(x => x.EmployedFrom)];
         Model.Contracts = [.. Model.Contracts.OrderByDescending(x => x.StartedAt)];
+
+        _isLoading = false;
+        StateHasChanged();
     }
 }

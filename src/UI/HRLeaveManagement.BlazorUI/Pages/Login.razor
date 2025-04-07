@@ -1,30 +1,51 @@
 ﻿@page "/login"
 @layout AuthLayout
 
-<MudText Typo="Typo.h6" Class="mb-1">Login to <MudText Typo="Typo.inherit" Color="Color.Primary">HR Management</MudText></MudText>
+<PageTitle>Login page</PageTitle>
 
-<EditForm Model="Model" OnValidSubmit="HandleLogin">
-    <DataAnnotationsValidator />
+<MudOverlay Visible="@_isLoading" LightBackground>
+    <HrProgressCircular />
+</MudOverlay>
 
+<MudText Typo="Typo.h6" Class="mb-1">
+    Login to <MudText Inline Typo="Typo.inherit" Color="Color.Primary">HR Management</MudText>
+</MudText>
+
+<MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)" >
     <MudCard>
         <MudCardContent>
-            <MudTextField InputType="InputType.Text" Label="Email" HelperText="Required" Placeholder="user@company.com" 
-                @bind-Value="@Model.Email" For="@(() => Model.Email)" Class="mb-6" />
+            <MudTextField InputType="InputType.Text" 
+                          Label="Username" 
+                          Placeholder="user01" 
+                          @bind-Value="@Model.Username" 
+                          For="@(() => Model.Username)" 
+                          Immediate
+                          Clearable
+                          Class="mb-6" />
 
-            <MudTextField InputType="InputType.Password" Label="Password" HelperText="Required" Placeholder="**********"
-                @bind-Value="@Model.Password" For="@(() => Model.Password)" />
+            <MudTextField InputType="InputType.Password" 
+                          Label="Password" 
+                          Placeholder="**********"
+                          @bind-Value="@Model.Password" 
+                          For="@(() => Model.Password)" 
+                          Immediate
+                          Clearable />
         </MudCardContent>
-        
         <MudCardContent>
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Login</MudButton>
-            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Text" Color="Color.Surface" Class="ml-auto">Forgot password or username</MudButton>
+            <MudButton ButtonType="ButtonType.Button" 
+                       Variant="Variant.Filled" 
+                       Color="Color.Primary" 
+                       Class="ml-auto"
+                       OnClick="@HandleLogin">
+                Login
+            </MudButton>
+            <MudButton ButtonType="ButtonType.Button" 
+                       Variant="Variant.Text" 
+                       Color="Color.Surface" 
+                       Class="ml-auto" 
+                       Href="#">
+                Forgot password or username
+            </MudButton>
         </MudCardContent>
     </MudCard>
-</EditForm>
-
-@if (_isLoading)
-{
-    <div style="text-align: center; margin-top: 40px;">
-        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate/>
-    </div>
-}
+</MudForm>

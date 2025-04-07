@@ -1,0 +1,15 @@
+﻿@inherits HrDialog
+
+<HrDialog Icon="@Icons.Material.Filled.Warning" ButtonColor="Color.Error">
+    <ChildBodyContent>
+        <MudText>
+            Are you sure you want to <b>permanently</b> remove @UserNameMarkup
+        </MudText>
+        <MudDivider />
+    </ChildBodyContent>
+</HrDialog>
+
+@code {
+    private MarkupString UserNameMarkup =>
+        new(UserName is not null ? $"user <b>{ UserName }</b>?" : "selected users?");
+}

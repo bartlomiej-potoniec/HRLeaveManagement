@@ -1,0 +1,63 @@
+﻿<HrSection Title="Another users" 
+           Icon="@Icons.Material.Filled.SupervisedUserCircle"
+           HasOverflowScroll 
+           HasLoader 
+           IsLoading="@(!_isLoaded)"
+           Height="@Height">
+    <HeaderChildContent>
+        <MudButton ButtonType="ButtonType.Button"
+                   Variant="Variant.Outlined"
+                   StartIcon="@Icons.Material.Filled.FormatListBulleted"
+                   Href="/employees/list"
+                   Style="margin-top: 8px;">
+            Full list
+        </MudButton>
+    </HeaderChildContent>
+    <BodyChildContent>
+        <MudItem Style="width: 100%;">
+            @if (Employees.Any())
+            {
+                @foreach (var employee in Employees)
+                {
+                    @if (employee.EmployeeId != _actualEmployeeId)
+                    {
+                        <MudCard Style="margin-bottom: 10px; width: 100%;">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.subtitle2">
+                                        @employee.FirstName @employee.LastName (@employee.Position)
+                                    </MudText>
+                                </CardHeaderContent>
+                                <CardHeaderActions>
+                                    <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default">
+                                        <MudMenuItem Icon="@Icons.Material.Filled.Info" Href="@($"/employees/{ employee.EmployeeId }/details")">
+                                            Details
+                                        </MudMenuItem>
+                                        <MudDivider />
+                                        <MudMenuItem Icon="@Icons.Material.Filled.Message" Href="#">
+                                            Message
+                                        </MudMenuItem>
+                                        <MudDivider />
+                                        <MudMenuItem Icon="@Icons.Material.Filled.EditNote" Href="@($"/employees/{ employee.EmployeeId }/edit")">
+                                            Edit
+                                        </MudMenuItem>
+                                    </MudMenu>
+                                </CardHeaderActions>
+                            </MudCardHeader>
+                            <MudCardContent Style="margin-top: -30px;">
+                                <MudText>Department: @employee.Section / @employee.Department</MudText>
+                                <MudText>Status: <MudText Inline Style="color: green;">Active now</MudText></MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                }
+            }
+            else
+            {
+                <MudText Typo="Typo.body2" Style="width: 100%;">
+                    No items to display
+                </MudText>
+            }
+        </MudItem>
+    </BodyChildContent>
+</HrSection>

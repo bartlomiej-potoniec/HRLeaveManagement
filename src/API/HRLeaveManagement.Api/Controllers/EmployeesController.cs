@@ -26,7 +26,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     }
 
     [HttpGet("{employeeId}")]
-    [Authorize(Roles = "HR", Policy = "IsEmployee")]
+    //[Authorize(Roles = "HR", Policy = "IsEmployee")]
     //[ValidateGuid]
     public async Task<ActionResult<EmployeeDetailsDTO>> GetWithDetails([FromRoute] Guid employeeId,
                                                                        CancellationToken cancellationToken)

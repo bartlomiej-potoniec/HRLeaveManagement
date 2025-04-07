@@ -1,0 +1,51 @@
+﻿<HrSection Title="Another users" 
+           Icon="@Icons.Material.Filled.SupervisedUserCircle" 
+           Height="@Height" 
+           MinHeight="@MinHeight"
+           HasOverflowScroll
+           HasLoader
+           IsLoading="@(!_isLoaded)">
+    <HeaderChildContent>
+        <MudButton Href="/users/list" 
+                   ButtonType="ButtonType.Button"
+                   Variant="Variant.Outlined" 
+                   StartIcon="@Icons.Material.Filled.FormatListBulleted"
+                   Disabled="@(!_isLoaded)"
+                   Style="margin-top: 8px;">
+            Full list
+        </MudButton>
+    </HeaderChildContent>
+    <BodyChildContent>
+        <MudItem>
+            @if (Users.Any())
+            {
+                @foreach (var user in Users)
+                {
+                    if (user.Id != _actualUserId)
+                    {
+                        <MudCard Style="margin-bottom: 10px; width: 100%;">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.subtitle2">@user.FirstName @user.LastName &lt;@user.Email&gt;</MudText>
+                                </CardHeaderContent>
+                                <CardHeaderActions>
+                                    <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default" />
+                                </CardHeaderActions>
+                            </MudCardHeader>
+                            <MudCardContent Style="margin-top: -30px;">
+                                <MudText>Phone no.: @user.PhoneNumber</MudText>
+                                <MudText>Status: <span style="color: green;">Active now</span></MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                }
+            }
+            else
+            {
+                <MudText Typo="Typo.body2" Style="width: 100%;">
+                    No items to display
+                </MudText>
+            }
+        </MudItem>
+    </BodyChildContent>
+</HrSection>

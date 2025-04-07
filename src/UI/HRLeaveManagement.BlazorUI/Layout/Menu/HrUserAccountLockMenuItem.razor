@@ -1,0 +1,12 @@
+﻿@if (IsUserLockout)
+{
+    <MudMenuItem OnClick="@(() => UnlockAccountAsync())" Icon="@Icons.Material.Filled.LockOpen">
+        Unlock
+    </MudMenuItem>
+}
+else
+{
+    <MudMenuItem OnClick="@(() => LockoutAccountAsync())" Icon="@Icons.Material.Filled.Lock">
+        Lockout
+    </MudMenuItem>
+}

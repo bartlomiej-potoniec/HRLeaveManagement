@@ -1,9 +1,11 @@
-﻿using FluentValidation;
-using HRLeaveManagement.BlazorUI.ViewModels;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
+using FluentValidation;
 
 namespace HRLeaveManagement.BlazorUI.Validation;
 
-public class EmployeeContractViewModelValidator : AbstractValidator<EmployeeContractViewModel>
+public class EmployeeContractViewModelValidator 
+    : AbstractValidator<EmployeeContractViewModel>, IViewModelValidator<EmployeeContractViewModel>
 {
     public EmployeeContractViewModelValidator()
     {
@@ -11,23 +13,12 @@ public class EmployeeContractViewModelValidator : AbstractValidator<EmployeeCont
             .NotNull()
             .NotEmpty();
 
-        RuleFor(x => x.EmployedFrom)
+        RuleFor(x => x.StartedAt)
             .NotNull()
             .NotEmpty();
 
-        RuleFor(x => x.EmployedTo)
+        RuleFor(x => x.ExpiredAt)
             .NotNull()
             .NotEmpty();
     }
-
-    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
-    {
-        var result = await ValidateAsync(ValidationContext<EmployeeContractViewModel>
-            .CreateWithOptions((EmployeeContractViewModel)model, x => x.IncludeProperties(propertyName)));
-
-        if (result.IsValid)
-            return Array.Empty<string>();
-
-        return result.Errors.Select(e => e.ErrorMessage);
-    };
 }

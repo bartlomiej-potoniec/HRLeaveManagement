@@ -3,99 +3,96 @@
 
 @using HRLeaveManagement.BlazorUI.ViewModels.Users
 
-<Header Title="Lista użytkowników">
-    <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.AddCircle" Href="auth/register-user/" Size="Size.Small" Class="mr-2">Nowy użytkownik</MudButton>
-</Header>
+<PageTitle>User list</PageTitle>
+
+<HrHeader>
+    <HeaderChildContent>
+        User list
+    </HeaderChildContent>
+
+    <BodyChildContent>
+        <MudButton Href="auth/register-user/" 
+                   Variant="Variant.Outlined"
+                   Size="Size.Small" 
+                   Color="Color.Default"
+                   StartIcon="@Icons.Material.Filled.AddCircle" 
+                   Class="mr-2">
+            New user
+        </MudButton>
+    </BodyChildContent>
+</HrHeader>
 
 <MudGrid Class="d-flex justify-space-between align-end">
     <MudItem>
-        @if (_isChoosenMany)
-        {
-            <MudButtonGroup Color="Color.Default" Variant="Variant.Filled" DropShadow Size="Size.Small" Class="ml-1">
-                <MudButton StartIcon="@Icons.Material.Filled.MoreVert" Disabled="!(_isChoosenMany)">Szybkie akcje</MudButton>
-                <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;" Disabled="!(_isChoosenMany)">
-                    <MudMenuItem Icon="@Icons.Material.Filled.Block">Zablokuj konta</MudMenuItem>
-                    <MudMenuItem Icon="@Icons.Material.Filled.Block">Odblokuj konta</MudMenuItem>
-                    <MudMenuItem Icon="@Icons.Material.Filled.Delete">Usuń konta</MudMenuItem>
-                </MudMenu>
-            </MudButtonGroup>
-        }
+        <HrUsersListActionsGroup T="UserDetailsViewModel" DataGrid="@_dataGrid" IsChoosen="@_isChoosenMany" />
     </MudItem>
     <MudItem Class="d-flex align-center">
-        <MudSwitch @bind-Value="_isChoosenMany" Color="Color.Primary">Zaznacz wiersze</MudSwitch>
+        <MudSwitch @bind-Value="_isChoosenMany" Color="Color.Primary">Select rows</MudSwitch>
     </MudItem>
 </MudGrid>
 
-<MudDataGrid T="UserDetailsViewModel" @ref="_dataGrid" ServerData="LoadServerData" Loading="@_isLoading" Filterable Striped MultiSelection Dense SelectOnRowClick="_isChoosenMany"
-             LoadingProgressColor="Color.Primary" FilterMode="DataGridFilterMode.ColumnFilterRow" Class="mt-5">
+<MudDataGrid T="UserDetailsViewModel" 
+             @ref="_dataGrid" 
+             ServerData="LoadServerData" 
+             Loading="@_isLoading" 
+             MultiSelection 
+             SelectOnRowClick="@_isChoosenMany"
+             LoadingProgressColor="Color.Primary" 
+             Filterable 
+             FilterMode="DataGridFilterMode.ColumnFilterRow" 
+             Striped 
+             Dense 
+             Class="mt-5">
     <ToolBarContent>
         <MudIcon Icon="@Icons.Material.Filled.ViewList" />
-        <MudText Typo="Typo.h6" Style="font-size: 18px; letter-spacing: .7px; margin-left: 10px;">Lista użytkowników</MudText>
+        <MudText Typo="Typo.h6" Style="font-size: 18px; letter-spacing: .7px; margin-left: 10px;">User list</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString1" Placeholder="Szukaj" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Clearable Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="_searchString" 
+                      Placeholder="Szukaj" 
+                      Adornment="Adornment.Start" 
+                      AdornmentIcon="@Icons.Material.Filled.Search" 
+                      IconSize="Size.Medium" 
+                      Clearable 
+                      Class="mt-0">
+        </MudTextField>
     </ToolBarContent>
     <Columns>
         <SelectColumn T="UserDetailsViewModel" Hidden="!(_isChoosenMany)" />
-        <PropertyColumn Property="u => u.ShortId" Title="Identyfikator" HeaderStyle="font-weight:700;" Filterable="false" Sortable="false" />
-        <PropertyColumn Property="u => u.FullName" Title="Imię i nazwisko" HeaderStyle="font-weight:700;" />
-        <PropertyColumn Property="u => u.UserName" Title="Nickname" HeaderStyle="font-weight:700;" />
+        <PropertyColumn Property="u => u.ShortId" Title="Identifier" HeaderStyle="font-weight:700;" Filterable="false" Sortable="false" />
+        <PropertyColumn Property="u => u.FullName" Title="First and lastname" HeaderStyle="font-weight:700;" />
+        <PropertyColumn Property="u => u.UserName" Title="Username" HeaderStyle="font-weight:700;" />
         <PropertyColumn Property="u => u.Email" Title="E-mail" HeaderStyle="font-weight:700;" />
-        <PropertyColumn Property="u => u.PhoneNumber" Title="Telefon" HeaderStyle="font-weight:700;" Sortable="false" />
-        <PropertyColumn Property="u => u.Roles" Title="Role" HeaderStyle="font-weight:700;" @ref="_rolesColumn" Sortable="false">
+        <PropertyColumn Property="u => u.PhoneNumber" Title="Phone no." HeaderStyle="font-weight:700;" Sortable="false" />
+        <PropertyColumn Property="u => u.Roles" Title="Roles" @ref="@_rolesColumn" Sortable="false" HeaderStyle="font-weight: 700;">
             <CellTemplate>
-                <div style="display: flex; flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; max-width: 170px;">
-                    @foreach (var role in context.Item.Roles)
-                    {
-                        <MudChip T="string" Size="Size.Small" Color="Color.Primary">@role</MudChip>
-                    }
-                </div>
+                <HrUserRoleCell Roles="@context.Item.Roles" />
             </CellTemplate>
             <FilterTemplate>
-                <MudIconButton OnClick="@OpenFilter" Icon="@_icon" Size="@Size.Small" />
-                <MudOverlay Visible="@_filterOpen" OnClick="@(() => _filterOpen = false)" />
-                <MudPopover Open="@_filterOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter"
-                            Style="width:150px">
-                    <MudStack Spacing="0">
-                        <MudCheckBox T="bool" Label="Select All" Size="@Size.Small" Value="@_selectAll" ValueChanged="@SelectAll" />
-                        <MudStack Spacing="0" Style="overflow-y:auto;max-height:250px">
-                            @foreach (var item in Roles)
-                            {
-                                <MudCheckBox T="bool" Label="@($"{item}")" Size="@Size.Small" Value="@(_selectedItems.Contains(item))"
-                                             ValueChanged="@((value) => SelectedChanged(value, item))" />
-                            }
-                        </MudStack>
-                        <MudStack Row="true">
-                            <MudButton OnClick="@(() => ClearFilterAsync(context))">Clear</MudButton>
-                            <MudButton Color="@Color.Primary" OnClick="@(() => ApplyFilterAsync(context))">Filter</MudButton>
-                        </MudStack>
-                    </MudStack>
-                </MudPopover>
+                <HrUserRoleFilter T="UserDetailsViewModel"
+                                  Data="@AllData"
+                                  Column="@_rolesColumn"
+                                  Context="@context"
+                                  FilterDefinitions="@context.FilterDefinitions" />
             </FilterTemplate>
         </PropertyColumn>
-        <PropertyColumn Property="u => u.AccountStatus" Title="Status" HeaderStyle="font-weight:700;" />
-        <TemplateColumn HeaderStyle="font-weight:700;" Title="Akcje" Sortable="false" Filterable="false">
+        <PropertyColumn Property="u => u.AccountStatus" Title="Status" @ref="@_accountStatusColumn" HeaderStyle="font-weight:700;">
+            <FilterTemplate>
+                <HrUserAccountStatusFilter T="UserDetailsViewModel" 
+                                           Data="@AllData"
+                                           Column="@_accountStatusColumn"
+                                           Context="@context" 
+                                           FilterDefinitions="@context.FilterDefinitions" />
+            </FilterTemplate>
+        </PropertyColumn>
+        <TemplateColumn HeaderStyle="font-weight:700;" Title="Actions" Sortable="false" Filterable="false">
             <CellTemplate>
-                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Medium">
-                    <MudMenuItem Icon="@Icons.Material.Filled.Info" Href="@($"users/{ context.Item.Id }/details/")">Szczegóły</MudMenuItem>
-                    <MudDivider />
-                    <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="@($"users/{ context.Item.Id }/edit/")">Edytuj</MudMenuItem>
-                    <MudDivider />
-                    @if (context.Item.IsLockout)
-                    {
-                        <MudMenuItem Icon="@Icons.Material.Filled.Block">Odblokuj konto</MudMenuItem>
-                        
-                    }
-                    else 
-                    {
-                        <MudMenuItem IconColor="Color.Warning" Icon="@Icons.Material.Filled.Block"><MudText Color="Color.Warning">Zablokuj konto</MudText></MudMenuItem>
-                    }
-                    <MudDivider />
-                    <MudMenuItem IconColor="Color.Error" Icon="@Icons.Material.Filled.Delete" Href="@($"users/{ context.Item.Id }/delete/")"><MudText Color="Color.Error">Usuń</MudText></MudMenuItem>
-                </MudMenu>
+                <HrUserActionsCell UserId="@context.Item.Id.ToString()" 
+                                   UserName="@context.Item.UserName" 
+                                   IsUserLockout="@context.Item.IsLockout" />
             </CellTemplate>
         </TemplateColumn>
     </Columns>
     <PagerContent>
-        <MudDataGridPager T="UserDetailsViewModel" PageSizeOptions="[5, 10, 15, 20, 25, 30]" />
+        <MudDataGridPager T="UserDetailsViewModel" PageSizeOptions="[10, 15, 20, 25, 30]" />
     </PagerContent>
 </MudDataGrid>

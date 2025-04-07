@@ -1,0 +1,23 @@
+﻿<MudGrid>
+    <MudItem>
+        <MudText Typo="Typo.h6" Class="mt-4" Style="font-size: 17px; letter-spacing: .7px; text-transform: uppercase;">
+            @HeaderChildContent
+        </MudText>
+    </MudItem>
+    <MudSpacer />
+    <MudItem Style="display: flex; align-items: center;">
+        @if (BodyChildContent is not null)
+        {
+            @BodyChildContent
+            <MudDivider Vertical Class="ml-3 mr-1" Style="height: 30px;" />
+        }
+
+        <MudToggleIconButton @bind-Toggled="_isInFavourites" 
+                             Icon="@Icons.Material.Filled.StarBorder" 
+                             ToggledIcon="@Icons.Material.Filled.Star" 
+                             Size="Size.Medium"
+                             Color="Color.Warning" />
+    </MudItem>
+</MudGrid>
+
+<MudDivider Class="mb-3" />

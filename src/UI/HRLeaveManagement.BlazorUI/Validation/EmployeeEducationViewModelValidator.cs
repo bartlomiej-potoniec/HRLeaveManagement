@@ -1,39 +1,47 @@
-﻿using FluentValidation;
-using HRLeaveManagement.BlazorUI.ViewModels;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Extensions;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
+using FluentValidation;
 
 namespace HRLeaveManagement.BlazorUI.Validation;
 
-public class EmployeeEducationViewModelValidator : AbstractValidator<EmployeeEducationViewModel>
+public class EmployeeEducationViewModelValidator 
+    : AbstractValidator<EmployeeEducationViewModel>, IViewModelValidator<EmployeeEducationViewModel>
 {
     public EmployeeEducationViewModelValidator()
     {
         RuleFor(x => x.EducationType)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.EducationType);
 
         RuleFor(x => x.EducationDetails)
             .NotNull()
             .NotEmpty()
-            .MaximumLength(200);
+            .MaximumLength(200)
+                .WithDisplayName(x => x.EducationDetails);
 
         RuleFor(x => x.EnrolledAt)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.EnrolledAt);
 
         RuleFor(x => x.EnrolledAt)
-            .LessThan(x => x.GraduatedAt)
-                .When(x => x.GraduatedAt.HasValue);
+            .LessThanOrEqualTo(x => x.GraduatedAt)
+                .WithDisplayName(x => x.EnrolledAt)
+                    .When(x => x.GraduatedAt.HasValue);
 
         RuleFor(x => x.GraduatedAt)
+            .NotNull()
+                .WithMessage("Pole '{PropertyName}' może być puste tylko jeśli pracownik wciąż się uczy")
+            .NotEmpty()
+                .WithMessage("Pole '{PropertyName}' może być puste tylko jeśli pracownik wciąż się uczy")
+                .WithDisplayName(x => x.GraduatedAt)
+                    .When(x => !(x.IsEmployeeStillStudying));
+                    
+        RuleFor(x => x.GraduatedAt)
             .LessThanOrEqualTo(DateTime.Now)
-                .When(x => x.GraduatedAt.HasValue);
+                .WithDisplayName(x => x.GraduatedAt)
+                    .When(x => x.GraduatedAt.HasValue);
     }
-
-    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
-    {
-        var result = await ValidateAsync(ValidationContext<EmployeeEducationViewModel>.CreateWithOptions((EmployeeEducationViewModel)model, x => x.IncludeProperties(propertyName)));
-        if (result.IsValid)
-            return Array.Empty<string>();
-        return result.Errors.Select(e => e.ErrorMessage);
-    };
 }

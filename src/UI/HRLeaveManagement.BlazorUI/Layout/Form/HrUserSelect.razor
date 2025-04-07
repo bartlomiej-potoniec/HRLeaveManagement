@@ -1,0 +1,28 @@
+﻿@typeparam T
+
+<MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="User" Style="min-width: 230px;">Select an user</MudInputLabel>
+    @if (Users.Any())
+    {
+        <MudSelect T="T"
+                   InputId="User"
+                   AnchorOrigin="Origin.BottomCenter"
+                   Variant="Variant.Outlined"
+                   Margin="Margin.Dense"
+                   ValueChanged="@(value => SelectedChangedAsync(value))"
+                   Clearable
+                   OnClearButtonClick="@ClearUserClickedAsync">
+            @foreach (var user in Users)
+            {
+                <MudSelectItem Value="@user">@user.FullName</MudSelectItem>
+            }
+        </MudSelect>
+    }
+    else
+    {
+        <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">
+            No employees currently to create.
+            <MudLink Href="#">Send a request to create a user to the administrator</MudLink>
+        </MudText>
+    }
+</MudItem>

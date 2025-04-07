@@ -1,0 +1,21 @@
+﻿@typeparam T
+
+@if (IsChoosen)
+{
+    <MudButtonGroup Color="Color.Default" Variant="Variant.Filled" DropShadow Size="Size.Small" Class="ml-1">
+        <MudButton StartIcon="@Icons.Material.Filled.MoreVert" Disabled="!(IsChoosen)">Fast actions</MudButton>
+        <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
+            <MudMenuItem OnClick="@(() => LockoutAccountsAsync())" Icon="@Icons.Material.Filled.Lock" Disabled="@_isOptionDisabled">
+                Lockout accounts
+            </MudMenuItem>
+            <MudDivider />
+            <MudMenuItem OnClick="@(() => UnlockAccountsAsync())" Icon="@Icons.Material.Filled.LockOpen" Disabled="@_isOptionDisabled">
+                Unlock accounts
+            </MudMenuItem>
+            <MudDivider />
+            <MudMenuItem OnClick="@(() => DeleteAccountsAsync())" IconColor="@Color.Error" Icon="@Icons.Material.Filled.Delete" Disabled="@_isOptionDisabled">
+                <MudText Color="@(_isOptionDisabled ? Color.Default : Color.Error)">Delete accounts</MudText>
+            </MudMenuItem>
+        </MudMenu>
+    </MudButtonGroup>
+}

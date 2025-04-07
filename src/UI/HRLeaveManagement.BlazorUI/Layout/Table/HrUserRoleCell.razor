@@ -1,0 +1,6 @@
+﻿<MudItem Style="display: flex; flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; max-width: 170px;">
+    @foreach (var role in Roles)
+    {
+        <MudChip T="string" Size="Size.Small" Color="Color.Primary">@role</MudChip>
+    }
+</MudItem>

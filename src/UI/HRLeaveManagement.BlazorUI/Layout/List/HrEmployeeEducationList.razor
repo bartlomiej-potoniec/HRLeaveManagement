@@ -1,0 +1,85 @@
+﻿@using HRLeaveManagement.BlazorUI.ViewModels.Employees
+
+<MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="Leader" Style="min-width: 230px;">Education history</MudInputLabel>
+    <MudPaper Width="100%">
+        <MudList T="string" Dense Padding Disabled="@IsDisabled">
+            <MudListSubheader Class="d-flex align-center justify-space-between">
+                <MudText Inline Typo="Typo.subtitle2">List of employee's education and qualifications</MudText>
+                @if (HasOptionsButtons)
+                {
+                    <MudButton ButtonType="ButtonType.Button" 
+                               Variant="Variant.Filled" 
+                               Size="Size.Small" 
+                               OnClick="@AddEducationToListDialogAsync" 
+                               StartIcon="@Icons.Material.Filled.AddCircle" 
+                               Color="Color.Primary" 
+                               Disabled="@IsDisabled">
+                        Add
+                    </MudButton>
+                }
+            </MudListSubheader>
+            @if (Educations.Any())
+            {
+                @foreach (var education in Educations)
+                {
+                    <MudListItem Text="@($"{ @education.EducationDetails } ({ @education.EducationTypeName })")" 
+                                 Icon="@Icons.Material.Filled.School" 
+                                 IconColor="Color.Dark">
+                        <NestedList>
+                            <MudGrid Style="padding-left: 45px;">
+                                <MudItem xs="10">
+                                    <MudItem Class="d-inline-flex align-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.LocationCity" Size="Size.Small" Style="margin-right: 7px;" />
+                                        <MudText Inline>@education.EducationTypes[@education.EducationType]</MudText>
+                                    </MudItem>
+                                    <MudFlexBreak />
+                                    <MudItem Class="d-inline-flex align-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.Details" Size="Size.Small" Style="margin-right: 7px;" />
+                                        <MudText Inline>@education.EducationDetails</MudText>
+                                    </MudItem>
+                                    <MudFlexBreak />
+                                    <MudItem Class="d-inline-flex align-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="margin-right: 7px;" />
+                                        <MudText>Enroll-Graduation date: @education.EnrolledAtShortDate - @GetEducationDateEndMarkup(education)</MudText>
+                                    </MudItem>
+                                </MudItem>
+                                @if (HasOptionsForItems)
+                                {
+                                    <MudItem xs="2">
+                                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz">
+                                            <MudMenuItem Icon="@Icons.Material.Filled.Edit"
+                                                         OnClick="() => UpdateEducationInListDialogAsync(education)"
+                                                         IconColor="Color.Warning">
+                                            </MudMenuItem>
+                                            <MudDivider />
+                                            <MudMenuItem Icon="@Icons.Material.Filled.Delete"
+                                                         OnClick="() => RemoveEducationFromListDialogAsync(education)"
+                                                         IconColor="Color.Error">
+                                            </MudMenuItem>
+                                        </MudMenu>
+                                    </MudItem>
+                                }
+                            </MudGrid>
+                        </NestedList>
+                    </MudListItem>
+                }
+            }
+            else
+            {
+                <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">
+                    No information about education has been added.
+                    <MudLink OnClick="@AddEducationToListDialogAsync" Disabled="@IsDisabled">Add information</MudLink>
+                </MudText>
+            }
+        </MudList>
+    </MudPaper>
+</MudItem>
+
+@code {
+    private MarkupString GetEducationDateEndMarkup(EmployeeEducationViewModel education)
+        => new(education.GraduatedAt.HasValue
+            ? $" { education.GraduatedAtShortDate }"
+            : "<span style=\"color: green; margin-left: 2px;\"><b>currently studying</b></span>"
+        );
+}

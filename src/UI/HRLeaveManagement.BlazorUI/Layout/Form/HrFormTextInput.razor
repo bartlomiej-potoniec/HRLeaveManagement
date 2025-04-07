@@ -1,0 +1,17 @@
+﻿@typeparam T
+
+<MudItem xs="@Xs" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="@InputId" Style="@($"min-width: { MinLabelWith };")">@Label</MudInputLabel>
+    <MudTextField Typo="Typo.body2" 
+                  InputId="@InputId"
+                  Variant="@Variant" 
+                  Margin="@Margin" 
+                  Value="@Value"
+                  ValueChanged="@ValueChanged"
+                  For="@For"
+                  Immediate
+                  ReadOnly="@IsReadOnly"
+                  Clearable="@IsClearable"
+                  Disabled="@IsDisabled"
+                  Style="font-size: 14px;" />
+</MudItem>

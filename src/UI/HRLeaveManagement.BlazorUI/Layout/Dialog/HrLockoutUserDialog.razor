@@ -1,0 +1,41 @@
+﻿@inherits HrDialog
+@using HRLeaveManagement.BlazorUI.ViewModels.Users
+
+<HrDialog Icon="@Icons.Material.Filled.Lock" ButtonColor="Color.Info">
+    <ChildDescriptionContent>
+        Enter the date and time of the lockout duration for @UserNameMarkup
+    </ChildDescriptionContent>
+    <ChildBodyContent>
+        <MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)">
+            <MudGrid Class="mt-5">
+                <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudDatePicker @ref="@DatePicker"
+                                   @bind-Date="@Model.LockoutDateEnd"
+                                   Label="Lockout date end"
+                                   For="@(() => Model.LockoutDateEnd)"
+                                   Variant="Variant.Outlined"
+                                   Margin="Margin.Dense"
+                                   Clearable />
+                </MudItem>
+
+                <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudCheckBox T="bool" ValueChanged="@(value => IsForIndefinitePeriodValueChanged(value))">Indefinite-term</MudCheckBox>
+                </MudItem>
+
+                <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudTimePicker @ref="@TimePicker"
+                                   @bind-Time="@Model.LockoutTimeEnd"
+                                   Label="Lockout time end"
+                                   Variant="Variant.Outlined"
+                                   Margin="Margin.Dense"
+                                   Clearable />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </ChildBodyContent>
+</HrDialog>
+
+@code {
+    private MarkupString UserNameMarkup =>
+        new(UserName is not null ? $"user { UserName }" : "selected users");
+}

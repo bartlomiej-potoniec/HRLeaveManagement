@@ -1,1 +1,8 @@
-﻿
+﻿@page "/remotework-request/{id}/details/"
+@attribute [Authorize(Roles = "Employee")]
+
+<HrUnderConstructionAlert />
+
+@code {
+    [Parameter] public string Id { get; set; }
+}

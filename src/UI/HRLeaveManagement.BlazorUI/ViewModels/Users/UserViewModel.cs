@@ -1,13 +1,27 @@
-﻿namespace HRLeaveManagement.BlazorUI.ViewModels.Users;
+﻿using System.ComponentModel;
 
-public record UserViewModel
+namespace HRLeaveManagement.BlazorUI.ViewModels.Users;
+
+public class UserViewModel
 {
-    public required Guid Id { get; init; }
-    public required string Email { get; init; }
-    public required string FirstName { get; init; }
-    public required string LastName { get; init; }
-    public string? PeselNumber { get; init; }
-    public required string PhoneNumber { get; init; }
-    public required DateTime DateOfBirth { get; init; }
-    public Guid? EmployeeId { get; init; }
+    public required Guid Id { get; set; }
+    public Guid? EmployeeId { get; set; }
+
+    [DisplayName("E-mail")]
+    public required string Email { get; set; }
+
+    [DisplayName("Firstname")]
+    public required string FirstName { get; set; }
+
+    [DisplayName("Lastname")]
+    public required string LastName { get; set; }
+
+    [DisplayName("PESEL number")]
+    public string? PeselNumber { get; set; }
+
+    [DisplayName("Phone number")]
+    public required string PhoneNumber { get; set; }
+
+    [DisplayName("Date of birth")]
+    public required DateTime DateOfBirth { get; set; }
 }

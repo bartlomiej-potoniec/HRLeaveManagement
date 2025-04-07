@@ -6,14 +6,10 @@ namespace HRLeaveManagement.BlazorUI.Pages.LeaveRequests;
 
 public partial class Details
 {
-    [Inject]
-    public ILeaveRequestService LeaveRequestService { get; set; }
+    [Inject] public ILeaveRequestService LeaveRequestService { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; }
 
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
-
-    [Parameter]
-    public int Id { get; set; }
+    [Parameter] public int Id { get; set; }
     
     public LeaveRequestViewModel Model { get; set; } = new();
 

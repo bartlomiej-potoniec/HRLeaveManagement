@@ -1,15 +1,15 @@
 ﻿using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.Models;
 using HRLeaveManagement.BlazorUI.Services.Base;
-using HRLeaveManagement.BlazorUI.ViewModels;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
 using Blazored.LocalStorage;
 using AutoMapper;
 
 namespace HRLeaveManagement.BlazorUI.Services;
 
-public class EmployeeService(IClient client,
-                             ILocalStorageService localStorage,
-                             IMapper mapper)
+public sealed class EmployeeService(IClient client,
+                                    ILocalStorageService localStorage,
+                                    IMapper mapper)
 	: HttpServiceBase(client, localStorage), IEmployeeService
 {
     private readonly IMapper _mapper = mapper;
@@ -75,7 +75,7 @@ public class EmployeeService(IClient client,
 		return response;
 	}
 
-	public async Task<Response> UpdateWithDetailsAsync(EditEmployeeDetailsViewModel viewModel)
+	public async Task<Response> UpdateWithDetailsAsync(EmployeeDetailsViewModel viewModel)
 	{
 		Response response;
 

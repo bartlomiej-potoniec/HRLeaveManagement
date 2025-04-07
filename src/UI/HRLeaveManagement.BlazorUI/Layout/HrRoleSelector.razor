@@ -1,0 +1,25 @@
+﻿<MudItem xs="9" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="SelectedRoles" Style="min-width: 230px;">Select role</MudInputLabel>
+    <MudAutocomplete T="string" 
+                     @bind-Value="SelectedRole"
+                     CoerceText="true" 
+                     OnKeyDown="HandleKeyDownAsync"
+                     ResetValueOnEmptyText="true" 
+                     SearchFunc="SearchRolesAsync"
+                     Placeholder="Enter or select a role"
+                     Variant="Variant.Outlined" 
+                     Margin="Margin.Dense" 
+                     Style="font-size: 14px;">
+    </MudAutocomplete>
+</MudItem>
+
+<MudItem xs="3" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudButton Variant="Variant.Filled" 
+               Color="Color.Primary" 
+               OnClick="AddRoleFromButtonAsync"
+               Disabled="IsAddRoleButtonDisabled">
+        Add role
+    </MudButton>
+</MudItem>
+
+<HrRoleDisplay ForId="SelectedRoles" Roles="@Roles" RolesChanged="@(roles => Roles = roles)" MarginTop="20px" />

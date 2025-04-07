@@ -23,4 +23,8 @@
     <ProjectReference Include="..\HRLeaveManagement.Infrastructure\HRLeaveManagement.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validation\" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,9 @@
-﻿using Blazored.LocalStorage;
-using HRLeaveManagement.BlazorUI.Contracts;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.Models;
 using HRLeaveManagement.BlazorUI.Providers;
 using HRLeaveManagement.BlazorUI.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
+using Blazored.LocalStorage;
 
 namespace HRLeaveManagement.BlazorUI.Services;
 
@@ -26,8 +26,10 @@ public sealed class AuthenticationService(IClient client,
 
             var authResponse = await _client.LoginAsync(authRequest);
 
-            if (string.IsNullOrEmpty(authResponse.Token)) 
+            if (string.IsNullOrEmpty(authResponse.Token))
+            {
                 return false;
+            }
 
             await _localStorage.SetItemAsync("token", authResponse.Token);
             await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedIn();
@@ -65,7 +67,7 @@ public sealed class AuthenticationService(IClient client,
             };
 
             var data = await _client.RegisterAsync(request);
-            response = base.GenerateSuccessResponse("User created successfully", data);
+            response = base.GenerateSuccessResponse("User was created successfully", data);
         }
 
         catch (ApiException ex)

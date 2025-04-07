@@ -1,0 +1,38 @@
+﻿<MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="Section" Style="min-width: 230px;">Department and section</MudInputLabel>
+    @if (!_isLoading)
+    {
+        @if (Sections.Any())
+        {
+            <MudSelect T="int?"
+                       Value="@Value"
+                       ValueChanged="@ValueChanged"
+                       For="@For"
+                       InputId="Section"
+                       AnchorOrigin="Origin.BottomCenter"
+                       Variant="Variant.Outlined"
+                       Margin="Margin.Dense"
+                       Style="font-size: 14px;"
+                       Clearable
+                       Disabled="@IsDisabled">
+                @foreach (var sect in Sections)
+                {
+                    <MudSelectItem Value="@(sect.Id as int?)">@sect.Name / @sect.DepartmentName</MudSelectItem>
+                }
+            </MudSelect>
+        }
+        else
+        {
+            <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">
+                No departments and sections to display. 
+                <MudLink Href="/departments/create" Disabled="@IsDisabled">Add department and section</MudLink>
+            </MudText>
+        }
+    }
+    else 
+    {
+        <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">
+            An error has occurred. Cannot display departments and sections.
+        </MudText>
+    }
+</MudItem>

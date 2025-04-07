@@ -53,15 +53,46 @@ public sealed class UsersController(IUserService userService) : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        await _userService.DeleteUserAsync(id, cancellationToken);
+        return NoContent();
+    }
+
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> DeleteMany([FromQuery] List<Guid> ids, CancellationToken cancellationToken)
+    {
+        await _userService.DeleteUsersAsync(ids, cancellationToken);
+        return NoContent();
+    }
+
     [HttpPatch("{id}/lockout")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> LockoutAccount([FromRoute] Guid id,
-                                                   [FromBody] LockoutUserAccountRequest request,
-                                                   CancellationToken cancellationToken)
+    public async Task<ActionResult> Lockout([FromRoute] Guid id,
+                                            [FromBody] LockoutUserAccountRequest request,
+                                            CancellationToken cancellationToken)
     {
         await _userService.LockoutUserAccountByIdAsync(request with { UserId = id }, cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPatch("lockout")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> LockoutMany([FromBody] LockoutManyUserAccountsRequest request,
+                                                CancellationToken cancellationToken)
+    {
+        await _userService.LockoutUserAccountsAsync(request, cancellationToken);
         return NoContent();
     }
 
@@ -69,11 +100,22 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> UnlockAccount([FromRoute] Guid id,
-                                                  [FromBody] UnlockUserAccountRequest request,
-                                                  CancellationToken cancellationToken)
+    public async Task<ActionResult> Unlock([FromRoute] Guid id,
+                                           [FromBody] UnlockUserAccountRequest request,
+                                           CancellationToken cancellationToken)
     {
         await _userService.UnlockUserAccountByIdAsync(request with { UserId = id }, cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPatch("unlock")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> UnlockMany([FromBody] UnlockManyUserAccountsRequest request,
+                                               CancellationToken cancellationToken)
+    {
+        await _userService.UnlockUserAccountsAsync(request, cancellationToken);
         return NoContent();
     }
 }

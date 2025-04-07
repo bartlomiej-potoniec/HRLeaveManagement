@@ -1,44 +1,50 @@
 ﻿using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.Layout;
+using HRLeaveManagement.BlazorUI.Validation;
 using HRLeaveManagement.BlazorUI.ViewModels;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace HRLeaveManagement.BlazorUI.Pages;
 
 public partial class Login
 {
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private IAuthenticationService AuthenticationService { get; set; }
 
-    [Inject]
-    private IAuthenticationService AuthenticationService { get; set; }
+    [CascadingParameter] protected Message Message { get; set; }
 
-    [CascadingParameter]
-    protected Error Error { get; set; } 
+    private LoginViewModel Model { get; set; } = new();
+    private IViewModelValidator<LoginViewModel> Validator => new LoginViewModelValidator();
 
-    public required LoginViewModel Model { get; set; }
-
-    public string? Message { get; set; }
-
-    protected override void OnInitialized() => Model = new();
-
-    private bool _isLoading;
+    private MudForm Form { get; set; }
+    private bool _isLoading = false;
 
     protected async Task HandleLogin()
     {
-        _isLoading = true;
+        await Form.Validate();
 
-        var authResult = await AuthenticationService.AuthenticateAsync(Model.Email, Model.Password);
-
-        _isLoading = false;
-
-        if (authResult)
+        if (!Form.IsValid)
         {
-            NavigationManager.NavigateTo("/");
+            Message.HandleError(Form.Errors);
             return;
         }
 
-        Message = "Nieprawidłowy login lub hasło";
-        Error.HandleError(Message);
+        _isLoading = true;
+
+        var isAuthenticated = await AuthenticationService.AuthenticateAsync(Model.Username, Model.Password);
+
+        if (!isAuthenticated)
+        {
+            Message.HandleError("Invalid login or password was given");
+            _isLoading = false;
+
+            return;
+        }
+
+        NavigationManager.NavigateTo("/");
+
+        _isLoading = false;
+        StateHasChanged();
     }
 }

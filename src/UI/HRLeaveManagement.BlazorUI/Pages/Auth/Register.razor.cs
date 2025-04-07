@@ -2,116 +2,41 @@
 using HRLeaveManagement.BlazorUI.Layout;
 using HRLeaveManagement.BlazorUI.Validation;
 using HRLeaveManagement.BlazorUI.ViewModels;
-using HRLeaveManagement.BlazorUI.ViewModels.Users;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
 namespace HRLeaveManagement.BlazorUI.Pages.Auth;
 
 public partial class Register
 {
-    [Inject]
-    private ISnackbar Snackbar { get; set; }
+    [Inject] public IAuthenticationService AuthenticationService { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; }
 
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    [CascadingParameter] protected Message Message { get; set; }
 
-    [Inject]
-    public IAuthenticationService AuthenticationService { get; set; }
-
-    [Inject]
-    public IUserService UserService { get; set; }
-
-    [Inject]
-    public IRoleService RoleService { get; set; }
-
-    [CascadingParameter]
-    protected Error Error { get; set; }
+    private RegisterViewModel Model { get; set; }
+    private IViewModelValidator<RegisterViewModel> Validator => new RegisterViewModelValidator();
 
     private MudForm Form { get; set; }
-    public string? Message { get; set; }
+    private bool _isLoading = true;
 
-    public RegisterViewModel Model { get; set; } = new();
-    private RegisterViewModelValidator Validator { get; set; } = new();
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnParametersSet()
     {
-        Users = await UserService.GetAllAsync();
+        _isLoading = true;
 
-        var roles = await RoleService.GetAllAsync();
-        Roles = roles
-            .Select(role => role.Name)
-            .ToList();
+        Model = new RegisterViewModel();
+
+        _isLoading = false;
+        StateHasChanged();
     }
 
-    // Existing Users from UserService
-    private List<UserDetailsViewModel> Users = [];
-    // Existing Role Names from RoleService
-    private List<string> Roles = [];
-
-    private bool _hasPesel = true;
-    private string HasPeselText => _hasPesel ? "Posiada PESEL" : "Nie posiada PESEL";
-    // Aktualnie wybrana wartość z Autocomplete
-    private string? SelectedRole;
-
-    // Czy przycisk jest nieaktywny?
-    private bool IsAddRoleDisabled => string.IsNullOrWhiteSpace(SelectedRole) || Model.Roles.Contains(SelectedRole);
-
-    // Funkcja do filtrowania dostępnych ról
-    private Task<IEnumerable<string>> SearchRoles(string value, CancellationToken token)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-            return Task.FromResult(Roles.Except(Model.Roles).AsEnumerable());
-
-        // Filtrowanie ról na podstawie wpisanej frazy
-        return Task.FromResult(Roles
-            .Except(Model.Roles) // Wyklucz już wybrane role
-            .Where(r => r.Contains(value, StringComparison.InvariantCultureIgnoreCase))
-            .AsEnumerable()
-        );
-    }
-
-    // Obsługa dodawania roli po zatwierdzeniu
-    private void HandleKeyDown(KeyboardEventArgs e)
-    {
-        if (e.Key == "Enter" && !string.IsNullOrEmpty(SelectedRole))
-        {
-            AddRole(SelectedRole);
-            SelectedRole = null;
-        }
-    }
-
-    private void AddRoleFromButton()
-    {
-        if (!string.IsNullOrWhiteSpace(SelectedRole))
-        {
-            AddRole(SelectedRole);
-            SelectedRole = null;
-        }
-    }
-
-    private void AddRole(string role)
-    {
-        if (!Model.Roles.Contains(role) && Roles.Contains(role))
-            Model.Roles.Add(role);
-    }
-
-    private void RemoveRole(string role)
-    {
-        if (Model.Roles.Contains(role))
-            Model.Roles.Remove(role);
-    }
-
-    private async Task HandleValidSubmit()
+    private async Task HandleValidSubmitAsync()
     {
         await Form.Validate();
 
         if (!Form.IsValid)
         {
-            Message = "Wystąpił błąd w walidacji formularza";
-            Error.HandleError(Message);
-
+            Message.HandleError(Form.Errors);
             return;
         }
 
@@ -125,15 +50,38 @@ public partial class Register
             Model.Roles
         );
 
-        Message = result.Message;
+        string message = result.Message;
 
         if (!result.IsSuccess)
         {
-            Error.HandleError(Message);
+            Message.HandleError(message);
             return;
         }
 
-        Snackbar.Add(Message, Severity.Success);
+        Message.HandleSuccess(message);
         NavigationManager.NavigateTo($"/users/{ result.Data.UserId }/details");
+    }
+
+    private void Reset()
+    {
+        Model.FirstName = null;
+        Model.LastName = null;
+        Model.Email = null;
+        Model.DateOfBirth = null;
+        Model.PeselNumber = null;
+        Model.PhoneNumber = null;
+        Model.HasPeselNumber = false;
+        Model.Roles = [];
+    }
+
+    private async Task HasPeselNumberAsync(bool value)
+    {
+        if (!value)
+        {
+            Model.PeselNumber = null;
+        }
+
+        Model.HasPeselNumber = value;
+        await Form.Validate();
     }
 }

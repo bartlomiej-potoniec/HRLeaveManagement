@@ -1,42 +1,46 @@
-﻿using HRLeaveManagement.BlazorUI.ViewModels;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Extensions;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
 using FluentValidation;
 
 namespace HRLeaveManagement.BlazorUI.Validation;
 
-public class EmployeeExperienceViewModelValidator : AbstractValidator<EmployeeExperienceViewModel>
+public class EmployeeExperienceViewModelValidator 
+    : AbstractValidator<EmployeeExperienceViewModel>, IViewModelValidator<EmployeeExperienceViewModel>
 {
     public EmployeeExperienceViewModelValidator()
     {
         RuleFor(x => x.PreviousCompanyName)
             .NotNull()
             .NotEmpty()
-            .MaximumLength(100);
+            .MaximumLength(100)
+                .WithDisplayName(x => x.PreviousCompanyName);
 
         RuleFor(x => x.Position)
             .NotNull()
             .NotEmpty()
-            .MaximumLength(100);
+            .MaximumLength(100)
+                .WithDisplayName(x => x.Position);
 
         RuleFor(x => x.ContractType)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.ContractType);
 
         RuleFor(x => x.EmploymentDateRange)
             .NotNull()
             .NotEmpty();
 
-        RuleFor(x => x.EmploymentDateRange.End)
-            .LessThanOrEqualTo(DateTime.Now);
+        RuleFor(x => x.EmployedFrom)
+            .NotNull()
+            .NotEmpty()
+            .LessThan(x => x.EmployedTo)
+                .WithDisplayName(x => x.EmployedFrom);
 
-        RuleFor(x => x.EmploymentDateRange.Start)
-            .LessThan(x => x.EmploymentDateRange.End);
+        RuleFor(x => x.EmployedTo)
+            .NotNull()
+            .NotEmpty()
+            .LessThanOrEqualTo(x => x.MaxEmployedToDate)
+                .WithDisplayName(x => x.EmployedTo);
     }
-
-    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
-    {
-        var result = await ValidateAsync(ValidationContext<EmployeeExperienceViewModel>.CreateWithOptions((EmployeeExperienceViewModel)model, x => x.IncludeProperties(propertyName)));
-        if (result.IsValid)
-            return Array.Empty<string>();
-        return result.Errors.Select(e => e.ErrorMessage);
-    };
 }

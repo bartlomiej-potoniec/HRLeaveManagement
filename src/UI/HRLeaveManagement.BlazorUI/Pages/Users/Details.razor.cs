@@ -2,45 +2,44 @@
 using HRLeaveManagement.BlazorUI.Layout;
 using HRLeaveManagement.BlazorUI.ViewModels.Users;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 
 namespace HRLeaveManagement.BlazorUI.Pages.Users;
 
 public partial class Details
 {
-    [Inject]
-    private ISnackbar Snackbar { get; set; }
+    [Inject] public IUserService UserService { get; set; }
 
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    [CascadingParameter] Message Message { get; set; }
 
-    [Inject]
-    public IAuthenticationService AuthenticationService { get; set; }
+    [Parameter] public required string Id { get; set; }
 
-    [Inject]
-    public IUserService UserService { get; set; }
-
-    [Parameter]
-    public string Id { get; set; }
-
-    [CascadingParameter]
-    protected Error Error { get; set; }
-
-    private bool _isLoaded = false;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Users = await UserService.GetAllAsync();
-        Model = await UserService.GetWithDetailsByIdAsync(Guid.Parse(Id));
-
-        _isLoaded = true;
-        StateHasChanged();
-    }
-
-    protected override bool ShouldRender() => _isLoaded;                          
-
-    // Existing Users from UserService
-    private List<UserDetailsViewModel> Users = [];
     private UserDetailsViewModel Model { get; set; } = new();
 
+    private bool _isLoading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+
+        var isValidId = Guid.TryParse(Id, out Guid id);
+
+        if (!isValidId)
+        {
+            Message.HandleError("Podano nieprawidłowy identyfikator");
+            return;
+        }
+
+        var response = await UserService.GetWithDetailsByIdAsync(id);
+
+        if (!response.IsSuccess)
+        {
+            Message.HandleError("Nie znaleziono użytkownika o podanym ID");
+            return;
+        }
+
+        Model = response.Data;
+
+        _isLoading = false;
+        StateHasChanged();
+    }
 }

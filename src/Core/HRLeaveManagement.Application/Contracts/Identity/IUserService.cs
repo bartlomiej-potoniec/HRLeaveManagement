@@ -29,5 +29,10 @@ public interface IUserService
     Task UpdateAsync(UpdateUserRequest request, CancellationToken cancellationToken);
     Task UpdateUserEmployeeIdAsync(Guid userId, Guid employeeId, CancellationToken cancellationToken);
     Task LockoutUserAccountByIdAsync(LockoutUserAccountRequest request, CancellationToken cancellationToken);
+    Task LockoutUserAccountsAsync(LockoutManyUserAccountsRequest request, CancellationToken cancellationToken);
     Task UnlockUserAccountByIdAsync(UnlockUserAccountRequest request, CancellationToken cancellationToken);
+    Task UnlockUserAccountsAsync(UnlockManyUserAccountsRequest request, CancellationToken cancellationToken);
+
+    Task DeleteUserAsync(Guid id, CancellationToken cancellationToken);
+    Task DeleteUsersAsync(List<Guid> ids, CancellationToken cancellationToken);
 }

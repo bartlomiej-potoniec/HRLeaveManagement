@@ -1,0 +1,38 @@
+﻿<MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="Leader" Style="min-width: 230px;">Leader</MudInputLabel>
+    @if (!_isLoading)
+    {
+        @if (Leaders.Any())
+        {
+            <MudSelect T="Guid?"
+                       Value="@Value"
+                       ValueChanged="@ValueChanged"
+                       For="@For"
+                       InputId="Leader"
+                       AnchorOrigin="Origin.BottomCenter"
+                       Variant="Variant.Outlined"
+                       Margin="Margin.Dense"
+                       Style="font-size: 14px;"
+                       Clearable
+                       Disabled="@IsDisabled">
+                @foreach (var leader in Leaders)
+                {
+                    <MudSelectItem Value="@(leader.EmployeeId as Guid?)">@leader.FullName (@leader.Position / @leader.Section / @leader.Department)</MudSelectItem>
+                }
+            </MudSelect>
+        }
+        else
+        {
+            <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">
+                No leaders to display. 
+                <MudLink Href="#" Disabled="@IsDisabled">Send a request to create a Manager to the administrator</MudLink>
+            </MudText>
+        }
+    }
+    else 
+    {
+        <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default">
+            An error has occurred. Cannot display leaders
+        </MudText>
+    }
+</MudItem>

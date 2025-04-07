@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
 
 namespace HRLeaveManagement.BlazorUI.ViewModels;
 
 public class LoginViewModel
 {
-    [Required]
-    public string? Email { get; set; }
+    [DisplayName("Username")]
+    public string? Username { get; set; }
 
-    [Required]
+    [DisplayName("Password")]
     public string? Password { get; set; }
 }

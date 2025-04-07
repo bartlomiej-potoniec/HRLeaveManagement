@@ -13,7 +13,9 @@ public sealed class JwtAuthorizationMessageHandler(ILocalStorageService localSto
         var token = await _localStorage.GetItemAsync<string>("token", cancellationToken);
 
         if (!string.IsNullOrEmpty(token))
+        {
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
 
         var result = await base.SendAsync(request, cancellationToken);
         return result;

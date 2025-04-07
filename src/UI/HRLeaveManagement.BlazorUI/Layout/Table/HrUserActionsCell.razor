@@ -1,0 +1,17 @@
+﻿<MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Medium">
+    <MudMenuItem Icon="@Icons.Material.Filled.Info" Href="@($"users/{ UserId }/details/")">
+        Details
+    </MudMenuItem>
+    <MudDivider />
+    <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="@($"users/{ UserId }/edit/")">
+        Edit
+    </MudMenuItem>
+    <MudDivider />
+
+    <HrUserAccountLockMenuItem UserId="@UserId.ToString()" UserName="@UserName" IsUserLockout="@IsUserLockout" />
+    <MudDivider />
+    
+    <MudMenuItem IconColor="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteAsync(UserId))">
+        <MudText Color="Color.Error">Delete</MudText>
+    </MudMenuItem>
+</MudMenu>

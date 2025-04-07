@@ -1,0 +1,21 @@
+﻿@using HRLeaveManagement.BlazorUI.Services.Base
+
+<MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+    <MudInputLabel ForId="ContractType" Style="min-width: 230px;">Contract type</MudInputLabel>
+    <MudSelect T="ContractType?" 
+               Value="@ContractType"
+               ValueChanged="@ContractTypeChanged"
+               For="@For" 
+               InputId="ContractType" 
+               AnchorOrigin="Origin.BottomCenter" 
+               Variant="Variant.Outlined" 
+               Margin="Margin.Dense" 
+               Style="font-size: 14px;" 
+               Disabled="@IsDisabled" 
+               Clearable>
+        @foreach (var item in ContractTypes)
+        {
+            <MudSelectItem Value="@item.Key">@item.Value</MudSelectItem>
+        }
+    </MudSelect>
+</MudItem>

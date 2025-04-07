@@ -1,17 +1,24 @@
-﻿@page "/leave-requests/details/{id:int}"
+﻿@page "/leave-requests/{id:int}/details"
+@attribute [Authorize(Roles = "Employee")]
 
-<MudText Typo="Typo.h5">Details</MudText>
+<HrUnderConstructionAlert />
+
+<HrHeader>
+    <HeaderChildContent>
+        Details of request @Model.LeaveType.Name
+    </HeaderChildContent>
+</HrHeader>
 
 <MudGrid>
     <MudItem>
         <MudText Typo="Typo.h6" Color="_mudColor">@_headingText</MudText>
-        <MudText Typo="Typo.body2"><strong>Employee Name:</strong>@Model.Employee.FirstName @Model.Employee.LastName</MudText>
+        <MudText Typo="Typo.body2"><b>Employee Name:</b>@Model.Employee.FirstName @Model.Employee.LastName</MudText>
     </MudItem>
 
     <MudDivider />
 
     <MudItem>
-        <MudText Typo="Typo.body2"><strong>Date Requested:</strong> @Model?.RequestedAt</MudText>
+        <MudText Typo="Typo.body2"><b>Date Requested:</b> @Model?.RequestedAt</MudText>
     </MudItem>
 </MudGrid>
 
@@ -32,7 +39,7 @@
     </dl>
 </div>
 
-<div>
+<MudItem>
     @if (Model.IsApproved is null)
     {
         <MudButton Color="Color.Success" OnClick="() => ChangeApproval(true)">Approve</MudButton>
@@ -40,4 +47,4 @@
     }
 
     <BackToList Target="leave-requests/" />
-</div>
+</MudItem>

@@ -2,6 +2,7 @@
 
 public record Response
 {
+    public int? StatusCode { get; init; }
     public required string Message { get; init; }
     public bool IsSuccess { get; init; } = false;
     public List<string> ValidationErrors { get; init; } = [];

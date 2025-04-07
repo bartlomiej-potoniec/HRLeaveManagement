@@ -1,0 +1,27 @@
+﻿<MudItem xs="12" Style="@($"padding-top: 0; display: flex; align-items: center; margin-top: { MarginTop };")">
+    <MudInputLabel ForId="@ForId" Style="@($"min-width: { MinLabelWidth };")">Selected roles</MudInputLabel>
+    <MudItem Style="@($"display: flex; flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; max-width: { MaxWrapWidth };")">
+        @if (Roles.Any())
+        {
+            @foreach (var role in Roles)
+            {
+                @if (IsReadOnly)
+                {
+                    <MudChip T="string" Size="@ChipSize" Color="@ChipColor">
+                        @role
+                    </MudChip>
+                }
+                else
+                {
+                    <MudChip T="string" Size="@ChipSize" Color="@ChipColor" OnClose="() => RemoveRoleAsync(role)">
+                        @role
+                    </MudChip>    
+                }
+            }
+        }
+        else
+        {
+            <MudText>No roles has been selected for the user</MudText>
+        }
+    </MudItem>
+</MudItem>

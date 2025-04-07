@@ -1,0 +1,23 @@
+﻿<MudDialog>
+    <TitleContent>
+        <MudItem Class="d-inline-flex align-center">
+            <MudIcon Icon="@Icon" Size="Size.Medium" Style="margin-right: 7px;" />
+            <MudText Inline Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">@Title</MudText>
+        </MudItem>
+    </TitleContent>
+
+    <DialogContent>
+        @if (ChildDescriptionContent is not null)
+        {
+            <MudText Typo="Typo.subtitle1">@ChildDescriptionContent</MudText>
+            <MudDivider />
+        }
+        
+        @ChildBodyContent
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Text" Color="Color.Default" OnClick="@Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="ButtonColor" OnClick="@ConfirmHandler">Confirm</MudButton>
+    </DialogActions>
+</MudDialog>

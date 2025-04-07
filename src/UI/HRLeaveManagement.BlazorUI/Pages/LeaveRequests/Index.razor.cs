@@ -6,15 +6,12 @@ namespace HRLeaveManagement.BlazorUI.Pages.LeaveRequests;
 
 public partial class Index
 {
-    [Inject]
-    private ILeaveRequestService LeaveRequestService { get; set; }
-
-    private bool _isLoading;
-
-    [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    [Inject] private ILeaveRequestService LeaveRequestService { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     public AdminLeaveRequestViewModel Model { get; set; } = new();
+
+    private bool _isLoading;
 
     protected override async Task OnInitializedAsync()
     {

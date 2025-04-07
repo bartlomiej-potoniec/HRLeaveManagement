@@ -3,18 +3,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1 class="text-center">Welcome to Hr Leave Management System</h1>
+<HrUnderConstructionAlert />
 
-<br>
-<br>
-
-<AuthorizeView>
-    <Authorized>
-        <button class="btn btn-danger" @onclick="Logout">Logout</button>
-    </Authorized>
-    <NotAuthorized>
-        <button class="btn btn-success" @onclick="GoToLogin">Login</button>
-        ||
-        <button class="btn btn-primary" @onclick="GoToRegister">Register</button>
-    </NotAuthorized>
-</AuthorizeView>
+<MudText Typo="Typo.h6">Dashboard</MudText>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Logout">Logout</MudButton>

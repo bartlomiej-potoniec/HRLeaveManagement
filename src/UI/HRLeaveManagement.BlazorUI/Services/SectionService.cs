@@ -1,8 +1,9 @@
-﻿using AutoMapper;
-using Blazored.LocalStorage;
-using HRLeaveManagement.BlazorUI.Contracts;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.Services.Base;
 using HRLeaveManagement.BlazorUI.ViewModels.Sections;
+using HRLeaveManagement.BlazorUI.Models;
+using Blazored.LocalStorage;
+using AutoMapper;
 
 namespace HRLeaveManagement.BlazorUI.Services;
 
@@ -13,11 +14,23 @@ public sealed class SectionService(IClient client,
 {
     private readonly IMapper _mapper = mapper;
 
-    public async Task<List<SectionViewModel>> GetAllAsync()
+    public async Task<Response<List<SectionViewModel>>> GetAllAsync()
     {
-        var sections = await _client.SectionsAllAsync();
-        var viewModel = _mapper.Map<List<SectionViewModel>>(sections);
+        Response<List<SectionViewModel>> response;
 
-        return viewModel;
+        try
+        {
+            var sections = await _client.SectionsAllAsync();
+            var viewModel = _mapper.Map<List<SectionViewModel>>(sections);
+
+            response = base.GenerateSuccessResponse("GET operation success", viewModel);
+        }
+
+        catch (ApiException ex)
+        {
+            response = base.ConvertApiExceptions<List<SectionViewModel>>(ex);
+        }
+
+        return response;
     }
 }

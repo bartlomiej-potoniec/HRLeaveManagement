@@ -1,0 +1,116 @@
+﻿<HrSection Title="User information" Icon="@Icons.Material.Filled.Info" Height="@Height" MinHeight="@MinHeight" HasOverflowScroll>
+    <BodyChildContent>
+        @if (!_isLoading)
+        {
+            @if (User is not null)
+            {
+                <HrFormDivider Text="User account" />
+                <HrFormTextInput T="string"
+                                    InputId="FullName"
+                                    Label="First and last name"
+                                    Value="@User.FullName"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormTextInput T="string"
+                                    InputId="UserName"
+                                    Label="Username"
+                                    Value="@User.UserName"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormTextInput T="string"
+                                    InputId="Email"
+                                    Label="E-mail"
+                                    Value="@User.Email"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormTextInput T="string"
+                                    InputId="PeselNumber"
+                                    Label="PESEL number"
+                                    Value="@User.PeselNumberInfoMessage"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormTextInput T="string"
+                                    InputId="PhoneNumber"
+                                    Label="Phone number"
+                                    Value="@User.PhoneNumberInfoMessage"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudInputLabel Style="min-width: 180px;">Assigned roles</MudInputLabel>
+                    <HrUserRoleCell Roles="@User.Roles" />
+                </MudItem>
+
+                <HrFormTextInput T="string"
+                                    InputId="AccountConfirmation"
+                                    Label="Account confirmation"
+                                    Value="@User.AccountConfirmationStatus"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormTextInput T="string"
+                                    InputId="AccountStatus"
+                                    Label="Account status"
+                                    Value="@User.AccountLockoutStatus"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormTextInput T="string"
+                                    InputId="AccountLock"
+                                    Label="Account lockout"
+                                    Value="@User.AccountLockoutDurationStatus"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormDivider Text="Employee account" />
+                <HrFormTextInput T="string"
+                                    InputId="EmployeeAccountIdentifier"
+                                    Label="Account identifier"
+                                    Value="@User.EmployeeIdStatus"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+
+                <HrFormTextInput T="string"
+                                    InputId="EmployeeAccountStatus"
+                                    Label="Account status"
+                                    Value="@User.EmployeeAccountStatus"
+                                    Variant="Variant.Text"
+                                    Margin="Margin.Normal"
+                                    MinLabelWith="180px"
+                                    IsReadOnly />
+            }
+            else
+            {
+                <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Default" Style="width: 100%">
+                    No user has been selected
+                </MudText>
+            }
+        }
+        else
+        {
+            <HrProgressCircular />
+        }
+    </BodyChildContent>
+</HrSection>

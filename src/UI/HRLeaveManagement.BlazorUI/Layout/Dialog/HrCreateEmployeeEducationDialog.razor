@@ -1,0 +1,69 @@
+﻿@inherits HrDialog
+@using HRLeaveManagement.BlazorUI.Services.Base;
+
+<HrDialog Icon="@Icons.Material.Filled.AddCircle" OnConfirm="@Confirm">
+    <ChildDescriptionContent>
+        Add to the list the educations of employee <b>@EmployeeFullName</b>
+    </ChildDescriptionContent>
+    <ChildBodyContent>
+        <MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)">
+            <MudGrid Class="mt-5">
+                <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudSelect T="EducationType?" 
+                               Label="Select education type" 
+                               @bind-Value="Model.EducationType" 
+                               Variant="Variant.Outlined" 
+                               Margin="Margin.Dense" 
+                               For="@(() => Model.EducationType)" 
+                               Immediate 
+                               Clearable>
+                        @foreach (var item in Model.EducationTypes)
+                        {
+                            <MudSelectItem Value="@item.Key">@item.Value</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudTextField T="string" 
+                                  @bind-Value="@Model.EducationDetails" 
+                                  Lines="3" 
+                                  Label="Education details" 
+                                  Variant="Variant.Outlined" 
+                                  Margin="Margin.Dense" 
+                                  For="@(() => Model.EducationDetails)" 
+                                  Immediate 
+                                  Clearable />
+                </MudItem>
+
+                <MudItem xs="7" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudDatePicker Label="Enroll date" 
+                                   @bind-Date="@Model.EnrolledAt" 
+                                   Variant="Variant.Outlined" 
+                                   Margin="Margin.Dense" 
+                                   For="@(() => Model.EnrolledAt)" 
+                                   ImmediateText 
+                                   Clearable />
+                </MudItem>
+                <MudItem xs="5" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudCheckBox T="bool" Value="@Model.IsEmployeeStillStudying" ValueChanged="@(value => IsEmployeeStillStudyingValueChanged(value))">
+                        Currently studying
+                    </MudCheckBox>
+                </MudItem>
+
+                @if (!Model.IsEmployeeStillStudying)
+                {
+                    <MudItem xs="7" Style="padding-top: 0px; display: flex; align-items: center;">
+                        <MudDatePicker Label="Graduation date" 
+                                       @bind-Date="@Model.GraduatedAt" 
+                                       Variant="Variant.Outlined" 
+                                       Margin="Margin.Dense" 
+                                       For="@(() => Model.GraduatedAt)" 
+                                       ImmediateText 
+                                       Clearable />
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudForm>
+    </ChildBodyContent>
+</HrDialog>

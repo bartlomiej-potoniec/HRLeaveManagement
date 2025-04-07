@@ -1,47 +1,161 @@
 ﻿@page "/leave-requests/create/"
+@attribute [Authorize(Roles = "Employee")]
 
-<h3>Apply for leave</h3>
+<HrUnderConstructionAlert />
 
-@if (!string.IsNullOrEmpty(Message))
-{
-    <div class="alert alert-danger">
-        <p>@Message</p>
-    </div>
+<HrHeader>
+    <HeaderChildContent>Leave request</HeaderChildContent>
+</HrHeader>
+
+<MudGrid>
+    <MudItem xs="12" lg="8">
+        <MudForm>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.AddCircle" Size="Size.Medium" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">New request</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudButton Style="margin-top: 8px;" 
+                                   ButtonType="ButtonType.Reset" 
+                                   Variant="Variant.Outlined" 
+                                   StartIcon="@Icons.Material.Filled.ChangeCircle">
+                            Reset
+                        </MudButton>
+                        <MudButton Style="margin-top: 8px;" ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CheckCircle">Submit</MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudDivider DividerType="DividerType.Middle" />
+                <MudCardContent>
+                    <MudGrid Style="padding: 5px 18px; padding-bottom: 30px; display: flex; align-items: center;">
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Document</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="RequestType" Style="min-width: 230px;">Request type</MudInputLabel>
+                            <MudSelect InputId="RequestType" T="string" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Clearable>
+                                <MudSelectItem Value="@("Vacation leave")">Vacation leave</MudSelectItem>
+                                <MudSelectItem Value="@("On-demand leave")">On-demand leave</MudSelectItem>
+                                <MudSelectItem Value="@("Occasional leave")">Occasional leave</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="AvailableDays" Style="margin-left: 15px; margin-right: 10px;">Available days</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="AvailableDays" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px; width: 50px" Disabled @bind-Value="_availableDays" />
+                        </MudItem>
+
+
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Request</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Employee" Style="min-width: 230px;">Employee</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="Employee" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled @bind-Value="_inputValue" />
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="LeaveDateFrom" Style="min-width: 230px;">From-To date</MudInputLabel>
+                            <MudDateRangePicker Variant="Variant.Outlined" PlaceholderStart="Start date" PlaceholderEnd="End date" Margin="Margin.Dense" Style="font-size: 14px;" />
+                        </MudItem>
+                        <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="DaysCount" Style="margin-left: 15px; margin-right: 10px;">Days count</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="DaysCount" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px; width: 50px;" @bind-Value="_daysCount" Disabled />
+                            <MudCheckBox @bind-Value="_isOneDayLeave">One day</MudCheckBox>
+                        </MudItem>
+
+                        <MudItem xs="6" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="CreatedAt" Style="min-width: 230px;">Submission date</MudInputLabel>
+                            <MudDatePicker Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Date="(new DateTime(2024, 6, 15))" Disabled />
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="Deputy" Style="min-width: 230px;">Deputy</MudInputLabel>
+                            <MudSelect InputId="Deputy" T="string" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Clearable>
+                                <MudSelectItem Value="@("John Doe")">John Doe</MudSelectItem>
+                                <MudSelectItem Value="@("John Doe")">John Doe</MudSelectItem>
+                                <MudSelectItem Value="@("John Doe")">John Doe</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                            <MudInputLabel ForId="ApproverComment" Style="min-width: 230px;">Comments</MudInputLabel>
+                            <MudTextField InputId="ApproverComment" T="string" Lines="2" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" />
+                        </MudItem>
+
+
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6" Style="font-size: 16px; letter-spacing: .7px;">Decision</MudText>
+                            <MudDivider Class="mb-3" />
+                        </MudItem>
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="Approver" Style="min-width: 230px;">Approver</MudInputLabel>
+                            <MudTextField Typo="Typo.body2" InputId="Approver" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled @bind-Value="_inputValue" />
+                        </MudItem>
+                        <MudFlexBreak />
+
+                        <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="RequestStatus" Style="min-width: 230px;">Request status</MudInputLabel>
+                            <MudTextField InputId="RequestStatus" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled @bind-Value="_inputValue2" />
+                        </MudItem>
+                        <MudItem xs="4" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="ApproveDate" Style="margin-left: 15px; margin-right: 10px; min-width: 80px;">Decision date</MudInputLabel>
+                            <MudDatePicker Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled />
+                        </MudItem>
+
+                        <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center">
+                            <MudInputLabel ForId="ApproverComment" Style="min-width: 230px;">Approver's comments</MudInputLabel>
+                            <MudTextField InputId="ApproverComment" T="string" Lines="2" Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-size: 14px;" Disabled />
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudForm>
+    </MudItem>
+
+    <MudItem xs="12" lg="4">
+        <MudCard Style="min-height: 80vh;">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudIcon Style="margin-top: 5px;" Icon="@Icons.Material.Filled.History" Size="Size.Medium" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6" Style="font-size: 17px; letter-spacing: .7px;">Request history</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudButton Style="margin-top: 8px;" 
+                               ButtonType="ButtonType.Button" 
+                               Variant="Variant.Outlined" 
+                               StartIcon="@Icons.Material.Filled.FormatListBulleted" 
+                               Href="/request-list/">
+                        Request list
+                    </MudButton>
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudDivider DividerType="DividerType.Middle" />
+            <MudCardContent>
+                <MudText Typo="Typo.body2">No item in this section</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private string _searchString;
+    private string _inputValue = "John Doe";
+    private string _inputValue2 = "Pending";
+    private string _availableDays = "14";
+    private DateTime _startedAt;
+    private bool _isOneDayLeave;
+    private DateTime _createdAt = DateTime.Now;
+    private int _daysCount = 2;
 }
-
-<EditForm Model="LeaveRequest" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label for="leaveType">Leave Type</label>
-        <InputSelect class="form-control" id="leaveType" @bind-Value="LeaveRequest!.LeaveTypeId">
-            <option>Select Leave Type</option>
-            @foreach (var leaveType in LeaveTypes)
-            {
-                <option value="@leaveType.Id">@leaveType.Name</option>
-            }
-        </InputSelect>
-        <ValidationMessage For="(() => LeaveRequest.LeaveTypeId)"/>
-    </div>
-
-    <div class="form-group">
-        <label for="startDate">Start Date</label>
-        <InputDate class="form-control" id="startDate" @bind-Value="LeaveRequest.StartedAt"/>
-        <ValidationMessage For="@(() => LeaveRequest.StartedAt)"/>
-    </div>
-
-    <div class="form-group">
-        <label for="endDate">End Date</label>
-        <InputDate class="form-control" id="endDate" @bind-Value="LeaveRequest.EndedAt" />
-        <ValidationMessage For="@(() => LeaveRequest.EndedAt)" />
-    </div>
-
-    <div class="form-group">
-        <label for="comments">Comments</label>
-        <InputTextArea class="form-control" id="comments" @bind-Value="LeaveRequest.RequestComments" MaxLength="300" />
-        <ValidationMessage For="@(() => LeaveRequest.RequestComments)"/>
-    </div>
-    
-    <button class="btn btn-success" type="submit">Submit Request</button>
-</EditForm>

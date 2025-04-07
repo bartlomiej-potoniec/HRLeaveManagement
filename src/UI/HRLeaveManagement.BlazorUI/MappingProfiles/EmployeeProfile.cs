@@ -1,5 +1,5 @@
 ﻿using HRLeaveManagement.BlazorUI.Services.Base;
-using HRLeaveManagement.BlazorUI.ViewModels;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
 using AutoMapper;
 
 namespace HRLeaveManagement.BlazorUI.MappingProfiles;
@@ -17,18 +17,13 @@ public sealed class EmployeeProfile : Profile
         CreateMap<EmployeeEducationRequest, EmployeeEducationViewModel>().ReverseMap();
         CreateMap<EmployeeExperienceRequest, EmployeeExperienceViewModel>().ReverseMap();
 
-        CreateMap<EmployeeDetailsDTO, EmployeeDetailsViewModel>().ReverseMap();
-        CreateMap<EmployeeDetailsDTO, CreateEmployeeDetailsViewModel>().ReverseMap();
-
-        CreateMap<EmployeeDetailsViewModel, EditEmployeeDetailsViewModel>().ReverseMap();
-        CreateMap<EmployeeContractDetailsViewModel, EmployeeContractViewModel>()
-            .ForMember(dest => dest.EmployedFrom, src => src.MapFrom(opt => opt.StartedAt))
-            .ForMember(dest => dest.EmployedTo, src => src.MapFrom(opt => opt.ExpiredAt))
+        CreateMap<EmployeeDetailsDTO, EmployeeDetailsViewModel>()
+            .ForMember(dest => dest.Contracts, src => src.MapFrom(opt => opt.Contracts))
+            .ForMember(dest => dest.Educations, src => src.MapFrom(opt => opt.Educations))
+            .ForMember(dest => dest.Experiences, src => src.MapFrom(opt => opt.Experiences))
             .ReverseMap();
 
-        CreateMap<EmployeeEducationDetailsViewModel, EmployeeEducationViewModel>().ReverseMap();
-        CreateMap<EmployeeExperienceDetailsViewModel, EmployeeExperienceViewModel>().ReverseMap();
-
+        CreateMap<EmployeeDetailsDTO, CreateEmployeeDetailsViewModel>().ReverseMap();
 
         CreateMap<CreateEmployeeDetailsViewModel, CreateEmployeeWithDetailsCommand>()
             .ForMember(dest => dest.EmployeeContract, src => src.MapFrom(opt => opt.Contract))
@@ -36,11 +31,13 @@ public sealed class EmployeeProfile : Profile
             .ForMember(dest => dest.EmployeeExperiences, src => src.MapFrom(opt => opt.Experiences))
             .ReverseMap();
 
-        CreateMap<EmployeeContractDetailsDTO, EmployeeContractDetailsViewModel>().ReverseMap();
-        CreateMap<EmployeeEducationDetailsDTO, EmployeeEducationDetailsViewModel>().ReverseMap();
-        CreateMap<EmployeeExperienceDetailsDTO, EmployeeExperienceDetailsViewModel>().ReverseMap();
+        CreateMap<EmployeeContractDetailsDTO, EmployeeContractViewModel>().ReverseMap();
+        CreateMap<EmployeeEducationDetailsDTO, EmployeeEducationViewModel>().ReverseMap();
+        CreateMap<EmployeeExperienceDetailsDTO, EmployeeExperienceViewModel>().ReverseMap();
 
-        CreateMap<EditEmployeeDetailsViewModel, UpdateEmployeeWithDetailsCommand>()
+        CreateMap<EmployeeExperienceViewModel, EmployeeExperienceViewModel>().ReverseMap();
+
+        CreateMap<EmployeeDetailsViewModel, UpdateEmployeeWithDetailsCommand>()
             .ForMember(dest => dest.Id, src => src.MapFrom(opt => opt.EmployeeId))
             .ForMember(dest => dest.EmployeeContracts, src => src.MapFrom(opt => opt.Contracts))
             .ForMember(dest => dest.EmployeeEducations, src => src.MapFrom(opt => opt.Educations))

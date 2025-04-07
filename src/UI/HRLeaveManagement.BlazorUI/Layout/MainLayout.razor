@@ -1,6 +1,5 @@
 ﻿@inherits LayoutComponentBase
 
-@* background-color: #200a81 *@
 <MudLayout>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="4" Width="320px">
         <MudDrawerHeader Style="min-height: 56px; background-color: #200a81;">
@@ -14,12 +13,18 @@
     <MudAppBar Elevation="0" Style="background-color: transparent;" Fixed="false">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Dark" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
-        <MudTextField @bind-Value="searchString" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Placeholder="Szukaj na stronie" Margin="Margin.Dense" Clearable />
+        <MudTextField @bind-Value="searchString" 
+                      Adornment="Adornment.Start" 
+                      AdornmentIcon="@Icons.Material.Filled.Search" 
+                      Variant="Variant.Outlined" 
+                      Placeholder="Find on page" 
+                      Margin="Margin.Dense" 
+                      Clearable />
         <MudSpacer />
         <LoginDisplay />
     </MudAppBar>
 
-    <MudMainContent Style="margin-top: -45px;">
+    <MudMainContent Style="margin-top: -45px; margin-bottom: 55px;">
         <MudContainer>
             @Body
         </MudContainer>
@@ -58,5 +63,4 @@
                     1px 1px 1px 0px rgba(0, 0, 0, 0.14), 
                     1px 1px 3px 0px rgba(0, 0, 0, 0.12);
     }
-
 </style>

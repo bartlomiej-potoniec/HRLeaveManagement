@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Layout;
 using HRLeaveManagement.BlazorUI.ViewModels.Users;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -7,154 +8,70 @@ namespace HRLeaveManagement.BlazorUI.Pages.Users;
 
 public partial class List
 {
-    [Inject]
-    private IUserService UserService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
 
-    [Inject]
-    private IRoleService RoleService { get; set; }
+    [CascadingParameter] protected Message Message { get; set; }
 
     private MudDataGrid<UserDetailsViewModel> _dataGrid;
     private Column<UserDetailsViewModel> _rolesColumn;
+    private Column<UserDetailsViewModel> _accountStatusColumn;
 
-    private string? _selectedRole;
-    private string? _searchPhrase;
-    private string? searchString1;
-    string selectedFilter;
+    private List<UserDetailsViewModel> AllData = [];
 
-    private bool _isInFavourites;
-    private bool _isLoading = true;
+    private string? _searchString;
     private bool _isChoosenMany = false;
-    private bool _isAdvancedFiltering = false;
-    bool _filterOpen = false;
-    bool _selectAll = true;
-    string _icon = Icons.Material.Outlined.FilterAlt;
 
-    private List<UserDetailsViewModel> Users = [];
-    private List<string> Roles = [];
-
-    HashSet<string> _selectedItems = [];
-    HashSet<string> _filterItems = [];
-    FilterDefinition<UserDetailsViewModel> _filterDefinition;
+    private bool _isLoading = true;
 
     protected override async Task OnInitializedAsync()
     {
-        Users = await UserService.GetAllAsync();
+        var response = await UserService.GetAllAsync(CancellationToken.None);
 
-        var roles = await RoleService.GetAllAsync();
-        Roles = roles
-            .Select(role => role.Name)
-            .ToList();
+        if (!response.IsSuccess)
+        {
+            Message.HandleError("Unable to fetch the users");
+            return;
+        }
 
-        _selectedItems = Roles.ToHashSet();
-        _filterItems = Roles.ToHashSet();
+        AllData = response.Data;
 
         _isLoading = false;
         StateHasChanged();
     }
 
-    protected override bool ShouldRender() => !_isLoading;
-
-    void OpenFilter()
-    {
-        _filterOpen = true;
-    }
-
-    private void SelectAll(bool value)
-    {
-        _selectAll = value;
-
-        if (value)
-        {
-            _selectedItems = Roles.ToHashSet();
-        }
-        else
-        {
-            _selectedItems.Clear();
-        }
-    }
-
-    private void SelectedChanged(bool value, string item)
-    {
-        if (value)
-            _selectedItems.Add(item);
-        else
-            _selectedItems.Remove(item);
-
-        if (_selectedItems.Count == Roles.Count())
-            _selectAll = true;
-        else
-            _selectAll = false;
-    }
-
-    private async Task ClearFilterAsync(FilterContext<UserDetailsViewModel> context)
-    {
-        _selectedItems = Roles.ToHashSet();
-        _filterItems = Roles.ToHashSet();
-        _icon = Icons.Material.Outlined.FilterAlt;
-
-        var existingFilter = context.FilterDefinitions
-            .FirstOrDefault(f => f.Column == _rolesColumn);
-
-        if (existingFilter is not null)
-            await context.Actions.ClearFilterAsync(_filterDefinition);
-
-        _filterOpen = false;
-    }
-
-    private async Task ApplyFilterAsync(FilterContext<UserDetailsViewModel> context)
-    {
-        _filterItems = _selectedItems.ToHashSet();
-
-        _icon = _filterItems.Count == Users.Count()
-            ? Icons.Material.Outlined.FilterAlt
-            : Icons.Material.Filled.FilterAlt;
-
-        var existingFilter = context.FilterDefinitions
-            .FirstOrDefault(f => f.Column == _rolesColumn);
-
-        if (existingFilter is not null)
-            await context.Actions.ClearFilterAsync(existingFilter);
-        
-        _filterDefinition = new FilterDefinition<UserDetailsViewModel>()
-        {
-            Title = _rolesColumn.Title,
-            Column = _rolesColumn,
-            Value = string.Join("|", _filterItems),
-            Operator = "equals"
-        };
-
-        await context.Actions.ApplyFilterAsync(_filterDefinition);
-
-        _filterOpen = false;
-    }
-
-    private async Task<GridData<UserDetailsViewModel>> LoadServerData(GridState<UserDetailsViewModel> state)
+    private async Task<GridData<UserDetailsViewModel>?> LoadServerData(GridState<UserDetailsViewModel> state)
     {
         var sortDefinition = state.SortDefinitions.FirstOrDefault();
         var filterDefinitions = state.FilterDefinitions;
         var pageNumber = state.Page + 1;
         var pageSize = state.PageSize;
+        var sieveSort = "Email";
 
-        string sieveSort = "Email";
         var sieveFilters = filterDefinitions
             .Select(filter => SieveMapper.MapToSieveFilter(filter.Column.PropertyName, filter));
 
         var sieveFilterString = string.Join(",", sieveFilters);
 
-        Console.WriteLine(sieveFilterString);
-
         if (sortDefinition is not null)
         {
             sieveSort = SieveMapper.MapToSieveSort(sortDefinition.SortBy, sortDefinition.Descending);
-            Console.WriteLine(sieveSort);
         }
 
-        var data = await UserService.GetAllAsync(pageNumber, pageSize, filters: sieveFilterString, sorts: sieveSort);
+        var response = await UserService.GetAllAsync(pageNumber, pageSize, filters: sieveFilterString, sorts: sieveSort);
+
+        if (!response.IsSuccess)
+        {
+            Message.HandleError("Unable to fetch the users");
+            return null;
+        }
+
+        _isLoading = false;
+        StateHasChanged();
 
         return new GridData<UserDetailsViewModel>
         {
-            Items = data.Items,
-            TotalItems = data.TotalItemsCount
+            Items = response.Data.Items,
+            TotalItems = response.Data.TotalItemsCount
         };
     }
 }

@@ -1,55 +1,61 @@
-﻿using HRLeaveManagement.BlazorUI.ViewModels;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Extensions;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
 using FluentValidation;
 
 namespace HRLeaveManagement.BlazorUI.Validation;
 
-public class EmployeeDetailsViewModelValidator : AbstractValidator<CreateEmployeeDetailsViewModel>
+public class EmployeeDetailsViewModelValidator 
+    : AbstractValidator<CreateEmployeeDetailsViewModel>, IViewModelValidator<CreateEmployeeDetailsViewModel>
 {
     public EmployeeDetailsViewModelValidator()
     {
         RuleFor(x => x.Position)
             .NotNull()
             .NotEmpty()
-            .MaximumLength(100);
+            .MaximumLength(100)
+                .WithDisplayName(x => x.Position);
 
         RuleFor(x => x.Responsibilities)
             .NotNull()
             .NotEmpty()
-            .MaximumLength(1000);
+            .MaximumLength(1000)
+                .WithDisplayName(x => x.Responsibilities);
 
         RuleFor(x => x.SectionId)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.SectionId);
 
         RuleFor(x => x.LeaderId)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.LeaderId);
 
         RuleFor(x => x.Contract.ContractType)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.Contract.ContractType);
 
-        RuleFor(x => x.Contract.EmployedFrom)
+        RuleFor(x => x.Contract.StartedAt)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.Contract.StartedAt);
 
-        RuleFor(x => x.Contract.EmployedFrom)
-            .LessThan(x => x.Contract.EmployedTo)
-                .When(x => x.Contract.EmployedTo.HasValue);
+        RuleFor(x => x.Contract.StartedAt)
+            .LessThan(x => x.Contract.ExpiredAt)
+                .WithDisplayName(x => x.Contract.StartedAt)
+                    .When(x => x.Contract.ExpiredAt.HasValue);
 
-        RuleFor(x => x.Contract.EmployedTo)
-            .GreaterThan(x => x.Contract.EmployedFrom)
-                .When(x => x.Contract.EmployedTo.HasValue);
+        RuleFor(x => x.Contract.ExpiredAt)
+            .NotNull()
+            .NotEmpty()
+                .WithDisplayName(x => x.Contract.ExpiredAt)
+                    .When(x => !(x.Contract.IsContractForIndefinitePeriod));
+
+        RuleFor(x => x.Contract.ExpiredAt)
+            .GreaterThan(x => x.Contract.StartedAt)
+                .WithDisplayName(x => x.Contract.ExpiredAt)
+                    .When(x => x.Contract.ExpiredAt.HasValue && x.Contract.StartedAt.HasValue);
     }
-
-    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
-    {
-        var result = await ValidateAsync(ValidationContext<CreateEmployeeDetailsViewModel>
-            .CreateWithOptions((CreateEmployeeDetailsViewModel)model, x => x.IncludeProperties(propertyName)));
-
-        if (result.IsValid)
-            return Array.Empty<string>();
-
-        return result.Errors.Select(e => e.ErrorMessage);
-    };
 } 

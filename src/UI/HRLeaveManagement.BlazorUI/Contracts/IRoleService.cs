@@ -1,8 +1,9 @@
-﻿using HRLeaveManagement.BlazorUI.ViewModels.Roles;
+﻿using HRLeaveManagement.BlazorUI.Models;
+using HRLeaveManagement.BlazorUI.ViewModels.Roles;
 
 namespace HRLeaveManagement.BlazorUI.Contracts;
 
 public interface IRoleService
 {
-    Task<List<RoleViewModel>> GetAllAsync();
+    Task<Response<List<RoleViewModel>>> GetAllAsync();
 }

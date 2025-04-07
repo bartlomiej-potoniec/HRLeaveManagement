@@ -1,0 +1,38 @@
+﻿@inherits HrDialog
+
+@using HRLeaveManagement.BlazorUI.Services.Base
+@using HRLeaveManagement.BlazorUI.Validation
+
+<HrDialog Icon="@Icons.Material.Filled.AddCircle">
+    <ChildDescriptionContent>
+        Add to the list the contracts and agreements of employee <b>@EmployeeFullName</b>
+    </ChildDescriptionContent>
+    <ChildBodyContent>
+        <MudForm Model="@Model" @ref="@Form" Validation="@(Validator.ValidateValue)">
+            <MudGrid Class="mt-5">
+                <MudItem xs="12" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudSelect T="ContractType?"
+                               @bind-Value="Model.ContractType"
+                               Label="Select contract type"
+                               Variant="Variant.Outlined"
+                               Margin="Margin.Dense"
+                               For="@(() => Model.ContractType)"
+                               Immediate
+                               Clearable>
+                        @foreach (var item in Model.ContractTypes)
+                        {
+                            <MudSelectItem Value="@item.Key">@item.Value</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="8" Style="padding-top: 0px; display: flex; align-items: center;">
+                    <MudDateRangePicker @bind-DateRange="@Model.EmploymentDateRange"
+                                        Label="Contract start and expiration date"
+                                        Variant="Variant.Outlined"
+                                        Margin="Margin.Dense"
+                                        Clearable />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </ChildBodyContent>
+</HrDialog>

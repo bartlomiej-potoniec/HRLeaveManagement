@@ -1,8 +1,9 @@
-﻿using HRLeaveManagement.BlazorUI.ViewModels.Sections;
+﻿using HRLeaveManagement.BlazorUI.Models;
+using HRLeaveManagement.BlazorUI.ViewModels.Sections;
 
 namespace HRLeaveManagement.BlazorUI.Contracts;
 
 public interface ISectionService
 {
-    Task<List<SectionViewModel>> GetAllAsync();
+    Task<Response<List<SectionViewModel>>> GetAllAsync();
 }

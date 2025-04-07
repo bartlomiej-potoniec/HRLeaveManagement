@@ -1,40 +1,35 @@
-﻿using FluentValidation;
-using HRLeaveManagement.BlazorUI.ViewModels;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
+using HRLeaveManagement.BlazorUI.Extensions;
+using FluentValidation;
+using HRLeaveManagement.BlazorUI.ViewModels.Employees;
 
 namespace HRLeaveManagement.BlazorUI.Validation;
 
-public class EditEmployeeDetailsViewModelValidator : AbstractValidator<EditEmployeeDetailsViewModel>
+public class EditEmployeeDetailsViewModelValidator 
+    : AbstractValidator<EmployeeDetailsViewModel>, IViewModelValidator<EmployeeDetailsViewModel>
 {
     public EditEmployeeDetailsViewModelValidator()
     {
         RuleFor(x => x.Position)
             .NotNull()
             .NotEmpty()
-            .MaximumLength(100);
+            .MaximumLength(100)
+                .WithDisplayName(x => x.Position);
 
         RuleFor(x => x.Responsibilities)
             .NotNull()
             .NotEmpty()
-            .MaximumLength(1000);
+            .MaximumLength(1000)
+                .WithDisplayName(x => x.Responsibilities);
 
         RuleFor(x => x.SectionId)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.SectionId);
 
         RuleFor(x => x.LeaderId)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+                .WithDisplayName(x => x.LeaderId);
     }
-
-    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
-    {
-        var result = await ValidateAsync(ValidationContext<EditEmployeeDetailsViewModel>
-            .CreateWithOptions((EditEmployeeDetailsViewModel)model, x => x.IncludeProperties(propertyName)));
-
-        if (result.IsValid)
-            return Array.Empty<string>();
-
-        return result.Errors.Select(e => e.ErrorMessage);
-    };
-
 }

@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Blazored.LocalStorage;
-using HRLeaveManagement.BlazorUI.Contracts;
+﻿using HRLeaveManagement.BlazorUI.Contracts;
 using HRLeaveManagement.BlazorUI.Models;
 using HRLeaveManagement.BlazorUI.Services.Base;
 using HRLeaveManagement.BlazorUI.ViewModels.LeaveType;
+using Blazored.LocalStorage;
+using AutoMapper;
 
 namespace HRLeaveManagement.BlazorUI.Services;
 
