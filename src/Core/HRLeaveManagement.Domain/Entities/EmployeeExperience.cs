@@ -82,6 +82,25 @@ public class EmployeeExperience
             ModifiedAt = DateTime.UtcNow
         };
 
+    public static EmployeeExperience Create(Guid employeeId,
+                                            ContractType contractType,
+                                            string previousCompanyName,
+                                            string position,
+                                            DateTime employedFrom,
+                                            DateTime employedTo)
+        => new()
+        {
+            EmployeeId = employeeId,
+            ContractType = contractType,
+            PreviousCompanyName = previousCompanyName,
+            Position = position,
+            EmployedFrom = DateOnly.FromDateTime(employedFrom),
+            EmployedTo = DateOnly.FromDateTime(employedTo),
+            TotalEmployment = (employedTo - employedFrom).Days,
+            CreatedAt = DateTime.UtcNow,
+            ModifiedAt = DateTime.UtcNow
+        };
+
     public static void Update(EmployeeExperience entity,
                               ContractType contractType,
                               string previousCompanyName,

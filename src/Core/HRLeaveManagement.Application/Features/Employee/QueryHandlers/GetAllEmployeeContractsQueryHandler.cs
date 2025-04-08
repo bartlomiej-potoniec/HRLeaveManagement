@@ -22,10 +22,10 @@ public sealed class GetAllEmployeeContractsQueryHandler(IEmployeeRepository empl
         _logger.LogInformation("Fetching all employee contracts for employee with ID: {Id} started", request.EmployeeId);
 
         var employeeContracts = await _employeeRepository.GetAllContractsByEmployeeIdAsync(request.EmployeeId, cancellationToken);
-        var employeeContractDTOs = _mapper.Map<IEnumerable<EmployeeContractDetailsDTO>>(employeeContracts);
+        var employeeContractDtos = _mapper.Map<IEnumerable<EmployeeContractDetailsDTO>>(employeeContracts);
 
         _logger.LogInformation("Fetching all employee contracts for employee with ID: {Id} successful", request.EmployeeId);
 
-        return employeeContractDTOs;
+        return employeeContractDtos;
     }
 }

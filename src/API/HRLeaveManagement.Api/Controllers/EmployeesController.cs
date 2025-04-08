@@ -13,7 +13,7 @@ namespace HRLeaveManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "HR")]
+//[Authorize(Roles = "HR")]
 public sealed class EmployeesController(ISender sender) : ControllerBase
 {
     private readonly ISender _sender = sender;
@@ -26,8 +26,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     }
 
     [HttpGet("{employeeId}")]
-    //[Authorize(Roles = "HR", Policy = "IsEmployee")]
-    //[ValidateGuid]
+    [Authorize(Roles = "HR", Policy = "IsEmployee")]
     public async Task<ActionResult<EmployeeDetailsDTO>> GetWithDetails([FromRoute] Guid employeeId,
                                                                        CancellationToken cancellationToken)
     {
@@ -70,8 +69,8 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
         return NoContent();
     }
 
-    // Contract subentity
-    
+    #region Contract_Subentity
+
     [HttpGet("{employeeId}/contracts")]
     public async Task<ActionResult<IEnumerable<EmployeeContractDetailsDTO>>> GetAllContracts([FromRoute] Guid employeeId,
                                                                                              CancellationToken cancellationToken)
@@ -81,13 +80,13 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     }
     
     [HttpGet("{employeeId}/contracts/{contractId}")]
-    //[Authorize(Roles = "HR", Policy = "IsEmployeeContract")]
+    [Authorize(Roles = "HR", Policy = "IsEmployeeContract")]
     public async Task<ActionResult<EmployeeContractDetailsDTO>> GetContractWithDetails([FromRoute] Guid employeeId,
                                                                                        [FromRoute] int contractId,
                                                                                        CancellationToken cancellationToken)
     {
         var contract = await _sender.Send(
-            new GetEmployeeContractWithDetailsCommand(employeeId, contractId), 
+            new GetEmployeeContractWithDetailsQuery(employeeId, contractId), 
             cancellationToken
         );
 
@@ -140,13 +139,14 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
         return NoContent();
     }
 
-    /*
-    // Education subentity
+    #endregion
+
+    #region Education_Subentity
 
     [HttpGet("{employeeId}/educations")]
-    public async Task<ActionResult<IEnumerable<EmployeeEducationDTO>>> GetAllEducations([FromRoute] Guid employeeId)
+    public async Task<ActionResult<IEnumerable<EmployeeEducationDetailsDTO>>> GetAllEducations([FromRoute] Guid employeeId)
     {
-        var educations = await _sender.Send(new GetAllEmployeeEducationsCommand(employeeId));
+        var educations = await _sender.Send(new GetAllEmployeeEducationsQuery(employeeId));
         return Ok(educations);
     }
 
@@ -155,7 +155,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     public async Task<ActionResult<EmployeeEducationDetailsDTO>> GetEducationWithDetails([FromRoute] Guid employeeId,
                                                                                          [FromRoute] int educationId)
     {
-        var education = await _sender.Send(new GetEmployeeEducationWithDetailsCommand(employeeId, educationId));
+        var education = await _sender.Send(new GetEmployeeEducationWithDetailsQuery(employeeId, educationId));
         return Ok(education);
     }
 
@@ -169,19 +169,21 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
 
     [HttpPatch("{employeeId}/educations/{educationId}")]
     public async Task<ActionResult> UpdateEducation([FromRoute] Guid employeeId,
-                                                    [FromRoute] Guid educationId,
+                                                    [FromRoute] int educationId,
                                                     [FromBody] UpdateEmployeeEducationCommand command)
     {
         await _sender.Send(command with { EmployeeId = employeeId, EducationId = educationId });
         return NoContent();
     }
 
-    // Experience subentity
+    #endregion
+
+    #region Experience_Subentity
 
     [HttpGet("{employeeId}/experiences")]
-    public async Task<ActionResult<IEnumerable<EmployeeExperienceDTO>>> GetAllExperiences([FromRoute] Guid employeeId)
+    public async Task<ActionResult<IEnumerable<EmployeeExperienceDetailsDTO>>> GetAllExperiences([FromRoute] Guid employeeId)
     {
-        var experiences = await _sender.Send(new GetAllEmployeeExperiencesCommand(employeeId));
+        var experiences = await _sender.Send(new GetAllEmployeeExperiencesQuery(employeeId));
         return Ok(experiences);
     }
 
@@ -190,7 +192,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
     public async Task<ActionResult<EmployeeExperienceDetailsDTO>> GetExperienceWithDetails([FromRoute] Guid employeeId,
                                                                                            [FromRoute] int experienceId)
     {
-        var experience = await _sender.Send(new GetEmployeeExperienceWithDetailsCommand(employeeId, experienceId));
+        var experience = await _sender.Send(new GetEmployeeExperienceWithDetailsQuery(employeeId, experienceId));
         return Ok(experience);
     }
 
@@ -211,9 +213,10 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
         await _sender.Send(command with { EmployeeId = employeeId, ExperienceId = experienceId });
         return NoContent();
     }
-    */
 
-    // RemoteWorkLimit subentity
+    #endregion
+
+    #region RemoteWorkLimit_Subentity
 
     [HttpGet("{employeeId}/remoteWorkLimits")]
     public async Task<ActionResult<IEnumerable<RemoteWorkLimitDTO>>> GetAllRemoteWorkLimitsForEmployee([FromRoute] Guid employeeId,
@@ -238,4 +241,6 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
 
         return Ok(leaveAllocations);
     }
+
+    #endregion
 }

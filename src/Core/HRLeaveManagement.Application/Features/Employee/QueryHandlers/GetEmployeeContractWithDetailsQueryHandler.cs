@@ -8,16 +8,16 @@ using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.Employee.QueryHandlers;
 
-public sealed class GetEmployeeContractWithDetailsCommandHandler(IEmployeeRepository employeeRepository,
-                                                                 IMapper mapper,
-                                                                 IAppLogger<GetEmployeeContractWithDetailsCommandHandler> logger)
-    : IRequestHandler<GetEmployeeContractWithDetailsCommand, EmployeeContractDetailsDTO>
+public sealed class GetEmployeeContractWithDetailsQueryHandler(IEmployeeRepository employeeRepository,
+                                                               IMapper mapper,
+                                                               IAppLogger<GetEmployeeContractWithDetailsQueryHandler> logger)
+    : IRequestHandler<GetEmployeeContractWithDetailsQuery, EmployeeContractDetailsDTO>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IMapper _mapper = mapper;
-    private readonly IAppLogger<GetEmployeeContractWithDetailsCommandHandler> _logger = logger;
+    private readonly IAppLogger<GetEmployeeContractWithDetailsQueryHandler> _logger = logger;
 
-    public async Task<EmployeeContractDetailsDTO> Handle(GetEmployeeContractWithDetailsCommand request,
+    public async Task<EmployeeContractDetailsDTO> Handle(GetEmployeeContractWithDetailsQuery request,
                                                          CancellationToken cancellationToken)
     {
         _logger.LogInformation("Fetching employee contract with ID: {ContractId} for employee with ID: {EmployeeId} started", request.ContractId, request.EmployeeId);

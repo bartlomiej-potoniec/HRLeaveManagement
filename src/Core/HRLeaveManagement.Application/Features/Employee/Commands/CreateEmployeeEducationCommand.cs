@@ -1,5 +1,4 @@
-﻿using HRLeaveManagement.Application.DTOs.Employees;
-using MediatR;
+﻿using MediatR;
 
 namespace HRLeaveManagement.Application.Features.Employee.Commands;
 

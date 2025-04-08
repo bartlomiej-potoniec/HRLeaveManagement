@@ -1,5 +1,4 @@
-﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -89,7 +88,39 @@ public sealed class EmployeeRepository(ApplicationDbContext dbContext) : IEmploy
 
     public async Task CreateEmployeeContract(EmployeeContract employeeContract, CancellationToken cancellationToken = default)
     {
-        await _dbContext.AddAsync(employeeContract, cancellationToken);
+        await _dbContext.EmployeeContracts.AddAsync(employeeContract, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<EmployeeEducation>> GetAllEducationsByEmployeeIdAsync(Guid employeeId,
+                                                                                        CancellationToken cancellationToken = default)
+        => await _dbContext.EmployeeEducations
+            .Where(ed => ed.EmployeeId == employeeId)
+            .ToListAsync(cancellationToken);
+
+    public async Task<EmployeeEducation?> GetEducationByIdAsync(int educationId, CancellationToken cancellationToken = default)
+        => await _dbContext.EmployeeEducations
+            .FirstOrDefaultAsync(ed => ed.Id == educationId, cancellationToken);
+
+    public async Task CreateEmployeeEducation(EmployeeEducation employeeEducation, CancellationToken cancellationToken = default)
+    {
+        await _dbContext.EmployeeEducations.AddAsync(employeeEducation, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<EmployeeExperience>> GetAllExperiencesByEmployeeIdAsync(Guid employeeId,
+                                                                                          CancellationToken cancellationToken = default)
+        => await _dbContext.EmployeeExperiences
+            .Where(ex => ex.EmployeeId == employeeId)
+            .ToListAsync(cancellationToken);
+
+    public async Task<EmployeeExperience?> GetExperienceByIdAsync(int experienceId, CancellationToken cancellationToken = default)
+        => await _dbContext.EmployeeExperiences
+            .FirstOrDefaultAsync(ex => ex.Id == experienceId, cancellationToken);
+
+    public async Task CreateEmployeeExperience(EmployeeExperience employeeExperience, CancellationToken cancellationToken = default)
+    {
+        await _dbContext.EmployeeExperiences.AddAsync(employeeExperience, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

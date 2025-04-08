@@ -3,5 +3,5 @@ using MediatR;
 
 namespace HRLeaveManagement.Application.Features.Employee.Queries;
 
-public sealed record GetEmployeeContractWithDetailsCommand(Guid EmployeeId, int ContractId) 
-    : IRequest<EmployeeContractDetailsDTO>;
+public sealed record GetEmployeeEducationWithDetailsQuery(Guid EmployeeId, int EducationId) 
+    : IRequest<EmployeeEducationDetailsDTO>;

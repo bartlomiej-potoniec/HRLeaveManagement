@@ -29,4 +29,14 @@ public interface IEmployeeRepository
                                                                          CancellationToken cancellationToken = default);
     Task<EmployeeContract?> GetContractByIdAsync(int contractId, CancellationToken cancellationToken = default);
     Task CreateEmployeeContract(EmployeeContract employeeContract, CancellationToken cancellationToken = default);
+
+    Task<IEnumerable<EmployeeEducation>> GetAllEducationsByEmployeeIdAsync(Guid employeeId,
+                                                                           CancellationToken cancellationToken = default);
+    Task<EmployeeEducation?> GetEducationByIdAsync(int educationId, CancellationToken cancellationToken = default);
+    Task CreateEmployeeEducation(EmployeeEducation employeeEducation, CancellationToken cancellationToken = default);
+
+    Task<IEnumerable<EmployeeExperience>> GetAllExperiencesByEmployeeIdAsync(Guid employeeId,
+                                                                             CancellationToken cancellationToken = default);
+    Task<EmployeeExperience?> GetExperienceByIdAsync(int experienceId, CancellationToken cancellationToken = default);
+    Task CreateEmployeeExperience(EmployeeExperience employeeExperience, CancellationToken cancellationToken = default);
 }
