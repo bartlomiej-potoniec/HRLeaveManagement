@@ -88,9 +88,9 @@ public sealed class EmailService(IEmailSender emailSender,
         _logger.LogInformation("Sending email successful to {Email}", email);
     }
 
-    public string GenerateEmailConfirmationLinkAsync(string userId,
-                                                     string token,
-                                                     CancellationToken cancellationToken = default)
+    public string GenerateEmailConfirmationLink(string userId,
+                                                string token,
+                                                CancellationToken cancellationToken = default)
     {
         var httpContext = _httpContextAccessor.HttpContext
             ?? throw new InvalidOperationException("HttpContext is not available");

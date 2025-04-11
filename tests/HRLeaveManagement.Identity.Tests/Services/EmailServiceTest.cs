@@ -27,7 +27,7 @@ public class EmailServiceTest
         string confirmationLink = "confirmation_link";
 
         emailSenderMock
-            .Setup(es => es.SendEmailAsync(It.IsAny<EmailMessage>()))
+            .Setup(es => es.SendEmailAsync(It.IsAny<EmailMessage>(), CancellationToken.None))
             .ReturnsAsync(emailResponse);
 
         var emailService = CreateEmailService(emailSenderMock);
@@ -55,7 +55,7 @@ public class EmailServiceTest
         var expectedExceptionMessage = "HttpContext is not available";
 
         // Act
-        Action result = () => emailService.GenerateEmailConfirmationLinkAsync(userId, token);
+        Action result = () => emailService.GenerateEmailConfirmationLink(userId, token);
 
         // Assert
         result
@@ -92,7 +92,7 @@ public class EmailServiceTest
         var expectedExceptionMessage = "An error occurred while creating confirmation link";
 
         // Act
-        Action result = () => emailService.GenerateEmailConfirmationLinkAsync(userId, token);
+        Action result = () => emailService.GenerateEmailConfirmationLink(userId, token);
 
         // Assert
         result
@@ -129,7 +129,7 @@ public class EmailServiceTest
         );
 
         // Act
-        var result = emailService.GenerateEmailConfirmationLinkAsync(userId, token);
+        var result = emailService.GenerateEmailConfirmationLink(userId, token);
 
         // Assert
         result

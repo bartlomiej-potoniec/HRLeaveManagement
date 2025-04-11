@@ -9,5 +9,5 @@ public interface IEmailService
                                string confirmationLink,
                                CancellationToken cancellationToken);
     Task SendEmployeeCreationEmailAsync(string email, string firstname, CancellationToken cancellationToken);
-    string GenerateEmailConfirmationLinkAsync(string userId, string token, CancellationToken cancellationToken);
+    string GenerateEmailConfirmationLink(string userId, string token, CancellationToken cancellationToken);
 }

@@ -102,14 +102,14 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
                 _logger.LogError("Adding to roles {Roles} failed for user {Username} ", request.Roles, userName);
                 throw new BadRequestException(
                     _identityResult.ToValidationErrors(result),
-                    $"Cannot add a new user to roles '{ request.Roles }'"
+                    $"Cannot add a new user to roles ['{ string.Join(", ", request.Roles) }']"
                 );
             }
-
+             
             _logger.LogInformation("Adding to roles {Roles} successful for user {Username} ", request.Roles, userName);
 
             var token = await _signInManager.UserManager.GenerateEmailConfirmationTokenAsync(user);
-            var confirmationLink = _emailService.GenerateEmailConfirmationLinkAsync(user.Id, token, cancellationToken);
+            var confirmationLink = _emailService.GenerateEmailConfirmationLink(user.Id, token, cancellationToken);
 
             await _emailService.SendRegistrationEmailAsync(
                 request.Email,
@@ -138,7 +138,9 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
     public async Task ConfirmEmailAsync(string? userId, string? token, CancellationToken cancellationToken = default)
     {
         if (userId is null or "" || token is null or "")
+        {
             throw new BadRequestException("Invalid user ID or token");
+        }
         
         var user = await _signInManager.UserManager
             .FindByIdAsync(userId)
@@ -173,7 +175,8 @@ public sealed class AuthService(SignInManager<ApplicationUser> signInManager,
         var user = _userService.User
             ?? throw new NotFoundException("No user found in current context");
 
-        var applicationUser = await _signInManager.UserManager.GetUserAsync(user)
+        var applicationUser = await _signInManager.UserManager
+            .GetUserAsync(user)
             ?? throw new NotFoundException("No user found");
 
         _logger.LogInformation("Changing password started for user {Username} with ID: {Id}", applicationUser.UserName!, applicationUser.Id);

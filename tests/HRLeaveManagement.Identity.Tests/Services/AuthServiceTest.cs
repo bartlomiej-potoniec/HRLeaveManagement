@@ -5,7 +5,9 @@ using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Identity.DbContexts;
 using HRLeaveManagement.Identity.Models;
 using HRLeaveManagement.Identity.Services;
+using HRLeaveManagement.Identity.Tests.Fakes;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Security.Claims;
 
 namespace HRLeaveManagement.Identity.Tests.Services;
@@ -23,7 +25,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "User with username: jkowals95 not found";
 
         // Act
-        Func<Task> login = () => authService.LoginAsync(authRequest);
+        Func<Task> login = async () => await authService.LoginAsync(authRequest);
 
         // Assert
         await login
@@ -42,15 +44,14 @@ public class AuthServiceTest
         var user = CreateAplicationUser();
         var authRequest = CreateAuthRequest();
 
-        UserManagerMock.SetupToFindUserByName(userManagerMock, user);
+        UserManagerMock.SetupToFindUserByName(userManagerMock, result: user);
         SignInManagerMock.SetupToReturnSignInResult(signInManagerMock, SignInResult.Failed);
 
         var authService = CreateAuthService(signInManagerMock);
-
         var expectedExceptionMessage = "Credentials for 'jkowals95' are not valid";
 
         // Act
-        Func<Task> login = () => authService.LoginAsync(authRequest);
+        Func<Task> login = async () => await authService.LoginAsync(authRequest);
 
         // Assert
         await login
@@ -71,11 +72,11 @@ public class AuthServiceTest
         var authRequest = CreateAuthRequest();
         var token = "test_jwt_security_token";
 
-        UserManagerMock.SetupToFindUserByName(userManagerMock, user);
+        UserManagerMock.SetupToFindUserByName(userManagerMock, result: user);
         SignInManagerMock.SetupToReturnSignInResult(signInManagerMock, SignInResult.Success);
 
         jwtService
-            .Setup(jwt => jwt.GenerateJwtToken(authRequest.UserName))
+            .Setup(jwt => jwt.GenerateJwtTokenAsync(authRequest.UserName, CancellationToken.None))
             .ReturnsAsync(token);
 
         var authService = CreateAuthService(signInManagerMock, jwtServiceMock: jwtService);
@@ -92,6 +93,41 @@ public class AuthServiceTest
     }
 
     [Fact]
+    public async Task Register_ThrowsOperationCanceledException_WhenBeginTransactionFailed()
+    {
+        // Arrange
+        var userManagerMock = UserManagerMock.Create();
+        var signInManagerMock = SignInManagerMock.Create(userManagerMock.Object);
+        var credentialServiceMock = CreateCredentialServiceMock();
+        var serviceProviderMock = CreateServiceProviderMock();
+        var fakeDbContext = CreateFakeApplicationIdentityDbContext();
+
+        var registrationRequest = CreateRegistrationRequest();
+
+        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, result: "jkowals95");
+        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, result: "1$g&J*34");
+        fakeDbContext.SetupToThrowOperationCanceledException();
+        
+        serviceProviderMock
+            .Setup(sp => sp.GetService(typeof(ApplicationIdentityDbContext)))
+            .Returns(fakeDbContext);
+
+        var authService = CreateAuthService(
+            signInManagerMock,
+            credentialServiceMock: credentialServiceMock,
+            serviceProviderMock: serviceProviderMock
+        );
+
+        // Act
+        Func<Task> result = async () => await authService.RegisterAsync(registrationRequest);
+
+        // Assert
+        await result
+            .Should()
+            .ThrowAsync<OperationCanceledException>();
+    }
+
+    [Fact]
     public async Task Register_ForRegistrationCredentials_ThrowsBadRequestException_WhenCreatingUserFailed()
     {
         // Arrange
@@ -101,8 +137,8 @@ public class AuthServiceTest
 
         var registrationRequest = CreateRegistrationRequest();
 
-        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, "jkowals95");
-        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, "1$g&J*34");
+        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, result: "jkowals95");
+        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, result: "1$g&J*34");
 
         UserManagerMock.SetupCreateToReturnIdentityResult(userManagerMock, IdentityResult.Failed());
 
@@ -111,7 +147,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Cannot create a new user for given credentials";
 
         // Act
-        Func<Task> result = () => authService.RegisterAsync(registrationRequest);
+        Func<Task> result = async () => await authService.RegisterAsync(registrationRequest);
 
         // Assert
         await result
@@ -121,33 +157,120 @@ public class AuthServiceTest
     }
 
     [Fact]
-    public async Task Register_ForRegistrationCredentials_ThrowsBadRequestException_WhenAddingToRoleFailed()
+    public async Task Register_ForRegistrationCredentials_ThrowsBadRequestException_WhenAddingToRolesFailed()
     {
         // Arrange
+        List<string> userRoles = ["Employee", "Manager"]; 
         var userManagerMock = UserManagerMock.Create();
         var signInManagerMock = SignInManagerMock.Create(userManagerMock.Object);
         var credentialServiceMock = CreateCredentialServiceMock();
 
-        var registrationRequest = CreateRegistrationRequest();
+        var registrationRequest = CreateRegistrationRequest(roles: userRoles);
 
-        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, "jkowals95");
-        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, "1$g&J*34");
+        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, result: "jkowals95");
+        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, result: "1$g&J*34");
 
         UserManagerMock.SetupCreateToReturnIdentityResult(userManagerMock, IdentityResult.Success);
-        UserManagerMock.SetupAddToRoleToReturnIdentityResult(userManagerMock, IdentityResult.Failed());
+        UserManagerMock.SetupAddToRolesToReturnIdentityResult(userManagerMock, IdentityResult.Failed());
 
         var authService = CreateAuthService(signInManagerMock, credentialServiceMock: credentialServiceMock);
 
-        var expectedExceptionMessage = "Cannot add a new user to role 'Employee'";
+        var expectedExceptionMessage = "Cannot add a new user to roles ['Employee, Manager']";
 
         // Act
-        Func<Task> result = () => authService.RegisterAsync(registrationRequest);
+        Func<Task> result = async () => await authService.RegisterAsync(registrationRequest);
 
         // Assert
         await result
             .Should()
             .ThrowAsync<BadRequestException>()
             .WithMessage(expectedExceptionMessage);
+    }
+
+    [Fact]
+    public async Task Register_ForRegistrationCredentials_RollbackTransaction_WhenCreatingUserFailed()
+    {
+        // Arrange
+        var userManagerMock = UserManagerMock.Create();
+        var signInManagerMock = SignInManagerMock.Create(userManagerMock.Object);
+        var credentialServiceMock = CreateCredentialServiceMock();
+        var serviceProviderMock = CreateServiceProviderMock();
+        var dbContextTransactionMock = CreateDbContextTransactionMock();
+        var fakeDbContext = CreateFakeApplicationIdentityDbContext();
+
+        var registrationRequest = CreateRegistrationRequest();
+
+        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, result: "jkowals95");
+        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, result: "1$g&J*34");
+
+        fakeDbContext.SetupSetupToReturnDbContextTransaction(dbContextTransactionMock.Object);
+
+        serviceProviderMock
+            .Setup(sp => sp.GetService(typeof(ApplicationIdentityDbContext)))
+            .Returns(fakeDbContext);
+
+        UserManagerMock.SetupCreateToReturnIdentityResult(userManagerMock, IdentityResult.Failed());
+
+        var authService = CreateAuthService(
+            signInManagerMock,
+            credentialServiceMock: credentialServiceMock,
+            serviceProviderMock: serviceProviderMock
+        );
+
+        // Act 
+        Func<Task> result = async () => await authService.RegisterAsync(registrationRequest);
+
+        // Assert
+        await result
+            .Should()
+            .ThrowAsync<BadRequestException>();
+
+        dbContextTransactionMock
+            .Verify(t => t.RollbackAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task Register_ForRegistrationCredentials_RollbackTransaction_WhenAddToRolesFailed()
+    {
+        // Arrange
+        List<string> userRoles = ["Employee", "Manager"];
+        var userManagerMock = UserManagerMock.Create();
+        var signInManagerMock = SignInManagerMock.Create(userManagerMock.Object);
+        var credentialServiceMock = CreateCredentialServiceMock();
+        var serviceProviderMock = CreateServiceProviderMock();
+        var dbContextTransactionMock = CreateDbContextTransactionMock();
+        var fakeDbContext = CreateFakeApplicationIdentityDbContext();
+
+        var registrationRequest = CreateRegistrationRequest(roles: userRoles);
+
+        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, result: "jkowals95");
+        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, result: "1$g&J*34");
+
+        fakeDbContext.SetupSetupToReturnDbContextTransaction(dbContextTransactionMock.Object);
+
+        serviceProviderMock
+            .Setup(sp => sp.GetService(typeof(ApplicationIdentityDbContext)))
+            .Returns(fakeDbContext);
+
+        UserManagerMock.SetupCreateToReturnIdentityResult(userManagerMock, IdentityResult.Success);
+        UserManagerMock.SetupAddToRolesToReturnIdentityResult(userManagerMock, IdentityResult.Failed());
+
+        var authService = CreateAuthService(
+            signInManagerMock,
+            credentialServiceMock: credentialServiceMock,
+            serviceProviderMock: serviceProviderMock
+        );
+
+        // Act
+        Func<Task> result = async () => await authService.RegisterAsync(registrationRequest);
+
+        // Assert
+        await result
+            .Should()
+            .ThrowAsync<BadRequestException>();
+
+        dbContextTransactionMock
+            .Verify(t => t.RollbackAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -163,18 +286,18 @@ public class AuthServiceTest
         var token = "email_confirmation_token";
         var confirmationLink = "email_confirmation_link";
 
-        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, "jkowals95");
-        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, "1$g&J*34");
+        SetupCredentialServiceMockToReturnLogin(credentialServiceMock, result: "jkowals95");
+        SetupCredentialServiceMockToReturnPassword(credentialServiceMock, result: "1$g&J*34");
 
         UserManagerMock.SetupCreateToReturnIdentityResult(userManagerMock, IdentityResult.Success);
-        UserManagerMock.SetupAddToRoleToReturnIdentityResult(userManagerMock, IdentityResult.Success);
+        UserManagerMock.SetupAddToRolesToReturnIdentityResult(userManagerMock, IdentityResult.Success);
 
         userManagerMock
             .Setup(um => um.GenerateEmailConfirmationTokenAsync(It.IsAny<ApplicationUser>()))
             .ReturnsAsync(token);
 
         emailServiceMock
-            .Setup(es => es.GenerateEmailConfirmationLink(It.IsAny<string>(), token))
+            .Setup(es => es.GenerateEmailConfirmationLink(It.IsAny<string>(), token, CancellationToken.None))
             .Returns(confirmationLink);
 
         var authService = CreateAuthService(signInManagerMock, credentialServiceMock, emailServiceMock);
@@ -201,7 +324,7 @@ public class AuthServiceTest
         var expectedExceptionMessage = "Invalid user ID or token";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
+        Func<Task> result = async () => await authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
@@ -220,13 +343,13 @@ public class AuthServiceTest
         string userId = "user_id";
         string token = "token";
 
-        UserManagerMock.SetupToFindUserById(userManagerMock, user: null);
+        UserManagerMock.SetupToFindUserById(userManagerMock, result: null);
 
         var authService = CreateAuthService(signInManagerMock);
         var expectedExceptionMessage = "No user with ID: user_id found";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
+        Func<Task> result = async () => await authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
@@ -246,17 +369,14 @@ public class AuthServiceTest
         string token = "token";
         var user = CreateAplicationUser();
 
-        UserManagerMock.SetupToFindUserById(userManagerMock, user: user);
-
-        userManagerMock
-            .Setup(um => um.IsEmailConfirmedAsync(user))
-            .ReturnsAsync(true);
+        UserManagerMock.SetupToFindUserById(userManagerMock, result: user);
+        UserManagerMock.SetupIsEmailConfirmedToReturnResult(userManagerMock, result: true);
 
         var authService = CreateAuthService(signInManagerMock);
         var expectedExceptionMessage = "Email for jkowalski95@company.com is already confirmed";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
+        Func<Task> result = async () => await authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
@@ -276,27 +396,46 @@ public class AuthServiceTest
         string token = "token";
         var user = CreateAplicationUser();
 
-        UserManagerMock.SetupToFindUserById(userManagerMock, user: user);
-
-        userManagerMock
-            .Setup(um => um.IsEmailConfirmedAsync(user))
-            .ReturnsAsync(false);
-
-        userManagerMock
-            .Setup(um => um.ConfirmEmailAsync(user, token))
-            .ReturnsAsync(IdentityResult.Failed());
+        UserManagerMock.SetupToFindUserById(userManagerMock, result: user);
+        UserManagerMock.SetupIsEmailConfirmedToReturnResult(userManagerMock, result: false);
+        UserManagerMock.SetupConfirmEmailAsyncToReturnIdentityResult(userManagerMock, IdentityResult.Failed());
 
         var authService = CreateAuthService(signInManagerMock);
         var expectedExceptionMessage = "Failed to confirm email for jkowalski95@company.com";
 
         // Act
-        Func<Task> result = () => authService.ConfirmEmailAsync(userId, token);
+        Func<Task> result = async () => await authService.ConfirmEmailAsync(userId, token);
 
         // Assert
         await result
             .Should()
             .ThrowAsync<BadRequestException>()
             .WithMessage(expectedExceptionMessage);
+    }
+
+    [Fact]
+    public async Task ConfirmEmail_ForGivenUserIdAndToken_ConfirmsUserEmailSuccessfully()
+    {
+        // Arrange
+        var userManagerMock = UserManagerMock.Create();
+        var signInManagerMock = SignInManagerMock.Create(userManagerMock.Object);
+
+        string userId = "user_id";
+        string token = "token";
+        var user = CreateAplicationUser();
+
+        UserManagerMock.SetupToFindUserById(userManagerMock, result: user);
+        UserManagerMock.SetupIsEmailConfirmedToReturnResult(userManagerMock, result: false);
+        UserManagerMock.SetupConfirmEmailAsyncToReturnIdentityResult(userManagerMock, IdentityResult.Success);
+
+        var authService = CreateAuthService(signInManagerMock);
+
+        // Act
+        await authService.ConfirmEmailAsync(userId, token);
+
+        // Assert
+        userManagerMock
+            .Verify(um => um.ConfirmEmailAsync(user, token), Times.Once);
     }
 
     [Fact]
@@ -309,14 +448,14 @@ public class AuthServiceTest
         var signInManagerMock = SignInManagerMock.Create();
         var userServiceMock = CreateUserServiceMock();
 
-        SetupUserServiceMockToReturnUser(userServiceMock, null);
+        SetupUserServiceMockToReturnUser(userServiceMock, result: null);
 
         var authService = CreateAuthService(signInManagerMock, userServiceMock: userServiceMock);
 
         var expectedExceptionMessage = "No user found in current context";
 
         // Act
-        Func<Task> result = () => authService.ChangePasswordAsync(passwordRequest);
+        Func<Task> result = async () => await authService.ChangePasswordAsync(passwordRequest);
 
         // Assert
         await result
@@ -336,15 +475,15 @@ public class AuthServiceTest
         var newPassword = "P@ssword2";
         var passwordRequest = CreatePasswordRequest("P@ssword1", newPassword);
 
-        SetupUserServiceMockToReturnUser(userServiceMock, new ClaimsPrincipal());
-        UserManagerMock.SetupGetUserToFindByApplicationUser(userManagerMock, null);
+        SetupUserServiceMockToReturnUser(userServiceMock, result: new ClaimsPrincipal());
+        UserManagerMock.SetupGetUserToFindByApplicationUser(userManagerMock, result: null);
 
         var authService = CreateAuthService(signInManagerMock, userServiceMock: userServiceMock);
 
         var expectedExceptionMessage = "No user found";
 
         // Act
-        Func<Task> result = () => authService.ChangePasswordAsync(passwordRequest);
+        Func<Task> result = async () => await authService.ChangePasswordAsync(passwordRequest);
 
         // Assert
         await result
@@ -354,7 +493,7 @@ public class AuthServiceTest
     }
 
     [Fact]
-    public async Task ChangePassword_BadRequestException_WhenChangingPasswordFailed()
+    public async Task ChangePassword_ThrowsBadRequestException_WhenChangingPasswordFailed()
     {
         // Arrange
         var userManagerMock = UserManagerMock.Create();
@@ -366,8 +505,8 @@ public class AuthServiceTest
         var passwordRequest = CreatePasswordRequest(currentPassword, newPassword);
         var user = CreateAplicationUser();
 
-        SetupUserServiceMockToReturnUser(userServiceMock, new ClaimsPrincipal());
-        UserManagerMock.SetupGetUserToFindByApplicationUser(userManagerMock, user);
+        SetupUserServiceMockToReturnUser(userServiceMock, result: new ClaimsPrincipal());
+        UserManagerMock.SetupGetUserToFindByApplicationUser(userManagerMock, result: user);
 
         userManagerMock
             .Setup(um => um.ChangePasswordAsync(It.IsAny<ApplicationUser>(), currentPassword, newPassword))
@@ -389,33 +528,42 @@ public class AuthServiceTest
 
     #region Test_Factory_Methods
 
+    private static FakeApplicationIdentityDbContext CreateFakeApplicationIdentityDbContext() => new();
+    private static Mock<IDbContextTransaction> CreateDbContextTransactionMock() => new();
     private static Mock<ICredentialService> CreateCredentialServiceMock() => new();
     private static Mock<IJwtService> CreateJwtServiceMock() => new();
     private static Mock<IEmailService> CreateEmailServiceMock() => new();
     private static Mock<IUserService> CreateUserServiceMock() => new();
+    private static Mock<IServiceProvider> CreateServiceProviderMock() => new();
 
     private static void SetupCredentialServiceMockToReturnLogin(Mock<ICredentialService> credentialServiceMock,
-                                                                string login)
+                                                                string result)
         => credentialServiceMock
             .Setup(cs => cs.GenerateUserLogin(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-            .Returns(login);
+            .Returns(result);
 
     private static void SetupCredentialServiceMockToReturnPassword(Mock<ICredentialService> credentialServiceMock,
-                                                                   string password)
+                                                                   string result)
         => credentialServiceMock
             .Setup(cs => cs.GenerateUserPassword())
-            .Returns(password);
+            .Returns(result);
 
     private static void SetupUserServiceMockToReturnUser(Mock<IUserService> userServiceMock,
-                                                         ClaimsPrincipal? user)
+                                                         ClaimsPrincipal? result)
         => userServiceMock
             .Setup(us => us.User)
-            .Returns(() => user);
+            .Returns(() => result);
 
     private static AuthRequest CreateAuthRequest() => new("jkowals95", "P@ssword1");
 
-    private static RegistrationRequest CreateRegistrationRequest()
-       => new("Jan", "Kowalski", "jkowalski95@company.com", new(1995, 4, 12), "12345678911", "566889111", ["Employee"]);
+    private static RegistrationRequest CreateRegistrationRequest(string firstName = "Jan",
+                                                                 string lastName = "Kowalski",
+                                                                 string email = "jkowalski95@company.com",
+                                                                 DateTime dateOfBirth = new(),
+                                                                 string? peselNumber = "12345678911",
+                                                                 string phoneNumber = "566889111",
+                                                                 List<string>? roles = null)
+       => new(firstName, lastName, email, dateOfBirth, peselNumber, phoneNumber, roles);
 
     private static PasswordRequest CreatePasswordRequest(string currentPassword, string newPassword)
         => new(currentPassword, newPassword);
@@ -424,9 +572,9 @@ public class AuthServiceTest
                                                  Mock<ICredentialService>? credentialServiceMock = null,
                                                  Mock<IEmailService>? emailServiceMock = null,
                                                  Mock<IJwtService>? jwtServiceMock = null,
-                                                 Mock<IUserService>? userServiceMock = null)
+                                                 Mock<IUserService>? userServiceMock = null,
+                                                 Mock<IServiceProvider>? serviceProviderMock = null)
     {
-        var serviceProviderMock = new Mock<IServiceProvider>();
         var identityResultMock = new Mock<IIdentityResult>();
         var loggerMock = new Mock<IAppLogger<AuthService>>();
 
@@ -434,6 +582,19 @@ public class AuthServiceTest
         emailServiceMock ??= CreateEmailServiceMock();
         jwtServiceMock ??= CreateJwtServiceMock();
         userServiceMock ??= CreateUserServiceMock();
+
+        if (serviceProviderMock is null)
+        {
+            var fakeDbContext = CreateFakeApplicationIdentityDbContext();
+            var transactionMock = CreateDbContextTransactionMock();
+            serviceProviderMock = CreateServiceProviderMock();
+
+            fakeDbContext.SetupSetupToReturnDbContextTransaction(transactionMock.Object);
+
+            serviceProviderMock
+                .Setup(sp => sp.GetService(typeof(ApplicationIdentityDbContext)))
+                .Returns(fakeDbContext);
+        }
 
         return new(
             signInManagerMock.Object,
