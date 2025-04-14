@@ -28,7 +28,15 @@ public class EmployeeEducation
                                            string educationDetails,
                                            DateOnly enrolledAt,
                                            DateOnly? graduatedAt)
-        => new()
+    {
+        if (employee is null)
+        {
+            throw new ArgumentException("Employee must be included");
+        }
+
+        ValidateBaseRules(educationType, educationDetails, enrolledAt, graduatedAt);
+
+        return new()
         {
             Employee = employee,
             EducationType = educationType,
@@ -38,85 +46,107 @@ public class EmployeeEducation
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
+    }
 
     public static EmployeeEducation Create(Employee employee,
                                            EducationType educationType,
                                            string educationDetails,
                                            DateTime enrolledAt,
                                            DateTime? graduatedAt)
-        => new()
+    {
+        if (employee is null)
+        {
+            throw new ArgumentException("Employee must be included");
+        }
+
+        ValidateBaseRules(educationType, educationDetails, enrolledAt, graduatedAt);
+
+        return new()
         {
             Employee = employee,
             EducationType = educationType,
             EducationDetails = educationDetails,
             EnrolledAt = DateOnly.FromDateTime(enrolledAt),
-            GraduatedAt = graduatedAt.HasValue 
-                ? DateOnly.FromDateTime(graduatedAt.Value) 
+            GraduatedAt = graduatedAt.HasValue
+                ? DateOnly.FromDateTime(graduatedAt.Value)
                 : null,
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
+    }
 
-    public static EmployeeEducation Create(Guid employeeId,
-                                           EducationType educationType,
-                                           string educationDetails,
-                                           DateOnly enrolledAt,
-                                           DateOnly? graduatedAt)
-        => new()
-        {
-            EmployeeId = employeeId,
-            EducationType = educationType,
-            EducationDetails = educationDetails,
-            EnrolledAt = enrolledAt,
-            GraduatedAt = graduatedAt,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
-
-    public static EmployeeEducation Create(Guid employeeId,
-                                           EducationType educationType,
-                                           string educationDetails,
-                                           DateTime enrolledAt,
-                                           DateTime? graduatedAt)
-        => new()
-        {
-            EmployeeId = employeeId,
-            EducationType = educationType,
-            EducationDetails = educationDetails,
-            EnrolledAt = DateOnly.FromDateTime(enrolledAt),
-            GraduatedAt = graduatedAt.HasValue 
-                ? DateOnly.FromDateTime(graduatedAt.Value) 
-                : null,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
-
-    public static void Update(EmployeeEducation entity,
+    public static void Update(EmployeeEducation employeeEducation,
                               EducationType educationType,
                               string educationDetails,
                               DateOnly enrolledAt,
                               DateOnly? graduatedAt)
     {
-        entity.EducationType = educationType;
-        entity.EducationDetails = educationDetails;
-        entity.EnrolledAt = enrolledAt;
-        entity.GraduatedAt = graduatedAt;
-        entity.ModifiedAt = DateTime.UtcNow;
+        if (employeeEducation is null)
+        {
+            throw new ArgumentException("Employee must be included");
+        }
+
+        ValidateBaseRules(educationType, educationDetails, enrolledAt, graduatedAt);
+
+        employeeEducation.EducationType = educationType;
+        employeeEducation.EducationDetails = educationDetails;
+        employeeEducation.EnrolledAt = enrolledAt;
+        employeeEducation.GraduatedAt = graduatedAt;
+        employeeEducation.ModifiedAt = DateTime.UtcNow;
     }
 
-    public static void Update(EmployeeEducation entity,
+    public static void Update(EmployeeEducation employeeEducation,
                               EducationType educationType,
                               string educationDetails,
                               DateTime enrolledAt,
                               DateTime? graduatedAt)
     {
-        entity.EducationType = educationType;
-        entity.EducationDetails = educationDetails;
-        entity.EnrolledAt = DateOnly.FromDateTime(enrolledAt);
-        entity.GraduatedAt = graduatedAt.HasValue
+        if (employeeEducation is null)
+        {
+            throw new ArgumentException("Employee must be included");
+        }
+
+        ValidateBaseRules(educationType, educationDetails, enrolledAt, graduatedAt);
+
+        employeeEducation.EducationType = educationType;
+        employeeEducation.EducationDetails = educationDetails;
+        employeeEducation.EnrolledAt = DateOnly.FromDateTime(enrolledAt);
+        employeeEducation.GraduatedAt = graduatedAt.HasValue
             ? DateOnly.FromDateTime(graduatedAt.Value)
             : null;
-        entity.ModifiedAt = DateTime.UtcNow;
+        employeeEducation.ModifiedAt = DateTime.UtcNow;
+    }
+
+    private static void ValidateBaseRules(EducationType educationType,
+                                          string educationDetails,
+                                          DateOnly enrolledAt,
+                                          DateOnly? graduatedAt)
+    {
+        if (string.IsNullOrEmpty(educationDetails))
+        {
+            throw new ArgumentException("Education details for employee cannot be empty");
+        }
+
+        if (graduatedAt.HasValue && graduatedAt < enrolledAt)
+        {
+            throw new InvalidOperationException("Education graduation date must be greater than enroll date");
+        }
+    }
+
+    private static void ValidateBaseRules(EducationType educationType,
+                                          string educationDetails,
+                                          DateTime enrolledAt,
+                                          DateTime? graduatedAt)
+    {
+        if (string.IsNullOrEmpty(educationDetails))
+        {
+            throw new ArgumentException("Education details for employee cannot be empty");
+        }
+
+        if (graduatedAt.HasValue && graduatedAt < enrolledAt)
+        {
+            throw new InvalidOperationException("Education graduation date must be greater than enroll date");
+        }
     }
 
     #endregion

@@ -31,7 +31,15 @@ public class EmployeeExperience
                                             string position,
                                             DateOnly employedFrom,
                                             DateOnly employedTo)
-        => new()
+    {
+        if (employee is null)
+        {
+            throw new ArgumentException("Employee must be included");
+        }
+
+        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
+
+        return new()
         {
             Employee = employee,
             ContractType = contractType,
@@ -43,6 +51,7 @@ public class EmployeeExperience
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
+    }
 
     public static EmployeeExperience Create(Employee employee,
                                             ContractType contractType,
@@ -50,47 +59,17 @@ public class EmployeeExperience
                                             string position,
                                             DateTime employedFrom,
                                             DateTime employedTo)
-        => new()
+    {
+        if (employee is null)
+        {
+            throw new ArgumentException("Employee must be included");
+        }
+
+        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
+
+        return new()
         {
             Employee = employee,
-            ContractType = contractType,
-            PreviousCompanyName = previousCompanyName,
-            Position = position,
-            EmployedFrom = DateOnly.FromDateTime(employedFrom),
-            EmployedTo = DateOnly.FromDateTime(employedTo),
-            TotalEmployment =  (employedTo - employedFrom).Days,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
-
-    public static EmployeeExperience Create(Guid employeeId,
-                                            ContractType contractType,
-                                            string previousCompanyName,
-                                            string position,
-                                            DateOnly employedFrom,
-                                            DateOnly employedTo)
-        => new()
-        {
-            EmployeeId = employeeId,
-            ContractType = contractType,
-            PreviousCompanyName = previousCompanyName,
-            Position = position,
-            EmployedFrom = employedFrom,
-            EmployedTo = employedTo,
-            TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
-
-    public static EmployeeExperience Create(Guid employeeId,
-                                            ContractType contractType,
-                                            string previousCompanyName,
-                                            string position,
-                                            DateTime employedFrom,
-                                            DateTime employedTo)
-        => new()
-        {
-            EmployeeId = employeeId,
             ContractType = contractType,
             PreviousCompanyName = previousCompanyName,
             Position = position,
@@ -100,37 +79,96 @@ public class EmployeeExperience
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
+    }
 
-    public static void Update(EmployeeExperience entity,
+    public static void Update(EmployeeExperience employeeExperience,
                               ContractType contractType,
                               string previousCompanyName,
                               string position,
                               DateOnly employedFrom,
                               DateOnly employedTo)
     {
-        entity.ContractType = contractType;
-        entity.PreviousCompanyName = previousCompanyName;
-        entity.Position = position;
-        entity.EmployedFrom = employedFrom;
-        entity.EmployedTo = employedTo;
-        entity.TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber;
-        entity.ModifiedAt = DateTime.UtcNow;
+        if (employeeExperience is null)
+        {
+            throw new ArgumentException("Employee experience must be included");
+        }
+
+        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
+
+        employeeExperience.ContractType = contractType;
+        employeeExperience.PreviousCompanyName = previousCompanyName;
+        employeeExperience.Position = position;
+        employeeExperience.EmployedFrom = employedFrom;
+        employeeExperience.EmployedTo = employedTo;
+        employeeExperience.TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber;
+        employeeExperience.ModifiedAt = DateTime.UtcNow;
     }
 
-    public static void Update(EmployeeExperience entity,
+    public static void Update(EmployeeExperience employeeExperience,
                               ContractType contractType,
                               string previousCompanyName,
                               string position,
                               DateTime employedFrom,
                               DateTime employedTo)
     {
-        entity.ContractType = contractType;
-        entity.PreviousCompanyName = previousCompanyName;
-        entity.Position = position;
-        entity.EmployedFrom = DateOnly.FromDateTime(employedFrom);
-        entity.EmployedTo = DateOnly.FromDateTime(employedTo);
-        entity.TotalEmployment = (employedTo - employedFrom).Days;
-        entity.ModifiedAt = DateTime.UtcNow;
+        if (employeeExperience is null)
+        {
+            throw new ArgumentException("Employee experience must be included");
+        }
+
+        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
+
+        employeeExperience.ContractType = contractType;
+        employeeExperience.PreviousCompanyName = previousCompanyName;
+        employeeExperience.Position = position;
+        employeeExperience.EmployedFrom = DateOnly.FromDateTime(employedFrom);
+        employeeExperience.EmployedTo = DateOnly.FromDateTime(employedTo);
+        employeeExperience.TotalEmployment = (employedTo - employedFrom).Days;
+        employeeExperience.ModifiedAt = DateTime.UtcNow;
+    }
+
+    private static void ValidateBaseRules(ContractType contractType,
+                                          string previousCompanyName,
+                                          string position,
+                                          DateOnly employedFrom,
+                                          DateOnly employedTo)
+    {
+        if (string.IsNullOrEmpty(previousCompanyName))
+        {
+            throw new ArgumentException("Previous company's name of employee cannot be empty");
+        }
+
+        if (string.IsNullOrEmpty(position))
+        {
+            throw new ArgumentException("Position at previous company of employee cannot be empty");
+        }
+
+        if (employedTo < employedFrom)
+        {
+            throw new InvalidOperationException("Employment end date at previous company must be greater than start date");
+        }
+    }
+
+    private static void ValidateBaseRules(ContractType contractType,
+                                          string previousCompanyName,
+                                          string position,
+                                          DateTime employedFrom,
+                                          DateTime employedTo)
+    {
+        if (string.IsNullOrEmpty(previousCompanyName))
+        {
+            throw new ArgumentException("Previous company's name of employee cannot be empty");
+        }
+
+        if (string.IsNullOrEmpty(position))
+        {
+            throw new ArgumentException("Position at previous company of employee cannot be empty");
+        }
+
+        if (employedTo < employedFrom)
+        {
+            throw new InvalidOperationException("Employment end date at previous company must be greater than start date");
+        }
     }
 
     #endregion

@@ -2,6 +2,24 @@
 
 public class DepartmentTest
 {
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Create_ThrowsArgumentException_WhenNameIsNullOrEmpty(string? name)
+    {
+        // Arrange
+        var expectedExceptionMessage = "Name of department cannot be empty";
+
+        // Act
+        Action result = () => CreateWithDefaultValues(name: name);
+
+        // Assert
+        result
+            .Should()
+            .Throw<ArgumentException>()
+            .WithMessage(expectedExceptionMessage);
+    }
+
     [Fact]
     public void Create_ForGivenParams_ReturnsNewInstance()
     {
@@ -37,5 +55,8 @@ public class DepartmentTest
             );
     }
 
-    private static Department CreateWithDefaultValues() => Department.Create("R&D", Guid.NewGuid());
+    private static Department CreateWithDefaultValues(string name = "R&D",
+                                                      Guid? leaderId = default,
+                                                      string? description = "R&D department") 
+        => Department.Create(name, leaderId, description);
 }

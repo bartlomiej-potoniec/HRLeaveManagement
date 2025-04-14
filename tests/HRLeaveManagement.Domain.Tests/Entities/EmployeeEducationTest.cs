@@ -1,14 +1,67 @@
 ﻿using HRLeaveManagement.Domain.Enums;
+using HRLeaveManagement.Domain.Tests.Helpers;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
 
 public class EmployeeEducationTest
 {
     [Fact]
-    public void Create_ForGivenParams_ReturnsNewInstance()
+    public void Create_ThrowsArgumentException_WhenEmployeeIsNull()
+    {
+        // Arrange
+        Employee employee = null;
+        var expectedExceptionMessage = "Employee must be included";
+
+        // Act
+        Action result = () => EmployeeEducation.Create(employee, EducationType.Basic, "Details", new DateOnly(), new DateOnly());
+
+        // Assert
+        result
+            .Should()
+            .Throw<ArgumentException>()
+            .WithMessage(expectedExceptionMessage);
+    }
+
+    [Theory]
+    [MemberData(nameof(GetInvalidDataForEducationDetails))]
+    public void Create_ThrowsArgumentException_WhenEducationDetailsIsNullOrEmpty(string educationDetails)
+    {
+        // Arrange
+        var expectedExceptionMessage = "Education details for employee cannot be empty";
+
+        // Act
+        Action result = () => CreateWithEducationDates(educationDetails: educationDetails);
+
+        // Assert
+        result
+            .Should()
+            .Throw<ArgumentException>()
+            .WithMessage(expectedExceptionMessage);
+    }
+
+    [Fact]
+    public void Create_ThrowsInvalidOperationException_WhenGraduatedAtIsLessThanEnrolledAt()
+    {
+        // Arrange
+        DateOnly enrolledAt = new(2025, 6, 6);
+        DateOnly invalidGraduatedAt = new(2025, 1, 1);
+        var expectedExceptionMessage = "Education graduation date must be greater than enroll date";
+
+        // Act
+        Action result = () => CreateWithEducationDates(enrolledAt: enrolledAt, graduatedAt: invalidGraduatedAt);
+
+        // Assert
+        result
+            .Should()
+            .Throw<InvalidOperationException>()
+            .WithMessage(expectedExceptionMessage);
+    }
+
+    [Fact]
+    public void Create_ForGivenParams_ReturnsNewInstanceOfEmployeeEducation()
     {
         // Act
-        var employeeEducation = CreateWithDefaultValues();
+        EmployeeEducation employeeEducation = CreateWithEducationDates();
 
         // Assert
         employeeEducation
@@ -17,100 +70,65 @@ public class EmployeeEducationTest
     }
 
     [Fact]
-    public void Update_ForGivenParams_UpdatesPropertiesOfExistingInstance()
+    public void Create_ForGivenDateTimeParams_SetsApropriateGraduatedAtProperty()
     {
         // Arrange
-        Guid emloyeeId = Guid.NewGuid();
-        EducationType educationType = EducationType.Higher;
-        string educationDetails = "Details";
-        DateOnly enrolledAt = new();
-        DateOnly graduatedAt = new();
-
-        var employeeEducation = CreateWithDefaultValues();
-        var expectedEmployeeEducation = EmployeeEducation.Create(
-            emloyeeId,
-            educationType,
-            educationDetails,
-            enrolledAt,
-            graduatedAt
-        );
+        DateTime graduatedAt = new(2025, 12, 12);
+        DateOnly expectedGraduatedAt = new(2025, 12, 12);
 
         // Act
-        EmployeeEducation.Update(
-            employeeEducation,
-            educationType,
-            educationDetails,
-            enrolledAt,
-            graduatedAt
-        );
+        EmployeeEducation employeeEducation = CreateWithEducationDateTimes(graduatedAt: graduatedAt);
 
         // Assert
         employeeEducation
+            .GraduatedAt
             .Should()
-            .BeEquivalentTo(expectedEmployeeEducation, options => options
-                .Including(ee => ee.EducationType)
-                .Including(ee => ee.EducationDetails)
-                .Including(ee => ee.EnrolledAt)
-                .Including(ee => ee.GraduatedAt)
-            );
+            .Be(expectedGraduatedAt);
     }
 
     [Fact]
-    public void Update_ForGivenDateTimeParams_UpdatesPropertiesOfExistingInstance()
+    public void Update_ForGivenParams_UpdatesEmployeeEducationProperties()
     {
         // Arrange
-        Guid emloyeeId = Guid.NewGuid();
         EducationType educationType = EducationType.Higher;
-        string educationDetails = "Details";
-        DateTime enrolledAt = new();
-        DateTime? graduatedAt = new();
+        string educationDetails = "Education details";
+        DateOnly enrolledAt = new(2020, 1, 1);
+        DateOnly? graduatedAt = new(2025, 1, 1);
 
-        var employeeEducation = CreateWithDefaultValues();
-        var expectedEmployeeEducation = EmployeeEducation.Create(
-            emloyeeId,
-            educationType,
-            educationDetails,
-            enrolledAt,
-            graduatedAt
-        );
+        var employeeEducation = CreateWithEducationDates();
+        var expectedEmployeeEducation = CreateWithEducationDates(educationType, educationDetails, enrolledAt, graduatedAt);
 
         // Act
-        EmployeeEducation.Update(
-            employeeEducation,
-            educationType,
-            educationDetails,
-            enrolledAt,
-            graduatedAt
-        );
+        EmployeeEducation.Update(employeeEducation, educationType, educationDetails, enrolledAt, graduatedAt);
 
         // Assert
         employeeEducation
             .Should()
             .BeEquivalentTo(expectedEmployeeEducation, options => options
-                .Including(ee => ee.EducationType)
-                .Including(ee => ee.EducationDetails)
-                .Including(ee => ee.EnrolledAt)
-                .Including(ee => ee.GraduatedAt)
+                .Including(lt => lt.EducationType)
+                .Including(lt => lt.EducationDetails)
+                .Including(lt => lt.EnrolledAt)
+                .Including(lt => lt.GraduatedAt)
             );
     }
 
-    private static EmployeeEducation CreateWithDefaultValues()
-        =>
-            EmployeeEducation.Create(
-                employeeId: Guid.NewGuid(),
-                educationType: EducationType.Secondary,
-                educationDetails: string.Empty,
-                enrolledAt: new DateOnly(),
-                graduatedAt: new DateOnly()
-            );
+    public static IEnumerable<object[]?> GetInvalidDataForEducationDetails() => [[null], [""]];
 
-    private static EmployeeEducation CreateWithDateTimeValues()
+    #region Test_Factory_Methods
+
+    private static EmployeeEducation CreateWithEducationDates(EducationType educationType = EducationType.Basic,
+                                                              string educationDetails = "Details",
+                                                              DateOnly enrolledAt = new(),
+                                                              DateOnly? graduatedAt = null)
         =>
-            EmployeeEducation.Create(
-                employeeId: Guid.NewGuid(),
-                educationType: EducationType.Secondary,
-                educationDetails: string.Empty,
-                enrolledAt: new DateTime(),
-                graduatedAt: new DateTime()
-            );
+            EmployeeEducation.Create(EmployeeHelper.CreateEmployee(), educationType, educationDetails, enrolledAt, graduatedAt);
+
+    private static EmployeeEducation CreateWithEducationDateTimes(EducationType educationType = EducationType.Basic,
+                                                                  string educationDetails = "Details",
+                                                                  DateTime enrolledAt = new(),
+                                                                  DateTime? graduatedAt = null)
+        =>
+            EmployeeEducation.Create(EmployeeHelper.CreateEmployee(), educationType, educationDetails, enrolledAt, graduatedAt);
+
+    #endregion
 }

@@ -29,8 +29,12 @@ public sealed class CreateEmployeeContractCommandHandler(IEmployeeRepository emp
             throw new BadRequestException("Invalid employee contract creation request", validationResult);
         }
 
+        var employee = await _employeeRepository
+            .GetByIdAsync(request.EmployeeId, cancellationToken)
+            ?? throw new NotFoundException($"No employee with ID: { request.EmployeeId } found");
+
         var employeeContract = EmployeeContract.Create(
-            request.EmployeeId,
+            employee,
             request.ContractType,
             request.EmployeedFrom,
             request.EmployeedTo

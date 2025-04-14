@@ -207,7 +207,7 @@ public sealed class EmployeesController(ISender sender) : ControllerBase
 
     [HttpPatch("{employeeId}/experiences/{experienceId}")]
     public async Task<ActionResult> UpdateExperience([FromRoute] Guid employeeId,
-                                                     [FromRoute] Guid experienceId,
+                                                     [FromRoute] int experienceId,
                                                      [FromBody] UpdateEmployeeExperienceCommand command)
     {
         await _sender.Send(command with { EmployeeId = employeeId, ExperienceId = experienceId });
