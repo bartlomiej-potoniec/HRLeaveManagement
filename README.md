@@ -33,7 +33,11 @@ The following list describes the features developed for the current branch/versi
 **Database:** SQL Server
 ## Database
 
+The following image describes the diagram for Domain
+
 ![The following image describes the diagram for Domain](domain-tables-diagram.png)
+
+The following image describes the diagram for Identity
 
 ![The following image describes the diagram for Identity](identity-tables-diagram.png)
 
