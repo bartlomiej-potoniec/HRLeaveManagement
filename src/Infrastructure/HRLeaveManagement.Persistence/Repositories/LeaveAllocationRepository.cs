@@ -1,7 +1,7 @@
 ﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
@@ -26,12 +26,12 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext dbContext) : 
             .Include(la => la.LeaveType)
             .FirstOrDefaultAsync(la => la.Id == id, cancellationToken);
 
-    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(string userId,
+    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(Guid employeeId,
                                                                          int leaveTypeId,
                                                                          CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
             .FirstOrDefaultAsync(
-                la => la.EmployeeId == Guid.Parse(userId) && la.LeaveTypeId == leaveTypeId,
+                la => la.EmployeeId == employeeId && la.LeaveTypeId == leaveTypeId,
                 cancellationToken
             );
 

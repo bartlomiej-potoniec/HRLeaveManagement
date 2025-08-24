@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 using HRLeaveManagement.Application.DTOs.Email;
-using HRLeaveManagement.Infrastructure.Email.Settings;
+using HRLeaveManagement.Infrastructure.Email.Options;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;

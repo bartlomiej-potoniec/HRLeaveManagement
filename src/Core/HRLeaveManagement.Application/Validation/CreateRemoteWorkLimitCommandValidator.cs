@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.Features.RemoteWorkLimit.Commands;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using FluentValidation;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Validation;
 

@@ -1,27 +1,32 @@
-﻿using DomainEmployee =  HRLeaveManagement.Domain.Entities.Employee;
-using HRLeaveManagement.Domain.Entities;
+﻿using DomainEmployee = HRLeaveManagement.Domain.Entities.Employee;
+using DomainSection = HRLeaveManagement.Domain.Entities.Section;
 using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Application.Contracts.Application;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.Employee.Commands;
 using HRLeaveManagement.Application.Validation;
-using System.Transactions;
+using HRLeaveManagement.Application.Contracts.Persistence;
 using MediatR;
 
 namespace HRLeaveManagement.Application.Features.Employee.CommandHandlers;
 
 public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository employeeRepository,
                                                             ISectionRepository sectionRepository,
+                                                            IEmployeeSubservice employeeSubservice,
                                                             IUserService userService,
                                                             IEmailService emailService,
+                                                            IUnitOfWork unitOfWork,
                                                             IAppLogger<CreateEmployeeWithDetailsCommandHandler> logger)
     : IRequestHandler<CreateEmployeeWithDetailsCommand, Guid>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly ISectionRepository _sectionRepository = sectionRepository;
+    private readonly IEmployeeSubservice _employeeSubservice = employeeSubservice;
     private readonly IUserService _userService = userService;
     private readonly IEmailService _emailService = emailService;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAppLogger<CreateEmployeeWithDetailsCommandHandler> _logger = logger;
 
     public async Task<Guid> Handle(CreateEmployeeWithDetailsCommand request, CancellationToken cancellationToken)
@@ -35,77 +40,47 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
             throw new BadRequestException("Invalid employee creation request", validationResult);
         }
 
-        var user = await _userService.GetUserByIdAsync(request.UserId, cancellationToken);
+        var user = await _userService
+            .GetUserByIdAsync(request.UserId, cancellationToken)
+            ?? throw new NotFoundException($"No user with ID: { request.UserId } found");
+
+        DomainEmployee? leader = default;
+        DomainSection? section = default;
+        
+        if (request.LeaderId is not null)
+        {
+            leader = await _employeeRepository
+                .GetByIdAsync(request.LeaderId.Value, cancellationToken)
+                ?? throw new NotFoundException($"No employee with ID: { request.LeaderId } found");            
+        }
+
+        if (request.SectionId is not null)
+        {
+            section = await _sectionRepository
+                .GetByIdAsync(request.SectionId.Value, cancellationToken)
+                ?? throw new NotFoundException($"No section with ID: { request.SectionId } found");
+        }
 
         var employee = DomainEmployee.Create(
             request.Position,
             request.Responsibilities,
-            request.SectionId,
-            request.LeaderId
+            request.ResidentialAddress,
+            request.RegisteredAddress,
+            request.SecondaryResidentialAddress,
+            request.RemoteWorkAddress,
+            section,
+            leader
         );
+        
+        await _employeeSubservice.CreateEmployeeContract(employee, request.EmployeeContract, cancellationToken);
+        await _employeeSubservice.CreateEmployeeEducations(employee, request.EmployeeEducations, cancellationToken);
+        await _employeeSubservice.CreateEmployeeExperiences(employee, request.EmployeeExperiences, cancellationToken);
 
-        var employeeContract = EmployeeContract.Create(
-            employee,
-            request.EmployeeContract.ContractType,
-            request.EmployeeContract.EmployeedFrom,
-            request.EmployeeContract.EmployeedTo
-        );
+        _logger.LogInformation("Creating new employee for user ID: {UserId}", request.UserId);
+        await _employeeRepository.AddAsync(employee, cancellationToken);
+        _logger.LogInformation("Creating new employee successful for user ID: {UserId}", request.UserId);
 
-        var employeeEducations = request.EmployeeEducations
-            .Select(ee => EmployeeEducation.Create(
-                employee,
-                ee.EducationType,
-                ee.EducationDetails,
-                ee.EnrolledAt,
-                ee.GraduatedAt
-            ))
-            .ToList();
-
-        var employeeExperiences = request.EmployeeExperiences
-            .Select(ee => EmployeeExperience.Create(
-                employee,
-                ee.ContractType,
-                ee.PreviousCompanyName,
-                ee.Position,
-                ee.EmployedFrom,
-                ee.EmployedTo
-            ))
-            .ToList();
-
-        _logger.LogInformation("Starting transaction for creating new employee for user ID: {UserId}", request.UserId);
-        using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
-        try
-        {
-            _logger.LogInformation("Creating new employee for user ID: {UserId}", request.UserId);
-
-            await _employeeRepository.CreateWithDetailsAsync(
-                employee,
-                employeeContract,
-                employeeEducations,
-                employeeExperiences,
-                cancellationToken
-            );
-
-            _logger.LogInformation("Creating new employee successful for user ID: {UserId}", request.UserId);
-            _logger.LogInformation("Updating new employee with ID: {EmployeeId} with user ID: {UserId}", employee.Id, request.UserId);
-
-            await _userService.UpdateUserEmployeeIdAsync(request.UserId, employee.Id, cancellationToken);
-
-            _logger.LogInformation("Updating new employee with ID: {EmployeeId} with user ID: {UserId} successful", employee.Id, request.UserId);
-
-            await _emailService.SendEmployeeCreationEmailAsync(user.Email, user.FirstName, cancellationToken);
-
-            transactionScope.Complete();
-            _logger.LogInformation("Transaction successful for creating new employee for user ID: {UserId}", request.UserId);
-
-            return employee.Id;
-        }
-
-        catch (Exception ex)
-        {
-            _logger.LogError("Transaction failed for creating new employee for user ID: {UserId}", request.UserId);
-            throw;
-        }
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return employee.Id;
     }
 }

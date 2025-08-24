@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.Domain.Enums;
+using HRLeaveManagement.Domain.RuleContracts;
 using HRLeaveManagement.Domain.Tests.Helpers;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
@@ -6,49 +7,23 @@ namespace HRLeaveManagement.Domain.Tests.Entities;
 public class EmployeeEducationTest
 {
     [Fact]
-    public void Create_ThrowsArgumentException_WhenEmployeeIsNull()
+    public void EmployeeAddEducation_ThrowsInvalidOperationException_WhenGraduatedAtIsFewerThanEnrolledAt()
     {
         // Arrange
-        Employee employee = null;
-        var expectedExceptionMessage = "Employee must be included";
+        Employee employee = EmployeeHelper.CreateEmployee();
 
-        // Act
-        Action result = () => EmployeeEducation.Create(employee, EducationType.Basic, "Details", new DateOnly(), new DateOnly());
+        DateOnly enrolledAt = new(2021, 1, 1);
+        DateOnly graduatedAt = new(2020, 1, 1);
 
-        // Assert
-        result
-            .Should()
-            .Throw<ArgumentException>()
-            .WithMessage(expectedExceptionMessage);
-    }
-
-    [Theory]
-    [MemberData(nameof(GetInvalidDataForEducationDetails))]
-    public void Create_ThrowsArgumentException_WhenEducationDetailsIsNullOrEmpty(string educationDetails)
-    {
-        // Arrange
-        var expectedExceptionMessage = "Education details for employee cannot be empty";
-
-        // Act
-        Action result = () => CreateWithEducationDates(educationDetails: educationDetails);
-
-        // Assert
-        result
-            .Should()
-            .Throw<ArgumentException>()
-            .WithMessage(expectedExceptionMessage);
-    }
-
-    [Fact]
-    public void Create_ThrowsInvalidOperationException_WhenGraduatedAtIsLessThanEnrolledAt()
-    {
-        // Arrange
-        DateOnly enrolledAt = new(2025, 6, 6);
-        DateOnly invalidGraduatedAt = new(2025, 1, 1);
         var expectedExceptionMessage = "Education graduation date must be greater than enroll date";
 
         // Act
-        Action result = () => CreateWithEducationDates(enrolledAt: enrolledAt, graduatedAt: invalidGraduatedAt);
+        Action result = () => employee.AddEducation(
+            EducationType.Higher,
+            "High School of Engineering",
+            enrolledAt,
+            graduatedAt
+        );
 
         // Assert
         result
@@ -58,77 +33,89 @@ public class EmployeeEducationTest
     }
 
     [Fact]
-    public void Create_ForGivenParams_ReturnsNewInstanceOfEmployeeEducation()
-    {
-        // Act
-        EmployeeEducation employeeEducation = CreateWithEducationDates();
-
-        // Assert
-        employeeEducation
-            .Should()
-            .BeOfType<EmployeeEducation>();
-    }
-
-    [Fact]
-    public void Create_ForGivenDateTimeParams_SetsApropriateGraduatedAtProperty()
+    public void EmployeeAddEducation_ForGivenEmploymentDateRange_SetsAppropriateTotalDurationValue()
     {
         // Arrange
-        DateTime graduatedAt = new(2025, 12, 12);
-        DateOnly expectedGraduatedAt = new(2025, 12, 12);
+        Employee employee = EmployeeHelper.CreateEmployee();
 
-        // Act
-        EmployeeEducation employeeEducation = CreateWithEducationDateTimes(graduatedAt: graduatedAt);
-
-        // Assert
-        employeeEducation
-            .GraduatedAt
-            .Should()
-            .Be(expectedGraduatedAt);
-    }
-
-    [Fact]
-    public void Update_ForGivenParams_UpdatesEmployeeEducationProperties()
-    {
-        // Arrange
         EducationType educationType = EducationType.Higher;
+        string institutionName = "High School of Engineering";
         string educationDetails = "Education details";
+        
+        DateOnly enrolledAt = new(2020, 1, 1);
+        DateOnly graduatedAt = new(2021, 1, 1);
+        int expectedTotalDuartion = 366;
+
+        // Act
+        employee.AddEducation(educationType, institutionName, enrolledAt, graduatedAt, educationDetails);
+
+        EmployeeEducation employeeEducation = employee.EmployeeEducations.First();
+
+        // Assert
+        employeeEducation.TotalDuration
+            .Should()
+            .Be(expectedTotalDuartion);
+    }
+
+    [Fact]
+    public void Update_ForGivenDates_SetsAppropriateTotalDurationtValue()
+    {
+        // Arrange
+        Employee employee = EmployeeHelper.CreateEmployeeWithEducationList(
+            (new DateOnly(2020, 1, 1), new DateOnly(2025, 1, 1))    
+        );
+
         DateOnly enrolledAt = new(2020, 1, 1);
         DateOnly? graduatedAt = new(2025, 1, 1);
+        int expectedTotalDuration = 1827;
 
-        var employeeEducation = CreateWithEducationDates();
-        var expectedEmployeeEducation = CreateWithEducationDates(educationType, educationDetails, enrolledAt, graduatedAt);
+        var employeeEducation = employee.EmployeeEducations.First();
 
         // Act
-        EmployeeEducation.Update(employeeEducation, educationType, educationDetails, enrolledAt, graduatedAt);
+        employeeEducation.Update(
+            EducationType.Higher,
+            "High School of Engineering",
+            enrolledAt,
+            graduatedAt,
+            "Education details"
+        );
+
+        // Assert
+        employeeEducation.EnrolledAt
+            .Should()
+            .Be(enrolledAt);
+
+        employeeEducation.GraduatedAt
+            .Should()
+            .Be(graduatedAt);
+
+        employeeEducation.TotalDuration
+            .Should()
+            .Be(expectedTotalDuration);
+    }
+
+
+    [Fact]
+    public async Task AddDocument_AddsEmployeeDocumentInstanceToEmployeeDocumentList()
+    {
+        // Arrange
+        Employee employee = EmployeeHelper.CreateEmployeeWithEducationList(
+            (new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1))
+        );
+
+        Mock<IEmployeeDocumentRuleSet> employeeDocumentRuleSetMock = EmployeeDocumentHelper.CreateEmployeeDocumentRuleSetMock();
+        EmployeeDocumentHelper.SetupIsDocumentNumberUniqueAsyncToReturnValue(employeeDocumentRuleSetMock, isRuleFailed: false);
+
+        EmployeeEducation employeeEducation = employee.EmployeeEducations.First();
+        EmployeeDocument employeeDocument = await EmployeeDocumentHelper.CreateEmployeeDocumentAsync(employeeDocumentRuleSetMock.Object);
+
+        // Act
+        employeeEducation.AddDocument(employeeDocument);
 
         // Assert
         employeeEducation
+            .EmployeeDocuments
             .Should()
-            .BeEquivalentTo(expectedEmployeeEducation, options => options
-                .Including(lt => lt.EducationType)
-                .Including(lt => lt.EducationDetails)
-                .Including(lt => lt.EnrolledAt)
-                .Including(lt => lt.GraduatedAt)
-            );
+            .Contain(employeeDocument);
     }
-
-    public static IEnumerable<object[]?> GetInvalidDataForEducationDetails() => [[null], [""]];
-
-    #region Test_Factory_Methods
-
-    private static EmployeeEducation CreateWithEducationDates(EducationType educationType = EducationType.Basic,
-                                                              string educationDetails = "Details",
-                                                              DateOnly enrolledAt = new(),
-                                                              DateOnly? graduatedAt = null)
-        =>
-            EmployeeEducation.Create(EmployeeHelper.CreateEmployee(), educationType, educationDetails, enrolledAt, graduatedAt);
-
-    private static EmployeeEducation CreateWithEducationDateTimes(EducationType educationType = EducationType.Basic,
-                                                                  string educationDetails = "Details",
-                                                                  DateTime enrolledAt = new(),
-                                                                  DateTime? graduatedAt = null)
-        =>
-            EmployeeEducation.Create(EmployeeHelper.CreateEmployee(), educationType, educationDetails, enrolledAt, graduatedAt);
-
-    #endregion
 }

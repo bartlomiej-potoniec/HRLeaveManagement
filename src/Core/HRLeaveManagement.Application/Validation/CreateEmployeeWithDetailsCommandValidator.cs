@@ -1,8 +1,8 @@
 ﻿using HRLeaveManagement.Domain.Enums;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Features.Employee.Commands;
 using FluentValidation;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Validation;
 

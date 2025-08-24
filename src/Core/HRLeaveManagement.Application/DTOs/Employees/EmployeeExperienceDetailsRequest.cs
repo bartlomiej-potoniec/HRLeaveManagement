@@ -7,4 +7,6 @@ public sealed record EmployeeExperienceDetailsRequest(int? Id,
                                                       string PreviousCompanyName,
                                                       string Position,
                                                       DateTime EmployedFrom,
-                                                      DateTime EmployedTo);
+                                                      DateTime EmployedTo,
+                                                      string? ExperienceDetails = null /* new */,
+                                                      IEnumerable<EmployeeDocumentDetailsRequest> EmployeeDocuments = null);

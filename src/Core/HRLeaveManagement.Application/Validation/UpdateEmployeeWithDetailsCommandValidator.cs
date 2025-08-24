@@ -1,8 +1,8 @@
 ﻿using HRLeaveManagement.Domain.Enums;
 using HRLeaveManagement.Application.Features.Employee.Commands;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Contracts.Identity;
 using FluentValidation;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Validation;
 
@@ -46,8 +46,8 @@ public sealed class UpdateEmployeeWithDetailsCommandValidator : AbstractValidato
                 !contracts.Any(edu1 =>
                     contracts.Any(edu2 =>
                         edu1 != edu2 &&
-                        edu1.EmployeedFrom < (edu2.EmployeedTo ?? DateTime.MaxValue) &&
-                        (edu1.EmployeedTo ?? DateTime.MaxValue) > edu2.EmployeedTo
+                        edu1.StartedAt < (edu2.ExpiredAt ?? DateTime.MaxValue) &&
+                        (edu1.ExpiredAt ?? DateTime.MaxValue) > edu2.ExpiredAt
                     )
                 )
             )
@@ -66,16 +66,16 @@ public sealed class UpdateEmployeeWithDetailsCommandValidator : AbstractValidato
                             return $"Value of ContractType must be in [{validValues}]";
                         });
 
-                contracts.RuleFor(c => c.EmployeedFrom)
+                contracts.RuleFor(c => c.StartedAt)
                     .NotNull()
                         .WithMessage("{PropertyName} is required")
-                    .LessThan(c => c.EmployeedTo)
-                        .When(c => c.EmployeedTo.HasValue)
+                    .LessThan(c => c.ExpiredAt)
+                        .When(c => c.ExpiredAt.HasValue)
                             .WithMessage("EmployeedFrom must be less than EmployeedFrom, if specified.");
 
-                contracts.RuleFor(c => c.EmployeedTo)
-                    .GreaterThan(c => c.EmployeedFrom)
-                        .When(c => c.EmployeedTo.HasValue)
+                contracts.RuleFor(c => c.ExpiredAt)
+                    .GreaterThan(c => c.StartedAt)
+                        .When(c => c.ExpiredAt.HasValue)
                             .WithMessage("EmployeedTo must be greater than EmployeedFrom, if specified.");
             });
 

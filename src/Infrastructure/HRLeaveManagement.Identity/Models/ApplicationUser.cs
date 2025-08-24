@@ -7,6 +7,7 @@ public class ApplicationUser : IdentityUser
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
+    public required string Gender { get; set; } // new
     public string? PeselNumber { get; set; }
     public required DateOnly DateOfBirth { get; set; }
     public Guid? EmployeeId { get; set; }
@@ -16,6 +17,7 @@ public class ApplicationUser : IdentityUser
 
     public static ApplicationUser Create(string firstName,
                                          string lastName,
+                                         string gender,
                                          string? peselNumber,
                                          string phoneNumber,
                                          DateOnly dateOfBirth,
@@ -26,6 +28,7 @@ public class ApplicationUser : IdentityUser
         {
             FirstName = firstName,
             LastName = lastName,
+            Gender = gender,
             PeselNumber = peselNumber,
             PhoneNumber = phoneNumber,
             DateOfBirth = dateOfBirth,
@@ -36,6 +39,7 @@ public class ApplicationUser : IdentityUser
 
     public static ApplicationUser Create(string firstName,
                                          string lastName,
+                                         string gender,
                                          string? peselNumber,
                                          string phoneNumber,
                                          DateTime dateOfBirth,
@@ -46,6 +50,7 @@ public class ApplicationUser : IdentityUser
         {
             FirstName = firstName,
             LastName = lastName,
+            Gender = gender,
             PeselNumber = peselNumber,
             PhoneNumber = phoneNumber,
             DateOfBirth = DateOnly.FromDateTime(dateOfBirth),
@@ -61,6 +66,7 @@ public class ApplicationUser : IdentityUser
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
+            Gender = user.Gender,
             PeselNumber = user.PeselNumber,
             PhoneNumber = user.PhoneNumber!,
             DateOfBirth = user.DateOfBirth.ToDateTime(new TimeOnly()),
@@ -75,6 +81,7 @@ public class ApplicationUser : IdentityUser
             FirstName = user.FirstName,
             LastName = user.LastName,
             FullName = $"{user.FirstName} {user.LastName}",
+            Gender = user.Gender,
             UserName = user.UserName,
             PeselNumber = user.PeselNumber,
             PhoneNumber = user.PhoneNumber!,
@@ -95,6 +102,7 @@ public class ApplicationUser : IdentityUser
     {
         user.FirstName = request.FirstName;
         user.LastName = request.LastName;
+        user.Gender = request.Gender;
         user.Email = request.Email;
         user.DateOfBirth = DateOnly.FromDateTime(request.DateOfBirth);
         user.PeselNumber = request.PeselNumber;
@@ -107,8 +115,7 @@ public class ApplicationUser : IdentityUser
     public static void LockoutUserUntilDateTime(ApplicationUser user, DateTime lockoutEnd)
         => user.LockoutEnd = lockoutEnd;
 
-    public static void UnlockUser(ApplicationUser user)
-        => user.LockoutEnd = null;
+    public static void UnlockUser(ApplicationUser user) => user.LockoutEnd = null;
 
     #endregion
 }

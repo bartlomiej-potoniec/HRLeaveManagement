@@ -21,7 +21,7 @@ public class EmployeeProfile : Profile
             .ForMember(dest => dest.Section, opt => opt.MapFrom(src => src.employee.Section.Name))
             .ForMember(dest => dest.Responsibilities, opt => opt.MapFrom(src => src.employee.Responsibilities))
             .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.employee.Section.Department.Name))
-            .ForMember(dest => dest.Contracts, opt => opt.MapFrom(src => src.employee.EmploymentContracts
+            .ForMember(dest => dest.Contracts, opt => opt.MapFrom(src => src.employee.EmployeeContracts
                 .Select(ec => new EmployeeContractResponse(
                     ec.Id, ec.ContractType, 
                     ec.StartedAt.ToDateTime(new TimeOnly()), 
@@ -56,7 +56,7 @@ public class EmployeeProfile : Profile
             .ForMember(dest => dest.Responsibilities, opt => opt.MapFrom(src => src.employee.Responsibilities))
             .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.employee.Section.Department.Id))
             .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.employee.Section.Department.Name))
-            .ForMember(dest => dest.Contracts, opt => opt.MapFrom(src => src.employee.EmploymentContracts
+            .ForMember(dest => dest.Contracts, opt => opt.MapFrom(src => src.employee.EmployeeContracts
                 .Select(ec => new EmployeeContractDetailsDTO
                 {
                     Id = ec.Id,

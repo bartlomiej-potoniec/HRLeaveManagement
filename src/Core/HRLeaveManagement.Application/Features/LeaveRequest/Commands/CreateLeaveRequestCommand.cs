@@ -1,9 +1,15 @@
-﻿using MediatR;
+﻿using HRLeaveManagement.Application.DTOs.Employees;
+using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.Commands;
 
 public sealed record CreateLeaveRequestCommand(int LeaveTypeId,
                                                DateTime StartedAt,
                                                DateTime EndedAt,
-                                               string? RequestComment) 
+                                               Guid ApproverId,
+                                               Guid SubstitutorId,
+                                               string? RequesterComment,
+                                               string? ApproverComment,
+                                               string? ReasonDescription,
+                                               IEnumerable<EmployeeDocumentRequest>? EmployeeDocuments) 
     : IRequest<int>;

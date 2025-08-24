@@ -1,7 +1,7 @@
 ﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
@@ -33,4 +33,6 @@ public sealed class RemoteWorkLimitRepository(ApplicationDbContext dbContext) : 
         _dbContext.RemoteWorkLimits.Update(remoteWorkLimit);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default) => await _dbContext.SaveChangesAsync(cancellationToken);
 }

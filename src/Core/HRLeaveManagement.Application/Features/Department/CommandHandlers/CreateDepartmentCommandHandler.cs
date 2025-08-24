@@ -1,20 +1,25 @@
-﻿using DomainDepartment = HRLeaveManagement.Domain.Entities.Department;
+﻿using DepartmentEntity = HRLeaveManagement.Domain.Entities.Department;
+using HRLeaveManagement.Domain.RuleContracts;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.Exceptions;
+using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Features.Department.Commands;
+using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Validation;
 using MediatR;
-using HRLeaveManagement.Application.Contracts.Identity;
 
 namespace HRLeaveManagement.Application.Features.Department.CommandHandlers;
 
 public sealed class CreateDepartmentCommandHandler(IDepartmentRepository departmentRepository,
+                                                   IEmployeeRepository employeeRepository,
+                                                   IDepartmentRuleSet departmentRuleSet,
                                                    IUserService userService,
                                                    IAppLogger<CreateDepartmentCommandHandler> logger)
     : IRequestHandler<CreateDepartmentCommand, int>
 {
     private readonly IDepartmentRepository _departmentRepository = departmentRepository;
+    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    private readonly IDepartmentRuleSet _departmentRuleSet = departmentRuleSet;
     private readonly IUserService _userService = userService;
     private readonly IAppLogger<CreateDepartmentCommandHandler> _logger = logger;
 
@@ -29,7 +34,11 @@ public sealed class CreateDepartmentCommandHandler(IDepartmentRepository departm
             throw new BadRequestException("Invalid department creation request", validationResult);
         }
 
-        var department = DomainDepartment.Create(request.Name, request.LeaderId, request.Description);
+        var leader = await _employeeRepository.GetByIdAsync(request.LeaderId, cancellationToken)
+            ?? throw new NotFoundException($"No employee with ID: {request.LeaderId} found");
+
+        var department = await DepartmentEntity
+            .CreateSingleAsync(_departmentRuleSet, request.Name, leader, request.Description, cancellationToken);
 
         _logger.LogInformation("Creating new department '{Name}' started", request.Name);
 

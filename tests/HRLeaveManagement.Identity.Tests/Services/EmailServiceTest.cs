@@ -2,7 +2,7 @@
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.DTOs.Email;
 using HRLeaveManagement.Identity.Services;
-using HRLeaveManagement.Infrastructure.Email.Settings;
+using HRLeaveManagement.Infrastructure.Email.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;

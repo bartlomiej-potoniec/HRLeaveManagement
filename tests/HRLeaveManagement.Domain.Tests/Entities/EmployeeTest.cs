@@ -1,104 +1,49 @@
-using HRLeaveManagement.Domain.Tests.Helpers;
-
 namespace HRLeaveManagement.Domain.Tests.Entities;
 
 public class EmployeeTest
 {
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    public void Create_ThrowsArgumentException_WhenPositionIsNullOrEmpty(string? position)
-    {
-        // Arrange
-        var expectedExceptionMessage = "Position for employee cannot be empty";
-
-        // Act
-        Action result = () => EmployeeHelper.CreateEmployee(position: position);
-
-        // Assert
-        result
-            .Should()
-            .Throw<ArgumentException>()
-            .WithMessage(expectedExceptionMessage);
-    }
-
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    public void Create_ThrowsArgumentException_WhenResponsibilitiesIsNullOrEmpty(string? responsibilities)
-    {
-        // Arrange
-        var expectedExceptionMessage = "Responsibilities for employee cannot be empty";
-
-        // Act
-        Action result = () => EmployeeHelper.CreateEmployee(responsibilities: responsibilities);
-
-        // Assert
-        result
-            .Should()
-            .Throw<ArgumentException>()
-            .WithMessage(expectedExceptionMessage);
-    }
-
-    [Theory]
-    [InlineData(-12)]
-    [InlineData(0)]
-    public void Create_ThrowsArgumentException_WhenSectionIdIsLessThanZero(int sectionId)
-    {
-        // Arrange
-        var expectedExceptionMessage = "Section ID for employee must be greater than zero";
-
-        // Act
-        Action result = () => EmployeeHelper.CreateEmployee(sectionId: sectionId);
-
-        // Assert
-        result
-            .Should()
-            .Throw<ArgumentException>()
-            .WithMessage(expectedExceptionMessage);
-    }
-
     [Fact]
     public void Create_ForGivenParams_ReturnsNewInstance()
     {
+        // Arrange
+        string position = "Logistic";
+        string responsibilities = "Logstic work";
+        Mock<Address> addressMock = new();
+        Mock<Section> sectionMock = new();
+        Mock<Employee> leaderMock = new();
+
         // Act
-        Employee employee = EmployeeHelper.CreateEmployee();
+        Employee employee = Employee.Create(
+            position,
+            responsibilities,
+            addressMock.Object,
+            sectionMock.Object,
+            leaderMock.Object
+        );
 
         // Assert
         employee
             .Should()
-            .BeOfType<Employee>();
-    }
-
-    [Fact]
-    public void Update_ThrowsArgumentException_WhenEmployeeIsNull()
-    {
-        // Arrange
-        Employee employee = null;
-
-        var expectedExceptionMessage = "Employee must be included";
-
-        // Act
-        Action result = () => Employee.Update(employee, "position", "responsibilities");
-
-        // Assert
-        result
-            .Should()
-            .Throw<ArgumentException>()
-            .WithMessage(expectedExceptionMessage);
+            .BeOfType<Employee>();     
     }
 
     [Fact]
     public void Update_ThrowsInvalidOperationException_WhenLeaderIdIsActualEmployeeId()
     {
         // Arrange
-        Guid employeeId = default;
-        Employee employee = EmployeeHelper.CreateEmployee();
-
-        var expectedExceptionMessage = "Employee cannot be their own leader";
+        Mock<Employee> employeeMock = new();
+        Mock<Employee> invalidLeaderMock = employeeMock;
+        
+        string expectedExceptionMessage = "Employee cannot be their own leader";
 
         // Act
-        Action result = () => Employee.Update(employee, "position", "responsibilities", leaderId: employeeId);
+        Action result = () => Employee.Update(
+            entity: employeeMock.Object,
+            "Logistic",
+            "Logistic work",
+            new Mock<Address>().Object,
+            leader: invalidLeaderMock.Object
+        );
 
         // Assert
         result
@@ -113,14 +58,22 @@ public class EmployeeTest
         // Arrange
         string position = "Logistic";
         string responsibilities = "Logistics";
-        int sectionId = 2;
-        Guid leaderId = Guid.NewGuid();
+        Address address = new Mock<Address>().Object;
+        Section section = new Mock<Section>().Object;
+        Employee leader = new Mock<Employee>().Object;
 
-        var employee = EmployeeHelper.CreateEmployee();
-        var expectedEmployee = Employee.Create(position, responsibilities, sectionId, leaderId);
+        Employee employee = Employee.Create(
+            "Engineer",
+            "Engineering work",
+            new Mock<Address>().Object,
+            new Mock<Section>().Object,
+            new Mock<Employee>().Object
+        );
+
+        Employee expectedEmployee = Employee.Create(position, responsibilities, address, section, leader);
 
         // Act
-        Employee.Update(employee, position, responsibilities, sectionId, leaderId);
+        Employee.Update(employee, position, responsibilities, address, section, leader);
 
         // Assert
         employee

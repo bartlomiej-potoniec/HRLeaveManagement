@@ -34,14 +34,18 @@ public sealed partial class UserService(UserManager<ApplicationUser> userManager
 
     public ClaimsPrincipal? User => _httpContextAccessor?.HttpContext?.User;
 
-    public string? UserId 
-        => User?.FindFirst(claim => claim.Type is "uid")?.Value;
+    public string UserId => User?.FindFirst(claim => claim.Type is "uid")?.Value
+        ?? throw new UnauthorizedAccessException("User is unathorized");
 
-    public string? UserName
-        => User?.FindFirst(claim => claim.Type is JwtRegisteredClaimNames.UniqueName)?.Value;
+    public string UserName => User?.FindFirst(claim => claim.Type is JwtRegisteredClaimNames.UniqueName)?.Value
+        ?? throw new UnauthorizedAccessException("User is unathorized");
 
-    public bool IsUserLoggedIn 
-        => User?.Identity is not null && User.Identity.IsAuthenticated;
+    public Guid EmployeeId => Guid.Parse(
+        User?.FindFirst(claim => claim.Type is "employeeId")?.Value
+        ?? throw new UnauthorizedAccessException("Employee is unathorized")
+    );
+
+    public bool IsUserLoggedIn => User?.Identity is not null && User.Identity.IsAuthenticated;
 
     public bool IsUserInRole(string roleName) => User?.IsInRole(roleName) is not null;
 

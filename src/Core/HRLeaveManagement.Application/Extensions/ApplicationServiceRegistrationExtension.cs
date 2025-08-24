@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using HRLeaveManagement.Application.Contracts.Application;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace HRLeaveManagement.Application.Extensions;
@@ -12,7 +13,9 @@ public static class ApplicationServiceRegistrationExtension
         services.AddMediatR(config =>
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
         );
-    
+
+        services.AddScoped<IEmployeeSubservice, IEmployeeSubservice>();
+
         return services;
     }
 

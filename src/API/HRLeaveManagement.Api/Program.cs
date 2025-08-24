@@ -44,7 +44,8 @@ builder.Services.AddSingleton<IAuthorizationHandler, IsEmployeeRequirementHandle
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsEmployee", policy => 
-        policy.Requirements.Add(new IsEmployeeRequirement()));
+        policy.Requirements.Add(new IsEmployeeRequirement())
+    );
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -69,10 +70,11 @@ var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>()
 var pendingMigrations = dbContext.Database.GetPendingMigrations();
 
 if (pendingMigrations.Any())
-    dbContext.Database.Migrate();
+{
+    await dbContext.Database.MigrateAsync();
+}
 
-dbContext.SeedLeaveTypes();
-
+await dbContext.SeedLeaveTypesAsync();
 
 app.UseSerilogRequestLogging();
 

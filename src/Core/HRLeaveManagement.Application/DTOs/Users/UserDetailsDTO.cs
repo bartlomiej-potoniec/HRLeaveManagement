@@ -7,6 +7,7 @@ public record UserDetailsDTO
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
     public required string FullName { get; init; }
+    public required string Gender { get; init; }
     public required string UserName { get; init; }
     public string? PeselNumber { get; init; }
     public required string PhoneNumber { get; init; }

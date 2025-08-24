@@ -1,157 +1,203 @@
-﻿using HRLeaveManagement.Domain.Enums;
+﻿using HRLeaveManagement.Domain.BoundedEntities;
+using HRLeaveManagement.Domain.CreationTokens;
+using HRLeaveManagement.Domain.Enums;
+using HRLeaveManagement.Domain.RuleContracts;
 
 namespace HRLeaveManagement.Domain.Entities;
 
+public record EmployeeContractPayload(ContractType ContractType,
+                                      string? ContractDetails,
+                                      DateOnly StartedAt,
+                                      DateOnly? ExpiredAt = null,
+                                      IEnumerable<EmployeeDocumentPayload>? EmployeeDocuments = null);
+
 public class EmployeeContract
 {
+    private readonly List<EmployeeDocument> _employeeDocuments = [];
+
     public int Id { get; private set; }
 
     public Guid EmployeeId { get; private set; }
     public Employee Employee { get; private set; }
 
     public ContractType ContractType { get; private set; }
-
+    public string? ContractDetails { get; private set; } // new
+    
     public DateOnly StartedAt { get; private set; }
     public DateOnly? ExpiredAt { get; private set; }
+    public DateOnly? TerminatedAt { get; private set; } // new
     public int? TotalDuration { get; private set; }
+
+    public IReadOnlyList<EmployeeDocument> EmployeeDocuments => _employeeDocuments.AsReadOnly(); // new
 
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private EmployeeContract() {}
+    internal EmployeeContract(Employee employee,
+                              ContractType contractType,
+                              string? contractDetails,
+                              DateOnly startedAt,
+                              DateOnly? expiredAt = null,
+                              IEnumerable<EmployeeDocument>? employeeDocuments = null,
+                              IEmployeeContractCreationToken creationToken = default) 
+    {
+        if (creationToken is null)
+        {
+            throw new AccessViolationException("Attempted to create EmployeeContract without proper domain context");
+        }
 
+        var employeeContracts = employee.EmployeeContracts;
+        ValidateBaseRules(employeeContracts, contractType, startedAt, expiredAt);
+
+        Employee = employee;
+        ContractType = contractType;
+        ContractDetails = contractDetails;
+        StartedAt = startedAt;
+        ExpiredAt = expiredAt;
+        TotalDuration = expiredAt.HasValue
+            ? expiredAt.Value.DayNumber - startedAt.DayNumber
+            : null;
+        CreatedAt = DateTime.UtcNow;
+        ModifiedAt = DateTime.UtcNow;
+
+        if (employeeDocuments is not null)
+        {
+            _employeeDocuments.AddRange(employeeDocuments);
+        }
+    }
+
+    internal static async Task<IReadOnlyList<EmployeeContract>> CreateManyAsync(
+        Employee employee,
+        IEmployeeDocumentRuleSet employeeDocumentRuleSet,
+        IEnumerable<EmployeeContractPayload> employeeContractPayloads,
+        CancellationToken cancellationToken = default,
+        IEmployeeContractCreationToken creationToken = default
+    )
+    {
+        List<EmployeeContract> employeeContracts = [];
+
+        foreach (var payload in employeeContractPayloads)
+        {
+            IReadOnlyList<EmployeeDocument>? documents = null;
+
+            if (payload.EmployeeDocuments is not null)
+            {
+                documents = await EmployeeDocument.CreateManyAsync(
+                    employeeDocumentRuleSet,
+                    payload.EmployeeDocuments,
+                    cancellationToken
+                ); 
+            }
+
+            var employeeContract = new EmployeeContract(
+                employee,
+                payload.ContractType,
+                payload.ContractDetails,
+                payload.StartedAt,
+                payload.ExpiredAt,
+                documents,
+                creationToken
+            );
+
+            employeeContracts.Add(employeeContract);
+        }
+
+        return employeeContracts.AsReadOnly();
+    }
 
     #region Domain_Factory_Methods
 
-    public static EmployeeContract Create(Employee employee,
-                                          ContractType contractType,
-                                          DateOnly startedAt,
-                                          DateOnly? expiredAt = null)
+    /// <summary>
+    /// Updates existing <see cref="EmployeeContract"/> instance with given params.
+    /// Designates the only way to properly modify an object.
+    /// </summary>
+    /// <param name="contractType">Employee's contract type</param>
+    /// <param name="contractDetails">Optional. Contract details description</param>
+    /// <param name="startedAt">Contract start date</param>
+    /// <param name="expiredAt">Optional. Contract expiration date</param>
+    /// <exception cref="InvalidOperationException">When business rule operations are violated</exception>
+    public void Update(EmployeeWithContracts employee,
+                       ContractType contractType,
+                       string? contractDetails,
+                       DateOnly startedAt,
+                       DateOnly? expiredAt = null,
+                       IEnumerable<EmployeeDocument>? employeeDocuments = null)
     {
-        if (employee is null)
-        {
-            throw new ArgumentException("Employee must be included");
-        }
-
-        var employeeContracts = employee.EmploymentContracts;
+        var employeeContracts = employee.EmployeeContracts;
         ValidateBaseRules(employeeContracts, contractType, startedAt, expiredAt);
 
-        return new()
-        {
-            Employee = employee,
-            ContractType = contractType,
-            StartedAt = startedAt,
-            ExpiredAt = expiredAt,
-            TotalDuration = expiredAt.HasValue
-                ? expiredAt.Value.DayNumber - startedAt.DayNumber
-                : null,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
-    }
-
-    public static EmployeeContract Create(Employee employee,
-                                          ContractType contractType,
-                                          DateTime startedAt,
-                                          DateTime? expiredAt = null)
-    {
-        if (employee is null)
-        {
-            throw new ArgumentException("Employee must be included");
-        }
-
-        var employeeContracts = employee.EmploymentContracts;
-        ValidateBaseRules(employeeContracts, contractType, startedAt, expiredAt);
-
-        return new()
-        {
-            Employee = employee,
-            ContractType = contractType,
-            StartedAt = DateOnly.FromDateTime(startedAt),
-            ExpiredAt = expiredAt.HasValue
-                ? DateOnly.FromDateTime(expiredAt.Value)
-                : null,
-            TotalDuration = expiredAt.HasValue
-                ? (expiredAt - startedAt).Value.Days
-                : null,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
-    }
-
-    public static void Update(EmployeeContract employeeContract,
-                              ContractType contractType,
-                              DateOnly startedAt,
-                              DateOnly? expiredAt = null)
-    {
-        if (employeeContract is null)
-        {
-            throw new ArgumentException("Employee contract must be included");
-        }
-
-        var employeeContracts = employeeContract.Employee.EmploymentContracts;
-        ValidateBaseRules(employeeContracts, contractType, startedAt, expiredAt);
-
-        employeeContract.ContractType = contractType;
-        employeeContract.StartedAt = startedAt;
-        employeeContract.ExpiredAt = expiredAt;
-        employeeContract.TotalDuration = expiredAt.HasValue
+        ContractType = contractType;
+        ContractDetails = contractDetails;
+        StartedAt = startedAt;
+        ExpiredAt = expiredAt;
+        TotalDuration = expiredAt.HasValue
             ? expiredAt.Value.DayNumber - startedAt.DayNumber
             : null;
-        employeeContract.ModifiedAt = DateTime.UtcNow;
+        ModifiedAt = DateTime.UtcNow;
+
+        if (employeeDocuments is not null)
+        {
+            _employeeDocuments.Clear();
+            _employeeDocuments.AddRange(employeeDocuments);
+        }
     }
 
-    public static void Update(EmployeeContract employeeContract,
-                              ContractType contractType,
-                              DateTime startedAt,
-                              DateTime? expiredAt = null)
+    /// <summary>
+    /// Terminates <see cref="EmployeeContract"/> instance with given params
+    /// Designates the only way to properly terminate a contract.
+    /// </summary>
+    /// <param name="terminationDate">Date when contract was terminated</param>
+    /// <param name="expirationDate">Optional. Expiration date. Determines whether contract is notice period observed</param>
+    /// <exception cref="InvalidOperationException">When business rule operations are violated</exception>
+    public void Terminate(DateTime todaysDate, DateOnly terminationDate, DateOnly? expirationDate = null)
     {
-        if (employeeContract is null)
+        var isNoticePeriodObserved = expirationDate is not null;
+        var todaysDateOnly = DateOnly.FromDateTime(todaysDate);
+
+        if (terminationDate < todaysDateOnly)
         {
-            throw new ArgumentException("Employee contract must be included");
+            throw new InvalidOperationException("Contract termination date must be greater than today's date");
         }
 
-        var employee = employeeContract.Employee;
-        var employeeContracts = employee.EmploymentContracts;
-        ValidateBaseRules(employeeContracts, contractType, startedAt, expiredAt);
-
-        employeeContract.ContractType = contractType;
-        employeeContract.StartedAt = DateOnly.FromDateTime(startedAt);
-        employeeContract.ExpiredAt = expiredAt.HasValue
-            ? DateOnly.FromDateTime(expiredAt.Value)
-            : null;
-        employeeContract.TotalDuration = expiredAt.HasValue
-            ? (expiredAt - startedAt).Value.Days
-            : null;
-        employeeContract.ModifiedAt = DateTime.UtcNow;
-    }
-
-    public static void Terminate(EmployeeContract employeeContract, DateOnly expiredDate)
-    {
-        if (expiredDate < employeeContract.StartedAt)
+        if (isNoticePeriodObserved)
         {
-            throw new InvalidOperationException("Contract termination date must be greater than start date");
+            if (terminationDate > expirationDate)
+            {
+                throw new InvalidOperationException("Contract termination date must be fewer than expiration date");
+            }
+
+            TerminatedAt = terminationDate;
+            ExpiredAt = expirationDate;
+            TotalDuration = expirationDate.Value.DayNumber - StartedAt.DayNumber;
+
+            return;
         }
 
-        employeeContract.ExpiredAt = expiredDate;
-        employeeContract.TotalDuration = expiredDate.DayNumber - employeeContract.StartedAt.DayNumber;
+        TerminatedAt = terminationDate;
+        ExpiredAt = terminationDate;
+        TotalDuration = terminationDate.DayNumber - StartedAt.DayNumber;
     }
 
-    public static void Terminate(EmployeeContract employeeContract, DateTime expiredDate)
-    {
-        if (DateOnly.FromDateTime(expiredDate) < employeeContract.StartedAt)
-        {
-            throw new InvalidOperationException("Contract termination date must be greater than start date");
-        }
+    #region EmployeeDocument_Entity_Methods
 
-        employeeContract.ExpiredAt = DateOnly.FromDateTime(expiredDate);
-        employeeContract.TotalDuration = employeeContract.ExpiredAt.Value.DayNumber - employeeContract.StartedAt.DayNumber;
-    }
+    /// <summary>
+    /// Adds <see cref="EmployeeContract"/> instance to employee-contract list.
+    /// </summary>
+    /// <param name="employeeDocument"><see cref="EmployeeDocument"/> instance</param>
+    public void AddDocument(EmployeeDocument employeeDocument) => _employeeDocuments.Add(employeeDocument);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="employeeDocument"></param>
+    public void RemoveDocument(EmployeeDocument employeeDocument) => _employeeDocuments.Remove(employeeDocument);
+
+    #endregion
 
     private static void ValidateBaseRules(IEnumerable<EmployeeContract> employeeContracts,
                                           ContractType contractType,
                                           DateOnly startedAt,
-                                          DateOnly? expiredAt = null)
+                                          DateOnly? expiredAt)
     {
         if (expiredAt.HasValue && expiredAt.Value < startedAt)
         {
@@ -176,41 +222,6 @@ public class EmployeeContract
             if (contract.ExpiredAt.HasValue &&
                 !expiredAt.HasValue && 
                 startedAt < contract.ExpiredAt)
-            {
-                throw new InvalidOperationException("Cannot define indefinite-term contract during the current contract");
-            }
-        }
-    }
-
-    private static void ValidateBaseRules(IEnumerable<EmployeeContract> employeeContracts,
-                                          ContractType contractType,
-                                          DateTime startedAt,
-                                          DateTime? expiredAt = null)
-    {
-        if (expiredAt.HasValue && expiredAt < startedAt)
-        {
-            throw new InvalidOperationException("Contract expiration date must be greater than start date");
-        }
-
-        foreach (var contract in employeeContracts)
-        {
-            if (!contract.ExpiredAt.HasValue &&
-                (!expiredAt.HasValue || DateOnly.FromDateTime(expiredAt.Value) > contract.StartedAt))
-            {
-                throw new InvalidOperationException("Cannot define another contract during the indefinite-term contract");
-            }
-
-            if (contract.ExpiredAt.HasValue &&
-                expiredAt.HasValue &&
-                (DateOnly.FromDateTime(expiredAt.Value) > contract.StartedAt && 
-                 DateOnly.FromDateTime(startedAt) < contract.ExpiredAt))
-            {
-                throw new InvalidOperationException("Cannot define another contract during the current contract");
-            }
-
-            if (contract.ExpiredAt.HasValue &&
-                !expiredAt.HasValue &&
-                DateOnly.FromDateTime(startedAt) < contract.ExpiredAt)
             {
                 throw new InvalidOperationException("Cannot define indefinite-term contract during the current contract");
             }

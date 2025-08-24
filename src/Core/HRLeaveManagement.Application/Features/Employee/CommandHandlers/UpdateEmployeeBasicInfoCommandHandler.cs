@@ -1,7 +1,9 @@
 ﻿using DomainEmployee = HRLeaveManagement.Domain.Entities.Employee;
+using DomainSection = HRLeaveManagement.Domain.Entities.Section;
 using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using HRLeaveManagement.Application.Contracts.Persistence.ContextFactories;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.Employee.Commands;
 using HRLeaveManagement.Application.Validation;
@@ -11,12 +13,14 @@ namespace HRLeaveManagement.Application.Features.Employee.CommandHandlers;
 
 public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository employeeRepository,
                                                           ISectionRepository sectionRepository,
+                                                          IEmployeeContextFactory employeeContextFactory,
                                                           IUserService userService,
                                                           IAppLogger<UpdateEmployeeBasicInfoCommandHandler> logger) 
     : IRequestHandler<UpdateEmployeeBasicInfoCommand>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly ISectionRepository _sectionRepository = sectionRepository;
+    private readonly IEmployeeContextFactory _employeeContextFactory = employeeContextFactory;
     private readonly IUserService _userService = userService;
     private readonly IAppLogger<UpdateEmployeeBasicInfoCommandHandler> _logger = logger;
 
@@ -40,17 +44,40 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
             .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No user with ID: { request.Id } found");
 
-        DomainEmployee.Update(
-            employee,
+        DomainEmployee? leader = null;
+        DomainSection? section = null;
+
+        if (request.LeaderId is not null)
+        {
+            leader = await _employeeRepository
+                .GetByIdAsync(request.LeaderId.Value, cancellationToken)
+                ?? throw new NotFoundException($"No leader with ID: { request.LeaderId } found");
+        }
+
+        if (request.SectionId is not null)
+        {
+            section = await _sectionRepository
+                .GetByIdAsync(request.SectionId.Value, cancellationToken)
+                ?? throw new NotFoundException($"No section with ID: {request.LeaderId} found");
+        }
+
+        var employeeWithAddress = _employeeContextFactory.AsEmployeeWithAddress(employee);
+
+        employeeWithAddress.Update(
             request.Position,
             request.Responsibilities,
-            request.SectionId,
-            request.LeaderId
+            request.ResidentialAddress,
+            request.RegisteredAddress,
+            request.SecondaryResidentialAddress,
+            request.RemoteWorkAddress,
+            section,
+            leader
         );
 
         _logger.LogInformation("Updating informations about employee with ID: {UserId} started", request.Id);
 
-        await _employeeRepository.UpdateBasicInfoAsync(employee, cancellationToken);
+        //await _employeeRepository.UpdateAsync(employee, cancellationToken);
+        await _employeeRepository.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Updating informations about employee with ID: {UserId} successful", request.Id);
     }

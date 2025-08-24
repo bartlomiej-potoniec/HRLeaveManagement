@@ -1,12 +1,31 @@
-﻿namespace HRLeaveManagement.Domain.Tests.Helpers;
+﻿using HRLeaveManagement.Domain.RuleContracts;
 
-public class WorkRequestTestHelper : WorkRequest
+namespace HRLeaveManagement.Domain.Tests.Helpers;
+
+internal class WorkRequestTestHelper : WorkRequest
 {
-    public void InitializeBase(Guid requestingEmployeeId,
-                               DateOnly startedAt,
-                               DateOnly endedAt,
-                               Guid approverId,
-                               string? approverComment = null)
+    internal async Task InitializeBase(Employee requestingEmployee,
+                                       DateOnly startedAt,
+                                       DateOnly endedAt,
+                                       Employee approver,
+                                       Mock<IWorkRequestRuleSet> workRequestRuleSet,
+                                       string? approverComment = null)
         => 
-            base.InitializeBase(requestingEmployeeId, startedAt, endedAt, approverId, approverComment);
+            await base.InitializeBase<WorkRequest>(
+                requestingEmployee,
+                startedAt,
+                endedAt,
+                approver,
+                approverComment,
+                workRequestRuleSet.Object
+            );
+
+    internal static Mock<IWorkRequestRuleSet> CreateWorkRequestRuleSetMock() => new();
+
+    internal static void SetupIsRequestApproverSuperiorOfEmployeeAsyncToReturnResult(Mock<IWorkRequestRuleSet> workRequestRuleSetMock,
+                                                                                     bool isRuleFailed)
+        => workRequestRuleSetMock
+            .Setup(rule => rule
+                .IsRequestApproverSuperiorOfEmployeeAsync(It.IsAny<Employee>(), It.IsAny<Employee>(), CancellationToken.None))
+            .ReturnsAsync(isRuleFailed);
 }

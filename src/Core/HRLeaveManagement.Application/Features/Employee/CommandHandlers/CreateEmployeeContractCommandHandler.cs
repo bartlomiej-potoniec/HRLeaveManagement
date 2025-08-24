@@ -1,20 +1,23 @@
-﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Features.Employee.Commands;
 using HRLeaveManagement.Application.Validation;
 using HRLeaveManagement.Application.Exceptions;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using HRLeaveManagement.Application.Contracts.Application;
+using HRLeaveManagement.Application.DTOs.Employees;
 using MediatR;
 using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.Employee.CommandHandlers;
 
 public sealed class CreateEmployeeContractCommandHandler(IEmployeeRepository employeeRepository,
+                                                         IEmployeeSubservice employeeSubservice,
                                                          IMapper mapper,
                                                          IAppLogger<CreateEmployeeContractCommandHandler> logger)
     : IRequestHandler<CreateEmployeeContractCommand, int>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    private readonly IEmployeeSubservice _employeeSubservice = employeeSubservice;
     private readonly IMapper _mapper = mapper;
     private readonly IAppLogger<CreateEmployeeContractCommandHandler> _logger = logger;
 
@@ -30,22 +33,27 @@ public sealed class CreateEmployeeContractCommandHandler(IEmployeeRepository emp
         }
 
         var employee = await _employeeRepository
-            .GetByIdAsync(request.EmployeeId, cancellationToken)
+            .GetWithContractsByIdAsync(request.EmployeeId, cancellationToken)
             ?? throw new NotFoundException($"No employee with ID: { request.EmployeeId } found");
 
-        var employeeContract = EmployeeContract.Create(
-            employee,
+        var employeeContractRequest = new EmployeeContractRequest(
             request.ContractType,
-            request.EmployeedFrom,
-            request.EmployeedTo
+            request.StartedAt,
+            request.ExpiredAt,
+            request.ContractDetails,
+            request.EmployeeDocuments
         );
+
+        var employeeContract = await _employeeSubservice
+            .CreateEmployeeContract(employee, employeeContractRequest, cancellationToken);
 
         _logger.LogInformation("Creating new employee contract for employee ID: {UserId} started", request.EmployeeId);
 
-        await _employeeRepository.CreateEmployeeContract(employeeContract, cancellationToken);
+        await _employeeRepository.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Creating new employee contract for employee ID: {UserId} successful", request.EmployeeId);
 
+        // sprawdzić czy EF dobrze śledzi zmiany i automatycznie załadował auto-inkrementowane ID
         return employeeContract.Id;
     }
 }

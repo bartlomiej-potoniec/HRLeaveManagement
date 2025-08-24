@@ -1,11 +1,11 @@
 ﻿using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.DTOs.Email;
 using MediatR;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.CommandHandlers;
 

@@ -1,7 +1,7 @@
 ﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Persistence.Repositories;
 
@@ -35,4 +35,6 @@ public sealed class LeaveTypeRepository(ApplicationDbContext dbContext) : ILeave
         _dbContext.LeaveTypes.Remove(leaveType);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public Task SaveChangesAsync(CancellationToken cancellationToken = default) => _dbContext.SaveChangesAsync(cancellationToken);
 }

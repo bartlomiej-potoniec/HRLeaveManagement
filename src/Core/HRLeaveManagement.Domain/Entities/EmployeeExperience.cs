@@ -1,9 +1,21 @@
-﻿using HRLeaveManagement.Domain.Enums;
+﻿using HRLeaveManagement.Domain.CreationTokens;
+using HRLeaveManagement.Domain.Enums;
+using HRLeaveManagement.Domain.RuleContracts;
 
 namespace HRLeaveManagement.Domain.Entities;
 
+public record EmployeeExperiencePayload(ContractType ContractType,
+                                        string PreviousCompanyName,
+                                        string Position,
+                                        DateOnly EmployedFrom,
+                                        DateOnly EmployedTo,
+                                        string? ExperienceDetails = null,
+                                        IEnumerable<EmployeeDocumentPayload>? EmployeeDocuments = null);
+
 public class EmployeeExperience
 {
+    private readonly List<EmployeeDocument> _employeeDocuments = [];
+
     public int Id { get; private set; }
 
     public Guid EmployeeId { get; private set; }
@@ -13,163 +25,173 @@ public class EmployeeExperience
 
     public string PreviousCompanyName { get; private set; }
     public string Position { get; private set; }
+    public string? ExperienceDetails { get; private set; } // new
     public DateOnly EmployedFrom { get; private set; }
     public DateOnly EmployedTo { get; private set; }
     public int TotalEmployment { get; private set; }
 
+    public IReadOnlyList<EmployeeDocument> EmployeeDocuments => _employeeDocuments.AsReadOnly(); // new
+
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }
 
-    private EmployeeExperience() {}
+    internal EmployeeExperience(Employee employee,
+                                ContractType contractType,
+                                string previousCompanyName,
+                                string position,
+                                DateOnly employedFrom,
+                                DateOnly employedTo,
+                                string? experienceDetails = null,
+                                IEnumerable<EmployeeDocument>? employeeDocuments = null,
+                                IEmployeeExperienceCreationToken creationToken = default)
+    {
+        if (creationToken is null)
+        {
+            throw new AccessViolationException("Attempted to create EmployeeExperience without proper domain context");
+        }
 
+        ValidateBaseRules(employedFrom, employedTo);
+
+        Employee = employee;
+        ContractType = contractType;
+        PreviousCompanyName = previousCompanyName;
+        Position = position;
+        ExperienceDetails = experienceDetails;
+        EmployedFrom = employedFrom;
+        EmployedTo = employedTo;
+        TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber;
+        CreatedAt = DateTime.UtcNow;
+        ModifiedAt = DateTime.UtcNow;
+
+        if (employeeDocuments is not null)
+        {
+            _employeeDocuments.AddRange(employeeDocuments);
+        }
+    }
+
+    internal static async Task<IReadOnlyList<EmployeeExperience>> CreateManyAsync(
+        Employee employee,
+        IEmployeeDocumentRuleSet employeeDocumentRuleSet,
+        IEnumerable<EmployeeExperiencePayload> employeeExperiencePayloads,
+        CancellationToken cancellationToken = default,
+        IEmployeeExperienceCreationToken creationToken = default
+    )
+    {
+        List<EmployeeExperience> employeeExperiences = [];
+
+        foreach (var payload in employeeExperiencePayloads)
+        {
+            IReadOnlyList<EmployeeDocument>? documents = null;
+
+            if (payload.EmployeeDocuments is not null)
+            {
+                documents = await EmployeeDocument.CreateManyAsync(
+                    employeeDocumentRuleSet,
+                    payload.EmployeeDocuments,
+                    cancellationToken
+                );
+            }
+
+            var employeeExperience = new EmployeeExperience(
+                employee,
+                payload.ContractType,
+                payload.PreviousCompanyName,
+                payload.Position,
+                payload.EmployedFrom,
+                payload.EmployedTo,
+                payload.ExperienceDetails,
+                documents,
+                creationToken
+            );
+
+            employeeExperiences.Add(employeeExperience);
+        }
+
+        return employeeExperiences.AsReadOnly();
+    }
 
     #region Domain_Factory_Methods
 
-    public static EmployeeExperience Create(Employee employee,
-                                            ContractType contractType,
-                                            string previousCompanyName,
-                                            string position,
-                                            DateOnly employedFrom,
-                                            DateOnly employedTo)
+    /// <summary>
+    /// Updates existing <see cref="EmployeeExperience"/> instance with given params.
+    /// Designates the only way to properly modify an object.
+    /// </summary>
+    /// <param name="contractType">Employee's contract type</param>
+    /// <param name="previousCompanyName">Name of previous company name</param>
+    /// <param name="position">Position in previous company name</param>
+    /// <param name="employedFrom">Employment start date</param>
+    /// <param name="employedTo">Employment end date</param>
+    /// <param name="experienceDetails">Description or details of experience</param>
+    /// <exception cref="InvalidOperationException">When business rule operations are violated<</exception>
+    public void Update(ContractType contractType,
+                       string previousCompanyName,
+                       string position,
+                       DateOnly employedFrom,
+                       DateOnly employedTo,
+                       string? experienceDetails = null)
     {
-        if (employee is null)
-        {
-            throw new ArgumentException("Employee must be included");
-        }
+        ValidateBaseRules(employedFrom, employedTo);
 
-        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
-
-        return new()
-        {
-            Employee = employee,
-            ContractType = contractType,
-            PreviousCompanyName = previousCompanyName,
-            Position = position,
-            EmployedFrom = employedFrom,
-            EmployedTo = employedTo,
-            TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
+        ContractType = contractType;
+        PreviousCompanyName = previousCompanyName!;
+        Position = position;
+        ExperienceDetails = experienceDetails;
+        EmployedFrom = employedFrom;
+        EmployedTo = employedTo;
+        TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber;
+        ModifiedAt = DateTime.UtcNow;
     }
 
-    public static EmployeeExperience Create(Employee employee,
-                                            ContractType contractType,
-                                            string previousCompanyName,
-                                            string position,
-                                            DateTime employedFrom,
-                                            DateTime employedTo)
+    /// <summary>
+    /// Updates existing <see cref="EmployeeExperience"/> instance with given params.
+    /// Designates the only way to properly modify an object.
+    /// </summary>
+    /// <param name="contractType">Employee's contract type</param>
+    /// <param name="previousCompanyName">Name of previous company name</param>
+    /// <param name="position">Position in previous company name</param>
+    /// <param name="employedFrom">Employment start date</param>
+    /// <param name="employedTo">Employment end date</param>
+    /// <param name="experienceDetails">Description or details of experience</param>
+    /// <exception cref="InvalidOperationException">When business rule operations are violated<</exception>
+    public void Update(ContractType contractType,
+                       string previousCompanyName,
+                       string position,
+                       DateTime employedFrom,
+                       DateTime employedTo,
+                       string? experienceDetails = null)
+        =>
+            Update(
+                contractType,
+                previousCompanyName,
+                position,
+                DateOnly.FromDateTime(employedFrom),
+                DateOnly.FromDateTime(employedTo),
+                experienceDetails
+            );
+
+    #region EmployeeDocument_Subentity_Methods
+
+    /// <summary>
+    /// Adds <see cref="EmployeeDocument"/> instance to employee-contract list.
+    /// </summary>
+    /// <param name="employeeDocument"><see cref="EmployeeDocument"/> instance</param>
+    public void AddDocument(EmployeeDocument employeeDocument) => _employeeDocuments.Add(employeeDocument);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="employeeDocument"></param>
+    public void RemoveDocument(EmployeeDocument employeeDocument) => _employeeDocuments.Remove(employeeDocument);
+
+    #endregion
+
+    private static void ValidateBaseRules(DateOnly employedFrom, DateOnly employedTo)
     {
-        if (employee is null)
-        {
-            throw new ArgumentException("Employee must be included");
-        }
-
-        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
-
-        return new()
-        {
-            Employee = employee,
-            ContractType = contractType,
-            PreviousCompanyName = previousCompanyName,
-            Position = position,
-            EmployedFrom = DateOnly.FromDateTime(employedFrom),
-            EmployedTo = DateOnly.FromDateTime(employedTo),
-            TotalEmployment = (employedTo - employedFrom).Days,
-            CreatedAt = DateTime.UtcNow,
-            ModifiedAt = DateTime.UtcNow
-        };
-    }
-
-    public static void Update(EmployeeExperience employeeExperience,
-                              ContractType contractType,
-                              string previousCompanyName,
-                              string position,
-                              DateOnly employedFrom,
-                              DateOnly employedTo)
-    {
-        if (employeeExperience is null)
-        {
-            throw new ArgumentException("Employee experience must be included");
-        }
-
-        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
-
-        employeeExperience.ContractType = contractType;
-        employeeExperience.PreviousCompanyName = previousCompanyName;
-        employeeExperience.Position = position;
-        employeeExperience.EmployedFrom = employedFrom;
-        employeeExperience.EmployedTo = employedTo;
-        employeeExperience.TotalEmployment = employedTo.DayNumber - employedFrom.DayNumber;
-        employeeExperience.ModifiedAt = DateTime.UtcNow;
-    }
-
-    public static void Update(EmployeeExperience employeeExperience,
-                              ContractType contractType,
-                              string previousCompanyName,
-                              string position,
-                              DateTime employedFrom,
-                              DateTime employedTo)
-    {
-        if (employeeExperience is null)
-        {
-            throw new ArgumentException("Employee experience must be included");
-        }
-
-        ValidateBaseRules(contractType, previousCompanyName, position, employedFrom, employedTo);
-
-        employeeExperience.ContractType = contractType;
-        employeeExperience.PreviousCompanyName = previousCompanyName;
-        employeeExperience.Position = position;
-        employeeExperience.EmployedFrom = DateOnly.FromDateTime(employedFrom);
-        employeeExperience.EmployedTo = DateOnly.FromDateTime(employedTo);
-        employeeExperience.TotalEmployment = (employedTo - employedFrom).Days;
-        employeeExperience.ModifiedAt = DateTime.UtcNow;
-    }
-
-    private static void ValidateBaseRules(ContractType contractType,
-                                          string previousCompanyName,
-                                          string position,
-                                          DateOnly employedFrom,
-                                          DateOnly employedTo)
-    {
-        if (string.IsNullOrEmpty(previousCompanyName))
-        {
-            throw new ArgumentException("Previous company's name of employee cannot be empty");
-        }
-
-        if (string.IsNullOrEmpty(position))
-        {
-            throw new ArgumentException("Position at previous company of employee cannot be empty");
-        }
-
         if (employedTo < employedFrom)
         {
             throw new InvalidOperationException("Employment end date at previous company must be greater than start date");
         }
     }
-
-    private static void ValidateBaseRules(ContractType contractType,
-                                          string previousCompanyName,
-                                          string position,
-                                          DateTime employedFrom,
-                                          DateTime employedTo)
-    {
-        if (string.IsNullOrEmpty(previousCompanyName))
-        {
-            throw new ArgumentException("Previous company's name of employee cannot be empty");
-        }
-
-        if (string.IsNullOrEmpty(position))
-        {
-            throw new ArgumentException("Position at previous company of employee cannot be empty");
-        }
-
-        if (employedTo < employedFrom)
-        {
-            throw new InvalidOperationException("Employment end date at previous company must be greater than start date");
-        }
-    }
-
+    
     #endregion
 }

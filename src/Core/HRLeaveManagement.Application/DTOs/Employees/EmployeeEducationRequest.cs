@@ -3,6 +3,8 @@
 namespace HRLeaveManagement.Application.DTOs.Employees;
 
 public record EmployeeEducationRequest(EducationType EducationType,
-                                       string EducationDetails,
+                                       string InstitutionName, // new
                                        DateTime EnrolledAt,
-                                       DateTime? GraduatedAt = null);
+                                       DateTime? GraduatedAt = null,
+                                       string? EducationDetails = null,
+                                       IEnumerable<EmployeeDocumentRequest>? EmployeeDocuments = null /* new */);

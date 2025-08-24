@@ -1,5 +1,4 @@
 ﻿using HRLeaveManagement.Application.Contracts.Identity;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Features.Employee.Queries;
 using HRLeaveManagement.Application.DTOs.Employees;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using MediatR;
 using AutoMapper;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Features.Employee.QueryHandlers;
 

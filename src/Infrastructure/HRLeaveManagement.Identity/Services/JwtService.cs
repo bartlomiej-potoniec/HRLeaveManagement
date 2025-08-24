@@ -60,6 +60,7 @@ public sealed class JwtService(UserManager<ApplicationUser> userManager,
             new(JwtRegisteredClaimNames.Sub, user.Id),
             new(JwtRegisteredClaimNames.UniqueName, user.UserName!),
             new(JwtRegisteredClaimNames.Email, user.Email!),
+            new("employeeId", $"{ user.EmployeeId }"),
             new("uid", user.Id)
         ];
 

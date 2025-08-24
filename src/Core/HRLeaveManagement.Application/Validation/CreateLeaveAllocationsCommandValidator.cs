@@ -1,6 +1,6 @@
 ﻿using HRLeaveManagement.Application.Features.LeaveAllocation.Commands;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using FluentValidation;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Validation;
 

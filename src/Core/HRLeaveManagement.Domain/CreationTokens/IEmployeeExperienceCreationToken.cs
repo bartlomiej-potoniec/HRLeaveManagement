@@ -1,0 +1,3 @@
+﻿namespace HRLeaveManagement.Domain.CreationTokens;
+
+internal interface IEmployeeExperienceCreationToken;

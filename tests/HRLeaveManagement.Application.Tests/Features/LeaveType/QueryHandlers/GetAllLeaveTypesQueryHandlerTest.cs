@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.DTOs.LeaveTypes;
 using HRLeaveManagement.Application.Features.LeaveType.Queries;
 using HRLeaveManagement.Application.Features.LeaveType.QueryHandlers;

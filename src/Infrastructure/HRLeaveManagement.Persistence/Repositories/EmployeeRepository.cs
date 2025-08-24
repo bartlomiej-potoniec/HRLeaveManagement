@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +14,7 @@ public sealed class EmployeeRepository(ApplicationDbContext dbContext) : IEmploy
             .Include(e => e.Section)
                 .ThenInclude(s => s.Department)
             .Include(e => e.Leader)
-            .Include(e => e.EmploymentContracts)
+            .Include(e => e.EmployeeContracts)
             .ToListAsync(cancellationToken);
 
     public async Task<Employee?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -22,10 +22,42 @@ public sealed class EmployeeRepository(ApplicationDbContext dbContext) : IEmploy
             .Include(e => e.Section)
                 .ThenInclude(s => s.Department)
             .Include(e => e.Leader)
-            .Include(e => e.EmploymentContracts)
+            .Include(e => e.EmployeeContracts)
             .Include(e => e.EmployeeEducations)
             .Include(e => e.EmployeeExperiences)
             .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+    public async Task<Employee?> GetWithContractsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => await _dbContext.Employees
+            .Include(e => e.EmployeeContracts)
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+    public async Task<Employee?> GetWithRemoteWorkLimitsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => await _dbContext.Employees
+            .Include(e => e.RemoteWorkLimits)
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+    public async Task<Employee?> GetWithLeaveAllocationsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => await _dbContext.Employees
+            .Include(e => e.LeaveAllocations)
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+    public async Task<Employee?> GetWithLeaveRequestsAndAllocationByIdAsync(Guid id,
+                                                                            int leaveTypeId,
+                                                                            int currentYear,
+                                                                            CancellationToken cancellationToken = default)
+        => await _dbContext.Employees
+            .Include(e => e.LeaveRequests)
+            .Include(e => e.LeaveAllocations)
+            .Where(
+                e => e.Id == id && 
+                e.LeaveAllocations.Any(la => la.LeaveTypeId == leaveTypeId && la.Year == currentYear)
+            )
+            .FirstOrDefaultAsync(cancellationToken);
+            
+
+    public async Task AddAsync(Employee employee, CancellationToken cancellationToken = default)
+        => await _dbContext.Employees.AddAsync(employee, cancellationToken);
 
     public async Task CreateWithDetailsAsync(Employee employee,
                                              EmployeeContract employeeContract,
@@ -41,38 +73,9 @@ public sealed class EmployeeRepository(ApplicationDbContext dbContext) : IEmploy
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateBasicInfoAsync(Employee employee, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(Employee employee, CancellationToken cancellationToken = default)
     {
         _dbContext.Employees.Update(employee);
-        await _dbContext.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task UpdateWithDetailsAsync(Employee employee,
-                                             IEnumerable<EmployeeContract> contractsToCreate,
-                                             IEnumerable<EmployeeEducation> educationsToCreate,
-                                             IEnumerable<EmployeeExperience> experiencesToCreate,
-                                             IEnumerable<EmployeeContract> contractsToUpdate,
-                                             IEnumerable<EmployeeEducation> educationsToUpdate,
-                                             IEnumerable<EmployeeExperience> experiencesToUpdate,
-                                             IEnumerable<EmployeeContract> contractsToDelete,
-                                             IEnumerable<EmployeeEducation> educationsToDelete,
-                                             IEnumerable<EmployeeExperience> experiencesToDelete,
-                                             CancellationToken cancellationToken = default)
-    {
-        _dbContext.Employees.Update(employee);
-
-        _dbContext.EmployeeContracts.UpdateRange(contractsToUpdate);
-        _dbContext.EmployeeEducations.UpdateRange(educationsToUpdate);
-        _dbContext.EmployeeExperiences.UpdateRange(experiencesToUpdate);
-
-        _dbContext.EmployeeContracts.RemoveRange(contractsToDelete);
-        _dbContext.EmployeeEducations.RemoveRange(educationsToDelete);
-        _dbContext.EmployeeExperiences.RemoveRange(experiencesToDelete);
-
-        await _dbContext.EmployeeContracts.AddRangeAsync(contractsToCreate, cancellationToken);
-        await _dbContext.EmployeeEducations.AddRangeAsync(educationsToCreate, cancellationToken);
-        await _dbContext.EmployeeExperiences.AddRangeAsync(experiencesToCreate, cancellationToken);
-
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 

@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +16,11 @@ public sealed class DepartmentRepository(ApplicationDbContext dbContext) : IDepa
         => await _dbContext.Departments
             .FirstOrDefaultAsync(d => d.Id == departmentId, cancellationToken);
 
+    public async Task<Department?> GetWithDetailsById(int departmentId, CancellationToken cancellationToken = default)
+        => await _dbContext.Departments
+            .Include(d => d.Sections)
+            .FirstOrDefaultAsync(d => d.Id == departmentId, cancellationToken);
+
     public async Task CreateAsync(Department department, CancellationToken cancellationToken = default)
     {
         await _dbContext.Departments.AddAsync(department, cancellationToken);
@@ -27,4 +32,8 @@ public sealed class DepartmentRepository(ApplicationDbContext dbContext) : IDepa
         _dbContext.Departments.Update(department);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default) 
+        => await _dbContext.SaveChangesAsync(cancellationToken);
+
 }

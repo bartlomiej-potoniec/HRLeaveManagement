@@ -7,8 +7,9 @@ namespace HRLeaveManagement.Application.Contracts.Identity;
 public interface IUserService
 {
     ClaimsPrincipal? User { get; }
-    string? UserId { get; }
-    string? UserName { get; }
+    string UserId { get; }
+    Guid EmployeeId { get; }
+    string UserName { get; }
     bool IsUserLoggedIn { get; }
     
     bool IsUserInRole(string roleName);

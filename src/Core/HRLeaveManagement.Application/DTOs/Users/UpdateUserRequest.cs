@@ -3,6 +3,7 @@
 public record UpdateUserRequest(Guid Id,
                                 string FirstName,
                                 string LastName,
+                                string Gender,
                                 string Email,
                                 DateTime DateOfBirth,
                                 string? PeselNumber,

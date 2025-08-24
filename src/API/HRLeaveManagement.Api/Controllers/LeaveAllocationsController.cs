@@ -37,7 +37,7 @@ public sealed class LeaveAllocationsController(ISender sender) : ControllerBase
 
     [HttpPatch("{id}")]
     public async Task<ActionResult> Update([FromRoute] int id,
-                                           [FromBody] UpdateLeaveAllocationCommand command,
+                                           [FromBody] UpdateLeaveAllocationDaysCommand command,
                                            CancellationToken cancellationToken)
     {
         await _sender.Send(command with { Id = id }, cancellationToken);

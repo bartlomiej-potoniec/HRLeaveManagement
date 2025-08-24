@@ -1,10 +1,10 @@
-﻿using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.Features.LeaveAllocation.Commands;
+﻿using HRLeaveManagement.Application.Features.LeaveAllocation.Commands;
 using FluentValidation;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Validation;
 
-public sealed class UpdateLeaveAllocationCommandValidator : AbstractValidator<UpdateLeaveAllocationCommand>
+public sealed class UpdateLeaveAllocationCommandValidator : AbstractValidator<UpdateLeaveAllocationDaysCommand>
 {
     public UpdateLeaveAllocationCommandValidator(ILeaveAllocationRepository leaveAllocationRepository)
     {

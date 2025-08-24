@@ -1,9 +1,12 @@
-﻿using HRLeaveManagement.Persistence.DbContexts;
+﻿using HRLeaveManagement.Domain.RuleContracts;
+using HRLeaveManagement.Persistence.DbContexts;
 using HRLeaveManagement.Persistence.Repositories;
-using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Persistence.RuleSets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using HRLeaveManagement.Application.Contracts.Persistence;
 
 namespace HRLeaveManagement.Persistence.Extensions;
 
@@ -17,6 +20,11 @@ public static class PersistenceServiceRegistrationExtension
                 .GetConnectionString("HrLeaveManagementConnectionString"))
         );
 
+        services.AddScoped<IEmployeeDocumentRuleSet, EmployeeDocumentRuleSet>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
         services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
         services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
         services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();

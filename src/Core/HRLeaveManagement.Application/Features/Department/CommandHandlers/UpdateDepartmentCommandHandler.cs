@@ -1,20 +1,24 @@
-﻿using DomainDepartment = HRLeaveManagement.Domain.Entities.Department;
-using HRLeaveManagement.Application.Contracts.Identity;
+﻿using HRLeaveManagement.Domain.RuleContracts;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.Exceptions;
+using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Features.Department.Commands;
 using HRLeaveManagement.Application.Validation;
+using HRLeaveManagement.Application.Exceptions;
 using MediatR;
 
 namespace HRLeaveManagement.Application.Features.Department.CommandHandlers;
 
 public sealed class UpdateDepartmentCommandHandler(IDepartmentRepository departmentRepository,
+                                                   IEmployeeRepository employeeRepository,
+                                                   IDepartmentRuleSet departmentRuleSet,
                                                    IUserService userService,
                                                    IAppLogger<UpdateDepartmentCommandHandler> logger)
     : IRequestHandler<UpdateDepartmentCommand>
 {
     private readonly IDepartmentRepository _departmentRepository = departmentRepository;
+    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    private readonly IDepartmentRuleSet _departmentRuleSet = departmentRuleSet;
     private readonly IUserService _userService = userService;
     private readonly IAppLogger<UpdateDepartmentCommandHandler> _logger = logger;
 
@@ -30,14 +34,18 @@ public sealed class UpdateDepartmentCommandHandler(IDepartmentRepository departm
         }
 
         var department = await _departmentRepository
-            .GetByIdAsync(request.Id)
+            .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No department with ID { request.Id } found");
 
-        DomainDepartment.Update(department, request.Name, request.LeaderId, request.Description);
+        var leader = await _employeeRepository
+            .GetByIdAsync(request.LeaderId, cancellationToken)
+            ?? throw new NotFoundException($"No employee with ID: { request.LeaderId } found");
+
+        await department.UpdateAsync(_departmentRuleSet, request.Name, leader, request.Description, cancellationToken);
 
         _logger.LogInformation("Updating informations about department with ID: {Id} started", request.Id);
 
-        await _departmentRepository.UpdateAsync(department, cancellationToken);
+        await _departmentRepository.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Updating informations about department with ID: {Id} successful", request.Id);
     }

@@ -1,4 +1,7 @@
-﻿namespace HRLeaveManagement.Domain.Tests.Entities;
+﻿using HRLeaveManagement.Domain.RuleContracts;
+using HRLeaveManagement.Domain.Tests.Helpers;
+
+namespace HRLeaveManagement.Domain.Tests.Entities;
 
 public class OvertimeRequestTest
 {
@@ -6,17 +9,25 @@ public class OvertimeRequestTest
     public void Create_ForGivenParams_ReturnsNewInstance()
     {
         // Arrange
-        Guid requestingEmployeeId = Guid.NewGuid();
+        Employee requestingEmployee = EmployeeHelper.CreateEmployee();
+        Employee approver = EmployeeHelper.CreateEmployee();
         DateOnly startedAt = new(2024, 11, 11);
         DateOnly endedAt = new(2024, 11, 13);
-        Guid approverId = Guid.NewGuid();
+        string approverComment = "Comment for employee's overtime";
+        string purposeDescription = "Overtime because of work";
+
+        Mock<IWorkRequestRuleSet> workRequestRuleSetMock = WorkRequestTestHelper.CreateWorkRequestRuleSetMock();
+        WorkRequestTestHelper.SetupIsRequestApproverSuperiorOfEmployeeAsyncToReturnResult(workRequestRuleSetMock, isRuleFailed: false);
 
         // Act
         var delegationRequest = OvertimeRequest.Create(
-            requestingEmployeeId,
+            workRequestRuleSetMock.Object,
+            requestingEmployee,
             startedAt,
             endedAt,
-            approverId
+            approver,
+            approverComment,
+            purposeDescription
         );
 
         // Assert

@@ -1,78 +1,101 @@
-﻿using DomainLeaveRequest = HRLeaveManagement.Domain.Entities.LeaveRequest;
-using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
+﻿using LeaveRequestEntity = HRLeaveManagement.Domain.Entities.LeaveRequest;
+using HRLeaveManagement.Domain.Entities;
+using HRLeaveManagement.Domain.RuleContracts;
 using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.Exceptions;
-using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
-using HRLeaveManagement.Application.Validation;
-using HRLeaveManagement.Application.Contracts.Infrastructure.Email;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using HRLeaveManagement.Application.Contracts.Persistence.ContextFactories;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.Features.LeaveRequest.Commands;
+using HRLeaveManagement.Application.Exceptions;
+using HRLeaveManagement.Application.Validation;
 using MediatR;
-using AutoMapper;
-using FluentValidation.Results;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.CommandHandlers;
 
-public sealed class CreateLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository,
-                                                     ILeaveTypeRepository leaveTypeRepository,
-                                                     ILeaveAllocationRepository leaveAllocationRepository,
+public sealed class CreateLeaveRequestCommandHandler(ILeaveTypeRepository leaveTypeRepository,
+                                                     IEmployeeRepository employeeRepository,
+                                                     ILeaveRequestRuleSet leaveRequestRuleSet,
+                                                     IEmployeeDocumentRuleSet employeeDocumentRuleSet,
+                                                     IEmployeeContextFactory employeeContextFactory,
                                                      IUserService userService,
-                                                     IEmailSender emailSender,
-                                                     IAppLogger<CreateLeaveRequestCommand> logger,
-                                                     IMapper mapper)
+                                                     IUnitOfWork unitOfWork,
+                                                     TimeProvider timeProvider,
+                                                     IAppLogger<CreateLeaveRequestCommand> logger)
     : IRequestHandler<CreateLeaveRequestCommand, int>
 {
-    private readonly ILeaveRequestRepository _leaveRequestRepository = leaveRequestRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
-    private readonly ILeaveAllocationRepository _leaveAllocationRepository = leaveAllocationRepository;
+    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    private readonly ILeaveRequestRuleSet _leaveRequestRuleSet = leaveRequestRuleSet;
+    private readonly IEmployeeDocumentRuleSet _employeeDocumentRuleSet = employeeDocumentRuleSet;
+    private readonly IEmployeeContextFactory _employeeContextFactory = employeeContextFactory;
     private readonly IUserService _userService = userService;
-    private readonly IEmailSender _emailSender = emailSender;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly TimeProvider _timeProvider = timeProvider;
     private readonly IAppLogger<CreateLeaveRequestCommand> _logger = logger;
-    private readonly IMapper _mapper = mapper;
 
     public async Task<int> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
-        /*var employeeId = _userService.UserId
-            ?? throw new NotFoundException("No user claim exists in actual context");
+        var requestingEmployeeId = _userService.EmployeeId;
+        var todaysDate = _timeProvider.GetUtcNow().DateTime;
+        var currentYear = todaysDate.Year;
 
-        var validator = new CreateLeaveRequestCommandValidator(
-            _leaveTypeRepository,
-            _leaveAllocationRepository,
-            employeeId
-        );
-
-        var validationResult = await validator.ValidateAsync(request);
+        var validator = new CreateLeaveRequestCommandValidator(todaysDate);
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
-            _logger.LogWarning("");
+            _logger.LogError("Validation error occurred while proccessing {Command}", nameof(CreateLeaveRequestCommand));
             throw new BadRequestException("Invalid leave request", validationResult);
         }
 
-        var leaveRequest = _mapper.Map<DomainLeaveRequest>(request, opt =>
-            opt.AfterMap((src, dest) => dest.RequestingEmployeeId = employeeId)
+        var employee = await _employeeRepository
+            .GetWithLeaveRequestsAndAllocationByIdAsync(requestingEmployeeId, request.LeaveTypeId, currentYear, cancellationToken)
+            ?? throw new NotFoundException($"No employee with ID: { requestingEmployeeId } " +
+                $"and allocation for leave type ID: { request.LeaveTypeId } and current year found");
+
+        var approver = await _employeeRepository
+            .GetByIdAsync(request.ApproverId, cancellationToken)
+            ?? throw new NotFoundException($"No employee with ID: { requestingEmployeeId } found");
+
+        var substitutor = await _employeeRepository
+            .GetByIdAsync(request.SubstitutorId, cancellationToken)
+            ?? throw new NotFoundException($"No employee with ID: { requestingEmployeeId } found");
+
+        var leaveType = await _leaveTypeRepository
+            .GetByIdAsync(request.LeaveTypeId, cancellationToken)
+            ?? throw new NotFoundException($"No leave typ with ID: { request.LeaveTypeId } found");
+
+        var employeeWithLeaveRequestsAndAllocation = _employeeContextFactory.AsEmployeeWithLeaveRequestsAndAllocation(employee);
+        var leaveAllocation = employeeWithLeaveRequestsAndAllocation.LeaveAllocation;
+
+        var documentPayloads = (request.EmployeeDocuments ?? [])
+            .Select(doc => new EmployeeDocumentPayload(
+                doc.Title,
+                doc.DocumentNumber,
+                doc.FileUrl,
+                doc.Description
+            ));
+
+        var documents = await EmployeeDocument.CreateManyAsync(_employeeDocumentRuleSet, documentPayloads, cancellationToken);
+
+        var leaveRequest = await LeaveRequestEntity.CreateAsync(
+            _leaveRequestRuleSet,
+            employeeWithLeaveRequestsAndAllocation,
+            leaveType,
+            DateOnly.FromDateTime(request.StartedAt),
+            DateOnly.FromDateTime(request.EndedAt),
+            approver,
+            substitutor,
+            request.RequesterComment,
+            request.ReasonDescription,
+            documents,
+            cancellationToken
         );
 
-        var leaveRequestId = await _leaveRequestRepository.CreateAsync(leaveRequest);
+        employeeWithLeaveRequestsAndAllocation.AddLeaveRequest(leaveRequest);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        try
-        {
-            var email = new EmailMessage
-            {
-                To = string.Empty, *//* Get email from employee record *//*
-                TextContent = $"Your leave request for {request.StartedAt:D} to {request.EndedAt:D}" +
-                              $"has been submitted successfully.",
-                Subject = $"Leave request with ID: {leaveRequestId} submitted"
-            };
-
-            await _emailSender.SendEmailAsync(email);
-        }
-
-        catch (Exception ex)
-        {
-            _logger.LogWarning(ex.Message);
-        }
-
-        return leaveRequestId;*/
-        return 0;
+        return leaveRequest.Id;
     }
 }

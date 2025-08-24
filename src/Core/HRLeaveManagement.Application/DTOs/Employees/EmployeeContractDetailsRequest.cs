@@ -4,5 +4,7 @@ namespace HRLeaveManagement.Application.DTOs.Employees;
 
 public record EmployeeContractDetailsRequest(int? Id,
                                              ContractType ContractType,
-                                             DateTime EmployeedFrom,
-                                             DateTime? EmployeedTo = null);
+                                             DateTime StartedAt,
+                                             DateTime? ExpiredAt,
+                                             string? ContractDetails, /* new */
+                                             IEnumerable<EmployeeDocumentDetailsRequest> EmployeeDocuments /* new */);

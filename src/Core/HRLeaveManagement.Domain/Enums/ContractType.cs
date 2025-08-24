@@ -3,5 +3,6 @@
 public enum ContractType
 {
     Employment,
-    B2B
+    B2B,
+    Other
 }

@@ -14,7 +14,7 @@ public class IsCurrentlyEmployedResolver : IValueResolver<(UserDTO userDto, Empl
         var today = DateOnly.FromDateTime(DateTime.Now);
         var isCurrentlyEmployeed = false;
 
-        source.employee.EmploymentContracts
+        source.employee.EmployeeContracts
             .ToList()
             .ForEach(contract =>
             {

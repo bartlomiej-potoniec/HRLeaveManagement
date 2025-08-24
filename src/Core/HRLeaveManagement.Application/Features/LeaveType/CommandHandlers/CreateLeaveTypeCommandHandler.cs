@@ -1,18 +1,21 @@
-﻿using DomainLeaveType = HRLeaveManagement.Domain.Entities.LeaveType;
-using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using LeaveTypeEntity = HRLeaveManagement.Domain.Entities.LeaveType;
+using HRLeaveManagement.Domain.RuleContracts;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
 using HRLeaveManagement.Application.Validation;
 using HRLeaveManagement.Application.Exceptions;
-using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.CommandHandlers;
 
 public sealed class CreateLeaveTypeCommandHandler(ILeaveTypeRepository leaveTypeRepository,
+                                                  ILeaveTypeRuleSet leaveTypeRuleSet,
                                                   IAppLogger<CreateLeaveTypeCommandHandler> logger)
     : IRequestHandler<CreateLeaveTypeCommand, int>
 {
     private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
+    private readonly ILeaveTypeRuleSet _leaveTypeRuleSet = leaveTypeRuleSet;
     private readonly IAppLogger<CreateLeaveTypeCommandHandler> _logger = logger;
  
     public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
@@ -26,10 +29,12 @@ public sealed class CreateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
             throw new BadRequestException("Invalid leave type creating request", validationResult);
         }
 
-        var leaveType = DomainLeaveType.Create(
+        var leaveType = await LeaveTypeEntity.CreateAsync(
+            _leaveTypeRuleSet,
             request.Name,
+            request.PaidFraction,
             request.Description,
-            request.PaidFraction
+            cancellationToken
         );
 
         _logger.LogInformation("Creating new leave type '{Name}' started", request.Name);

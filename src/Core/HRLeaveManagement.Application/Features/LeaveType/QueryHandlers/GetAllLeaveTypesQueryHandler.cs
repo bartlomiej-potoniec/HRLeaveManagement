@@ -1,9 +1,9 @@
-﻿using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Application.Features.LeaveType.Queries;
+﻿using HRLeaveManagement.Application.Features.LeaveType.Queries;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.DTOs.LeaveTypes;
 using MediatR;
 using AutoMapper;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Features.LeaveType.QueryHandlers;
 

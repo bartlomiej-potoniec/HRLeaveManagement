@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using HRLeaveManagement.Application.Contracts.Persistence;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
 
 namespace HRLeaveManagement.Application.Validation;

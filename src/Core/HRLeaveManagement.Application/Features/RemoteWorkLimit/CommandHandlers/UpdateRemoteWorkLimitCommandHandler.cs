@@ -1,6 +1,5 @@
-﻿using DomainRemoteWorkLimit = HRLeaveManagement.Domain.Entities.RemoteWorkLimit;
+﻿using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Features.RemoteWorkLimit.Commands;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Validation;
@@ -10,11 +9,13 @@ namespace HRLeaveManagement.Application.Features.RemoteWorkLimit.CommandHandlers
 
 public sealed class UpdateRemoteWorkLimitCommandHandler(IRemoteWorkLimitRepository remoteWorkLimitRepository,
                                                         IEmployeeRepository employeeRepository,
+                                                        TimeProvider timeProvider,
                                                         IAppLogger<UpdateRemoteWorkLimitCommandHandler> logger) 
     : IRequestHandler<UpdateRemoteWorkLimitCommand>
 {
     private readonly IRemoteWorkLimitRepository _remoteWorkLimitRepository = remoteWorkLimitRepository;
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    private readonly TimeProvider _timeProvider = timeProvider;
     private readonly IAppLogger<UpdateRemoteWorkLimitCommandHandler> _logger = logger;
 
     public async Task Handle(UpdateRemoteWorkLimitCommand request, CancellationToken cancellationToken)
@@ -36,16 +37,13 @@ public sealed class UpdateRemoteWorkLimitCommandHandler(IRemoteWorkLimitReposito
             .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No remote work limit with ID: { request.Id } found");
 
-        DomainRemoteWorkLimit.Update(
-            remoteWorkLimit,
-            request.EmployeeId,
-            request.Year,
-            request.AvailableDays
-        );
+        var currentYear = _timeProvider.GetUtcNow().Year;
+
+        remoteWorkLimit.Update(currentYear, request.Year, request.AvailableDays);
 
         _logger.LogInformation("Updating informations about remote work limit with ID: {Id} started", request.Id);
 
-        await _remoteWorkLimitRepository.UpdateAsync(remoteWorkLimit, cancellationToken);
+        await _remoteWorkLimitRepository.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Updating informations about remote work limit with ID: {Id} successful", request.Id);
     }

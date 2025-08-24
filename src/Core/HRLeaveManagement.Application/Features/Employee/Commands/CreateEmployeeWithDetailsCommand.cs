@@ -6,9 +6,13 @@ namespace HRLeaveManagement.Application.Features.Employee.Commands;
 public sealed record CreateEmployeeWithDetailsCommand(Guid UserId,
                                                       string Position,
                                                       string Responsibilities,
+                                                      string ResidentialAddress, // new
+                                                      string RegisteredAddress, // new
+                                                      string? SecondaryResidentialAddress, // new
+                                                      string? RemoteWorkAddress, // new
                                                       int? SectionId,
                                                       Guid? LeaderId,
                                                       EmployeeContractRequest EmployeeContract,
-                                                      List<EmployeeEducationRequest> EmployeeEducations,
-                                                      List<EmployeeExperienceRequest> EmployeeExperiences)
+                                                      IEnumerable<EmployeeEducationRequest> EmployeeEducations,
+                                                      IEnumerable<EmployeeExperienceRequest> EmployeeExperiences)
     : IRequest<Guid>;

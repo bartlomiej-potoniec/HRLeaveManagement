@@ -1,10 +1,10 @@
 ﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
-using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.DTOs.Sections;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.Section.Queries;
 using MediatR;
 using AutoMapper;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Features.Section.QueryHandlers;
 

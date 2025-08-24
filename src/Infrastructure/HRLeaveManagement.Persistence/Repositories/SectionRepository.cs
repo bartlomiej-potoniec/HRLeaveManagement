@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -39,4 +39,6 @@ public sealed class SectionRepository(ApplicationDbContext dbContext) : ISection
         _dbContext.Update(section);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default) => await _dbContext.SaveChangesAsync(cancellationToken);
 }

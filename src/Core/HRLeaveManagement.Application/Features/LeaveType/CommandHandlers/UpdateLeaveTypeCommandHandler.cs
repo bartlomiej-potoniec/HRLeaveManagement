@@ -1,5 +1,5 @@
-﻿using DomainLeaveType = HRLeaveManagement.Domain.Entities.LeaveType;
-using HRLeaveManagement.Application.Contracts.Persistence;
+﻿using HRLeaveManagement.Domain.RuleContracts;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Features.LeaveType.Commands;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Validation;
@@ -9,10 +9,12 @@ using MediatR;
 namespace HRLeaveManagement.Application.Features.LeaveType.CommandHandlers;
 
 public sealed class UpdateLeaveTypeCommandHandler(ILeaveTypeRepository leaveTypeRepository,
+                                                    ILeaveTypeRuleSet leaveTypeRuleSet,
                                                   IAppLogger<UpdateLeaveTypeCommandHandler> logger)
     : IRequestHandler<UpdateLeaveTypeCommand>
 {
     private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
+    private readonly ILeaveTypeRuleSet _leaveTypeRuleSet = leaveTypeRuleSet;
     private readonly IAppLogger<UpdateLeaveTypeCommandHandler> _logger = logger;
 
     public async Task Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
@@ -30,16 +32,17 @@ public sealed class UpdateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
             .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No leave type with ID: { request.Id } found");
 
-        DomainLeaveType.Update(
-            leaveType,
+        await leaveType.UpdateAsync(
+            _leaveTypeRuleSet,
             request.Name,
+            request.PaidFraction,
             request.Description,
-            request.PaidFraction
+            cancellationToken
         );
         
         _logger.LogInformation("Updating informations about leave type with ID: {Id} started", request.Id);
 
-        await _leaveTypeRepository.UpdateAsync(leaveType, cancellationToken);
+        await _leaveTypeRepository.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Updating informations about leave type with ID: {Id} successful", request.Id);
     }

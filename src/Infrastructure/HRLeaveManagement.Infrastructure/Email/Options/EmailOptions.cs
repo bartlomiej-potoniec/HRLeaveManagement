@@ -1,4 +1,4 @@
-﻿namespace HRLeaveManagement.Infrastructure.Email.Settings;
+﻿namespace HRLeaveManagement.Infrastructure.Email.Options;
 
 public sealed class EmailOptions
 {
