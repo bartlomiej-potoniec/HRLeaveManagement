@@ -16,7 +16,7 @@ public class LeaveRequestTest
 
         DateOnly startedAt = new(2024, 2, 15);
         DateOnly endedAt = new(2024, 2, 20);
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
         Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
@@ -51,7 +51,7 @@ public class LeaveRequestTest
 
         DateOnly startedAt = new(2024, 2, 15);
         DateOnly endedAt = new(2024, 2, 20);
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
         Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: true);
@@ -86,7 +86,7 @@ public class LeaveRequestTest
         Employee requestingEmployee = EmployeeHelper.CreateEmployee();
         Employee substitutor = EmployeeHelper.CreateEmployee();
         Employee approver = EmployeeHelper.CreateEmployee();
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
         Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
@@ -126,7 +126,7 @@ public class LeaveRequestTest
 
         Employee substitutor = EmployeeHelper.CreateEmployee();
         Employee approver = EmployeeHelper.CreateEmployee();
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
         Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
@@ -164,7 +164,7 @@ public class LeaveRequestTest
 
         Employee substitutor = EmployeeHelper.CreateEmployee();
         Employee approver = EmployeeHelper.CreateEmployee();
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
         string comment = "Comment for leave request";
         string approverComment = "Approver comment for leave request";
@@ -237,7 +237,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -279,7 +279,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -322,7 +322,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -363,7 +363,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -405,7 +405,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -448,7 +448,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -489,7 +489,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -531,7 +531,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -574,7 +574,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -615,7 +615,7 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
@@ -678,7 +678,7 @@ public class LeaveRequestTest
             )
             .ReturnsAsync(!isRuleFailed);
 
-    private static async Task<LeaveType> GetDefaultLeaveTypeAsync() => await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
+    private static async Task<Domain.Entities.LeaveType> GetDefaultLeaveTypeAsync() => await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
 
     #endregion
 }

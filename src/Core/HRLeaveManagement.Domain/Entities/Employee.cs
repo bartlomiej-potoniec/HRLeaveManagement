@@ -24,10 +24,14 @@ public class Employee : Entity
 
     public Guid Id { get; private set; }
 
+    public string FirstName { get; private set; } // new
+    public string LastName { get; private set; } // new
+    public GenderType Gender { get; private set; } // new 
+
     public string Position { get; private set; }
     public string? Responsibilities { get; private set; }
 
-    public int AddressId { get; private set; } // new
+    public int? AddressId { get; private set; } // new
     public Address Address { get; private set; } // new
 
     public int? SectionId { get; private set; }
@@ -73,7 +77,11 @@ public class Employee : Entity
     /// <param name="experiences">Optional. List of employee professional experience history</param>
     /// <returns>A new instance of <see cref="Employee"/></returns>
     /// <exception cref="ArgumentException">When business rules are violated</exception>
-    public static Employee Create(string position,
+    public static Employee Create(Guid userId,
+                                  string firstName,
+                                  string lastName,
+                                  GenderType gender,
+                                  string position,
                                   string responsibilities,
                                   string residentialAddress,
                                   string registeredAddress,
@@ -85,6 +93,9 @@ public class Employee : Entity
         Employee employee = new()
         {
             Id = Guid.NewGuid(),
+            FirstName = firstName,
+            LastName = lastName,
+            Gender = gender,
             Position = position,
             Responsibilities = responsibilities,
             Section = section,
@@ -104,7 +115,7 @@ public class Employee : Entity
 
         employee.Address = address;
 
-        employee.AddEvent(new EmployeeCreated(employee));
+        employee.AddEvent(new EmployeeCreated(employee, userId));
         return employee;
     }
 
@@ -117,7 +128,10 @@ public class Employee : Entity
     /// <param name="section">Employee's team section identifier</param>
     /// <param name="leader">Employee's leader identifier</param>
     /// <exception cref="ArgumentException">When business rules are violated.</exception>
-    internal void Update(string position,
+    internal void Update(string firstName,
+                         string lastName,
+                         GenderType gender,
+                         string position,
                          string responsibilities,
                          string residentialAddress,
                          string registeredAddress,
@@ -133,12 +147,25 @@ public class Employee : Entity
 
         Address.Update(residentialAddress, registeredAddress, secondaryResidentialAddress, remoteWorkAddress);
 
+        FirstName = firstName;
+        LastName = lastName;
+        Gender = gender;
         Position = position;
         Responsibilities = responsibilities;
         Section = section;
         Leader = leader;
         ModifiedAt = DateTime.UtcNow;
+
+        AddEvent(new EmployeeUpdated(this));
     }
+
+    public static GenderType MapGender(string gender) => gender switch
+    {
+        "f" => GenderType.Female,
+        "m" => GenderType.Male,
+        "u" => GenderType.Unspecified,
+        _ => throw new NotImplementedException("No gender for given abbreviation"),
+    };
 
     #region EmployeeContract_Subentity_Methods
 
@@ -169,6 +196,8 @@ public class Employee : Entity
         );
 
         _employeeContracts.Add(contract);
+        AddEvent(new EmployeeContractCreated(contract));
+
         return contract;
     }
 

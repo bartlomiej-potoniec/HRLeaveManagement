@@ -17,6 +17,24 @@ public sealed class EmployeeRepository(ApplicationDbContext dbContext) : IEmploy
             .Include(e => e.EmployeeContracts)
             .ToListAsync(cancellationToken);
 
+    public async Task<IEnumerable<Employee>> GetAllWithDetailsAsync(CancellationToken cancellationToken = default)
+        => await _dbContext.Employees
+            .Include(e => e.Section)
+                .ThenInclude(s => s.Department)
+            .Include(e => e.Leader)
+            .Include(e => e.EmployeeContracts)
+            .Include(e => e.EmployeeEducations)
+            .Include(e => e.EmployeeExperiences)
+            .Include(e => e.LeaveRequests)
+            .Include(e => e.LeaveAllocations)
+            .Include(e => e.WorkRequests)
+            .Include(e => e.DelegationRequests)
+            .Include(e => e.ExtraRemoteWorkRequests)
+            .Include(e => e.OvertimeRequests)
+            .Include(e => e.RemoteWorkLimits)
+            .Include(e => e.TimeRegisters)
+            .ToListAsync(cancellationToken);
+
     public async Task<Employee?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => await _dbContext.Employees
             .Include(e => e.Section)

@@ -1,5 +1,6 @@
 ﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Messaging;
+using HRLeaveManagement.Application.DTOs.Auth;
 using HRLeaveManagement.Domain.Contracts;
 using HRLeaveManagement.Infrastructure.Messaging.Options;
 using HRLeaveManagement.Persistence.DbContexts;
@@ -29,6 +30,7 @@ public sealed class OutboxMessageProcessor(IServiceScopeFactory serviceScopeFact
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var eventPublisher = scope.ServiceProvider.GetRequiredService<IEventPublisher>();
             var eventAdapter = scope.ServiceProvider.GetRequiredService<IEventAdapter>();
+            var authMetadataProvider = scope.ServiceProvider.GetRequiredService<IAuthMetadataProvider>();
 
             var messageCountToProcessing = _outboxOptions.MessageProcessor.MessageCountToProcessing;
             var messageCollectionPeriodInSeconds = _outboxOptions.MessageProcessor.MessageCollectionPeriodInSeconds;
@@ -53,11 +55,21 @@ public sealed class OutboxMessageProcessor(IServiceScopeFactory serviceScopeFact
                     IEntityEvent? @event = JsonSerializer.Deserialize(message.Payload, type) as IEntityEvent;
                     if (type is null)
                     {
-                        _logger.LogWarning("Unknown event type or null", message.Type);
+                        _logger.LogWarning("Unknown event type or null");
                         continue;
                     }
 
-                    var transportEvent = eventAdapter.Map(@event);
+                    AuthMetadata? authMetadata = message.AuthMetadata is null 
+                        ? null 
+                        : JsonSerializer.Deserialize<AuthMetadata>(message.AuthMetadata);
+
+                    if (authMetadata is null)
+                    {
+                        _logger.LogWarning("Unknown auth-metadata or null");
+                        continue;
+                    }
+
+                    var transportEvent = eventAdapter.Map(@event, authMetadata);
 
                     await eventPublisher.PublishAsync(transportEvent, stoppingToken);
                     message.MarkAsProcessed();

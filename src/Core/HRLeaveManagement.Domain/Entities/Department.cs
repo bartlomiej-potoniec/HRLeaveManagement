@@ -1,4 +1,5 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Events;
+using HRLeaveManagement.Domain.RuleContracts;
 
 namespace HRLeaveManagement.Domain.Entities;
 
@@ -48,7 +49,7 @@ public class Department : Entity
     {
         await ValidateBaseRulesAsync(name, departmentRuleSet, cancellationToken);
 
-        return new()
+        var department = new Department
         {
             Name = name,
             Description = description,
@@ -56,6 +57,9 @@ public class Department : Entity
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow
         };
+
+        department.AddEvent(new DepartmentCreated(department));
+        return department;
     }
 
     /// <summary>
@@ -114,6 +118,8 @@ public class Department : Entity
         Description = description;
         Leader = leader;
         ModifiedAt = DateTime.UtcNow;
+
+        AddEvent(new DepartmentUpdated(this));
     }
 
     /// <summary>

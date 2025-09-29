@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.Application.Contracts.Application;
+using HRLeaveManagement.Application.Features.LeaveAllocation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -15,8 +16,8 @@ public static class ApplicationServiceRegistrationExtension
         );
 
         services.AddScoped<IEmployeeSubservice, IEmployeeSubservice>();
+        services.AddScoped<LeavePolicyFactory>();
 
         return services;
     }
-
 }

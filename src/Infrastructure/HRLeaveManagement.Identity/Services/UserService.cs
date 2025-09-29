@@ -40,6 +40,9 @@ public sealed partial class UserService(UserManager<ApplicationUser> userManager
     public string UserName => User?.FindFirst(claim => claim.Type is JwtRegisteredClaimNames.UniqueName)?.Value
         ?? throw new UnauthorizedAccessException("User is unathorized");
 
+    public string UserEmail => User?.FindFirst(claim => claim.Type is JwtRegisteredClaimNames.Email)?.Value
+        ?? throw new UnauthorizedAccessException("User is unathorized");
+
     public Guid EmployeeId => Guid.Parse(
         User?.FindFirst(claim => claim.Type is "employeeId")?.Value
         ?? throw new UnauthorizedAccessException("Employee is unathorized")

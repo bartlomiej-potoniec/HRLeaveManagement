@@ -6,6 +6,24 @@ namespace HRLeaveManagement.Persistence.ContextFactories;
 
 public sealed class EmployeeContextFactory : IEmployeeContextFactory
 {
+    public EmployeeWithAllInfo AsEmployeeWithAllInfo(Employee employee)
+    {
+        EnsureEntityLoaded(employee);
+        EnsureCollectionLoaded(employee.EmployeeContracts);
+        EnsureCollectionLoaded(employee.EmployeeEducations);
+        EnsureCollectionLoaded(employee.EmployeeExperiences);
+        EnsureCollectionLoaded(employee.LeaveRequests);
+        EnsureCollectionLoaded(employee.LeaveAllocations);
+        EnsureCollectionLoaded(employee.WorkRequests);
+        EnsureCollectionLoaded(employee.DelegationRequests);
+        EnsureCollectionLoaded(employee.ExtraRemoteWorkRequests);
+        EnsureCollectionLoaded(employee.OvertimeRequests);
+        EnsureCollectionLoaded(employee.RemoteWorkLimits);
+        EnsureCollectionLoaded(employee.TimeRegisters);
+
+        return new EmployeeWithAllInfo(employee);
+    }
+
     public EmployeeWithAddress AsEmployeeWithAddress(Employee employee)
     {
         EnsureEntityLoaded(employee);

@@ -1,7 +1,8 @@
-﻿using HRLeaveManagement.Domain.Events;
+﻿using HRLeaveManagement.Application.DTOs.Auth;
+using HRLeaveManagement.Domain.Events;
 using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.Events;
 
-public sealed record LeaveRequestCreatedEvent(LeaveRequestCreated Payload)
+public sealed record LeaveRequestCreatedEvent(LeaveRequestCreated Payload, AuthMetadata UserMetadata)
     : INotification;

@@ -9,29 +9,32 @@ namespace HRLeaveManagement.Identity.Services;
 
 public sealed partial class UserService
 {
-    public async Task UpdateUserEmployeeIdAsync(Guid userId,
-                                                Guid employeeId,
-                                                CancellationToken cancellationToken = default)
+    public async Task<UserDTO> UpdateUserEmployeeIdAsync(Guid userId,
+                                                         Guid employeeId,
+                                                         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Updating user with ID: {UserId} with employee ID: {EmployeeId} started", userId, employeeId);
 
         var user = await _userManager
             .FindByIdAsync(userId.ToString())
-            ?? throw new NotFoundException($"No user with ID: {userId} found");
+            ?? throw new NotFoundException($"No user with ID: { userId } found");
 
         ApplicationUser.UpdateUserEmployeeId(user, employeeId);
         var result = await _userManager.UpdateAsync(user);
-
+        
         if (!result.Succeeded)
         {
             _logger.LogError("Updating user with ID: {UserId} with employee ID: {EmployeeId} failed", user.Id, employeeId);
             throw new BadRequestException(
                 _identityResult.ToValidationErrors(result),
-                $"Failed to update user with ID {user.Id}"
+                $"Failed to update user with ID { user.Id }"
             );
         }
 
         _logger.LogInformation("Updating user with ID: {UserId} with employee ID: {EmployeeId} successful", userId, employeeId);
+        
+        var userDto = ApplicationUser.CreateUserDTO(user);
+        return userDto;
     }
 
     public async Task UpdateAsync(UpdateUserRequest request, CancellationToken cancellationToken = default)

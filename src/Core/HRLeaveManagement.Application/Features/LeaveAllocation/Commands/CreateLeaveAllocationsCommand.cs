@@ -1,9 +1,5 @@
-﻿using HRLeaveManagement.Application.DTOs.LeaveAllocations;
-using MediatR;
+﻿using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveAllocation.Commands;
 
-public sealed record CreateLeaveAllocationsCommand(Guid EmployeeId,
-                                                   int Year,
-                                                   List<LeaveAllocationForUserRequest> LeaveAllocations) 
-    : IRequest;
+public sealed record CreateLeaveAllocationsCommand(int LeaveTypeId, string? LeaveRuleSet) : IRequest;

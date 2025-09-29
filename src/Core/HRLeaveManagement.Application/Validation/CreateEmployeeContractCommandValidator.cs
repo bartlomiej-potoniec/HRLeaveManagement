@@ -1,7 +1,7 @@
-﻿using HRLeaveManagement.Application.Features.Employee.Commands;
-using FluentValidation;
-using HRLeaveManagement.Domain.Enums;
+﻿using HRLeaveManagement.Domain.Enums;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using HRLeaveManagement.Application.Features.Employee.Commands;
+using FluentValidation;
 
 namespace HRLeaveManagement.Application.Validation;
 
@@ -11,9 +11,7 @@ public sealed class CreateEmployeeContractCommandValidator : AbstractValidator<C
     {
         RuleFor(c => c.EmployeeId)
             .NotNull()
-                .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id, token) is not null)
-                .WithMessage("Employee for given ID does not exist");
+                .WithMessage("{PropertyName} is required");
 
         RuleFor(c => c.ContractType)
             .NotNull()
@@ -25,16 +23,16 @@ public sealed class CreateEmployeeContractCommandValidator : AbstractValidator<C
                     return $"Value of ContractType must be in [{validValues}]";
                 });
 
-        RuleFor(c => c.EmployeedFrom)
+        RuleFor(c => c.StartedAt)
             .NotNull()
                 .WithMessage("{PropertyName} is required")
-            .LessThan(c => c.EmployeedTo)
-                .When(c => c.EmployeedTo.HasValue)
+            .LessThan(c => c.ExpiredAt)
+                .When(c => c.ExpiredAt.HasValue)
                     .WithMessage("EmployeedFrom must be less than EmployeedFrom, if specified.");
 
-        RuleFor(c => c.EmployeedTo)
-            .GreaterThan(c => c.EmployeedFrom)
-                .When(c => c.EmployeedTo.HasValue)
+        RuleFor(c => c.ExpiredAt)
+            .GreaterThan(c => c.StartedAt)
+                .When(c => c.ExpiredAt.HasValue)
                     .WithMessage("EmployeedTo must be greater than EmployeedFrom, if specified.");
     }
 }

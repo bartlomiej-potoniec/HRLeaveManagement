@@ -113,7 +113,7 @@ internal class EmployeeHelper
         Employee substitutor = CreateEmployee();
         approver ??= CreateEmployee();
 
-        LeaveType leaveType = await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
+        Domain.Entities.LeaveType leaveType = await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
 
         Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = new();
         leaveRequestRuleSetMock

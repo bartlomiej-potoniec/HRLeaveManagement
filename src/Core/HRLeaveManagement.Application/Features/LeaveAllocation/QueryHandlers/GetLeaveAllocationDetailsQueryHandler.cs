@@ -1,10 +1,10 @@
 ﻿using HRLeaveManagement.Application.DTOs.LeaveAllocations;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
-using MediatR;
-using AutoMapper;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using MediatR;
+using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.LeaveAllocation.QueryHandlers;
 
@@ -29,7 +29,6 @@ public sealed class GetLeaveAllocationWithDetailsQueryHandler(ILeaveAllocationRe
         var leaveAllocationDto = _mapper.Map<LeaveAllocationDetailsDTO>(leaveAllocation);
 
         _logger.LogInformation("Fetching leave allocation with ID: {Id} successful", request.Id);
-
         return leaveAllocationDto;
     }
 }

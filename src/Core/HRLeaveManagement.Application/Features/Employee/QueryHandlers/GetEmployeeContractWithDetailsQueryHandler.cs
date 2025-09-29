@@ -2,9 +2,9 @@
 using HRLeaveManagement.Application.DTOs.Employees;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.Employee.Queries;
-using MediatR;
-using AutoMapper;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using AutoMapper;
+using MediatR;
 
 namespace HRLeaveManagement.Application.Features.Employee.QueryHandlers;
 

@@ -9,6 +9,7 @@ using HRLeaveManagement.Application.Validation;
 using HRLeaveManagement.Application.Exceptions;
 using MediatR;
 using HRLeaveManagement.Application.Contracts.Persistence.ContextFactories;
+using HRLeaveManagement.Application.Contracts.Persistence;
 
 namespace HRLeaveManagement.Application.Features.Employee.CommandHandlers;
 
@@ -17,6 +18,7 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
                                                             IEmployeeContextFactory employeeContextFactory,
                                                             IEmployeeSubservice employeeSubservice,
                                                             IUserService userService,
+                                                            IUnitOfWork unitOfWork,
                                                             IAppLogger<UpdateEmployeeWithDetailsCommandHandler> logger) 
     : IRequestHandler<UpdateEmployeeWithDetailsCommand>
 {
@@ -25,6 +27,7 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
     private readonly IEmployeeContextFactory _employeeContextFactory = employeeContextFactory;
     private readonly IEmployeeSubservice _employeeSubservice = employeeSubservice;
     private readonly IUserService _userService = userService;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAppLogger<UpdateEmployeeWithDetailsCommandHandler> _logger = logger;
 
     public async Task Handle(UpdateEmployeeWithDetailsCommand request, CancellationToken cancellationToken)
@@ -83,7 +86,7 @@ public sealed class UpdateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
 
         _logger.LogInformation("Updating employee with ID: {EmployeeId} started", request.Id);
 
-        await _employeeRepository.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Updating employee with ID: {EmployeeId} successful", request.Id);
     }

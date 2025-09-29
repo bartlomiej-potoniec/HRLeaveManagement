@@ -38,10 +38,8 @@ public sealed class CreateLeaveTypeCommandHandler(ILeaveTypeRepository leaveType
         );
 
         _logger.LogInformation("Creating new leave type '{Name}' started", request.Name);
-
         await _leaveTypeRepository.CreateAsync(leaveType, cancellationToken);
-
-        _logger.LogInformation("Creating new leave type '{Name}' successsful", request.Name);
+        _logger.LogInformation("Creating new leave type '{Name}' successful", request.Name);
 
         return leaveType.Id;
     }

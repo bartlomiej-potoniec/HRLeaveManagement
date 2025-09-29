@@ -1,8 +1,8 @@
 ﻿using HRLeaveManagement.Domain.Enums;
 using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Features.Employee.Commands;
-using FluentValidation;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using FluentValidation;
 
 namespace HRLeaveManagement.Application.Validation;
 
@@ -33,9 +33,7 @@ public sealed class CreateEmployeeWithDetailsCommandValidator : AbstractValidato
 
         RuleFor(c => c.SectionId)
             .GreaterThan(0)
-                .WithMessage("{PropertyName} must be greater than 0")
-            .MustAsync(async (id, token) => id is null || await sectionRepository.GetByIdAsync(id.Value, token) is not null)
-                .WithMessage("Section for given ID does not exist");
+                .WithMessage("{PropertyName} must be greater than 0");
 
         RuleFor(c => c.LeaderId)
             .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeIdAsync(id.Value, token))

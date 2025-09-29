@@ -1,9 +1,10 @@
 ﻿using DomainEmployee = HRLeaveManagement.Domain.Entities.Employee;
 using DomainSection = HRLeaveManagement.Domain.Entities.Section;
-using HRLeaveManagement.Application.Contracts.Identity;
-using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
+using HRLeaveManagement.Application.Contracts.Persistence;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Persistence.ContextFactories;
+using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Features.Employee.Commands;
 using HRLeaveManagement.Application.Validation;
@@ -15,6 +16,7 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
                                                           ISectionRepository sectionRepository,
                                                           IEmployeeContextFactory employeeContextFactory,
                                                           IUserService userService,
+                                                          IUnitOfWork unitOfWork,
                                                           IAppLogger<UpdateEmployeeBasicInfoCommandHandler> logger) 
     : IRequestHandler<UpdateEmployeeBasicInfoCommand>
 {
@@ -22,6 +24,7 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
     private readonly ISectionRepository _sectionRepository = sectionRepository;
     private readonly IEmployeeContextFactory _employeeContextFactory = employeeContextFactory;
     private readonly IUserService _userService = userService;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAppLogger<UpdateEmployeeBasicInfoCommandHandler> _logger = logger;
 
     public async Task Handle(UpdateEmployeeBasicInfoCommand request, CancellationToken cancellationToken)
@@ -75,10 +78,7 @@ public sealed class UpdateEmployeeBasicInfoCommandHandler(IEmployeeRepository em
         );
 
         _logger.LogInformation("Updating informations about employee with ID: {UserId} started", request.Id);
-
-        //await _employeeRepository.UpdateAsync(employee, cancellationToken);
-        await _employeeRepository.SaveChangesAsync(cancellationToken);
-
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("Updating informations about employee with ID: {UserId} successful", request.Id);
     }
 }

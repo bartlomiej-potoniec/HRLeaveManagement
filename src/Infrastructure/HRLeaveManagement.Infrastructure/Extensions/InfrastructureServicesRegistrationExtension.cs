@@ -32,6 +32,7 @@ public static class InfrastructureServicesRegistrationExtension
         services.AddTransient(typeof(IEventAdapter<>), typeof(MediatREventAdapter<>));
         services.AddTransient<IEventAdapter>(provider =>
             provider.GetRequiredService<IEventAdapter<INotification>>());
+        
 
         services.Configure<EmailOptions>(configuration.GetSection(nameof(EmailOptions)));
         services.Configure<OutboxOptions>(configuration.GetSection(nameof(OutboxOptions)));
@@ -39,6 +40,7 @@ public static class InfrastructureServicesRegistrationExtension
 
         services.AddTransient<IEmailSender, EmailSender>();
 
+        services.AddScoped<IAuthMetadataProvider, AuthMetadataProvider>();
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         services.AddScoped<ISieveProcessor, ApplicationSieveProcessor>();
         services.AddScoped<ISieveCustomFilterMethods, SieveCustomRolesFilterMethods>();

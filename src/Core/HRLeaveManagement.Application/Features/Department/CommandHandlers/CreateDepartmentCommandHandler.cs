@@ -41,9 +41,7 @@ public sealed class CreateDepartmentCommandHandler(IDepartmentRepository departm
             .CreateSingleAsync(_departmentRuleSet, request.Name, leader, request.Description, cancellationToken);
 
         _logger.LogInformation("Creating new department '{Name}' started", request.Name);
-
         await _departmentRepository.CreateAsync(department, cancellationToken);
-
         _logger.LogInformation("Creating new department '{Name}' successful", request.Name);
 
         return department.Id;

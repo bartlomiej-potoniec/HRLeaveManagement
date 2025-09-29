@@ -15,7 +15,9 @@ public sealed class CreateDepartmentCommandValidator : AbstractValidator<CreateD
                 .WithMessage("{PropertyName} cannot be empty");
 
         RuleFor(c => c.LeaderId)
-            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeIdAsync(id.Value, token))
+            .NotNull()
+                .WithMessage("{PropertyName} is required")
+            .MustAsync(userService.IsUserInManagerRoleByEmployeeIdAsync)
                 .WithMessage("Leader for given ID does not exist");
     }
 }

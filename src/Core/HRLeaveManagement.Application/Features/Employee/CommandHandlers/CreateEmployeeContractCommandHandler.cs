@@ -5,20 +5,20 @@ using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Application;
 using HRLeaveManagement.Application.DTOs.Employees;
+using HRLeaveManagement.Application.Contracts.Persistence;
 using MediatR;
-using AutoMapper;
 
 namespace HRLeaveManagement.Application.Features.Employee.CommandHandlers;
 
 public sealed class CreateEmployeeContractCommandHandler(IEmployeeRepository employeeRepository,
                                                          IEmployeeSubservice employeeSubservice,
-                                                         IMapper mapper,
+                                                         IUnitOfWork unitOfWork,
                                                          IAppLogger<CreateEmployeeContractCommandHandler> logger)
     : IRequestHandler<CreateEmployeeContractCommand, int>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IEmployeeSubservice _employeeSubservice = employeeSubservice;
-    private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAppLogger<CreateEmployeeContractCommandHandler> _logger = logger;
 
     public async Task<int> Handle(CreateEmployeeContractCommand request, CancellationToken cancellationToken)
@@ -49,7 +49,7 @@ public sealed class CreateEmployeeContractCommandHandler(IEmployeeRepository emp
 
         _logger.LogInformation("Creating new employee contract for employee ID: {UserId} started", request.EmployeeId);
 
-        await _employeeRepository.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Creating new employee contract for employee ID: {UserId} successful", request.EmployeeId);
 

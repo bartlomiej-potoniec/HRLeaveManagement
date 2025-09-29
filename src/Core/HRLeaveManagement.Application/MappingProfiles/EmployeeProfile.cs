@@ -1,8 +1,8 @@
 ﻿using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Application.DTOs.Employees;
-using AutoMapper;
-using HRLeaveManagement.Application.MappingResolvers;
 using HRLeaveManagement.Application.DTOs.Users;
+using HRLeaveManagement.Application.MappingResolvers;
+using AutoMapper;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 
@@ -13,8 +13,6 @@ public class EmployeeProfile : Profile
         CreateMap<(UserDTO userDto, Employee employee), EmployeeDTO>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.userDto.Id))
             .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.employee.Id))
-            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.userDto.FirstName))
-            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.userDto.LastName))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.userDto.Email))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.userDto.PhoneNumber))
             .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.employee.Position))
@@ -44,8 +42,6 @@ public class EmployeeProfile : Profile
         CreateMap<(UserDTO userDto, Employee employee), EmployeeDetailsDTO>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.userDto.Id))
             .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.employee.Id))
-            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.userDto.FirstName))
-            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.userDto.LastName))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.userDto.Email))
             .ForMember(dest => dest.PeselNumber, opt => opt.MapFrom(src => src.userDto.PeselNumber))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.userDto.PhoneNumber))

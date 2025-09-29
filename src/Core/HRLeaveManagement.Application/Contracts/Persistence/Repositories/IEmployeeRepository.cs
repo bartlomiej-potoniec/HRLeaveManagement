@@ -5,6 +5,7 @@ namespace HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 public interface IEmployeeRepository
 {
     Task<IEnumerable<Employee>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Employee>> GetAllWithDetailsAsync(CancellationToken cancellationToken = default);
     Task<Employee?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Employee?> GetWithContractsByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Employee?> GetWithRemoteWorkLimitsByIdAsync(Guid id, CancellationToken cancellationToken = default);

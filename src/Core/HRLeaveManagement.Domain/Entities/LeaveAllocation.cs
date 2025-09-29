@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.Domain.BoundedEntities;
+using HRLeaveManagement.Domain.Contracts;
 using HRLeaveManagement.Domain.Events;
 
 namespace HRLeaveManagement.Domain.Entities;
@@ -6,6 +7,7 @@ namespace HRLeaveManagement.Domain.Entities;
 public class LeaveAllocation : Entity
 {
     public int Id { get; private set; }
+
     public Guid EmployeeId { get; private set; }
     public Employee Employee { get; private set; }
 
@@ -35,11 +37,18 @@ public class LeaveAllocation : Entity
     /// <param name="availableDays">Available days count for specific leave-type allocation</param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public static LeaveAllocation Create(EmployeeWithLeaveAllocations employee,
+    public static LeaveAllocation Create(ILeaveAllocationPolicy policy,
+                                         EmployeeWithAllInfo employee,
                                          LeaveType leaveType,
                                          int year,
                                          int? availableDays = null)
     {
+        var leaveEvaluationContext = new LeaveEvaluationContext(employee);
+        if (!policy.IsEligible(leaveEvaluationContext))
+        {
+            throw new InvalidOperationException($"Employee is not allowed to allocate leave type: { leaveType.Name }");
+        }
+
         var isLeaveAllocationForYearExist = employee.LeaveAllocations
             .Where(la => la.LeaveType == leaveType && la.Year == year) is not null;
 
@@ -95,6 +104,8 @@ public class LeaveAllocation : Entity
 
         AvailableDays = availableDays;
         ModifiedAt = DateTime.UtcNow;
+
+        AddEvent(new LeaveAllocationUpdated(this));
     }
 
     /// <summary>

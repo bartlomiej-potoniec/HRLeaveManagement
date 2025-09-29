@@ -3,9 +3,9 @@ using HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Exceptions;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using MediatR;
 using AutoMapper;
-using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Features.LeaveAllocation.QueryHandlers;
 
@@ -43,7 +43,6 @@ public sealed class GetAllLeaveAllocationsQueryHandler(ILeaveAllocationRepositor
         });
 
         _logger.LogInformation("Fetching all departments successful");
-
         return leaveAllocationDtos;
     }
 }

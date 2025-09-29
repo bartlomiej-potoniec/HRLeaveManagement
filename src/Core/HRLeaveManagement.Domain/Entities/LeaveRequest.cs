@@ -15,7 +15,7 @@ public class LeaveRequest : Entity
     public Employee RequestingEmployee { get; private set; }
 
     public int LeaveTypeId { get; private set; }
-    public LeaveType? LeaveType { get; private set; }
+    public LeaveType LeaveType { get; private set; }
 
     public DateOnly StartedAt { get; private set; }
     public DateOnly EndedAt { get; private set; }
@@ -98,7 +98,7 @@ public class LeaveRequest : Entity
             Status = RequestStatus.Pending,
             CreatedAt = DateTime.UtcNow
         };
-
+        
         if (employeeDocuments is not null)
         {
             leaveRequest._employeeDocuments.AddRange(employeeDocuments);

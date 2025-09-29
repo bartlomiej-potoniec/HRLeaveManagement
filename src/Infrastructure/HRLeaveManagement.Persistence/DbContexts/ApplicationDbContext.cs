@@ -1,14 +1,14 @@
-﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Application.Contracts.Infrastructure.Messaging;
+﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Messaging;
+using HRLeaveManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRLeaveManagement.Persistence.DbContexts;
 
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-                                         IOutboxMetadataProvider metadataProvider) 
+                                         IAuthMetadataProvider metadataProvider) 
     : DbContext(options)
 {
-    private readonly IOutboxMetadataProvider _metadataProvider = metadataProvider;
+    private readonly IAuthMetadataProvider _metadataProvider = metadataProvider;
 
     public DbSet<Employee> Employees { get; set; }
     public DbSet<EmployeeContract> EmployeeContracts { get; set; }
@@ -50,8 +50,9 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
         foreach (var entity in entitiesWithEvents)
         {
             var metadata = _metadataProvider.GetMetadata();
+            string userId = metadata.RequestingUserId;
 
-            var messages = OutboxMessage.CreateForEntity(entity, metadata);
+            var messages = OutboxMessage.CreateForEntity(entity, userId, metadata);
             OutboxMessages.AddRange(messages);
         }
 

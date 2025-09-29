@@ -113,4 +113,39 @@ public sealed class EmailService(IEmailSender emailSender,
 
         return actionLink;
     }
+
+    public async Task SendDepartmentCreationEmailAsync(string email,
+                                                       int departmentId,
+                                                       string departmentName,
+                                                       CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;   
+    }
+
+    public async Task SendEmployeeContractCreationEmailAsync(string email,
+                                                             string contractType,
+                                                             string employeeName,
+                                                             CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
+    }
+
+    public async Task SendEmployeeUpdatingEmailAsync(string email,
+                                                     string employeeId,
+                                                     string firstName,
+                                                     string lastName,
+                                                     CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
+    }
+
+    public Task SendEmployeeUpdatingEmailAsync(string email, Guid employeeId, string firstName, string lastName, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SendLeaveAllocationUdpatingEmailAsync(string requestingUserEmail, Guid employeeId, string employeeFirstName, string employeeLastName, int? availableDays, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

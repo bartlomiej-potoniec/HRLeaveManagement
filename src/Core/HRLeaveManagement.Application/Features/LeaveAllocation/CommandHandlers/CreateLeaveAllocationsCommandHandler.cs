@@ -1,4 +1,5 @@
 ﻿using LeaveAllocationEntity = HRLeaveManagement.Domain.Entities.LeaveAllocation;
+using HRLeaveManagement.Domain.BoundedEntities;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Contracts.Persistence.ContextFactories;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
@@ -13,6 +14,8 @@ public sealed class CreateLeaveAllocationsCommandHandler(ILeaveAllocationReposit
                                                          ILeaveTypeRepository leaveTypeRepository,
                                                          IEmployeeRepository employeeRepository,
                                                          IEmployeeContextFactory employeeContextFactory,
+                                                         LeavePolicyFactory policyFactory,
+                                                         TimeProvider timeProvider,
                                                          IAppLogger<CreateLeaveAllocationsCommand> logger) 
     : IRequestHandler<CreateLeaveAllocationsCommand>
 {
@@ -20,16 +23,13 @@ public sealed class CreateLeaveAllocationsCommandHandler(ILeaveAllocationReposit
     private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IEmployeeContextFactory _employeeContextFactory = employeeContextFactory;
+    private readonly LeavePolicyFactory _policyFactory = policyFactory;
+    private readonly TimeProvider _timeProvider = timeProvider;
     private readonly IAppLogger<CreateLeaveAllocationsCommand> _logger = logger;
 
     public async Task Handle(CreateLeaveAllocationsCommand request, CancellationToken cancellationToken)
     {
-        var validator = new CreateLeaveAllocationsCommandValidator(
-            _leaveAllocationRepository,
-            _leaveTypeRepository,
-            _employeeRepository
-        );
-
+        var validator = new CreateLeaveAllocationsCommandValidator(_leaveTypeRepository);
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
@@ -38,28 +38,32 @@ public sealed class CreateLeaveAllocationsCommandHandler(ILeaveAllocationReposit
             throw new BadRequestException("Invalid leave allocations creation request", validationResult);
         }
 
-        var employee = await _employeeRepository
-            .GetWithLeaveAllocationsByIdAsync(request.EmployeeId, cancellationToken)
-            ?? throw new NotFoundException($"No employee with ID: { request.EmployeeId } found");
+        var employees = await _employeeRepository.GetAllWithDetailsAsync(cancellationToken);
+        var leaveType = await _leaveTypeRepository
+            .GetByIdAsync(request.LeaveTypeId, cancellationToken)
+            ?? throw new NotFoundException($"No leave type with ID: { request.LeaveTypeId } found");
 
-        var employeeWithLeaveAllocations = _employeeContextFactory.AsEmployeeWithLeaveAllocations(employee);
+        List<LeaveAllocationEntity> allocations = [];
 
-        foreach (var allocation in request.LeaveAllocations)
+        var currentYear = _timeProvider.GetUtcNow().Year;
+        var policy = _policyFactory.Create(leaveType);
+
+        foreach (var employee in employees)
         {
-            var leaveType = await _leaveTypeRepository
-                .GetByIdAsync(allocation.LeaveTypeId, cancellationToken)
-                ?? throw new NotFoundException($"No leave type with ID: { allocation.LeaveTypeId } found");
+            var employeeWithAllInfo = _employeeContextFactory.AsEmployeeWithAllInfo(employee);
+            var leaveEvaluationContext = new LeaveEvaluationContext(employeeWithAllInfo);
 
-            var leaveAllocation = LeaveAllocationEntity
-                .Create(employeeWithLeaveAllocations, leaveType, request.Year, allocation.AvailableDays);
-            
-            employeeWithLeaveAllocations.AddLeaveAllocation(leaveAllocation);
+            if (policy.IsEligible(leaveEvaluationContext))
+            {
+                var availableDays = policy.CalculateDays(leaveEvaluationContext);
+                var allocation = LeaveAllocationEntity.Create(policy, employeeWithAllInfo, leaveType, currentYear, availableDays);
+
+                allocations.Add(allocation);
+            }
         }
 
-        _logger.LogInformation("Creating new leave allocations for employee with ID: {Id} started", request.EmployeeId);
-
-        await _employeeRepository.SaveChangesAsync(cancellationToken);
-
-        _logger.LogInformation("Creating new leave allocations for employee with ID: {Id} successful", request.EmployeeId);
+        _logger.LogInformation("Creating new leave allocations for leave type with ID: {Id} started", request.LeaveTypeId);
+        await _leaveAllocationRepository.CreateRangeAsync(allocations, cancellationToken);
+        _logger.LogInformation("Creating new leave allocations for leave type with ID: {Id} successful", request.LeaveTypeId);
     }
 }

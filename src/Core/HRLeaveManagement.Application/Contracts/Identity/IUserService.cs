@@ -10,6 +10,7 @@ public interface IUserService
     string UserId { get; }
     Guid EmployeeId { get; }
     string UserName { get; }
+    string UserEmail { get; }
     bool IsUserLoggedIn { get; }
     
     bool IsUserInRole(string roleName);
@@ -27,8 +28,8 @@ public interface IUserService
     Task<UserDTO> GetUserByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<UserDTO> GetUserByEmployeeIdAsync(Guid employeeId, CancellationToken cancellationToken);
 
+    Task<UserDTO> UpdateUserEmployeeIdAsync(Guid userId, Guid employeeId, CancellationToken cancellationToken);
     Task UpdateAsync(UpdateUserRequest request, CancellationToken cancellationToken);
-    Task UpdateUserEmployeeIdAsync(Guid userId, Guid employeeId, CancellationToken cancellationToken);
     Task LockoutUserAccountByIdAsync(LockoutUserAccountRequest request, CancellationToken cancellationToken);
     Task LockoutUserAccountsAsync(LockoutManyUserAccountsRequest request, CancellationToken cancellationToken);
     Task UnlockUserAccountByIdAsync(UnlockUserAccountRequest request, CancellationToken cancellationToken);

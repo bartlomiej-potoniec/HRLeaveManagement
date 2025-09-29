@@ -7,12 +7,10 @@ using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveAllocation.CommandHandlers;
 
-public sealed class UpdateLeaveAllocationDaysCommandHandler(ILeaveTypeRepository leaveTypeRepository,
-                                                            ILeaveAllocationRepository leaveAllocationRepository,
+public sealed class UpdateLeaveAllocationDaysCommandHandler(ILeaveAllocationRepository leaveAllocationRepository,
                                                             IAppLogger<UpdateLeaveAllocationDaysCommand> logger) 
     : IRequestHandler<UpdateLeaveAllocationDaysCommand>
 {
-    private readonly ILeaveTypeRepository _leaveTypeRepository = leaveTypeRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository = leaveAllocationRepository;
     private readonly IAppLogger<UpdateLeaveAllocationDaysCommand> _logger = logger;
 
@@ -34,9 +32,7 @@ public sealed class UpdateLeaveAllocationDaysCommandHandler(ILeaveTypeRepository
         leaveAllocation.UpdateDays(request.AvailableDays);
 
         _logger.LogInformation("Updating informations about leave allocation with ID: {Id} started", request.Id);
-
         await _leaveAllocationRepository.UpdateAsync(leaveAllocation, cancellationToken);
-
         _logger.LogInformation("Updating informations about leave allocation with ID: {Id} successful", request.Id);
     }
 }

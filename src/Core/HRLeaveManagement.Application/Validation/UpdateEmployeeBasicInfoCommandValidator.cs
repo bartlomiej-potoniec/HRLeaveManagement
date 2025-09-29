@@ -1,7 +1,7 @@
-﻿using FluentValidation;
-using HRLeaveManagement.Application.Contracts.Identity;
+﻿using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using HRLeaveManagement.Application.Features.Employee.Commands;
+using FluentValidation;
 
 namespace HRLeaveManagement.Application.Validation;
 
@@ -13,9 +13,7 @@ public sealed class UpdateEmployeeBasicInfoCommandValidator : AbstractValidator<
     {
         RuleFor(c => c.Id)
             .NotNull()
-                .WithMessage("{PropertyName} is required")
-            .MustAsync(async (id, token) => await employeeRepository.GetByIdAsync(id, token) is not null)
-                .WithMessage("Employee for given ID does not exist");
+                .WithMessage("{PropertyName} is required");
 
         RuleFor(c => c.Position)
             .NotNull()
@@ -31,12 +29,6 @@ public sealed class UpdateEmployeeBasicInfoCommandValidator : AbstractValidator<
 
         RuleFor(c => c.SectionId)
             .GreaterThan(0)
-                .WithMessage("{PropertyName} must be greater than 0")
-            .MustAsync(async (id, token) => id is null || await sectionRepository.GetByIdAsync(id.Value, token) is not null)
-                .WithMessage("Section for given ID does not exist");
-
-        RuleFor(c => c.LeaderId)
-            .MustAsync(async (id, token) => id is null || await userService.IsUserInManagerRoleByEmployeeIdAsync(id.Value, token))
-                .WithMessage("Leader for given ID does not exist");
+                .WithMessage("{PropertyName} must be greater than 0");
     }
 }

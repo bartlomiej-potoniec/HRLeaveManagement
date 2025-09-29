@@ -16,7 +16,6 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
                                                             ISectionRepository sectionRepository,
                                                             IEmployeeSubservice employeeSubservice,
                                                             IUserService userService,
-                                                            IEmailService emailService,
                                                             IUnitOfWork unitOfWork,
                                                             IAppLogger<CreateEmployeeWithDetailsCommandHandler> logger)
     : IRequestHandler<CreateEmployeeWithDetailsCommand, Guid>
@@ -25,7 +24,6 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
     private readonly ISectionRepository _sectionRepository = sectionRepository;
     private readonly IEmployeeSubservice _employeeSubservice = employeeSubservice;
     private readonly IUserService _userService = userService;
-    private readonly IEmailService _emailService = emailService;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAppLogger<CreateEmployeeWithDetailsCommandHandler> _logger = logger;
 
@@ -43,6 +41,8 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
         var user = await _userService
             .GetUserByIdAsync(request.UserId, cancellationToken)
             ?? throw new NotFoundException($"No user with ID: { request.UserId } found");
+
+        var gender = DomainEmployee.MapGender(user.Gender);
 
         DomainEmployee? leader = default;
         DomainSection? section = default;
@@ -62,6 +62,10 @@ public sealed class CreateEmployeeWithDetailsCommandHandler(IEmployeeRepository 
         }
 
         var employee = DomainEmployee.Create(
+            user.Id,
+            user.FirstName,
+            user.LastName,
+            gender,
             request.Position,
             request.Responsibilities,
             request.ResidentialAddress,

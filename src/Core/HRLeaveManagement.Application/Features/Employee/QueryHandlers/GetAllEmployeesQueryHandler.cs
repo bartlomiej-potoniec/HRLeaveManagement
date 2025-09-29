@@ -2,11 +2,11 @@
 using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Features.Employee.Queries;
 using HRLeaveManagement.Application.DTOs.Employees;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
-using MediatR;
 using AutoMapper;
-using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using MediatR;
 
 namespace HRLeaveManagement.Application.Features.Employee.QueryHandlers;
 
@@ -32,16 +32,25 @@ public sealed class GetAllEmployeesQueryHandler(IEmployeeRepository employeeRepo
 
         await Parallel.ForEachAsync(employees, async (employee, token) =>
         {
-            if (cancellationToken.IsCancellationRequested) return;
+            if (cancellationToken.IsCancellationRequested)
+            { 
+                return; 
+            }
 
             using var scope = _serviceProvider.CreateScope();
             var scopedUserService = scope.ServiceProvider.GetRequiredService<IUserService>();
 
             var isUserEmployee = await scopedUserService.IsUserEmployeeByEmployeeIdAsync(employee.Id, cancellationToken);
-            if (isUserEmployee is false) return;
+            if (isUserEmployee is false)
+            { 
+                return; 
+            }
 
             var user = await scopedUserService.GetUserByEmployeeIdAsync(employee.Id, cancellationToken);
-            if (user is null) return;
+            if (user is null)
+            {
+                return;
+            }
 
             var userLeader = employee.LeaderId.HasValue 
                 ? await scopedUserService.GetUserByEmployeeIdAsync(employee.LeaderId.Value, cancellationToken) 

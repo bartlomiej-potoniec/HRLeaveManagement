@@ -1,12 +1,19 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Enums;
+using HRLeaveManagement.Domain.RuleContracts;
 
 namespace HRLeaveManagement.Domain.Entities;
 
 public class LeaveType
 {
     public int Id { get; private set; }
+    public string Code { get; private set; } // new
     public string Name { get; private set; }
     public string? Description { get; private set; }
+
+    public int? DefaultDays { get; private set; } // new
+    public bool IsPredefined { get; private set; } // new
+    public LeaveRuleType Rule { get; private set; } // new
+
     public decimal PaidFraction { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime ModifiedAt { get; private set; }

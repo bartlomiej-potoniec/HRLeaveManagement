@@ -5,6 +5,7 @@ namespace HRLeaveManagement.Application.Contracts.Persistence.ContextFactories;
 
 public interface IEmployeeContextFactory
 {
+    EmployeeWithAllInfo AsEmployeeWithAllInfo(Employee employee);
     EmployeeWithAddress AsEmployeeWithAddress(Employee employee);
     EmployeeWithContracts AsEmployeeWithContracts(Employee employee);
     EmployeeWithEducations AsEmployeeWithEducations(Employee employee);
