@@ -2,4 +2,4 @@
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.Commands;
 
-public sealed record DeleteLeaveRequestCommand(int Id) : IRequest;
+public sealed record ApproveLeaveRequestCommand(int Id) : IRequest;

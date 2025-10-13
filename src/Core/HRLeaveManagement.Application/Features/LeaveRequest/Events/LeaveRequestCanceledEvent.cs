@@ -4,5 +4,5 @@ using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.Events;
 
-public sealed record LeaveRequestCreatedEvent(LeaveRequestCreated Payload, AuthMetadata AuthMetadata)
+public sealed record LeaveRequestCanceledEvent(LeaveRequestCanceled Payload, AuthMetadata AuthMetadata)
     : INotification;

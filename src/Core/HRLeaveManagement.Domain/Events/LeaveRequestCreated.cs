@@ -17,6 +17,5 @@ public sealed class LeaveRequestCreated(LeaveRequest leaveRequest) : IEntityEven
         => $"{ leaveRequest.Approver.FirstName } { leaveRequest.Approver.LastName }";
 
     public DateTime OccurredOn => DateTime.UtcNow;
-
     public string Content => $"Wystawiono wniosek o { LeaveTypeName } na { LeaveStartedAt }-{ LeaveEndedAt }";
 }

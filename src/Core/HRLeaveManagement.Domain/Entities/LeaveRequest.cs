@@ -127,6 +127,7 @@ public class LeaveRequest : Entity
         }
 
         UpdateStatus(RequestStatus.Approved);
+        AddEvent(new LeaveRequestApproved(this));
     }
 
     /// <summary>
@@ -147,8 +148,9 @@ public class LeaveRequest : Entity
         {
             throw new InvalidOperationException("It is not allowed to reject canceled or approved request");
         }
-        
+
         UpdateStatus(RequestStatus.Rejected);
+        AddEvent(new LeaveRequestRejected(this));
     }
 
     /// <summary>
@@ -170,6 +172,7 @@ public class LeaveRequest : Entity
         }
 
         UpdateStatus(RequestStatus.Canceled);
+        AddEvent(new LeaveRequestCanceled(this));
     }
 
     public void ChangeApproverOn(EmployeeWithLeaveRequests requestingApprover,
@@ -210,6 +213,13 @@ public class LeaveRequest : Entity
                                                      ILeaveRequestRuleSet leaveRequestRuleSet,
                                                      CancellationToken cancellationToken)
     {
+        var isRequesterAllowedToUseLeaveType = await leaveRequestRuleSet
+            .IsRequesterAllowedToUseLeaveType(requestingEmployee.Employee, leaveType, cancellationToken);
+        if (!isRequesterAllowedToUseLeaveType)
+        {
+            throw new InvalidOperationException($"Requesting employee is not allowed to use leave type: { leaveType.Name }");
+        }
+
         if (requestingEmployee.Employee == approver)
         {
             throw new InvalidOperationException("Requesting employee cannot be their own approver");
@@ -217,17 +227,10 @@ public class LeaveRequest : Entity
 
         var isRequestApproverSuperiorOfEmployee = await leaveRequestRuleSet
             .IsRequestApproverSuperiorOfEmployeeAsync(approver, requestingEmployee.Employee, cancellationToken);
-
         if (isRequestApproverSuperiorOfEmployee)
         {
             throw new InvalidOperationException("Approver must be a superior of requesting employee");
         }
-
-        // think 'bout it
-        //if (startedAt < DateOnly.FromDateTime(DateTime.UtcNow))
-        //{
-        //    throw new InvalidOperationException("Started date must be at least todays's date");
-        //}
 
         if (startedAt > endedAt)
         {

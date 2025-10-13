@@ -36,11 +36,7 @@ public sealed class CreateLeaveRequestCommandHandler(ILeaveTypeRepository leaveT
 
     public async Task<int> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
-        var requestingEmployeeId = _userService.EmployeeId;
-        var todaysDate = _timeProvider.GetUtcNow().DateTime;
-        var currentYear = todaysDate.Year;
-
-        var validator = new CreateLeaveRequestCommandValidator(todaysDate);
+        var validator = new CreateLeaveRequestCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
@@ -48,6 +44,10 @@ public sealed class CreateLeaveRequestCommandHandler(ILeaveTypeRepository leaveT
             _logger.LogError("Validation error occurred while proccessing {Command}", nameof(CreateLeaveRequestCommand));
             throw new BadRequestException("Invalid leave request", validationResult);
         }
+
+        var requestingEmployeeId = _userService.EmployeeId;
+        var todaysDate = _timeProvider.GetUtcNow().DateTime;
+        var currentYear = todaysDate.Year;
 
         var employee = await _employeeRepository
             .GetWithLeaveRequestsAndAllocationByIdAsync(requestingEmployeeId, request.LeaveTypeId, currentYear, cancellationToken)

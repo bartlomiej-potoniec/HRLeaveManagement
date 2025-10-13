@@ -19,10 +19,11 @@ public sealed class MediatREventAdapter<TTransportEvent> : IEventAdapter<TTransp
     private static INotification GetAvailableEvents(IEntityEvent? @event, AuthMetadata authMetadata)
         => @event switch
         {
-            LeaveRequestCreated ev => new LeaveRequestCreatedEvent(ev, authMetadata),
-            EmployeeCreated ev     => new EmployeeCreatedEvent(ev, authMetadata),
-            DepartmentCreated ev   => new DepartmentCreatedEvent(ev, authMetadata),
-            DepartmentUpdated ev   => new DepartmentUpdatedEvent(ev, authMetadata),
-            _                      => throw new NotImplementedException("There's no notification-event with given type")
+            EmployeeCreated ev      => new EmployeeCreatedEvent(ev, authMetadata),
+            DepartmentCreated ev    => new DepartmentCreatedEvent(ev, authMetadata),
+            DepartmentUpdated ev    => new DepartmentUpdatedEvent(ev, authMetadata),
+            LeaveRequestCreated ev  => new LeaveRequestCreatedEvent(ev, authMetadata),
+            LeaveRequestCanceled ev => new LeaveRequestCanceledEvent(ev, authMetadata),
+            _                       => throw new NotImplementedException("There's no notification-event with given type")
         };
 }

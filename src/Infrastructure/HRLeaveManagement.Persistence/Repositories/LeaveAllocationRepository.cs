@@ -26,12 +26,15 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext dbContext) : 
             .Include(la => la.LeaveType)
             .FirstOrDefaultAsync(la => la.Id == id, cancellationToken);
 
-    public async Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(Guid employeeId,
-                                                                         int leaveTypeId,
-                                                                         CancellationToken cancellationToken = default)
+    public async Task<LeaveAllocation?> GetUserLeaveAllocationByIdAsync(Guid employeeId,
+                                                                        int leaveTypeId,
+                                                                        int year,
+                                                                        CancellationToken cancellationToken = default)
         => await _dbContext.LeaveAllocations
-            .FirstOrDefaultAsync(
-                la => la.EmployeeId == employeeId && la.LeaveTypeId == leaveTypeId,
+            .FirstOrDefaultAsync(la => 
+                la.EmployeeId == employeeId && 
+                    la.LeaveTypeId == leaveTypeId &&
+                    la.Year == year,
                 cancellationToken
             );
 
@@ -60,8 +63,8 @@ public sealed class LeaveAllocationRepository(ApplicationDbContext dbContext) : 
         => await _dbContext.LeaveAllocations
             .AnyAsync(la => 
                 la.EmployeeId == employeeId &&
-                la.LeaveTypeId == leaveTypeId &&
-                la.Year == year,
+                    la.LeaveTypeId == leaveTypeId &&
+                    la.Year == year,
                 cancellationToken
             );
 

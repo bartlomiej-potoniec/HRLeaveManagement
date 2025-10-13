@@ -126,5 +126,15 @@ public class LeaveAllocation : Entity
         AddEvent(new LeaveAllocationDaysUsed(this));
     }
 
+    /// <summary>
+    /// Returns specific leave-allocation days when cancel request after approving
+    /// </summary>
+    /// <param name="requestedDays"></param>
+    public void ReturnDays(int requestedDays)
+    {
+        UsedDays -= requestedDays;
+        RemainingDays += requestedDays;
+    }
+
     #endregion
 }

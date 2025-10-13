@@ -9,7 +9,6 @@ public sealed record CreateLeaveRequestCommand(int LeaveTypeId,
                                                Guid ApproverId,
                                                Guid SubstitutorId,
                                                string? RequesterComment,
-                                               string? ApproverComment,
                                                string? ReasonDescription,
                                                IEnumerable<EmployeeDocumentRequest>? EmployeeDocuments) 
     : IRequest<int>;

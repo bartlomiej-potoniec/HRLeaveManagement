@@ -9,27 +9,27 @@ using MediatR;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.CommandHandlers;
 
-public sealed class CancelLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository,
-                                                     IEmployeeRepository employeeRepository,
-                                                     IUserService userService,
-                                                     IUnitOfWork unitOfWork,
-                                                     IAppLogger<CancelLeaveRequestCommand> logger) 
-    : IRequestHandler<CancelLeaveRequestCommand>
+public sealed class ApproveLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository,
+                                                      IEmployeeRepository employeeRepository,
+                                                      IUserService userService,
+                                                      IUnitOfWork unitOfWork,
+                                                      IAppLogger<ApproveLeaveRequestCommandHandler> logger)
+    : IRequestHandler<ApproveLeaveRequestCommand>
 {
-    public readonly ILeaveRequestRepository _leaveRequestRepository = leaveRequestRepository;
+    private readonly ILeaveRequestRepository _leaveRequestRepository = leaveRequestRepository;
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IUserService _userService = userService;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-    private readonly IAppLogger<CancelLeaveRequestCommand> _logger = logger;
+    private readonly IAppLogger<ApproveLeaveRequestCommandHandler> _logger = logger;
 
-    public async Task Handle(CancelLeaveRequestCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ApproveLeaveRequestCommand request, CancellationToken cancellationToken)
     {
-        var validator = new CancelLeaveRequestCommandValidator();
+        var validator = new ApproveLeaveRequestCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
-            _logger.LogError("Validation error occurred while proccessing {Command}", nameof(CancelLeaveRequestCommand));
+            _logger.LogError("Validation error occurred while proccessing {Command}", nameof(ApproveLeaveRequestCommand));
             throw new BadRequestException("Invalid cancelation leave request", validationResult);
         }
 
@@ -43,9 +43,9 @@ public sealed class CancelLeaveRequestCommandHandler(ILeaveRequestRepository lea
             .GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException($"No leave request with ID: { request.Id } found");
 
-        leaveRequest.Cancel(employee);
+        leaveRequest.Approve(employee);
 
-        _logger.LogInformation("Cancelation for leave request with ID: {RequestId} by employee with ID: {EmployeeId}", request.Id, requestingEmployeeId);
+        _logger.LogInformation("Approving for leave request with ID: {RequestId} by employee with ID: {EmployeeId}", request.Id, requestingEmployeeId);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

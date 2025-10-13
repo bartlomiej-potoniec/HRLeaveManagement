@@ -13,9 +13,10 @@ public interface ILeaveAllocationRepository
     Task<IReadOnlyList<LeaveAllocation>> GetAllLeaveAllocationsWithDetailsAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<LeaveAllocation>> GetUserLeaveAllocationsWithDetailsAsync(string userId,
                                                                                  CancellationToken cancellationToken = default);
-    Task<LeaveAllocation?> GetUserLeaveAllocationsByIdAsync(Guid employeeId,
-                                                            int leaveTypeId,
-                                                            CancellationToken cancellationToken = default);
+    Task<LeaveAllocation?> GetUserLeaveAllocationByIdAsync(Guid employeeId,
+                                                           int leaveTypeId,
+                                                           int year,
+                                                           CancellationToken cancellationToken = default);
 
     Task<bool> IsAllocationForEmployeeExistAsync(Guid employeeId,
                                                  int leaveTypeId,
