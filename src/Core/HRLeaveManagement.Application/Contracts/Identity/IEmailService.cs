@@ -35,5 +35,10 @@ public interface IEmailService
                                             string leaveTypeName,
                                             DateTime leaveRequestCreatedAt,
                                             CancellationToken cancellationToken);
+    Task SendLeaveRequestRejectionEmailAsync(string requestingUserEmail,
+                                             string requestingUserName,
+                                             string leaveTypeName,
+                                             DateTime leaveRequestCreatedAt,
+                                             CancellationToken cancellationToken);
     string GenerateEmailConfirmationLink(string userId, string token, CancellationToken cancellationToken);
 }

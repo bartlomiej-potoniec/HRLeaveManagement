@@ -148,4 +148,24 @@ public sealed class EmailService(IEmailSender emailSender,
     {
         throw new NotImplementedException();
     }
+
+    public Task SendLeaveRequestCreationEmail(string requestingUserEmail, string requesterFullName, string approverFullName, string leaveTypeName, DateOnly leaveStartedAt, DateOnly leaveEndedAt, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SendLeaveRequestCancelationEmail(string requestingUserEmail, string requestingUserName, string leaveTypeName, DateTime leaveRequestCreatedAt, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SendLeaveRequestApprovalEmailAsync(string requestingUserEmail, string requestingUserName, string leaveTypeName, DateTime leaveRequestCreatedAt, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SendLeaveRequestRejectionEmailAsync(string requestingUserEmail, string requestingUserName, string leaveTypeName, DateTime leaveRequestCreatedAt, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

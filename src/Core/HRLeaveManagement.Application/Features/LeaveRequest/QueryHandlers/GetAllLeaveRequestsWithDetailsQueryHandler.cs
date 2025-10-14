@@ -3,9 +3,9 @@ using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Application.DTOs;
 using HRLeaveManagement.Application.Features.LeaveRequest.Queries;
 using HRLeaveManagement.Application.Exceptions;
+using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 using MediatR;
 using AutoMapper;
-using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.QueryHandlers;
 

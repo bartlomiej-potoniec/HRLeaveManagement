@@ -15,11 +15,10 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<IEnumerable<LeaveRequestDTO>>> GetAllWithDetails([FromRoute] bool isUserLoggedIn,
-                                                                                    CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<LeaveRequestDTO>>> GetAllWithDetails(CancellationToken cancellationToken)
     {
         var leaveRequests = await _sender.Send(
-            new GetAllLeaveRequestsWithDetailsQuery(isUserLoggedIn),
+            new GetAllLeaveRequestsWithDetailsQuery(),
             cancellationToken
         );
 
@@ -49,40 +48,37 @@ public sealed class LeaveRequestsController(ISender sender) : ControllerBase
         return CreatedAtAction(nameof(GetWithDetailsById), new { id = leaveRequestId }, command);
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPatch("{id:int}/approve")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
-    public async Task<ActionResult> Update([FromRoute] int id,
-                                           [FromBody] UpdateLeaveRequestCommand command,
-                                           CancellationToken cancellationToken)
+    public async Task<ActionResult> Approve(int id,
+                                            [FromBody] ApproveLeaveRequestCommand command,
+                                            CancellationToken cancellationToken)
     {
-        await _sender.Send(command with { Id = id }, cancellationToken);
+        await _sender.Send(command, cancellationToken);
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpPatch("{id:int}/reject")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
-    public async Task<ActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
-    {
-        await _sender.Send(new DeleteLeaveRequestCommand(id), cancellationToken);
-        return NoContent();
-    }
-
-    [HttpPatch("cancel")]
-    public async Task<ActionResult> Cancel([FromBody] CancelLeaveRequestCommand command,
+    public async Task<ActionResult> Reject([FromRoute] int id,
+                                           [FromBody] RejectLeaveRequestCommand command,
                                            CancellationToken cancellationToken)
     {
         await _sender.Send(command, cancellationToken);
         return NoContent();
     }
 
-    [HttpPatch("approve")]
-    public async Task<ActionResult> Approve([FromBody] ChangeLeaveRequestApprovalCommand command,
-                                            CancellationToken cancellationToken)
+    [HttpPatch("{id:int}/cancel")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Cancel([FromRoute] int id,
+                                       [FromBody] CancelLeaveRequestCommand command,
+                                       CancellationToken cancellationToken)
     {
         await _sender.Send(command, cancellationToken);
         return NoContent();
