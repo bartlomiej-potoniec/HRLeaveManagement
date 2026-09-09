@@ -1,4 +1,6 @@
-﻿namespace HRLeaveManagement.Domain.Tests.Entities;
+﻿using HRLeaveManagement.Domain.Employee.Address;
+
+namespace HRLeaveManagement.Domain.Tests.Entities;
 
 public class AddressTest
 {

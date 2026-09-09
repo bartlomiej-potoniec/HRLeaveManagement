@@ -1,8 +1,9 @@
-﻿using HRLeaveManagement.Application.Features.LeaveType.Commands;
-using HRLeaveManagement.Application.Features.LeaveType.Queries;
+﻿using HRLeaveManagement.Application.Features.LeaveType.Queries;
 using HRLeaveManagement.Application.DTOs.LeaveTypes;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using HRLeaveManagement.Application.Features.LeaveType.CreateLeaveType.Commands;
+using HRLeaveManagement.Application.Features.LeaveType.UpdateLeaveType.Commands;
 
 namespace HRLeaveManagement.Api.Controllers;
 

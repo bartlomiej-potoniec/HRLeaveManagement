@@ -1,6 +1,6 @@
 ﻿using Moq;
-using HRLeaveManagement.Domain.Entities;
 using HRLeaveManagement.Application.Contracts.Persistence.Repositories;
+using HRLeaveManagement.Domain.Leave.LeaveType;
 
 namespace HRLeaveManagement.Application.Tests.Mocks;
 

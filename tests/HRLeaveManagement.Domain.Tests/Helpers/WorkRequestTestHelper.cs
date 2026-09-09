@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.WorkRequest;
 
 namespace HRLeaveManagement.Domain.Tests.Helpers;
 

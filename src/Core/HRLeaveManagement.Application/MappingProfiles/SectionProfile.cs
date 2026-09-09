@@ -1,6 +1,6 @@
-﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Application.DTOs.Sections;
+﻿using HRLeaveManagement.Application.DTOs.Sections;
 using AutoMapper;
+using HRLeaveManagement.Domain.Department.Section;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 

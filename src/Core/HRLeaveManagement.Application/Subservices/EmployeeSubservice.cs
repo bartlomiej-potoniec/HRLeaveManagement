@@ -1,17 +1,20 @@
-﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Domain.RuleContracts;
-using HRLeaveManagement.Application.Contracts.Application;
+﻿using HRLeaveManagement.Application.Contracts.Application;
 using HRLeaveManagement.Application.Contracts.Persistence.ContextFactories;
 using HRLeaveManagement.Application.DTOs.Employees;
+using HRLeaveManagement.Domain.Employee;
+using HRLeaveManagement.Domain.Employee.Contract;
+using HRLeaveManagement.Domain.Document;
+using HRLeaveManagement.Domain.Employee.Education;
+using HRLeaveManagement.Domain.Employee.Experience;
 
 namespace HRLeaveManagement.Application.Subservices;
 
 public sealed class EmployeeSubservice(IEmployeeContextFactory employeeContextFactory,
-                                       IEmployeeDocumentRuleSet employeeDocumentRuleSet)
+                                       IEmployeeDocumentNumberUniqueChecker employeeDocumentRuleSet)
     : IEmployeeSubservice
 {
     private readonly IEmployeeContextFactory _employeeContextFactory = employeeContextFactory;
-    private readonly IEmployeeDocumentRuleSet _employeeDocumentRuleSet = employeeDocumentRuleSet;
+    private readonly IEmployeeDocumentNumberUniqueChecker _employeeDocumentRuleSet = employeeDocumentRuleSet;
 
     public async Task<EmployeeContract> CreateEmployeeContract(Employee employee,
                                                                EmployeeContractRequest contractRequest,
@@ -158,7 +161,7 @@ public sealed class EmployeeSubservice(IEmployeeContextFactory employeeContextFa
             // Add new contract documents
             foreach (var docuemntDto in dto.EmployeeDocuments.Where(doc => doc.Id is null))
             {
-                var document = await EmployeeDocument.CreateSingleAsync(
+                var document = await EmployeeDocument.CreateAsync(
                     _employeeDocumentRuleSet,
                     docuemntDto.Title,
                     docuemntDto.DocumentNumber,
@@ -260,7 +263,7 @@ public sealed class EmployeeSubservice(IEmployeeContextFactory employeeContextFa
             // Add new contract documents
             foreach (var docuemntDto in dto.EmployeeDocuments.Where(doc => doc.Id is null))
             {
-                var document = await EmployeeDocument.CreateSingleAsync(
+                var document = await EmployeeDocument.CreateAsync(
                     _employeeDocumentRuleSet,
                     docuemntDto.Title,
                     docuemntDto.DocumentNumber,
@@ -363,7 +366,7 @@ public sealed class EmployeeSubservice(IEmployeeContextFactory employeeContextFa
             // Add new contract documents
             foreach (var docuemntDto in dto.EmployeeDocuments.Where(doc => doc.Id is null))
             {
-                var document = await EmployeeDocument.CreateSingleAsync(
+                var document = await EmployeeDocument.CreateAsync(
                     _employeeDocumentRuleSet,
                     docuemntDto.Title,
                     docuemntDto.DocumentNumber,

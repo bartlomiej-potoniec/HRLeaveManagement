@@ -1,8 +1,11 @@
-﻿using HRLeaveManagement.Domain.Entities;
-using HRLeaveManagement.Application.DTOs.Employees;
+﻿using HRLeaveManagement.Application.DTOs.Employees;
 using HRLeaveManagement.Application.DTOs.Users;
 using HRLeaveManagement.Application.MappingResolvers;
 using AutoMapper;
+using HRLeaveManagement.Domain.Employee;
+using HRLeaveManagement.Domain.Employee.Contract;
+using HRLeaveManagement.Domain.Employee.Education;
+using HRLeaveManagement.Domain.Employee.Experience;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 

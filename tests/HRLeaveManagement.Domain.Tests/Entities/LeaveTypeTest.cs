@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Leave.LeaveType;
 using System.Xml.Linq;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
@@ -11,7 +11,7 @@ public class LeaveTypeTest
         // Arrange
         string name = "Vacation leave";
 
-        Mock<ILeaveTypeRuleSet> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
+        Mock<ILeaveTypeNameUniqueChecker> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
         SetupLeaveTypeRuleSetMockToReturnResult(leaveTypeRuleSetMock, isRuleFailed: true);
 
         var expectedExceptionMessage = "Leave type with name 'Vacation leave' already exists";
@@ -33,7 +33,7 @@ public class LeaveTypeTest
         string name = "Vacation leave";
         decimal paidFraction = -2.0M;
 
-        Mock<ILeaveTypeRuleSet> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
+        Mock<ILeaveTypeNameUniqueChecker> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
         SetupLeaveTypeRuleSetMockToReturnResult(leaveTypeRuleSetMock, isRuleFailed: false);
 
         var expectedExceptionMessage = "Paid fraction of leave type must be greater than 0";
@@ -56,7 +56,7 @@ public class LeaveTypeTest
         decimal paidFraction = -2.0M;
         string description = "Description for Vacation leave";
 
-        Mock<ILeaveTypeRuleSet> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
+        Mock<ILeaveTypeNameUniqueChecker> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
         SetupLeaveTypeRuleSetMockToReturnResult(leaveTypeRuleSetMock, isRuleFailed: false);
 
         var expectedLeaveType = new
@@ -87,7 +87,7 @@ public class LeaveTypeTest
         decimal paidFractionToUpdate = -2.0M;
         string descriptionToUpdate = "Description for Vacation leave";
 
-        Mock<ILeaveTypeRuleSet> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
+        Mock<ILeaveTypeNameUniqueChecker> leaveTypeRuleSetMock = CreateLeaveTypeRuleSetMock();
         SetupLeaveTypeRuleSetMockToReturnResult(leaveTypeRuleSetMock, isRuleFailed: false);
 
         LeaveType leaveType = await LeaveType.CreateAsync(leaveTypeRuleSetMock.Object, "Some leave");
@@ -114,12 +114,12 @@ public class LeaveTypeTest
 
     #region Test_Factory_Methods
 
-    private static Mock<ILeaveTypeRuleSet> CreateLeaveTypeRuleSetMock() => new();
+    private static Mock<ILeaveTypeNameUniqueChecker> CreateLeaveTypeRuleSetMock() => new();
 
-    private static void SetupLeaveTypeRuleSetMockToReturnResult(Mock<ILeaveTypeRuleSet> leaveTypeRuleSetMock,
+    private static void SetupLeaveTypeRuleSetMockToReturnResult(Mock<ILeaveTypeNameUniqueChecker> leaveTypeRuleSetMock,
                                                                 bool isRuleFailed)
         => leaveTypeRuleSetMock
-            .Setup(rule => rule.IsNameUniqueAsync(It.IsAny<string>(), CancellationToken.None))
+            .Setup(rule => rule.IsEligible(It.IsAny<string>(), CancellationToken.None))
             .ReturnsAsync(!isRuleFailed);
 
     #endregion

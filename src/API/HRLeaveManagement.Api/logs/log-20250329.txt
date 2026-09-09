@@ -1,0 +1,719 @@
+2025-03-29 08:23:37.651 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 08:23:40.692 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 08:23:40.694 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 08:23:40.772 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 08:23:40.773 +01:00 [INF] Hosting environment: Development
+2025-03-29 08:23:40.774 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 08:23:57.905 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 2.4369 ms
+2025-03-29 08:23:58.808 +01:00 [INF] Logging in started for user apotoni24 with id: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:23:59.018 +01:00 [INF] Logging in successful for user apotoni24 with id: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:23:59.031 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 1114.5651 ms
+2025-03-29 08:24:08.238 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.4675 ms
+2025-03-29 08:24:08.238 +01:00 [INF] HTTP OPTIONS /api/Sections responded 204 in 0.5350 ms
+2025-03-29 08:24:08.248 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.0487 ms
+2025-03-29 08:24:08.243 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0775 ms
+2025-03-29 08:24:08.391 +01:00 [INF] Fetching all users with details started
+2025-03-29 08:24:08.565 +01:00 [INF] Fetching all users with details successful
+2025-03-29 08:24:08.566 +01:00 [INF] Paginating result started
+2025-03-29 08:24:08.597 +01:00 [INF] Paginating result successfull
+2025-03-29 08:24:08.623 +01:00 [INF] HTTP GET /api/Users responded 200 in 360.0248 ms
+2025-03-29 08:24:08.637 +01:00 [INF] Fetching all sections started
+2025-03-29 08:24:08.640 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:24:08.884 +01:00 [INF] Fetching all sections successful
+2025-03-29 08:24:08.888 +01:00 [INF] HTTP GET /api/Sections responded 200 in 625.7390 ms
+2025-03-29 08:24:08.952 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:08.952 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:24:08.955 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:24:08.964 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:24:08.966 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:24:08.964 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:08.966 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:08.967 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:08.969 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:08.972 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:08.973 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:08.973 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:24:08.974 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:24:08.975 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:08.979 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:24:08.982 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:24:08.983 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:24:08.986 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:24:08.986 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:08.987 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:24:08.990 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:08.995 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:09.013 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:09.015 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:24:09.052 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:24:09.052 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:24:09.052 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:24:09.085 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:24:09.087 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:24:09.104 +01:00 [INF] HTTP GET /api/Employees responded 200 in 849.9697 ms
+2025-03-29 08:24:09.114 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:24:09.124 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:09.124 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:24:09.134 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:09.135 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:09.125 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:24:09.140 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:24:09.140 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:09.144 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:24:09.140 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:24:09.148 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:09.142 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:09.140 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:09.152 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:09.167 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:24:09.183 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:24:09.197 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:09.198 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:09.199 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:09.201 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:24:09.205 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:24:09.202 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:09.204 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:24:09.207 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:24:09.212 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:24:09.212 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:24:09.215 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:24:09.215 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:24:09.220 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:24:09.221 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:24:09.223 +01:00 [INF] HTTP GET /api/Employees responded 200 in 115.6556 ms
+2025-03-29 08:24:53.301 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 0.1331 ms
+2025-03-29 08:24:53.316 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.0330 ms
+2025-03-29 08:24:53.323 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:24:53.325 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:24:53.330 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:24:53.339 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:24:53.345 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 08:24:53.352 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:24:53.356 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:53.364 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:24:53.367 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:53.370 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:24:53.382 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:53.384 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:53.387 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:24:53.383 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:53.388 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:53.389 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:53.388 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:24:53.390 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:24:53.391 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:24:53.396 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:24:53.396 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:53.399 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:24:53.398 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:24:53.400 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:24:53.390 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:24:53.403 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:24:53.403 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:24:53.404 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:24:53.404 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 08:24:53.405 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:24:53.408 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:24:53.414 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:24:53.418 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:24:53.418 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:24:53.422 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:24:53.423 +01:00 [INF] HTTP GET /api/Employees responded 200 in 103.2812 ms
+2025-03-29 08:24:53.453 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 08:24:53.590 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:24:53.604 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 288.2972 ms
+2025-03-29 08:24:53.966 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0583 ms
+2025-03-29 08:24:53.976 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 08:24:54.014 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 08:24:54.016 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 45.4890 ms
+2025-03-29 08:38:30.652 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 08:38:33.573 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 08:38:33.584 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 08:38:33.654 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 08:38:33.656 +01:00 [INF] Hosting environment: Development
+2025-03-29 08:38:33.657 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 08:38:52.026 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 3.5019 ms
+2025-03-29 08:38:52.028 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 1.0636 ms
+2025-03-29 08:38:52.624 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:38:52.624 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:38:52.629 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:38:52.970 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:38:52.972 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 08:38:53.097 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:38:53.097 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 08:38:53.101 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:38:53.101 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:38:53.103 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:38:53.105 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:38:53.106 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:38:53.107 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:38:53.108 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:38:53.108 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:38:53.109 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:38:53.113 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:38:53.115 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:38:53.114 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:38:53.112 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:38:53.117 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:38:53.117 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:38:53.118 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:38:53.119 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:38:53.123 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:38:53.124 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:38:53.131 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:38:53.131 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:38:53.134 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:38:53.139 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:38:53.149 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 08:38:53.156 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:38:53.161 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:38:53.161 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:38:53.164 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:38:53.183 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:38:53.225 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1156.7507 ms
+2025-03-29 08:38:53.232 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:38:53.258 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 1193.7672 ms
+2025-03-29 08:38:53.724 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0621 ms
+2025-03-29 08:38:53.753 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 08:38:53.783 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 08:38:53.789 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 58.9530 ms
+2025-03-29 08:40:53.187 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 08:40:55.754 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 08:40:55.759 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 08:40:55.840 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 08:40:55.845 +01:00 [INF] Hosting environment: Development
+2025-03-29 08:40:55.865 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 08:41:10.500 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 2.5141 ms
+2025-03-29 08:41:10.500 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 4.7399 ms
+2025-03-29 08:41:10.958 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:41:10.958 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:41:10.966 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:41:11.309 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:41:11.312 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 08:41:11.434 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 08:41:11.435 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:41:11.435 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:41:11.441 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:41:11.441 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:41:11.443 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:41:11.445 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:41:11.448 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:41:11.449 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:41:11.449 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:41:11.452 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:41:11.453 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:41:11.453 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:41:11.445 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:41:11.454 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:41:11.457 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:41:11.459 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:41:11.459 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:41:11.468 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:41:11.469 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:41:11.468 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:41:11.475 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:41:11.477 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:41:11.483 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:41:11.484 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:41:11.490 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 08:41:11.493 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:41:11.498 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:41:11.498 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:41:11.504 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:41:11.518 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:41:11.563 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1052.9586 ms
+2025-03-29 08:41:11.566 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:41:11.583 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 1073.5570 ms
+2025-03-29 08:41:12.013 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0864 ms
+2025-03-29 08:41:12.036 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 08:41:12.059 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 08:41:12.065 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 46.6740 ms
+2025-03-29 08:48:19.936 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 08:48:22.439 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 08:48:22.445 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 08:48:22.516 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 08:48:22.533 +01:00 [INF] Hosting environment: Development
+2025-03-29 08:48:22.551 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 08:48:44.932 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 4.5750 ms
+2025-03-29 08:48:44.934 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.4980 ms
+2025-03-29 08:48:45.377 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:48:45.377 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:48:45.382 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:48:45.712 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:48:45.714 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 08:48:45.760 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 08:48:45.855 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:48:45.860 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:48:45.857 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:48:45.891 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:48:45.887 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:48:45.892 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:48:45.893 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:48:45.894 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:48:45.895 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:48:45.897 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:48:45.901 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:48:45.899 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:48:45.895 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:48:45.902 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:48:45.902 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:48:45.904 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:48:45.905 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:48:45.907 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:48:45.909 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:48:45.914 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:48:45.912 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:48:45.914 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:48:45.917 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:48:45.918 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:48:45.925 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 08:48:45.961 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:48:45.961 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:48:45.961 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:48:45.962 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:48:45.983 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:48:46.016 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:48:46.024 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1078.5994 ms
+2025-03-29 08:48:46.033 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 1087.2443 ms
+2025-03-29 08:48:46.474 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0555 ms
+2025-03-29 08:48:46.494 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 08:48:46.530 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 08:48:46.535 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 57.1342 ms
+2025-03-29 08:53:31.173 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 08:53:34.467 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 08:53:34.479 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 08:53:34.568 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 08:53:34.581 +01:00 [INF] Hosting environment: Development
+2025-03-29 08:53:34.622 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 08:53:50.850 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 3.1245 ms
+2025-03-29 08:53:50.850 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.3351 ms
+2025-03-29 08:53:51.458 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:53:51.457 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:53:51.466 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:53:51.841 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:53:51.843 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 08:53:51.929 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 08:53:51.993 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:53:51.994 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:53:52.022 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:53:52.026 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:53:52.047 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:53:52.053 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:53:52.063 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:53:52.067 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:53:52.066 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:53:52.057 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:53:52.072 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:53:52.071 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:53:52.072 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:53:52.075 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:53:52.076 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:53:52.080 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:53:52.076 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:53:52.077 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:53:52.076 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 08:53:52.083 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:53:52.081 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:53:52.081 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:53:52.086 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:53:52.090 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:53:52.092 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:53:52.150 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:53:52.179 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:53:52.196 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:53:52.201 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:53:52.215 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:53:52.217 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:53:52.255 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1345.3504 ms
+2025-03-29 08:53:52.259 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 1392.8297 ms
+2025-03-29 08:53:52.739 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0787 ms
+2025-03-29 08:53:52.765 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 08:53:52.790 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 08:53:52.796 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 47.1537 ms
+2025-03-29 08:55:42.227 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 08:55:45.409 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 08:55:45.519 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 08:55:45.610 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 08:55:47.185 +01:00 [INF] Hosting environment: Development
+2025-03-29 08:55:47.186 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 08:55:57.832 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 3.8398 ms
+2025-03-29 08:55:57.832 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 3.8326 ms
+2025-03-29 08:55:59.048 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:55:59.090 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:55:59.101 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:55:59.693 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:55:59.711 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 08:55:59.826 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:55:59.850 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:55:59.856 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:55:59.856 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:55:59.856 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:55:59.858 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:55:59.861 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:55:59.859 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:55:59.861 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:55:59.868 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:55:59.868 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:55:59.874 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:55:59.876 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:55:59.876 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:55:59.877 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:55:59.878 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:55:59.902 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:55:59.904 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:55:59.906 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:55:59.907 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:55:59.914 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:55:59.917 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:55:59.920 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:55:59.920 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:55:59.933 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:55:59.989 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:55:59.991 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:55:59.993 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 08:56:00.059 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 08:56:00.068 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:56:00.072 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:56:00.121 +01:00 [INF] HTTP GET /api/Employees responded 200 in 2272.9031 ms
+2025-03-29 08:56:00.168 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:56:00.185 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 2337.0156 ms
+2025-03-29 08:56:00.608 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0826 ms
+2025-03-29 08:56:00.624 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 08:56:00.657 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 08:56:00.663 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 49.3613 ms
+2025-03-29 08:57:53.863 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 08:57:55.390 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 08:57:55.396 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 08:57:55.463 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 08:57:55.467 +01:00 [INF] Hosting environment: Development
+2025-03-29 08:57:55.468 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 08:58:13.163 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 3.0994 ms
+2025-03-29 08:58:13.163 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 9.0727 ms
+2025-03-29 08:58:13.797 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:58:13.799 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 08:58:13.804 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:58:14.163 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:58:14.165 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 08:58:14.225 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 08:58:14.281 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:58:14.281 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:58:14.304 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:58:14.316 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:58:14.319 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:58:14.322 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:58:14.329 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:58:14.329 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:58:14.332 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:58:14.335 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:58:14.347 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:58:14.337 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 08:58:14.338 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 08:58:14.354 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:58:14.351 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 08:58:14.351 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 08:58:14.355 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 08:58:14.359 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 08:58:14.358 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 08:58:14.355 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 08:58:14.362 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 08:58:14.364 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 08:58:14.369 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 08:58:14.370 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 08:58:14.370 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 08:58:14.433 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 08:58:14.438 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 08:58:14.438 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 08:58:14.438 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 08:58:14.461 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:58:14.464 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 08:58:14.502 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1327.4770 ms
+2025-03-29 08:58:14.505 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 1330.3640 ms
+2025-03-29 08:58:15.000 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0578 ms
+2025-03-29 08:58:15.027 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 08:58:15.054 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 08:58:15.059 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 53.4156 ms
+2025-03-29 09:28:41.883 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 09:28:43.694 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 09:28:43.706 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 09:28:43.772 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 09:28:43.774 +01:00 [INF] Hosting environment: Development
+2025-03-29 09:28:43.775 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 09:29:04.279 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 3.5901 ms
+2025-03-29 09:29:04.890 +01:00 [INF] Logging in started for user apotoni24 with id: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:29:05.120 +01:00 [INF] Logging in successful for user apotoni24 with id: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:29:05.132 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 842.4706 ms
+2025-03-29 09:29:16.873 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 0.4668 ms
+2025-03-29 09:29:16.882 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.0493 ms
+2025-03-29 09:29:17.154 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:29:17.162 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:29:17.163 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:17.230 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:17.232 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 09:29:17.269 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 09:29:17.313 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 09:29:17.458 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:17.467 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:17.529 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:17.538 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:17.534 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:17.558 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:17.559 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:17.561 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:29:17.562 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:17.565 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:17.567 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:29:17.570 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:17.568 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:17.572 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 09:29:17.566 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:17.576 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:17.573 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:17.578 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:29:17.574 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:17.569 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 09:29:17.580 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 09:29:17.582 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:29:17.580 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:17.591 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 09:29:17.590 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 09:29:17.608 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 09:29:17.612 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 09:29:17.612 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 09:29:17.614 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 736.5890 ms
+2025-03-29 09:29:17.619 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 09:29:17.621 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 09:29:17.634 +01:00 [INF] HTTP GET /api/Employees responded 200 in 746.5307 ms
+2025-03-29 09:29:17.946 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0551 ms
+2025-03-29 09:29:17.964 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 09:29:17.977 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 09:29:17.981 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 30.5687 ms
+2025-03-29 09:29:37.833 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 0.0920 ms
+2025-03-29 09:29:37.839 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.0525 ms
+2025-03-29 09:29:37.847 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:29:37.847 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:29:37.854 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:37.865 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:37.866 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 09:29:37.871 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:37.873 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:37.875 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:37.876 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:37.872 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:29:37.879 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:37.879 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:37.879 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:37.882 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:37.881 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 09:29:37.886 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:29:37.886 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:37.889 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:37.890 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:37.890 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:37.892 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:37.893 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:37.895 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:37.897 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 09:29:37.895 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 09:29:37.899 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:29:37.904 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:37.907 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:29:37.900 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 09:29:37.907 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 09:29:37.908 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 09:29:37.909 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 09:29:37.913 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 09:29:37.911 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 67.2359 ms
+2025-03-29 09:29:37.920 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 09:29:37.922 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 09:29:37.927 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 09:29:37.929 +01:00 [INF] HTTP GET /api/Employees responded 200 in 83.1261 ms
+2025-03-29 09:29:37.957 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0765 ms
+2025-03-29 09:29:37.970 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 09:29:37.977 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 09:29:37.979 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 8.9506 ms
+2025-03-29 09:29:38.023 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:29:38.031 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:38.031 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:38.031 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:29:38.035 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:38.035 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:38.033 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:38.037 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:38.036 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:29:38.039 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:38.040 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:38.042 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:38.042 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:29:38.044 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:29:38.046 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:29:38.048 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:38.049 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:29:38.046 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:29:38.052 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:29:38.052 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:29:38.053 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 09:29:38.055 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 09:29:38.057 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:29:38.060 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 09:29:38.054 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 09:29:38.062 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 09:29:38.061 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 09:29:38.065 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 09:29:38.070 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 09:29:38.071 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 09:29:38.073 +01:00 [INF] HTTP GET /api/Employees responded 200 in 53.1022 ms
+2025-03-29 09:29:38.093 +01:00 [INF] HTTP OPTIONS /api/Sections responded 204 in 0.0437 ms
+2025-03-29 09:29:38.106 +01:00 [INF] Fetching all sections started
+2025-03-29 09:29:38.127 +01:00 [INF] Fetching all sections successful
+2025-03-29 09:29:38.130 +01:00 [INF] HTTP GET /api/Sections responded 200 in 33.1459 ms
+2025-03-29 09:32:17.607 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 0.1981 ms
+2025-03-29 09:32:17.610 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.0474 ms
+2025-03-29 09:32:17.643 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:32:17.644 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 09:32:17.647 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:32:17.657 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:32:17.658 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 09:32:17.662 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:32:17.665 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:32:17.675 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:32:17.670 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:32:17.678 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:32:17.673 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 09:32:17.684 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:32:17.686 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:32:17.665 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:32:17.683 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:32:17.689 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 09:32:17.690 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 09:32:17.693 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:32:17.695 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 09:32:17.697 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:32:17.693 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 09:32:17.698 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 09:32:17.700 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:32:17.700 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 09:32:17.702 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 09:32:17.703 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 09:32:17.703 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 09:32:17.707 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 78.1429 ms
+2025-03-29 09:32:17.709 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 09:32:17.701 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 09:32:17.716 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 09:32:17.710 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 09:32:17.718 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 09:32:17.717 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 09:32:17.719 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 09:32:17.722 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0588 ms
+2025-03-29 09:32:17.725 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 09:32:17.727 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 09:32:17.727 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 09:32:17.728 +01:00 [INF] HTTP GET /api/Employees responded 200 in 87.3386 ms
+2025-03-29 09:32:17.735 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 09:32:17.737 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 10.1316 ms
+2025-03-29 17:28:02.497 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 17:28:04.693 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 17:28:04.695 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 17:28:04.765 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 17:28:04.767 +01:00 [INF] Hosting environment: Development
+2025-03-29 17:28:04.768 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 17:28:44.640 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 2.4941 ms
+2025-03-29 17:28:45.425 +01:00 [INF] Logging in started for user apotoni24 with id: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 17:28:45.610 +01:00 [INF] Logging in successful for user apotoni24 with id: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 17:28:45.621 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 970.2373 ms
+2025-03-29 17:29:22.642 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 3.8203 ms
+2025-03-29 17:29:22.649 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.0492 ms
+2025-03-29 17:29:22.946 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 17:29:22.947 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 17:29:22.951 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 17:29:23.016 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 17:29:23.018 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 17:29:23.050 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 17:29:23.086 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 17:29:23.239 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 17:29:23.241 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 17:29:23.243 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 17:29:23.242 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 17:29:23.248 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 17:29:23.248 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 17:29:23.251 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 17:29:23.252 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 17:29:23.253 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 17:29:23.255 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 17:29:23.255 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 17:29:23.258 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 17:29:23.258 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 17:29:23.260 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 17:29:23.261 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 17:29:23.263 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 17:29:23.263 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 17:29:23.265 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 17:29:23.265 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 17:29:23.268 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 17:29:23.270 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 17:29:23.271 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 17:29:23.273 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 17:29:23.275 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 17:29:23.298 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 17:29:23.313 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 17:29:23.316 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 17:29:23.316 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 17:29:23.323 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 17:29:23.325 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 17:29:23.331 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 678.5410 ms
+2025-03-29 17:29:23.337 +01:00 [INF] HTTP GET /api/Employees responded 200 in 683.0589 ms
+2025-03-29 17:29:23.661 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0828 ms
+2025-03-29 17:29:23.680 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 17:29:23.693 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 17:29:23.697 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 31.1349 ms
+2025-03-29 17:30:38.901 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-29 17:30:41.289 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-29 17:30:41.296 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-29 17:30:41.453 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-29 17:30:41.463 +01:00 [INF] Hosting environment: Development
+2025-03-29 17:30:41.478 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-29 17:30:56.448 +01:00 [INF] HTTP OPTIONS /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 204 in 3.6323 ms
+2025-03-29 17:30:56.447 +01:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 3.3641 ms
+2025-03-29 17:30:56.887 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 17:30:56.887 +01:00 [INF] Fetching all employees started by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b
+2025-03-29 17:30:56.892 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 17:30:57.255 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 17:30:57.257 +01:00 [INF] Fetching all users in role Manager started
+2025-03-29 17:30:57.367 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 17:30:57.367 +01:00 [INF] Fetching all users in role Manager successful
+2025-03-29 17:30:57.367 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 17:30:57.375 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 17:30:57.375 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 17:30:57.377 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 17:30:57.379 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 17:30:57.380 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 17:30:57.381 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 17:30:57.381 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 17:30:57.382 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-03-29 17:30:57.384 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 17:30:57.385 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 17:30:57.387 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 17:30:57.387 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-03-29 17:30:57.388 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-03-29 17:30:57.391 +01:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-03-29 17:30:57.389 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-03-29 17:30:57.393 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-03-29 17:30:57.398 +01:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-03-29 17:30:57.400 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-03-29 17:30:57.402 +01:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-03-29 17:30:57.403 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-03-29 17:30:57.406 +01:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-03-29 17:30:57.407 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-03-29 17:30:57.414 +01:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-29 17:30:57.420 +01:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-03-29 17:30:57.424 +01:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-03-29 17:30:57.424 +01:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-03-29 17:30:57.429 +01:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-03-29 17:30:57.443 +01:00 [INF] Fetching all employees by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 17:30:57.480 +01:00 [INF] HTTP GET /api/Employees responded 200 in 1021.8111 ms
+2025-03-29 17:30:57.481 +01:00 [INF] Fetching employee with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" by user: null with ID: a656fde0-99c0-4d47-84be-f21334bef50b successful
+2025-03-29 17:30:57.497 +01:00 [INF] HTTP GET /api/Employees/1131063c-f66b-47f6-3f1d-08dd1bca1d33 responded 200 in 1038.7886 ms
+2025-03-29 17:30:57.917 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0725 ms
+2025-03-29 17:30:57.935 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-29 17:30:57.957 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-29 17:30:57.963 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 41.5293 ms

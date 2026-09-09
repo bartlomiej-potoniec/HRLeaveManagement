@@ -1,9 +1,10 @@
 ﻿using HRLeaveManagement.Application.Features.Department.Queries;
-using HRLeaveManagement.Application.Features.Department.Commands;
 using HRLeaveManagement.Application.DTOs.Departments;
 using HRLeaveManagement.Application.DTOs.Sections;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using HRLeaveManagement.Application.Features.Department.CreateDepartment.Commands;
+using HRLeaveManagement.Application.Features.Department.UpdateDepartment.Commands;
 
 namespace HRLeaveManagement.Api.Controllers;
 

@@ -1,12 +1,11 @@
 using HRLeaveManagement.Api.Authorization.Handlers;
 using HRLeaveManagement.Api.Authorization.Requirements;
 using HRLeaveManagement.Api.Middleware;
-using HRLeaveManagement.Application.Extensions;
+using HRLeaveManagement.Application;
 using HRLeaveManagement.Identity.Extensions;
 using HRLeaveManagement.Infrastructure.Extensions;
-using HRLeaveManagement.Persistence.DbContexts;
-using HRLeaveManagement.Persistence.Extensions;
-using HRLeaveManagement.Persistence.Seeders;
+using HRLeaveManagement.Persistence;
+using HRLeaveManagement.Persistence.Leave.LeaveType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -18,8 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, loggerConfig) 
     => loggerConfig
         .WriteTo.Console()
-        .ReadFrom.Configuration(context.Configuration)
-);
+        .ReadFrom.Configuration(context.Configuration));
 
 builder.Services.RegisterApplicationServices();
 builder.Services.RegisterInfrastructureServices(builder.Configuration);
@@ -41,12 +39,9 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IAuthorizationHandler, IsEmployeeRequirementHandler>();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("IsEmployee", policy => 
-        policy.Requirements.Add(new IsEmployeeRequirement())
-    );
-});
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("IsEmployee", policy => 
+        policy.Requirements.Add(new IsEmployeeRequirement()));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

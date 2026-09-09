@@ -17,4 +17,15 @@
     <ProjectReference Include="..\HRLeaveManagement.Domain\HRLeaveManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Employee\Contract\TerminateContract\Events\" />
+    <Folder Include="Features\Employee\Contract\UpdateContract\Events\" />
+    <Folder Include="Features\Employee\Education\CreateEducation\Events\" />
+    <Folder Include="Features\Employee\Education\UpdateEducation\Events\" />
+    <Folder Include="Features\Employee\Experience\CreateExperieence\Events\" />
+    <Folder Include="Features\Employee\Experience\UpdateExperience\Events\" />
+    <Folder Include="Features\LeaveAllocation\CreateLeaveAllocation\Events\" />
+    <Folder Include="Features\LeaveType\CreateLeaveType\Events\" />
+  </ItemGroup>
+
 </Project>

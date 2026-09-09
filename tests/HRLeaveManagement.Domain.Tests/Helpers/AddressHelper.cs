@@ -1,4 +1,6 @@
-﻿namespace HRLeaveManagement.Domain.Tests.Helpers;
+﻿using HRLeaveManagement.Domain.Employee.Address;
+
+namespace HRLeaveManagement.Domain.Tests.Helpers;
 
 public class AddressHelper
 {

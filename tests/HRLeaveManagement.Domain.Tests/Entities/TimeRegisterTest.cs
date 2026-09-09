@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.Domain.Tests.Helpers;
+using HRLeaveManagement.Domain.TimeTracking.TimeRegister;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
 

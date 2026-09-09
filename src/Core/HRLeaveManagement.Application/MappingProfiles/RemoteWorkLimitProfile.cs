@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HRLeaveManagement.Application.DTOs.RemoteWorkLimits;
-using HRLeaveManagement.Domain.Entities;
+using HRLeaveManagement.Domain.TimeTracking.RemoteWorkLimit;
 
 namespace HRLeaveManagement.Application.MappingProfiles;
 

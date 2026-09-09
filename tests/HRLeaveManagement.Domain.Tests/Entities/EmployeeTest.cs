@@ -1,3 +1,6 @@
+using HRLeaveManagement.Domain.Employee.Address;
+using HRLeaveManagement.Domain.Department.Section;
+
 namespace HRLeaveManagement.Domain.Tests.Entities;
 
 public class EmployeeTest

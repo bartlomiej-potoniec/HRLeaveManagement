@@ -1,0 +1,1424 @@
+2025-03-03 18:08:57.842 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-03 18:09:05.071 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-03 18:09:05.076 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-03 18:09:05.152 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-03 18:09:05.154 +01:00 [INF] Hosting environment: Development
+2025-03-03 18:09:05.155 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-03 18:09:12.327 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 3.7762 ms
+2025-03-03 18:09:13.400 +01:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 18:09:13.633 +01:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 18:09:13.644 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 1303.2311 ms
+2025-03-03 18:09:17.640 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.5612 ms
+2025-03-03 18:09:17.651 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0502 ms
+2025-03-03 18:09:17.653 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.3586 ms
+2025-03-03 18:09:17.769 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:09:17.816 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:09:17.901 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:09:17.947 +01:00 [INF] HTTP GET /api/Roles responded 200 in 286.4716 ms
+2025-03-03 18:09:17.973 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:09:17.984 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:09:17.986 +01:00 [INF] Paginating result started
+2025-03-03 18:09:17.987 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:09:17.988 +01:00 [INF] HTTP GET /api/Roles responded 200 in 17.2208 ms
+2025-03-03 18:09:18.001 +01:00 [INF] Paginating result successfull
+2025-03-03 18:09:18.021 +01:00 [INF] HTTP GET /api/Users responded 200 in 357.3392 ms
+2025-03-03 18:09:43.715 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978699 responded 204 in 0.7004 ms
+2025-03-03 18:09:43.725 +01:00 [INF] HTTP OPTIONS /api/Users/00000000-0000-0000-0000-000000000000 responded 204 in 0.1239 ms
+2025-03-03 18:09:43.732 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0530 ms
+2025-03-03 18:09:43.737 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:09:43.743 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978699" with details started
+2025-03-03 18:09:43.743 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:09:43.771 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:09:43.772 +01:00 [INF] Paginating result started
+2025-03-03 18:09:43.774 +01:00 [INF] Paginating result successfull
+2025-03-03 18:09:43.776 +01:00 [INF] HTTP GET /api/Users responded 200 in 39.8575 ms
+2025-03-03 18:09:43.995 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 259.9966 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method279(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:09:43.995 +01:00 [ERR] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978699 responded 500 in 269.7085 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: ab712cf8-7e4d-413e-a3fa-fbfd9e978699 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method271(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:09:44.181 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:09:44.271 +01:00 [ERR] An exception occurred: No user with ID: ab712cf8-7e4d-413e-a3fa-fbfd9e978699 found
+2025-03-03 18:11:20.049 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978669 responded 204 in 0.1161 ms
+2025-03-03 18:11:20.058 +01:00 [INF] HTTP OPTIONS /api/Users/00000000-0000-0000-0000-000000000000 responded 204 in 0.0479 ms
+2025-03-03 18:11:20.069 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0629 ms
+2025-03-03 18:11:20.074 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978669" with details started
+2025-03-03 18:11:20.084 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:11:20.154 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:11:20.255 +01:00 [ERR] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978669 responded 500 in 185.9689 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: ab712cf8-7e4d-413e-a3fa-fbfd9e978669 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method279(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:11:20.257 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 177.5828 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method279(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:11:20.309 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:11:20.365 +01:00 [INF] Paginating result started
+2025-03-03 18:11:20.345 +01:00 [ERR] An exception occurred: No user with ID: ab712cf8-7e4d-413e-a3fa-fbfd9e978669 found
+2025-03-03 18:11:20.486 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:11:20.486 +01:00 [INF] Paginating result successfull
+2025-03-03 18:11:20.500 +01:00 [INF] HTTP GET /api/Users responded 200 in 414.6949 ms
+2025-03-03 18:11:37.243 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.0569 ms
+2025-03-03 18:11:37.251 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:11:37.256 +01:00 [INF] HTTP OPTIONS /api/Users/00000000-0000-0000-0000-000000000000 responded 204 in 0.0484 ms
+2025-03-03 18:11:37.262 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0558 ms
+2025-03-03 18:11:37.272 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:11:37.276 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:11:37.277 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:11:37.303 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 51.6254 ms
+2025-03-03 18:11:37.369 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 98.0118 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method279(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:11:37.383 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:11:37.392 +01:00 [INF] Paginating result started
+2025-03-03 18:11:37.469 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:11:37.472 +01:00 [INF] Paginating result successfull
+2025-03-03 18:11:37.473 +01:00 [INF] HTTP GET /api/Users responded 200 in 198.6585 ms
+2025-03-03 18:11:38.023 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:11:38.029 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:11:38.031 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 9.7438 ms
+2025-03-03 18:12:57.823 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0683 ms
+2025-03-03 18:12:57.826 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0523 ms
+2025-03-03 18:12:57.829 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0663 ms
+2025-03-03 18:12:57.847 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:12:57.853 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:12:57.862 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:12:57.887 +01:00 [INF] HTTP GET /api/Roles responded 200 in 46.4215 ms
+2025-03-03 18:12:57.887 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:12:57.890 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:12:57.892 +01:00 [INF] Paginating result started
+2025-03-03 18:12:57.904 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:12:57.905 +01:00 [INF] Paginating result successfull
+2025-03-03 18:12:57.905 +01:00 [INF] HTTP GET /api/Roles responded 200 in 15.9189 ms
+2025-03-03 18:12:57.907 +01:00 [INF] HTTP GET /api/Users responded 200 in 54.9115 ms
+2025-03-03 18:14:17.721 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.1043 ms
+2025-03-03 18:14:17.738 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:14:17.745 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:14:17.747 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 9.4553 ms
+2025-03-03 18:14:18.754 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:14:18.758 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0331 ms
+2025-03-03 18:14:18.763 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0336 ms
+2025-03-03 18:14:18.768 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:14:18.778 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:18.765 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:14:18.794 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 40.8345 ms
+2025-03-03 18:14:18.799 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:18.825 +01:00 [INF] HTTP GET /api/Roles responded 200 in 48.9991 ms
+2025-03-03 18:14:18.825 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:14:18.829 +01:00 [INF] Paginating result started
+2025-03-03 18:14:18.831 +01:00 [INF] Paginating result successfull
+2025-03-03 18:14:18.833 +01:00 [INF] HTTP GET /api/Users responded 200 in 66.9474 ms
+2025-03-03 18:14:26.042 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0345 ms
+2025-03-03 18:14:26.048 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:14:26.049 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0309 ms
+2025-03-03 18:14:26.064 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:14:26.065 +01:00 [INF] Paginating result started
+2025-03-03 18:14:26.066 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:14:26.067 +01:00 [INF] Paginating result successfull
+2025-03-03 18:14:26.071 +01:00 [INF] HTTP GET /api/Users responded 200 in 23.6751 ms
+2025-03-03 18:14:26.079 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:14:26.080 +01:00 [INF] Paginating result started
+2025-03-03 18:14:26.100 +01:00 [INF] Paginating result successfull
+2025-03-03 18:14:26.141 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0355 ms
+2025-03-03 18:14:26.143 +01:00 [INF] HTTP GET /api/Users responded 200 in 88.0723 ms
+2025-03-03 18:14:26.146 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:26.150 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:26.158 +01:00 [INF] HTTP GET /api/Roles responded 200 in 12.2872 ms
+2025-03-03 18:14:30.996 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0329 ms
+2025-03-03 18:14:31.009 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:14:31.014 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:14:31.015 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 7.7146 ms
+2025-03-03 18:14:31.209 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:14:31.214 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0998 ms
+2025-03-03 18:14:31.216 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0339 ms
+2025-03-03 18:14:31.224 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:14:31.224 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:31.226 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:14:31.230 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 21.9477 ms
+2025-03-03 18:14:31.235 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:31.258 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:14:31.261 +01:00 [INF] Paginating result started
+2025-03-03 18:14:31.262 +01:00 [INF] HTTP GET /api/Roles responded 200 in 37.9118 ms
+2025-03-03 18:14:31.263 +01:00 [INF] Paginating result successfull
+2025-03-03 18:14:31.265 +01:00 [INF] HTTP GET /api/Users responded 200 in 41.0651 ms
+2025-03-03 18:14:42.293 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0342 ms
+2025-03-03 18:14:42.296 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0328 ms
+2025-03-03 18:14:42.302 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:14:42.308 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:14:42.388 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:14:42.391 +01:00 [INF] Paginating result started
+2025-03-03 18:14:42.395 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:14:42.396 +01:00 [INF] Paginating result successfull
+2025-03-03 18:14:42.396 +01:00 [INF] Paginating result started
+2025-03-03 18:14:42.397 +01:00 [INF] HTTP GET /api/Users responded 200 in 90.5568 ms
+2025-03-03 18:14:42.399 +01:00 [INF] Paginating result successfull
+2025-03-03 18:14:42.402 +01:00 [INF] HTTP GET /api/Users responded 200 in 101.3653 ms
+2025-03-03 18:14:42.597 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0927 ms
+2025-03-03 18:14:42.603 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:42.607 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:42.609 +01:00 [INF] HTTP GET /api/Roles responded 200 in 7.8570 ms
+2025-03-03 18:14:44.657 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.0289 ms
+2025-03-03 18:14:44.664 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:14:44.673 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:14:44.674 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 11.0931 ms
+2025-03-03 18:14:44.865 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:14:44.869 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:14:44.877 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:44.880 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:14:44.882 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:14:44.884 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 19.4558 ms
+2025-03-03 18:14:44.885 +01:00 [INF] Paginating result started
+2025-03-03 18:14:44.888 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:14:44.891 +01:00 [INF] Paginating result successfull
+2025-03-03 18:14:44.892 +01:00 [INF] HTTP GET /api/Roles responded 200 in 20.4516 ms
+2025-03-03 18:14:44.893 +01:00 [INF] HTTP GET /api/Users responded 200 in 25.4819 ms
+2025-03-03 18:18:22.309 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-03 18:18:24.822 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-03 18:18:24.885 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-03 18:18:24.978 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-03 18:18:24.987 +01:00 [INF] Hosting environment: Development
+2025-03-03 18:18:24.988 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-03 18:18:49.770 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 3.3788 ms
+2025-03-03 18:18:49.770 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 3.3842 ms
+2025-03-03 18:18:50.038 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:18:50.038 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:18:50.752 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:18:50.754 +01:00 [INF] Paginating result started
+2025-03-03 18:18:50.761 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:18:50.762 +01:00 [INF] Paginating result started
+2025-03-03 18:18:50.775 +01:00 [INF] Paginating result successfull
+2025-03-03 18:18:50.775 +01:00 [INF] Paginating result successfull
+2025-03-03 18:18:50.811 +01:00 [INF] HTTP GET /api/Users responded 200 in 1026.2321 ms
+2025-03-03 18:18:50.811 +01:00 [INF] HTTP GET /api/Users responded 200 in 1026.2131 ms
+2025-03-03 18:18:51.047 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0872 ms
+2025-03-03 18:18:51.063 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:18:51.092 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:18:51.095 +01:00 [INF] HTTP GET /api/Roles responded 200 in 41.7377 ms
+2025-03-03 18:18:54.875 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0493 ms
+2025-03-03 18:18:54.892 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:18:54.937 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:18:54.940 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 59.5274 ms
+2025-03-03 18:18:55.438 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0463 ms
+2025-03-03 18:18:55.438 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:18:55.446 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:18:55.451 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:18:55.460 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:18:55.460 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:18:55.471 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 35.5531 ms
+2025-03-03 18:18:55.462 +01:00 [INF] HTTP GET /api/Roles responded 200 in 17.5976 ms
+2025-03-03 18:18:55.519 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:18:55.522 +01:00 [INF] Paginating result started
+2025-03-03 18:18:55.525 +01:00 [INF] Paginating result successfull
+2025-03-03 18:18:55.527 +01:00 [INF] HTTP GET /api/Users responded 200 in 76.6003 ms
+2025-03-03 18:20:02.633 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.1111 ms
+2025-03-03 18:20:02.640 +01:00 [INF] HTTP OPTIONS /api/Users/00000000-0000-0000-0000-000000000000 responded 204 in 0.8030 ms
+2025-03-03 18:20:02.646 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.7459 ms
+2025-03-03 18:20:02.663 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:02.665 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:20:02.665 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:20:02.794 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 129.6100 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:20:02.795 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:02.806 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:20:02.969 +01:00 [INF] Paginating result started
+2025-03-03 18:20:02.968 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:20:02.922 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 266.5772 ms
+2025-03-03 18:20:02.971 +01:00 [INF] Paginating result successfull
+2025-03-03 18:20:02.978 +01:00 [INF] HTTP GET /api/Users responded 200 in 312.8114 ms
+2025-03-03 18:20:03.043 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:03.052 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:03.054 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 11.8289 ms
+2025-03-03 18:20:04.640 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:04.649 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:04.650 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 11.6149 ms
+2025-03-03 18:20:04.844 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:04.846 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:20:04.856 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:04.862 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 19.8212 ms
+2025-03-03 18:20:04.864 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0458 ms
+2025-03-03 18:20:04.865 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:20:04.879 +01:00 [INF] Paginating result started
+2025-03-03 18:20:04.881 +01:00 [INF] Paginating result successfull
+2025-03-03 18:20:04.882 +01:00 [INF] HTTP GET /api/Users responded 200 in 37.0308 ms
+2025-03-03 18:20:04.885 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:20:04.888 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:20:04.890 +01:00 [INF] HTTP GET /api/Roles responded 200 in 8.4194 ms
+2025-03-03 18:20:05.620 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:05.629 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:20:05.629 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:20:05.727 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 98.7128 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:20:05.729 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:05.732 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:20:05.845 +01:00 [INF] Paginating result started
+2025-03-03 18:20:05.843 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:20:05.796 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 176.5904 ms
+2025-03-03 18:20:05.846 +01:00 [INF] Paginating result successfull
+2025-03-03 18:20:05.853 +01:00 [INF] HTTP GET /api/Users responded 200 in 223.9830 ms
+2025-03-03 18:20:05.929 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:05.942 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:05.945 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 17.4816 ms
+2025-03-03 18:20:09.430 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.5593 ms
+2025-03-03 18:20:09.437 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:09.445 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:09.447 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 10.1350 ms
+2025-03-03 18:20:09.636 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:09.638 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0866 ms
+2025-03-03 18:20:09.646 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:20:09.649 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:20:09.654 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:09.655 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:20:09.670 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 35.0448 ms
+2025-03-03 18:20:09.672 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:20:09.672 +01:00 [INF] HTTP GET /api/Roles responded 200 in 27.9020 ms
+2025-03-03 18:20:09.677 +01:00 [INF] Paginating result started
+2025-03-03 18:20:09.681 +01:00 [INF] Paginating result successfull
+2025-03-03 18:20:09.682 +01:00 [INF] HTTP GET /api/Users responded 200 in 37.2359 ms
+2025-03-03 18:20:10.523 +01:00 [INF] HTTP OPTIONS /api/Users/00000000-0000-0000-0000-000000000000 responded 204 in 0.1189 ms
+2025-03-03 18:20:10.527 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:20:10.527 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:10.538 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:20:10.545 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:10.600 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 73.2165 ms
+2025-03-03 18:20:10.638 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 101.5247 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:20:10.636 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:20:10.650 +01:00 [INF] Paginating result started
+2025-03-03 18:20:10.754 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:20:10.755 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:20:10.756 +01:00 [INF] Paginating result successfull
+2025-03-03 18:20:10.762 +01:00 [INF] HTTP GET /api/Users responded 200 in 236.7179 ms
+2025-03-03 18:20:10.766 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:20:10.768 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 13.6468 ms
+2025-03-03 18:20:21.959 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4499 responded 204 in 0.3179 ms
+2025-03-03 18:20:21.969 +01:00 [INF] HTTP OPTIONS /api/Users/00000000-0000-0000-0000-000000000000 responded 204 in 0.0455 ms
+2025-03-03 18:20:21.969 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4499" with details started
+2025-03-03 18:20:21.973 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0629 ms
+2025-03-03 18:20:21.992 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:20:22.024 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:20:22.126 +01:00 [ERR] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4499 responded 500 in 158.6171 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 4f220d02-e595-4900-8864-2887a15f4499 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:20:22.126 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 137.1375 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:20:22.139 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:20:22.243 +01:00 [ERR] An exception occurred: No user with ID: 4f220d02-e595-4900-8864-2887a15f4499 found
+2025-03-03 18:20:22.265 +01:00 [INF] Paginating result started
+2025-03-03 18:20:22.333 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:20:22.335 +01:00 [INF] Paginating result successfull
+2025-03-03 18:20:22.337 +01:00 [INF] HTTP GET /api/Users responded 200 in 344.6067 ms
+2025-03-03 18:21:14.431 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0625 ms
+2025-03-03 18:21:14.431 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0460 ms
+2025-03-03 18:21:14.440 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:21:14.441 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:21:14.454 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:21:14.465 +01:00 [INF] Paginating result started
+2025-03-03 18:21:14.491 +01:00 [INF] Paginating result successfull
+2025-03-03 18:21:14.498 +01:00 [INF] HTTP GET /api/Users responded 200 in 58.7529 ms
+2025-03-03 18:21:14.507 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:21:14.514 +01:00 [INF] Paginating result started
+2025-03-03 18:21:14.516 +01:00 [INF] Paginating result successfull
+2025-03-03 18:21:14.517 +01:00 [INF] HTTP GET /api/Users responded 200 in 78.3327 ms
+2025-03-03 18:21:14.770 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0656 ms
+2025-03-03 18:21:14.774 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:21:14.778 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:21:14.779 +01:00 [INF] HTTP GET /api/Roles responded 200 in 6.1563 ms
+2025-03-03 18:21:29.285 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.0490 ms
+2025-03-03 18:21:29.289 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:21:29.291 +01:00 [INF] HTTP OPTIONS /api/Users/00000000-0000-0000-0000-000000000000 responded 204 in 0.0303 ms
+2025-03-03 18:21:29.294 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0289 ms
+2025-03-03 18:21:29.302 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:21:29.303 +01:00 [INF] Fetching user with ID: "00000000-0000-0000-0000-000000000000" with details started
+2025-03-03 18:21:29.304 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:21:29.310 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 21.3304 ms
+2025-03-03 18:21:29.408 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:21:29.409 +01:00 [ERR] HTTP GET /api/Users/00000000-0000-0000-0000-000000000000 responded 500 in 107.3730 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 00000000-0000-0000-0000-000000000000 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:21:29.411 +01:00 [INF] Paginating result started
+2025-03-03 18:21:29.504 +01:00 [ERR] An exception occurred: No user with ID: 00000000-0000-0000-0000-000000000000 found
+2025-03-03 18:21:29.511 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 18:21:29.514 +01:00 [INF] Paginating result successfull
+2025-03-03 18:21:29.521 +01:00 [INF] HTTP GET /api/Users responded 200 in 219.0788 ms
+2025-03-03 18:21:29.523 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 18:21:29.529 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 22.4077 ms
+2025-03-03 18:21:35.077 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 1.5231 ms
+2025-03-03 18:21:35.078 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0232 ms
+2025-03-03 18:21:35.080 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0295 ms
+2025-03-03 18:21:35.084 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:21:35.088 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:21:35.095 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:21:35.104 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:21:35.106 +01:00 [INF] Paginating result started
+2025-03-03 18:21:35.105 +01:00 [INF] HTTP GET /api/Roles responded 200 in 20.8589 ms
+2025-03-03 18:21:35.113 +01:00 [INF] Paginating result successfull
+2025-03-03 18:21:35.117 +01:00 [INF] HTTP GET /api/Users responded 200 in 31.2073 ms
+2025-03-03 18:21:35.121 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:21:35.132 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:21:35.134 +01:00 [INF] HTTP GET /api/Roles responded 200 in 13.9352 ms
+2025-03-03 18:42:50.589 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-03 18:42:56.397 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-03 18:42:56.412 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-03 18:42:56.491 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-03 18:42:56.492 +01:00 [INF] Hosting environment: Development
+2025-03-03 18:42:56.494 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-03 18:43:09.672 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 4.4814 ms
+2025-03-03 18:43:09.672 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 4.7740 ms
+2025-03-03 18:43:09.988 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:43:09.988 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:43:10.645 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:43:10.645 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:43:10.646 +01:00 [INF] Paginating result started
+2025-03-03 18:43:10.646 +01:00 [INF] Paginating result started
+2025-03-03 18:43:10.661 +01:00 [INF] Paginating result successfull
+2025-03-03 18:43:10.662 +01:00 [INF] Paginating result successfull
+2025-03-03 18:43:10.697 +01:00 [INF] HTTP GET /api/Users responded 200 in 1006.7586 ms
+2025-03-03 18:43:10.697 +01:00 [INF] HTTP GET /api/Users responded 200 in 1007.1618 ms
+2025-03-03 18:43:11.192 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0810 ms
+2025-03-03 18:43:11.210 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:43:11.232 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:43:11.236 +01:00 [INF] HTTP GET /api/Roles responded 200 in 34.6444 ms
+2025-03-03 18:43:13.884 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0507 ms
+2025-03-03 18:43:13.910 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:43:13.958 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:43:13.959 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 61.8326 ms
+2025-03-03 18:43:14.210 +01:00 [INF] HTTP OPTIONS /api/Users/c178bfc4-83a4-4dcc-a3d2-6317ecdf921b responded 204 in 0.0860 ms
+2025-03-03 18:43:14.218 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:43:14.231 +01:00 [INF] Fetching user with ID: "c178bfc4-83a4-4dcc-a3d2-6317ecdf921b" with details started
+2025-03-03 18:43:14.242 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:43:14.244 +01:00 [INF] Paginating result started
+2025-03-03 18:43:14.247 +01:00 [INF] Paginating result successfull
+2025-03-03 18:43:14.252 +01:00 [INF] HTTP GET /api/Users responded 200 in 36.1445 ms
+2025-03-03 18:43:14.410 +01:00 [ERR] HTTP GET /api/Users/c178bfc4-83a4-4dcc-a3d2-6317ecdf921b responded 500 in 181.0847 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: c178bfc4-83a4-4dcc-a3d2-6317ecdf921b found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:43:14.559 +01:00 [ERR] An exception occurred: No user with ID: c178bfc4-83a4-4dcc-a3d2-6317ecdf921b found
+2025-03-03 18:43:44.046 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.1151 ms
+2025-03-03 18:43:44.072 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:43:44.080 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:43:44.081 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 12.5119 ms
+2025-03-03 18:43:45.022 +01:00 [INF] HTTP OPTIONS /api/Users/016b3e63-bb98-44d2-9a25-47bb036ec96c responded 204 in 0.0533 ms
+2025-03-03 18:43:45.025 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0441 ms
+2025-03-03 18:43:45.030 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0452 ms
+2025-03-03 18:43:45.032 +01:00 [INF] Fetching user with ID: "016b3e63-bb98-44d2-9a25-47bb036ec96c" with details started
+2025-03-03 18:43:45.032 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:43:45.141 +01:00 [ERR] HTTP GET /api/Users/016b3e63-bb98-44d2-9a25-47bb036ec96c responded 500 in 110.3582 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: 016b3e63-bb98-44d2-9a25-47bb036ec96c found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:43:45.145 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:43:45.145 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:43:45.240 +01:00 [ERR] An exception occurred: No user with ID: 016b3e63-bb98-44d2-9a25-47bb036ec96c found
+2025-03-03 18:43:45.241 +01:00 [INF] Paginating result started
+2025-03-03 18:43:45.242 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:43:45.244 +01:00 [INF] Paginating result successfull
+2025-03-03 18:43:45.246 +01:00 [INF] HTTP GET /api/Roles responded 200 in 103.1117 ms
+2025-03-03 18:43:45.252 +01:00 [INF] HTTP GET /api/Users responded 200 in 221.3207 ms
+2025-03-03 18:44:23.842 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.3153 ms
+2025-03-03 18:44:23.847 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0372 ms
+2025-03-03 18:44:23.847 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:44:23.855 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:44:23.862 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:44:23.864 +01:00 [INF] Paginating result started
+2025-03-03 18:44:23.866 +01:00 [INF] Paginating result successfull
+2025-03-03 18:44:23.869 +01:00 [INF] HTTP GET /api/Users responded 200 in 22.8859 ms
+2025-03-03 18:44:23.881 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:44:23.903 +01:00 [INF] Paginating result started
+2025-03-03 18:44:23.914 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0571 ms
+2025-03-03 18:44:23.923 +01:00 [INF] Paginating result successfull
+2025-03-03 18:44:23.926 +01:00 [INF] HTTP GET /api/Users responded 200 in 72.1703 ms
+2025-03-03 18:44:23.929 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:44:23.939 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:44:23.940 +01:00 [INF] HTTP GET /api/Roles responded 200 in 15.4363 ms
+2025-03-03 18:44:28.749 +01:00 [INF] HTTP OPTIONS /api/Users/a656fde0-99c0-4d47-84be-f21334bef50b responded 204 in 0.1006 ms
+2025-03-03 18:44:28.758 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with details started
+2025-03-03 18:44:28.765 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with details successful
+2025-03-03 18:44:28.767 +01:00 [INF] HTTP GET /api/Users/a656fde0-99c0-4d47-84be-f21334bef50b responded 200 in 9.3084 ms
+2025-03-03 18:44:28.857 +01:00 [INF] HTTP OPTIONS /api/Users/bf5ae717-03ec-4e0e-9bcb-e760f6d59bb4 responded 204 in 0.0428 ms
+2025-03-03 18:44:28.859 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0483 ms
+2025-03-03 18:44:28.865 +01:00 [INF] Fetching user with ID: "bf5ae717-03ec-4e0e-9bcb-e760f6d59bb4" with details started
+2025-03-03 18:44:28.873 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:44:28.994 +01:00 [ERR] HTTP GET /api/Users/bf5ae717-03ec-4e0e-9bcb-e760f6d59bb4 responded 500 in 130.4212 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: bf5ae717-03ec-4e0e-9bcb-e760f6d59bb4 found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:44:29.006 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:44:29.016 +01:00 [INF] Paginating result started
+2025-03-03 18:44:29.108 +01:00 [ERR] An exception occurred: No user with ID: bf5ae717-03ec-4e0e-9bcb-e760f6d59bb4 found
+2025-03-03 18:44:29.110 +01:00 [INF] Paginating result successfull
+2025-03-03 18:44:29.111 +01:00 [INF] HTTP GET /api/Users responded 200 in 244.7417 ms
+2025-03-03 18:45:50.044 +01:00 [INF] HTTP OPTIONS /api/Users/a656fde0-99c0-4d47-84be-f21334bef50b responded 204 in 1.8364 ms
+2025-03-03 18:45:50.059 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with details started
+2025-03-03 18:45:50.067 +01:00 [INF] Fetching user with ID: "a656fde0-99c0-4d47-84be-f21334bef50b" with details successful
+2025-03-03 18:45:50.068 +01:00 [INF] HTTP GET /api/Users/a656fde0-99c0-4d47-84be-f21334bef50b responded 200 in 9.5805 ms
+2025-03-03 18:45:50.239 +01:00 [INF] HTTP OPTIONS /api/Users/f49d8f11-49a5-4b35-a751-c584cd9aa05b responded 204 in 0.0841 ms
+2025-03-03 18:45:50.241 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0483 ms
+2025-03-03 18:45:50.245 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0462 ms
+2025-03-03 18:45:50.248 +01:00 [INF] Fetching user with ID: "f49d8f11-49a5-4b35-a751-c584cd9aa05b" with details started
+2025-03-03 18:45:50.249 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:45:50.249 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:45:50.258 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:45:50.315 +01:00 [INF] HTTP GET /api/Roles responded 200 in 66.8223 ms
+2025-03-03 18:45:50.335 +01:00 [ERR] HTTP GET /api/Users/f49d8f11-49a5-4b35-a751-c584cd9aa05b responded 500 in 88.4320 ms
+HRLeaveManagement.Application.Exceptions.NotFoundException: No user with ID: f49d8f11-49a5-4b35-a751-c584cd9aa05b found
+   at HRLeaveManagement.Identity.Services.UserService.GetUserWithDetailsByIdAsync(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\Infrastructure\HRLeaveManagement.Identity\Services\UserService.cs:line 145
+   at HRLeaveManagement.Api.Controllers.UsersController.GetWithDetails(Guid id, CancellationToken cancellationToken) in C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api\Controllers\UsersController.cs:line 40
+   at lambda_method400(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-03-03 18:45:50.351 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:45:50.391 +01:00 [INF] Paginating result started
+2025-03-03 18:45:50.393 +01:00 [INF] Paginating result successfull
+2025-03-03 18:45:50.395 +01:00 [INF] HTTP GET /api/Users responded 200 in 146.3466 ms
+2025-03-03 18:45:50.478 +01:00 [ERR] An exception occurred: No user with ID: f49d8f11-49a5-4b35-a751-c584cd9aa05b found
+2025-03-03 18:51:34.036 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-03 18:51:37.286 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-03 18:51:37.300 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-03 18:51:37.713 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-03 18:51:38.014 +01:00 [INF] Hosting environment: Development
+2025-03-03 18:51:38.024 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-03 18:51:45.424 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 3.7502 ms
+2025-03-03 18:51:45.424 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 4.1351 ms
+2025-03-03 18:51:45.680 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:51:45.680 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:51:46.351 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:51:46.352 +01:00 [INF] Paginating result started
+2025-03-03 18:51:46.363 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:51:46.365 +01:00 [INF] Paginating result started
+2025-03-03 18:51:46.374 +01:00 [INF] Paginating result successfull
+2025-03-03 18:51:46.374 +01:00 [INF] Paginating result successfull
+2025-03-03 18:51:46.412 +01:00 [INF] HTTP GET /api/Users responded 200 in 970.4091 ms
+2025-03-03 18:51:46.412 +01:00 [INF] HTTP GET /api/Users responded 200 in 970.4203 ms
+2025-03-03 18:51:49.583 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0580 ms
+2025-03-03 18:51:49.597 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:51:49.618 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:51:49.621 +01:00 [INF] HTTP GET /api/Roles responded 200 in 34.1619 ms
+2025-03-03 18:51:49.922 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0516 ms
+2025-03-03 18:51:49.938 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:51:49.985 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:51:49.986 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 58.0743 ms
+2025-03-03 18:51:50.274 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:51:50.278 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:51:50.285 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:51:50.290 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:51:50.291 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 18.2650 ms
+2025-03-03 18:51:50.292 +01:00 [INF] Paginating result started
+2025-03-03 18:51:50.298 +01:00 [INF] Paginating result successfull
+2025-03-03 18:51:50.302 +01:00 [INF] HTTP GET /api/Users responded 200 in 25.2066 ms
+2025-03-03 18:52:13.466 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0805 ms
+2025-03-03 18:52:13.481 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:52:13.486 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:52:13.487 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 7.5580 ms
+2025-03-03 18:52:13.747 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 18:52:13.748 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.1442 ms
+2025-03-03 18:52:13.770 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.7660 ms
+2025-03-03 18:52:13.781 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 18:52:13.799 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 53.3046 ms
+2025-03-03 18:52:13.802 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:52:13.804 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:52:13.813 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:52:13.818 +01:00 [INF] HTTP GET /api/Roles responded 200 in 16.9369 ms
+2025-03-03 18:52:13.823 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:52:13.826 +01:00 [INF] Paginating result started
+2025-03-03 18:52:13.828 +01:00 [INF] Paginating result successfull
+2025-03-03 18:52:13.830 +01:00 [INF] HTTP GET /api/Users responded 200 in 28.2526 ms
+2025-03-03 18:52:17.232 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:52:17.237 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0500 ms
+2025-03-03 18:52:17.246 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:52:17.248 +01:00 [INF] Paginating result started
+2025-03-03 18:52:17.251 +01:00 [INF] Paginating result successfull
+2025-03-03 18:52:17.252 +01:00 [INF] Fetching all users with details started
+2025-03-03 18:52:17.252 +01:00 [INF] HTTP GET /api/Users responded 200 in 20.9412 ms
+2025-03-03 18:52:17.270 +01:00 [INF] Fetching all users with details successful
+2025-03-03 18:52:17.290 +01:00 [INF] Paginating result started
+2025-03-03 18:52:17.300 +01:00 [INF] Paginating result successfull
+2025-03-03 18:52:17.312 +01:00 [INF] HTTP GET /api/Users responded 200 in 61.3782 ms
+2025-03-03 18:52:17.317 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:52:17.322 +01:00 [INF] Fetching Identity roles started
+2025-03-03 18:52:17.323 +01:00 [INF] HTTP GET /api/Roles responded 200 in 14.5627 ms
+2025-03-03 19:00:22.829 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.7873 ms
+2025-03-03 19:00:22.864 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:00:22.968 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:00:22.972 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 108.9438 ms
+2025-03-03 19:00:23.141 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:00:23.142 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.1799 ms
+2025-03-03 19:00:23.144 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0581 ms
+2025-03-03 19:00:23.150 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:00:23.155 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 16.2635 ms
+2025-03-03 19:00:23.156 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:00:23.182 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:00:23.238 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:00:23.238 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:00:23.243 +01:00 [INF] HTTP GET /api/Roles responded 200 in 68.0701 ms
+2025-03-03 19:00:23.244 +01:00 [INF] Paginating result started
+2025-03-03 19:00:23.248 +01:00 [INF] Paginating result successfull
+2025-03-03 19:00:23.250 +01:00 [INF] HTTP GET /api/Users responded 200 in 95.9640 ms
+2025-03-03 19:02:56.357 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.1138 ms
+2025-03-03 19:02:56.375 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:02:56.381 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:02:56.382 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 8.2007 ms
+2025-03-03 19:02:56.474 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0366 ms
+2025-03-03 19:02:56.475 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:02:56.482 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:02:56.482 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:02:56.493 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 18.3995 ms
+2025-03-03 19:02:56.541 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:02:56.542 +01:00 [INF] Paginating result started
+2025-03-03 19:02:56.544 +01:00 [INF] Paginating result successfull
+2025-03-03 19:02:56.546 +01:00 [INF] HTTP GET /api/Users responded 200 in 66.9007 ms
+2025-03-03 19:02:57.802 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:02:57.810 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:02:57.812 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 10.6534 ms
+2025-03-03 19:02:57.974 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:02:57.976 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0390 ms
+2025-03-03 19:02:57.977 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:02:57.985 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:02:58.003 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:02:58.012 +01:00 [INF] HTTP GET /api/Roles responded 200 in 26.9860 ms
+2025-03-03 19:02:58.038 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:02:58.063 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 91.6857 ms
+2025-03-03 19:02:58.064 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:02:58.066 +01:00 [INF] Paginating result started
+2025-03-03 19:02:58.068 +01:00 [INF] Paginating result successfull
+2025-03-03 19:02:58.070 +01:00 [INF] HTTP GET /api/Users responded 200 in 93.8856 ms
+2025-03-03 19:02:59.258 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:02:59.266 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:02:59.267 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 10.0711 ms
+2025-03-03 19:02:59.358 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:02:59.362 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:02:59.384 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:02:59.386 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 31.8384 ms
+2025-03-03 19:02:59.409 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:02:59.410 +01:00 [INF] Paginating result started
+2025-03-03 19:02:59.412 +01:00 [INF] Paginating result successfull
+2025-03-03 19:02:59.413 +01:00 [INF] HTTP GET /api/Users responded 200 in 51.8942 ms
+2025-03-03 19:03:02.736 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.0705 ms
+2025-03-03 19:03:02.751 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:03:02.760 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:03:02.761 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 10.6565 ms
+2025-03-03 19:03:02.930 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0358 ms
+2025-03-03 19:03:02.932 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:03:02.935 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:03:02.959 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:03:02.960 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:03:02.961 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:03:02.963 +01:00 [INF] HTTP GET /api/Roles responded 200 in 28.6658 ms
+2025-03-03 19:03:02.964 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 34.0727 ms
+2025-03-03 19:03:03.006 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:03:03.007 +01:00 [INF] Paginating result started
+2025-03-03 19:03:03.009 +01:00 [INF] Paginating result successfull
+2025-03-03 19:03:03.010 +01:00 [INF] HTTP GET /api/Users responded 200 in 57.2700 ms
+2025-03-03 19:03:05.701 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:03:05.712 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:03:05.714 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 13.3426 ms
+2025-03-03 19:03:05.801 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:03:05.801 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:03:05.816 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:03:05.818 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:03:05.818 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 18.1449 ms
+2025-03-03 19:03:05.819 +01:00 [INF] Paginating result started
+2025-03-03 19:03:05.827 +01:00 [INF] Paginating result successfull
+2025-03-03 19:03:05.829 +01:00 [INF] HTTP GET /api/Users responded 200 in 28.3587 ms
+2025-03-03 19:03:06.867 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:03:06.876 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:03:06.878 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 12.1445 ms
+2025-03-03 19:03:07.053 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0394 ms
+2025-03-03 19:03:07.054 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:03:07.054 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:03:07.065 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:03:07.084 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:03:07.085 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:03:07.085 +01:00 [INF] Paginating result started
+2025-03-03 19:03:07.088 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 34.8824 ms
+2025-03-03 19:03:07.088 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:03:07.091 +01:00 [INF] Paginating result successfull
+2025-03-03 19:03:07.094 +01:00 [INF] HTTP GET /api/Roles responded 200 in 28.8721 ms
+2025-03-03 19:03:07.095 +01:00 [INF] HTTP GET /api/Users responded 200 in 40.6079 ms
+2025-03-03 19:08:47.753 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 2.1157 ms
+2025-03-03 19:08:47.759 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:08:47.834 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:08:47.836 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 78.2859 ms
+2025-03-03 19:08:47.929 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:08:47.934 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0295 ms
+2025-03-03 19:08:47.938 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:08:47.940 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:08:47.941 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 14.0963 ms
+2025-03-03 19:08:47.998 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:08:47.999 +01:00 [INF] Paginating result started
+2025-03-03 19:08:48.001 +01:00 [INF] Paginating result successfull
+2025-03-03 19:08:48.003 +01:00 [INF] HTTP GET /api/Users responded 200 in 63.1278 ms
+2025-03-03 19:08:49.602 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:08:49.608 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:08:49.610 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 7.9086 ms
+2025-03-03 19:08:49.753 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:08:49.756 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:08:49.760 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0298 ms
+2025-03-03 19:08:49.763 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:08:49.767 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 15.3362 ms
+2025-03-03 19:08:49.775 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:08:49.823 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:08:49.823 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:08:49.824 +01:00 [INF] HTTP GET /api/Roles responded 200 in 50.1358 ms
+2025-03-03 19:08:49.825 +01:00 [INF] Paginating result started
+2025-03-03 19:08:49.830 +01:00 [INF] Paginating result successfull
+2025-03-03 19:08:49.831 +01:00 [INF] HTTP GET /api/Users responded 200 in 75.5590 ms
+2025-03-03 19:08:51.008 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:08:51.017 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:08:51.019 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 11.3354 ms
+2025-03-03 19:08:51.100 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details started
+2025-03-03 19:08:51.100 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:08:51.107 +01:00 [INF] Fetching user with ID: "ab712cf8-7e4d-413e-a3fa-fbfd9e978665" with details successful
+2025-03-03 19:08:51.110 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 200 in 10.4174 ms
+2025-03-03 19:08:51.121 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:08:51.122 +01:00 [INF] Paginating result started
+2025-03-03 19:08:51.123 +01:00 [INF] Paginating result successfull
+2025-03-03 19:08:51.124 +01:00 [INF] HTTP GET /api/Users responded 200 in 24.5931 ms
+2025-03-03 19:10:07.092 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.0346 ms
+2025-03-03 19:10:07.116 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 401 in 9.7656 ms
+2025-03-03 19:10:14.907 +01:00 [INF] HTTP OPTIONS /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 204 in 0.0342 ms
+2025-03-03 19:10:14.944 +01:00 [INF] HTTP GET /api/Users/ab712cf8-7e4d-413e-a3fa-fbfd9e978665 responded 401 in 28.3044 ms
+2025-03-03 19:10:17.157 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0269 ms
+2025-03-03 19:10:17.160 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0248 ms
+2025-03-03 19:10:17.174 +01:00 [INF] HTTP GET /api/Users responded 401 in 2.1831 ms
+2025-03-03 19:10:17.178 +01:00 [INF] HTTP GET /api/Users responded 401 in 1.2778 ms
+2025-03-03 19:10:17.227 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0248 ms
+2025-03-03 19:10:17.234 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:10:17.240 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:10:17.241 +01:00 [INF] HTTP GET /api/Roles responded 200 in 7.3812 ms
+2025-03-03 19:10:52.212 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 0.0211 ms
+2025-03-03 19:10:52.301 +01:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 19:10:52.453 +01:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 19:10:52.456 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 231.8730 ms
+2025-03-03 19:10:56.593 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0417 ms
+2025-03-03 19:10:56.596 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0257 ms
+2025-03-03 19:10:56.601 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:10:56.602 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:10:56.638 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:10:56.647 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:10:56.659 +01:00 [INF] Paginating result started
+2025-03-03 19:10:56.660 +01:00 [INF] Paginating result started
+2025-03-03 19:10:56.661 +01:00 [INF] Paginating result successfull
+2025-03-03 19:10:56.663 +01:00 [INF] HTTP GET /api/Users responded 200 in 61.7432 ms
+2025-03-03 19:10:56.663 +01:00 [INF] Paginating result successfull
+2025-03-03 19:10:56.669 +01:00 [INF] HTTP GET /api/Users responded 200 in 67.5064 ms
+2025-03-03 19:10:56.862 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0251 ms
+2025-03-03 19:10:56.870 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:10:56.873 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:10:56.875 +01:00 [INF] HTTP GET /api/Roles responded 200 in 5.3322 ms
+2025-03-03 19:10:59.650 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0265 ms
+2025-03-03 19:10:59.659 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:10:59.667 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:10:59.670 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 11.7115 ms
+2025-03-03 19:10:59.906 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:10:59.907 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:10:59.926 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:10:59.934 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:10:59.939 +01:00 [INF] Paginating result started
+2025-03-03 19:10:59.939 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 33.2373 ms
+2025-03-03 19:10:59.941 +01:00 [INF] Paginating result successfull
+2025-03-03 19:10:59.943 +01:00 [INF] HTTP GET /api/Users responded 200 in 36.8212 ms
+2025-03-03 19:11:33.486 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0283 ms
+2025-03-03 19:11:33.502 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:11:33.507 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:11:33.508 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 6.8163 ms
+2025-03-03 19:11:33.778 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:11:33.784 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0303 ms
+2025-03-03 19:11:33.787 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.1196 ms
+2025-03-03 19:11:33.789 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:11:33.791 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:11:33.793 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 15.1758 ms
+2025-03-03 19:11:33.795 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:11:33.804 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:11:33.822 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:11:33.823 +01:00 [INF] Paginating result started
+2025-03-03 19:11:33.822 +01:00 [INF] HTTP GET /api/Roles responded 200 in 29.3446 ms
+2025-03-03 19:11:33.826 +01:00 [INF] Paginating result successfull
+2025-03-03 19:11:33.828 +01:00 [INF] HTTP GET /api/Users responded 200 in 37.6866 ms
+2025-03-03 19:12:06.807 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0251 ms
+2025-03-03 19:12:06.818 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0206 ms
+2025-03-03 19:12:06.833 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:12:06.834 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:12:06.883 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:12:06.883 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:12:06.887 +01:00 [INF] Paginating result started
+2025-03-03 19:12:06.888 +01:00 [INF] Paginating result started
+2025-03-03 19:12:06.889 +01:00 [INF] Paginating result successfull
+2025-03-03 19:12:06.891 +01:00 [INF] HTTP GET /api/Users responded 200 in 60.4161 ms
+2025-03-03 19:12:06.891 +01:00 [INF] Paginating result successfull
+2025-03-03 19:12:06.894 +01:00 [INF] HTTP GET /api/Users responded 200 in 59.6401 ms
+2025-03-03 19:12:06.908 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0219 ms
+2025-03-03 19:12:06.914 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:12:06.918 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:12:06.920 +01:00 [INF] HTTP GET /api/Roles responded 200 in 5.9738 ms
+2025-03-03 19:12:10.914 +01:00 [INF] HTTP OPTIONS /api/Users/a0bc7389-c9c0-4023-b2b0-ad731a9272f2 responded 204 in 0.0483 ms
+2025-03-03 19:12:10.924 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details started
+2025-03-03 19:12:10.927 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details successful
+2025-03-03 19:12:10.929 +01:00 [INF] HTTP GET /api/Users/a0bc7389-c9c0-4023-b2b0-ad731a9272f2 responded 200 in 5.7708 ms
+2025-03-03 19:12:11.095 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details started
+2025-03-03 19:12:11.101 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:12:11.108 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:12:11.108 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details successful
+2025-03-03 19:12:11.112 +01:00 [INF] HTTP GET /api/Users/a0bc7389-c9c0-4023-b2b0-ad731a9272f2 responded 200 in 17.5158 ms
+2025-03-03 19:12:11.112 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:12:11.118 +01:00 [INF] HTTP GET /api/Roles responded 200 in 11.0338 ms
+2025-03-03 19:12:11.142 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:12:11.143 +01:00 [INF] Paginating result started
+2025-03-03 19:12:11.145 +01:00 [INF] Paginating result successfull
+2025-03-03 19:12:11.146 +01:00 [INF] HTTP GET /api/Users responded 200 in 48.1722 ms
+2025-03-03 19:12:15.192 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details started
+2025-03-03 19:12:15.197 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details successful
+2025-03-03 19:12:15.202 +01:00 [INF] HTTP GET /api/Users/a0bc7389-c9c0-4023-b2b0-ad731a9272f2 responded 200 in 11.4873 ms
+2025-03-03 19:12:15.296 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details started
+2025-03-03 19:12:15.301 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0218 ms
+2025-03-03 19:12:15.308 +01:00 [INF] Fetching user with ID: "a0bc7389-c9c0-4023-b2b0-ad731a9272f2" with details successful
+2025-03-03 19:12:15.315 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:12:15.322 +01:00 [INF] HTTP GET /api/Users/a0bc7389-c9c0-4023-b2b0-ad731a9272f2 responded 200 in 25.4753 ms
+2025-03-03 19:12:15.338 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:12:15.341 +01:00 [INF] Paginating result started
+2025-03-03 19:12:15.342 +01:00 [INF] Paginating result successfull
+2025-03-03 19:12:15.343 +01:00 [INF] HTTP GET /api/Users responded 200 in 35.5749 ms
+2025-03-03 19:12:41.451 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.4118 ms
+2025-03-03 19:12:41.452 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0209 ms
+2025-03-03 19:12:41.458 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:12:41.460 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:12:41.480 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:12:41.480 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:12:41.482 +01:00 [INF] Paginating result started
+2025-03-03 19:12:41.485 +01:00 [INF] Paginating result started
+2025-03-03 19:12:41.489 +01:00 [INF] Paginating result successfull
+2025-03-03 19:12:41.491 +01:00 [INF] HTTP GET /api/Users responded 200 in 33.3726 ms
+2025-03-03 19:12:41.491 +01:00 [INF] Paginating result successfull
+2025-03-03 19:12:41.494 +01:00 [INF] HTTP GET /api/Users responded 200 in 35.0109 ms
+2025-03-03 19:12:41.505 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0509 ms
+2025-03-03 19:12:41.517 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:12:41.524 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:12:41.530 +01:00 [INF] HTTP GET /api/Roles responded 200 in 15.0981 ms
+2025-03-03 19:12:50.320 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0244 ms
+2025-03-03 19:12:50.327 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:12:50.345 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:12:50.346 +01:00 [INF] Paginating result started
+2025-03-03 19:12:50.348 +01:00 [INF] Paginating result successfull
+2025-03-03 19:12:50.352 +01:00 [INF] HTTP GET /api/Users responded 200 in 25.1741 ms
+2025-03-03 19:18:17.400 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0437 ms
+2025-03-03 19:18:17.411 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:17.542 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:17.544 +01:00 [INF] Paginating result started
+2025-03-03 19:18:17.547 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:17.549 +01:00 [INF] HTTP GET /api/Users responded 200 in 138.1059 ms
+2025-03-03 19:18:19.109 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0201 ms
+2025-03-03 19:18:19.115 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:19.137 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:19.143 +01:00 [INF] Paginating result started
+2025-03-03 19:18:19.146 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:19.147 +01:00 [INF] HTTP GET /api/Users responded 200 in 32.1561 ms
+2025-03-03 19:18:30.147 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.3165 ms
+2025-03-03 19:18:30.152 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:30.185 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:30.186 +01:00 [INF] Paginating result started
+2025-03-03 19:18:30.188 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:30.190 +01:00 [INF] HTTP GET /api/Users responded 200 in 38.1707 ms
+2025-03-03 19:18:31.074 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0228 ms
+2025-03-03 19:18:31.079 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:31.099 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:31.100 +01:00 [INF] Paginating result started
+2025-03-03 19:18:31.102 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:31.103 +01:00 [INF] HTTP GET /api/Users responded 200 in 25.2562 ms
+2025-03-03 19:18:32.137 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:32.150 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:32.151 +01:00 [INF] Paginating result started
+2025-03-03 19:18:32.153 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:32.154 +01:00 [INF] HTTP GET /api/Users responded 200 in 17.6305 ms
+2025-03-03 19:18:33.167 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:33.188 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:33.191 +01:00 [INF] Paginating result started
+2025-03-03 19:18:33.193 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:33.195 +01:00 [INF] HTTP GET /api/Users responded 200 in 27.9183 ms
+2025-03-03 19:18:34.079 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:34.093 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:34.094 +01:00 [INF] Paginating result started
+2025-03-03 19:18:34.096 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:34.097 +01:00 [INF] HTTP GET /api/Users responded 200 in 17.9793 ms
+2025-03-03 19:18:43.689 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0241 ms
+2025-03-03 19:18:43.695 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:43.705 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:43.706 +01:00 [INF] Paginating result started
+2025-03-03 19:18:43.709 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:43.711 +01:00 [INF] HTTP GET /api/Users responded 200 in 16.1842 ms
+2025-03-03 19:18:44.487 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0261 ms
+2025-03-03 19:18:44.493 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:44.504 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:44.505 +01:00 [INF] Paginating result started
+2025-03-03 19:18:44.511 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:44.513 +01:00 [INF] HTTP GET /api/Users responded 200 in 20.2256 ms
+2025-03-03 19:18:45.394 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:45.417 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:45.419 +01:00 [INF] Paginating result started
+2025-03-03 19:18:45.421 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:45.427 +01:00 [INF] HTTP GET /api/Users responded 200 in 32.6339 ms
+2025-03-03 19:18:47.884 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0225 ms
+2025-03-03 19:18:47.890 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:47.901 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:47.902 +01:00 [INF] Paginating result started
+2025-03-03 19:18:47.904 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:47.905 +01:00 [INF] HTTP GET /api/Users responded 200 in 16.4552 ms
+2025-03-03 19:18:49.778 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0226 ms
+2025-03-03 19:18:49.788 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:49.804 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:49.805 +01:00 [INF] Paginating result started
+2025-03-03 19:18:49.810 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:49.812 +01:00 [INF] HTTP GET /api/Users responded 200 in 23.9953 ms
+2025-03-03 19:18:51.721 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0205 ms
+2025-03-03 19:18:51.728 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:51.738 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:51.742 +01:00 [INF] Paginating result started
+2025-03-03 19:18:51.744 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:51.746 +01:00 [INF] HTTP GET /api/Users responded 200 in 18.2042 ms
+2025-03-03 19:18:53.133 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:18:53.148 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:18:53.149 +01:00 [INF] Paginating result started
+2025-03-03 19:18:53.151 +01:00 [INF] Paginating result successfull
+2025-03-03 19:18:53.152 +01:00 [INF] HTTP GET /api/Users responded 200 in 18.8532 ms
+2025-03-03 19:23:11.144 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-03 19:23:14.522 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-03 19:23:14.536 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-03 19:23:14.718 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-03 19:23:14.786 +01:00 [INF] Hosting environment: Development
+2025-03-03 19:23:14.789 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-03 19:24:03.379 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 4.0943 ms
+2025-03-03 19:24:03.379 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 4.0981 ms
+2025-03-03 19:24:03.671 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:24:03.671 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:24:04.475 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:24:04.476 +01:00 [INF] Paginating result started
+2025-03-03 19:24:04.476 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:24:04.478 +01:00 [INF] Paginating result started
+2025-03-03 19:24:04.490 +01:00 [INF] Paginating result successfull
+2025-03-03 19:24:04.491 +01:00 [INF] Paginating result successfull
+2025-03-03 19:24:04.525 +01:00 [INF] HTTP GET /api/Users responded 200 in 1134.8473 ms
+2025-03-03 19:24:04.525 +01:00 [INF] HTTP GET /api/Users responded 200 in 1134.8494 ms
+2025-03-03 19:24:04.998 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0544 ms
+2025-03-03 19:24:05.012 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:24:05.034 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:24:05.037 +01:00 [INF] HTTP GET /api/Roles responded 200 in 35.1311 ms
+2025-03-03 19:24:30.770 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0694 ms
+2025-03-03 19:24:30.777 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0893 ms
+2025-03-03 19:24:30.780 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:24:30.793 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:24:30.794 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:24:30.795 +01:00 [INF] HTTP GET /api/Roles responded 200 in 20.6355 ms
+2025-03-03 19:24:30.805 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:24:30.838 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:24:30.841 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:24:30.845 +01:00 [INF] Paginating result started
+2025-03-03 19:24:30.843 +01:00 [INF] HTTP GET /api/Roles responded 200 in 42.7333 ms
+2025-03-03 19:24:30.850 +01:00 [INF] Paginating result successfull
+2025-03-03 19:24:30.852 +01:00 [INF] HTTP GET /api/Users responded 200 in 66.0557 ms
+2025-03-03 19:25:32.023 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 0.1472 ms
+2025-03-03 19:25:32.105 +01:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 19:25:32.245 +01:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 19:25:32.251 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 216.1357 ms
+2025-03-03 19:25:36.369 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0792 ms
+2025-03-03 19:25:36.369 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0292 ms
+2025-03-03 19:25:36.375 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:25:36.418 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:25:36.454 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:25:36.460 +01:00 [INF] Paginating result started
+2025-03-03 19:25:36.461 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:25:36.462 +01:00 [INF] Paginating result successfull
+2025-03-03 19:25:36.462 +01:00 [INF] Paginating result started
+2025-03-03 19:25:36.465 +01:00 [INF] HTTP GET /api/Users responded 200 in 90.8408 ms
+2025-03-03 19:25:36.468 +01:00 [INF] Paginating result successfull
+2025-03-03 19:25:36.469 +01:00 [INF] HTTP GET /api/Users responded 200 in 91.8756 ms
+2025-03-03 19:25:36.608 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0445 ms
+2025-03-03 19:25:36.616 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:25:36.621 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:25:36.622 +01:00 [INF] HTTP GET /api/Roles responded 200 in 8.6772 ms
+2025-03-03 19:34:31.202 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.1590 ms
+2025-03-03 19:34:31.216 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:34:32.547 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:34:32.550 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 1339.8187 ms
+2025-03-03 19:34:32.717 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:34:32.721 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.2643 ms
+2025-03-03 19:34:32.735 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:34:32.736 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:34:32.737 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 20.7131 ms
+2025-03-03 19:34:32.799 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:34:32.800 +01:00 [INF] Paginating result started
+2025-03-03 19:34:32.802 +01:00 [INF] Paginating result successfull
+2025-03-03 19:34:32.803 +01:00 [INF] HTTP GET /api/Users responded 200 in 68.2817 ms
+2025-03-03 19:35:30.178 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0717 ms
+2025-03-03 19:35:30.182 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0490 ms
+2025-03-03 19:35:30.187 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:35:30.230 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:35:30.287 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:35:30.301 +01:00 [INF] Paginating result started
+2025-03-03 19:35:30.302 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:35:30.303 +01:00 [INF] Paginating result successfull
+2025-03-03 19:35:30.303 +01:00 [INF] Paginating result started
+2025-03-03 19:35:30.304 +01:00 [INF] HTTP GET /api/Users responded 200 in 119.2590 ms
+2025-03-03 19:35:30.307 +01:00 [INF] Paginating result successfull
+2025-03-03 19:35:30.311 +01:00 [INF] HTTP GET /api/Users responded 200 in 120.9232 ms
+2025-03-03 19:35:30.321 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0855 ms
+2025-03-03 19:35:30.329 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:35:30.332 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:35:30.333 +01:00 [INF] HTTP GET /api/Roles responded 200 in 5.0476 ms
+2025-03-03 19:35:33.998 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0825 ms
+2025-03-03 19:35:34.004 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:35:34.010 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:35:34.012 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 8.4207 ms
+2025-03-03 19:35:34.146 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:35:34.149 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:35:34.155 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:35:34.164 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:35:34.164 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 18.7564 ms
+2025-03-03 19:35:34.165 +01:00 [INF] Paginating result started
+2025-03-03 19:35:34.170 +01:00 [INF] Paginating result successfull
+2025-03-03 19:35:34.172 +01:00 [INF] HTTP GET /api/Users responded 200 in 23.9885 ms
+2025-03-03 19:39:28.341 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.3014 ms
+2025-03-03 19:39:28.341 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0250 ms
+2025-03-03 19:39:28.359 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:39:28.361 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:39:28.402 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:39:28.402 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:39:28.403 +01:00 [INF] Paginating result started
+2025-03-03 19:39:28.404 +01:00 [INF] Paginating result started
+2025-03-03 19:39:28.406 +01:00 [INF] Paginating result successfull
+2025-03-03 19:39:28.407 +01:00 [INF] Paginating result successfull
+2025-03-03 19:39:28.407 +01:00 [INF] HTTP GET /api/Users responded 200 in 46.8658 ms
+2025-03-03 19:39:28.408 +01:00 [INF] HTTP GET /api/Users responded 200 in 50.2138 ms
+2025-03-03 19:39:28.432 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0351 ms
+2025-03-03 19:39:28.437 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:39:28.440 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:39:28.441 +01:00 [INF] HTTP GET /api/Roles responded 200 in 3.9861 ms
+2025-03-03 19:40:37.108 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0564 ms
+2025-03-03 19:40:37.120 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:40:37.126 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:40:37.134 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 14.8280 ms
+2025-03-03 19:40:37.344 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:40:37.352 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0351 ms
+2025-03-03 19:40:37.352 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0213 ms
+2025-03-03 19:40:37.354 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:40:37.366 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:40:37.367 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 23.4323 ms
+2025-03-03 19:40:37.372 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:40:37.381 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:40:37.383 +01:00 [INF] HTTP GET /api/Roles responded 200 in 11.5345 ms
+2025-03-03 19:40:37.389 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:40:37.400 +01:00 [INF] Paginating result started
+2025-03-03 19:40:37.406 +01:00 [INF] Paginating result successfull
+2025-03-03 19:40:37.410 +01:00 [INF] HTTP GET /api/Users responded 200 in 44.7262 ms
+2025-03-03 19:40:39.757 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:40:39.763 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:40:39.765 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 8.0288 ms
+2025-03-03 19:40:39.854 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:40:39.856 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:40:39.863 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:40:39.871 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 21.5339 ms
+2025-03-03 19:40:39.871 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:40:39.875 +01:00 [INF] Paginating result started
+2025-03-03 19:40:39.877 +01:00 [INF] Paginating result successfull
+2025-03-03 19:40:39.878 +01:00 [INF] HTTP GET /api/Users responded 200 in 27.3562 ms
+2025-03-03 19:41:25.794 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0332 ms
+2025-03-03 19:41:25.802 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:41:25.807 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:41:25.808 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 6.6144 ms
+2025-03-03 19:41:25.958 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 19:41:25.964 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0350 ms
+2025-03-03 19:41:25.968 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 19:41:25.967 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0316 ms
+2025-03-03 19:41:25.976 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 18.8724 ms
+2025-03-03 19:41:25.979 +01:00 [INF] Fetching all users with details started
+2025-03-03 19:41:25.989 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:41:25.996 +01:00 [INF] Fetching Identity roles started
+2025-03-03 19:41:26.000 +01:00 [INF] HTTP GET /api/Roles responded 200 in 11.8524 ms
+2025-03-03 19:41:26.005 +01:00 [INF] Fetching all users with details successful
+2025-03-03 19:41:26.006 +01:00 [INF] Paginating result started
+2025-03-03 19:41:26.008 +01:00 [INF] Paginating result successfull
+2025-03-03 19:41:26.009 +01:00 [INF] HTTP GET /api/Users responded 200 in 30.7520 ms
+2025-03-03 20:42:17.518 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-03 20:42:22.391 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-03 20:42:22.392 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-03 20:42:22.465 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-03 20:42:22.483 +01:00 [INF] Hosting environment: Development
+2025-03-03 20:42:22.484 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-03 20:42:41.994 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 5.5889 ms
+2025-03-03 20:42:42.634 +01:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 20:42:42.848 +01:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 20:42:42.889 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 881.0547 ms
+2025-03-03 20:43:14.573 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 8.3354 ms
+2025-03-03 20:43:14.663 +01:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 20:43:14.761 +01:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 20:43:14.763 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 184.3020 ms
+2025-03-03 20:43:30.130 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0465 ms
+2025-03-03 20:43:30.133 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0674 ms
+2025-03-03 20:43:30.229 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:43:30.231 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:43:30.340 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:43:30.346 +01:00 [INF] Paginating result started
+2025-03-03 20:43:30.346 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:43:30.348 +01:00 [INF] Paginating result started
+2025-03-03 20:43:30.360 +01:00 [INF] Paginating result successfull
+2025-03-03 20:43:30.361 +01:00 [INF] Paginating result successfull
+2025-03-03 20:43:30.386 +01:00 [INF] HTTP GET /api/Users responded 200 in 249.4334 ms
+2025-03-03 20:43:30.386 +01:00 [INF] HTTP GET /api/Users responded 200 in 247.7734 ms
+2025-03-03 20:43:30.803 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0571 ms
+2025-03-03 20:43:30.815 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:43:30.835 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:43:30.838 +01:00 [INF] HTTP GET /api/Roles responded 200 in 28.3595 ms
+2025-03-03 20:43:34.054 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.1032 ms
+2025-03-03 20:43:34.077 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:43:34.119 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:43:34.122 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 60.9711 ms
+2025-03-03 20:43:34.363 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:43:34.368 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:43:34.376 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:43:34.382 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 21.9128 ms
+2025-03-03 20:43:34.383 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:43:34.386 +01:00 [INF] Paginating result started
+2025-03-03 20:43:34.388 +01:00 [INF] Paginating result successfull
+2025-03-03 20:43:34.390 +01:00 [INF] HTTP GET /api/Users responded 200 in 24.2662 ms
+2025-03-03 20:43:35.903 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:43:35.913 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:43:35.914 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 12.1051 ms
+2025-03-03 20:43:36.170 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:43:36.173 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0445 ms
+2025-03-03 20:43:36.176 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0408 ms
+2025-03-03 20:43:36.178 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:43:36.181 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:43:36.183 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 13.4539 ms
+2025-03-03 20:43:36.189 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:43:36.198 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:43:36.208 +01:00 [INF] Paginating result started
+2025-03-03 20:43:36.210 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:43:36.211 +01:00 [INF] Paginating result successfull
+2025-03-03 20:43:36.212 +01:00 [INF] HTTP GET /api/Roles responded 200 in 30.0661 ms
+2025-03-03 20:43:36.213 +01:00 [INF] HTTP GET /api/Users responded 200 in 31.9135 ms
+2025-03-03 20:44:02.592 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0517 ms
+2025-03-03 20:44:02.603 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:02.609 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:02.610 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 10.4260 ms
+2025-03-03 20:44:02.691 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:02.692 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0462 ms
+2025-03-03 20:44:02.698 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:02.700 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:44:02.700 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 10.0038 ms
+2025-03-03 20:44:02.733 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:44:02.736 +01:00 [INF] Paginating result started
+2025-03-03 20:44:02.738 +01:00 [INF] Paginating result successfull
+2025-03-03 20:44:02.739 +01:00 [INF] HTTP GET /api/Users responded 200 in 40.4438 ms
+2025-03-03 20:44:06.761 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:06.772 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:06.773 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 13.3556 ms
+2025-03-03 20:44:06.927 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:06.927 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:44:06.928 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.1397 ms
+2025-03-03 20:44:06.937 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:06.955 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 31.1242 ms
+2025-03-03 20:44:06.962 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:44:07.005 +01:00 [INF] Paginating result started
+2025-03-03 20:44:07.007 +01:00 [INF] Paginating result successfull
+2025-03-03 20:44:07.007 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:44:07.008 +01:00 [INF] HTTP GET /api/Users responded 200 in 81.7176 ms
+2025-03-03 20:44:07.011 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:44:07.012 +01:00 [INF] HTTP GET /api/Roles responded 200 in 35.7841 ms
+2025-03-03 20:44:08.036 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0736 ms
+2025-03-03 20:44:08.043 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:08.048 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:08.050 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 6.9094 ms
+2025-03-03 20:44:08.136 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:08.139 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.1480 ms
+2025-03-03 20:44:08.143 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:08.144 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:44:08.145 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 9.2910 ms
+2025-03-03 20:44:08.163 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:44:08.164 +01:00 [INF] Paginating result started
+2025-03-03 20:44:08.166 +01:00 [INF] Paginating result successfull
+2025-03-03 20:44:08.168 +01:00 [INF] HTTP GET /api/Users responded 200 in 25.0081 ms
+2025-03-03 20:44:09.138 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:09.145 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:09.146 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 9.3545 ms
+2025-03-03 20:44:09.290 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:09.294 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:44:09.296 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:44:09.304 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:44:09.308 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:09.315 +01:00 [INF] HTTP GET /api/Roles responded 200 in 19.5273 ms
+2025-03-03 20:44:09.318 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:44:09.319 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 29.0795 ms
+2025-03-03 20:44:09.326 +01:00 [INF] Paginating result started
+2025-03-03 20:44:09.329 +01:00 [INF] Paginating result successfull
+2025-03-03 20:44:09.332 +01:00 [INF] HTTP GET /api/Users responded 200 in 38.6508 ms
+2025-03-03 20:44:11.571 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:11.586 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:11.589 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 18.9170 ms
+2025-03-03 20:44:11.664 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 20:44:11.667 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:44:11.672 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 20:44:11.675 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 11.5524 ms
+2025-03-03 20:44:11.681 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:44:11.686 +01:00 [INF] Paginating result started
+2025-03-03 20:44:11.688 +01:00 [INF] Paginating result successfull
+2025-03-03 20:44:11.689 +01:00 [INF] HTTP GET /api/Users responded 200 in 22.4633 ms
+2025-03-03 20:44:46.067 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.1717 ms
+2025-03-03 20:44:46.071 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0305 ms
+2025-03-03 20:44:46.075 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:44:46.079 +01:00 [INF] Fetching all users with details started
+2025-03-03 20:44:46.116 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:44:46.122 +01:00 [INF] Paginating result started
+2025-03-03 20:44:46.125 +01:00 [INF] Paginating result successfull
+2025-03-03 20:44:46.126 +01:00 [INF] HTTP GET /api/Users responded 200 in 51.7219 ms
+2025-03-03 20:44:46.134 +01:00 [INF] Fetching all users with details successful
+2025-03-03 20:44:46.140 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0505 ms
+2025-03-03 20:44:46.141 +01:00 [INF] Paginating result started
+2025-03-03 20:44:46.145 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:44:46.146 +01:00 [INF] Paginating result successfull
+2025-03-03 20:44:46.149 +01:00 [INF] HTTP GET /api/Users responded 200 in 73.1241 ms
+2025-03-03 20:44:46.150 +01:00 [INF] Fetching Identity roles started
+2025-03-03 20:44:46.154 +01:00 [INF] HTTP GET /api/Roles responded 200 in 8.6017 ms
+2025-03-03 20:47:48.968 +01:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 0.0863 ms
+2025-03-03 20:47:48.992 +01:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 20:47:49.082 +01:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-03-03 20:47:49.083 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 104.3599 ms
+2025-03-03 20:49:22.134 +01:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-03-03 20:49:24.787 +01:00 [INF] Now listening on: https://localhost:7131
+2025-03-03 20:49:24.876 +01:00 [INF] Now listening on: http://localhost:5133
+2025-03-03 20:49:24.978 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-03 20:49:25.026 +01:00 [INF] Hosting environment: Development
+2025-03-03 20:49:25.027 +01:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-03-03 21:05:28.619 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 8.8079 ms
+2025-03-03 21:05:28.619 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 8.6013 ms
+2025-03-03 21:05:28.872 +01:00 [INF] Fetching all users with details started
+2025-03-03 21:05:28.872 +01:00 [INF] Fetching all users with details started
+2025-03-03 21:05:30.962 +01:00 [INF] Fetching all users with details successful
+2025-03-03 21:05:30.963 +01:00 [INF] Fetching all users with details successful
+2025-03-03 21:05:30.963 +01:00 [INF] Paginating result started
+2025-03-03 21:05:30.964 +01:00 [INF] Paginating result started
+2025-03-03 21:05:30.977 +01:00 [INF] Paginating result successfull
+2025-03-03 21:05:30.978 +01:00 [INF] Paginating result successfull
+2025-03-03 21:05:31.009 +01:00 [INF] HTTP GET /api/Users responded 200 in 2377.1835 ms
+2025-03-03 21:05:31.009 +01:00 [INF] HTTP GET /api/Users responded 200 in 2377.1877 ms
+2025-03-03 21:05:31.211 +01:00 [INF] HTTP OPTIONS /api/Roles responded 204 in 0.0760 ms
+2025-03-03 21:05:31.226 +01:00 [INF] Fetching Identity roles started
+2025-03-03 21:05:31.244 +01:00 [INF] Fetching Identity roles started
+2025-03-03 21:05:31.247 +01:00 [INF] HTTP GET /api/Roles responded 200 in 30.7903 ms
+2025-03-03 21:05:33.819 +01:00 [INF] HTTP OPTIONS /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 204 in 0.0518 ms
+2025-03-03 21:05:33.836 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 21:05:33.883 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 21:05:33.884 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 56.9066 ms
+2025-03-03 21:05:34.141 +01:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0796 ms
+2025-03-03 21:05:34.142 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details started
+2025-03-03 21:05:34.147 +01:00 [INF] Fetching all users with details started
+2025-03-03 21:05:34.151 +01:00 [INF] Fetching user with ID: "4f220d02-e595-4900-8864-2887a15f4449" with details successful
+2025-03-03 21:05:34.158 +01:00 [INF] Fetching all users with details successful
+2025-03-03 21:05:34.160 +01:00 [INF] Paginating result started
+2025-03-03 21:05:34.159 +01:00 [INF] HTTP GET /api/Users/4f220d02-e595-4900-8864-2887a15f4449 responded 200 in 18.7788 ms
+2025-03-03 21:05:34.162 +01:00 [INF] Paginating result successfull
+2025-03-03 21:05:34.165 +01:00 [INF] HTTP GET /api/Users responded 200 in 18.8337 ms

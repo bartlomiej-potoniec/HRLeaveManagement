@@ -1,9 +1,8 @@
 ﻿using HRLeaveManagement.Application.Contracts.Infrastructure.Logging;
 using HRLeaveManagement.Application.Contracts.Infrastructure.Messaging;
 using HRLeaveManagement.Application.DTOs.Auth;
-using HRLeaveManagement.Domain.Contracts;
 using HRLeaveManagement.Infrastructure.Messaging.Options;
-using HRLeaveManagement.Persistence.DbContexts;
+using HRLeaveManagement.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

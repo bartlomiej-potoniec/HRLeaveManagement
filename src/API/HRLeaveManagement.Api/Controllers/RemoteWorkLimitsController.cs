@@ -1,8 +1,9 @@
 ﻿using HRLeaveManagement.Application.DTOs.RemoteWorkLimits;
 using HRLeaveManagement.Application.Features.RemoteWorkLimit.Queries;
-using HRLeaveManagement.Application.Features.RemoteWorkLimit.Commands;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using HRLeaveManagement.Application.Features.RemoteWorkLimit.CreateRemoteWorkLimit.Commands;
+using HRLeaveManagement.Application.Features.RemoteWorkLimit.UpdateRemoteWorkLimit.Commands;
 
 namespace HRLeaveManagement.Api.Controllers;
 

@@ -1,4 +1,6 @@
-﻿namespace HRLeaveManagement.Domain.Tests.Entities;
+﻿using HRLeaveManagement.Domain.Leave.LeaveAllocation;
+
+namespace HRLeaveManagement.Domain.Tests.Entities;
 
 public class LeaveAllocationTest
 {

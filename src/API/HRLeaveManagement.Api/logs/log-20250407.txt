@@ -1,0 +1,137 @@
+2025-04-07 08:15:22.522 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-04-07 08:15:29.157 +02:00 [INF] Now listening on: https://localhost:7131
+2025-04-07 08:15:29.163 +02:00 [INF] Now listening on: http://localhost:5133
+2025-04-07 08:15:29.241 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-07 08:15:29.243 +02:00 [INF] Hosting environment: Development
+2025-04-07 08:15:29.245 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-04-07 08:15:45.995 +02:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 3.9083 ms
+2025-04-07 08:15:46.909 +02:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 08:15:47.123 +02:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 08:15:47.136 +02:00 [INF] HTTP POST /api/Auth/login responded 200 in 1125.5771 ms
+2025-04-07 08:24:39.645 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-04-07 08:24:41.497 +02:00 [INF] Now listening on: https://localhost:7131
+2025-04-07 08:24:41.536 +02:00 [INF] Now listening on: http://localhost:5133
+2025-04-07 08:24:41.708 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-07 08:24:41.711 +02:00 [INF] Hosting environment: Development
+2025-04-07 08:24:41.714 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-04-07 17:24:22.934 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-04-07 17:24:27.896 +02:00 [INF] Now listening on: https://localhost:7131
+2025-04-07 17:24:27.897 +02:00 [INF] Now listening on: http://localhost:5133
+2025-04-07 17:24:27.971 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-07 17:24:27.974 +02:00 [INF] Hosting environment: Development
+2025-04-07 17:24:27.975 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-04-07 17:24:47.121 +02:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 6.4130 ms
+2025-04-07 17:24:47.786 +02:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 17:24:47.989 +02:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 17:24:48.002 +02:00 [INF] HTTP POST /api/Auth/login responded 200 in 866.9801 ms
+2025-04-07 17:25:06.711 +02:00 [INF] HTTP OPTIONS /api/Employees responded 204 in 0.7869 ms
+2025-04-07 17:25:06.724 +02:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.0956 ms
+2025-04-07 17:25:06.735 +02:00 [INF] HTTP OPTIONS /api/Sections responded 204 in 0.0588 ms
+2025-04-07 17:25:06.839 +02:00 [INF] Fetching all users with details started
+2025-04-07 17:25:06.971 +02:00 [INF] Fetching all users with details successful
+2025-04-07 17:25:06.972 +02:00 [INF] Paginating result started
+2025-04-07 17:25:07.003 +02:00 [INF] Paginating result successfull
+2025-04-07 17:25:07.027 +02:00 [INF] HTTP GET /api/Users responded 200 in 290.6606 ms
+2025-04-07 17:25:07.069 +02:00 [INF] Fetching all sections started
+2025-04-07 17:25:07.071 +02:00 [INF] Fetching all employees started by user: null with ID: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 17:25:07.203 +02:00 [INF] Fetching all sections successful
+2025-04-07 17:25:07.206 +02:00 [INF] HTTP GET /api/Sections responded 200 in 455.0381 ms
+2025-04-07 17:25:07.272 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-04-07 17:25:07.272 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-04-07 17:25:07.272 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-04-07 17:25:07.278 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.280 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-04-07 17:25:07.280 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-04-07 17:25:07.280 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-04-07 17:25:07.284 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.283 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.285 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.285 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-04-07 17:25:07.288 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.290 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.289 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.291 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-04-07 17:25:07.291 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-04-07 17:25:07.293 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-04-07 17:25:07.294 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-04-07 17:25:07.293 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.297 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-04-07 17:25:07.299 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-04-07 17:25:07.300 +02:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-04-07 17:25:07.301 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-04-07 17:25:07.304 +02:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-04-07 17:25:07.302 +02:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-04-07 17:25:07.301 +02:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-04-07 17:25:07.362 +02:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-04-07 17:25:07.367 +02:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-04-07 17:25:07.367 +02:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-04-07 17:25:07.367 +02:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-04-07 17:25:07.379 +02:00 [INF] Fetching all employees by user: null with ID: a0bc7389-c9c0-4023-b2b0-ad731a9272f2 successful
+2025-04-07 17:25:07.403 +02:00 [INF] HTTP GET /api/Employees responded 200 in 677.4286 ms
+2025-04-07 17:25:07.408 +02:00 [INF] Fetching all employees started by user: null with ID: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 17:25:07.420 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-04-07 17:25:07.421 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.420 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-04-07 17:25:07.422 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-04-07 17:25:07.423 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-04-07 17:25:07.425 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-04-07 17:25:07.424 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.427 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.427 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-04-07 17:25:07.428 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.429 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" started
+2025-04-07 17:25:07.433 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-04-07 17:25:07.433 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.436 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.437 +02:00 [INF] Fetching user with employee ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" successful
+2025-04-07 17:25:07.438 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-04-07 17:25:07.438 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" started
+2025-04-07 17:25:07.439 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" started
+2025-04-07 17:25:07.443 +02:00 [INF] Fetching user with employee ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" successful
+2025-04-07 17:25:07.441 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" started
+2025-04-07 17:25:07.440 +02:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager started
+2025-04-07 17:25:07.445 +02:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager started
+2025-04-07 17:25:07.447 +02:00 [INF] Fetching user with employee ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" successful
+2025-04-07 17:25:07.444 +02:00 [INF] Fetching user with employee ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" successful
+2025-04-07 17:25:07.452 +02:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager started
+2025-04-07 17:25:07.453 +02:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager started
+2025-04-07 17:25:07.454 +02:00 [INF] Checking user with ID: "1131063c-f66b-47f6-3f1d-08dd1bca1d33" to be in role Manager successful
+2025-04-07 17:25:07.454 +02:00 [INF] Checking user with ID: "11852ec5-9845-4fc6-8e3d-cca237b4b979" to be in role Manager successful
+2025-04-07 17:25:07.458 +02:00 [INF] Checking user with ID: "5a853e1d-86ac-4d97-15cb-08dd1e22cf5c" to be in role Manager successful
+2025-04-07 17:25:07.459 +02:00 [INF] Checking user with ID: "b7611622-9a70-4cee-63d3-08dd3c4d07dc" to be in role Manager successful
+2025-04-07 17:25:07.460 +02:00 [INF] Fetching all employees by user: null with ID: a0bc7389-c9c0-4023-b2b0-ad731a9272f2 successful
+2025-04-07 17:25:07.462 +02:00 [INF] HTTP GET /api/Employees responded 200 in 57.3607 ms
+2025-04-07 17:31:17.348 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-04-07 17:31:21.762 +02:00 [INF] Now listening on: https://localhost:7131
+2025-04-07 17:31:21.777 +02:00 [INF] Now listening on: http://localhost:5133
+2025-04-07 17:31:21.852 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-07 17:31:21.857 +02:00 [INF] Hosting environment: Development
+2025-04-07 17:31:21.857 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-04-07 17:32:23.107 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-04-07 17:32:25.688 +02:00 [INF] Now listening on: https://localhost:7131
+2025-04-07 17:32:25.697 +02:00 [INF] Now listening on: http://localhost:5133
+2025-04-07 17:32:25.763 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-07 17:32:25.765 +02:00 [INF] Hosting environment: Development
+2025-04-07 17:32:25.766 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-04-07 17:32:46.884 +02:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 3.9274 ms
+2025-04-07 17:32:47.547 +02:00 [INF] Logging in started for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 17:32:47.763 +02:00 [INF] Logging in successful for user bpotocz98 with id: a0bc7389-c9c0-4023-b2b0-ad731a9272f2
+2025-04-07 17:32:47.778 +02:00 [INF] HTTP POST /api/Auth/login responded 200 in 880.2214 ms
+2025-04-07 17:58:57.639 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-04-07 17:59:01.938 +02:00 [INF] Now listening on: https://localhost:7131
+2025-04-07 17:59:01.940 +02:00 [INF] Now listening on: http://localhost:5133
+2025-04-07 17:59:02.020 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-07 17:59:02.027 +02:00 [INF] Hosting environment: Development
+2025-04-07 17:59:02.047 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-04-07 17:59:26.060 +02:00 [INF] HTTP OPTIONS /api/Users responded 204 in 15.2366 ms
+2025-04-07 17:59:26.060 +02:00 [INF] HTTP OPTIONS /api/Users responded 204 in 0.4087 ms
+2025-04-07 17:59:26.329 +02:00 [INF] Fetching all users with details started
+2025-04-07 17:59:26.329 +02:00 [INF] Fetching all users with details started
+2025-04-07 17:59:27.023 +02:00 [INF] Fetching all users with details successful
+2025-04-07 17:59:27.025 +02:00 [INF] Fetching all users with details successful
+2025-04-07 17:59:27.025 +02:00 [INF] Paginating result started
+2025-04-07 17:59:27.026 +02:00 [INF] Paginating result started
+2025-04-07 17:59:27.040 +02:00 [INF] Paginating result successfull
+2025-04-07 17:59:27.041 +02:00 [INF] Paginating result successfull
+2025-04-07 17:59:27.078 +02:00 [INF] HTTP GET /api/Users responded 200 in 970.8606 ms
+2025-04-07 17:59:27.078 +02:00 [INF] HTTP GET /api/Users responded 200 in 974.7720 ms

@@ -1,7 +1,7 @@
 ﻿using HRLeaveManagement.Application.DTOs.Employees;
-using HRLeaveManagement.Domain.Entities;
 using AutoMapper;
 using HRLeaveManagement.Application.DTOs.Users;
+using HRLeaveManagement.Domain.Employee;
 
 namespace HRLeaveManagement.Application.MappingResolvers;
 

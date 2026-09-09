@@ -1,5 +1,6 @@
-﻿using HRLeaveManagement.Domain.Enums;
-using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Leave.LeaveRequest;
+using HRLeaveManagement.Domain.Leave.LeaveRequest.CheckerContracts;
+using HRLeaveManagement.Domain.Leave.LeaveType;
 using HRLeaveManagement.Domain.Tests.Helpers;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
@@ -16,9 +17,9 @@ public class LeaveRequestTest
 
         DateOnly startedAt = new(2024, 2, 15);
         DateOnly endedAt = new(2024, 2, 20);
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         var expectedExceptionMessage = "Requesting employee cannot be their own approver";
@@ -51,9 +52,9 @@ public class LeaveRequestTest
 
         DateOnly startedAt = new(2024, 2, 15);
         DateOnly endedAt = new(2024, 2, 20);
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: true);
 
         var expectedExceptionMessage = "Approver must be a superior of requesting employee";
@@ -86,9 +87,9 @@ public class LeaveRequestTest
         Employee requestingEmployee = EmployeeHelper.CreateEmployee();
         Employee substitutor = EmployeeHelper.CreateEmployee();
         Employee approver = EmployeeHelper.CreateEmployee();
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         var expectedExceptionMessage = "Request started date must be fewer than ended date";
@@ -126,9 +127,9 @@ public class LeaveRequestTest
 
         Employee substitutor = EmployeeHelper.CreateEmployee();
         Employee approver = EmployeeHelper.CreateEmployee();
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         var expectedExceptionMessage = "Given period for request is already included in another one";
@@ -164,7 +165,7 @@ public class LeaveRequestTest
 
         Employee substitutor = EmployeeHelper.CreateEmployee();
         Employee approver = EmployeeHelper.CreateEmployee();
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
 
         string comment = "Comment for leave request";
         string approverComment = "Approver comment for leave request";
@@ -174,7 +175,7 @@ public class LeaveRequestTest
         DateOnly endedAt = new(2024, 2, 27);
         int expectedTotalDays = 5;
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         var expectedLeaveRequest = new
@@ -237,11 +238,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -279,11 +280,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -322,11 +323,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -363,11 +364,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -405,11 +406,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -448,11 +449,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -489,11 +490,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -531,11 +532,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -574,11 +575,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -615,11 +616,11 @@ public class LeaveRequestTest
             (new DateOnly(2024, 2, 1), new DateOnly(2024, 2, 15))
         );
 
-        Domain.Entities.LeaveType leaveType = await GetDefaultLeaveTypeAsync();
+        LeaveType leaveType = await GetDefaultLeaveTypeAsync();
         DateOnly startedAt = new(2024, 2, 24);
         DateOnly endedAt = new(2024, 2, 16);
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = CreateLeaveRequestRuleSetMock();
         SetupLeaveRequestRuleSetMockToReturnResult(leaveRequestRuleSetMock, isRuleFailed: false);
 
         LeaveRequest leaveRequest = await LeaveRequest.CreateAsync(
@@ -668,9 +669,9 @@ public class LeaveRequestTest
 
     #region Test_Factory_Methods
 
-    private static Mock<ILeaveRequestRuleSet> CreateLeaveRequestRuleSetMock() => new();
+    private static Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> CreateLeaveRequestRuleSetMock() => new();
 
-    private static void SetupLeaveRequestRuleSetMockToReturnResult(Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock,
+    private static void SetupLeaveRequestRuleSetMockToReturnResult(Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock,
                                                                    bool isRuleFailed)
         => leaveRequestRuleSetMock
             .Setup(rule => rule.IsRequestApproverSuperiorOfEmployeeAsync(
@@ -678,7 +679,7 @@ public class LeaveRequestTest
             )
             .ReturnsAsync(!isRuleFailed);
 
-    private static async Task<Domain.Entities.LeaveType> GetDefaultLeaveTypeAsync() => await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
+    private static async Task<LeaveType> GetDefaultLeaveTypeAsync() => await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
 
     #endregion
 }

@@ -1,15 +1,15 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Document;
 
 namespace HRLeaveManagement.Domain.Tests.Helpers;
 
 internal class EmployeeDocumentHelper
 {
-    internal static async Task<EmployeeDocument> CreateEmployeeDocumentAsync(IEmployeeDocumentRuleSet employeeDocumentRuleSet,
+    internal static async Task<EmployeeDocument> CreateEmployeeDocumentAsync(IEmployeeDocumentNumberUniqueChecker employeeDocumentRuleSet,
                                                                              string title = "Document title",
                                                                              string documentNumber = "No.1",
                                                                              string? description = "Document description",
                                                                              string fileUrl = "/sth/sth1/sth2/")
-        => await EmployeeDocument.CreateSingleAsync(
+        => await EmployeeDocument.CreateAsync(
             employeeDocumentRuleSet,
             title,
             documentNumber,
@@ -17,11 +17,11 @@ internal class EmployeeDocumentHelper
             description
         );
 
-    internal static Mock<IEmployeeDocumentRuleSet> CreateEmployeeDocumentRuleSetMock() => new();
+    internal static Mock<IEmployeeDocumentNumberUniqueChecker> CreateEmployeeDocumentRuleSetMock() => new();
 
-    internal static void SetupIsDocumentNumberUniqueAsyncToReturnValue(Mock<IEmployeeDocumentRuleSet> employeeDocumentRuleSetMock,
+    internal static void SetupIsDocumentNumberUniqueAsyncToReturnValue(Mock<IEmployeeDocumentNumberUniqueChecker> employeeDocumentRuleSetMock,
                                                                        bool isRuleFailed)
         => employeeDocumentRuleSetMock
-            .Setup(rule => rule.IsDocumentNumberUniqueAsync(It.IsAny<string>(), CancellationToken.None))
+            .Setup(rule => rule.IsEligibleAsync(It.IsAny<string>(), CancellationToken.None))
             .ReturnsAsync(!isRuleFailed);
 }

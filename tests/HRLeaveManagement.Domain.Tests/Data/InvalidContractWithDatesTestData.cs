@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.Enums;
+﻿using HRLeaveManagement.Domain.Employee.Contract;
 using HRLeaveManagement.Domain.Tests.Helpers;
 using System.Collections;
 

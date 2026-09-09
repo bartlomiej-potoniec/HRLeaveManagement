@@ -1,4 +1,6 @@
-﻿using HRLeaveManagement.Domain.Tests.Helpers;
+﻿using HRLeaveManagement.Domain.Department;
+using HRLeaveManagement.Domain.Department.Section;
+using HRLeaveManagement.Domain.Tests.Helpers;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
 
@@ -12,7 +14,7 @@ public class SectionTest
         string dedicatedSectionName = "Section_52";
         string expectedExceptionMessage = $"Section with name 'Section_52' for department: Department_1 already exists";
 
-        Department department = await DepartmentHelper
+        Department.Department department = await DepartmentHelper
             .CreateDepartmentWithSectionListAsync(departmentName, dedicatedSectionName);
 
         Section sectionToUpdate = department.Sections.First(s => s.Name == dedicatedSectionName);
@@ -35,7 +37,7 @@ public class SectionTest
         string description = "Description for Section_52";
         Employee? leader = null;
 
-        Department department = await DepartmentHelper.CreateDepartmentWithSectionListAsync();
+        Department.Department department = await DepartmentHelper.CreateDepartmentWithSectionListAsync();
         Section sectionToUpdate = department.Sections.First();
 
         var expectedSection = new

@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.Enums;
+﻿using HRLeaveManagement.Domain.Employee.Education;
 
 namespace HRLeaveManagement.Application.DTOs.Employees;
 

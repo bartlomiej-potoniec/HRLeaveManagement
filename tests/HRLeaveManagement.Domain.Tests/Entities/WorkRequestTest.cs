@@ -1,6 +1,6 @@
-﻿using HRLeaveManagement.Domain.Enums;
-using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Leave.LeaveRequest;
 using HRLeaveManagement.Domain.Tests.Helpers;
+using HRLeaveManagement.Domain.WorkRequest;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
 

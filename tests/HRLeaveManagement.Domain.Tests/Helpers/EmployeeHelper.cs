@@ -1,5 +1,13 @@
-﻿using HRLeaveManagement.Domain.Enums;
-using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Document;
+using HRLeaveManagement.Domain.Employee.Contract;
+using HRLeaveManagement.Domain.Employee.Education;
+using HRLeaveManagement.Domain.Leave.LeaveRequest;
+using HRLeaveManagement.Domain.Leave.LeaveType;
+using HRLeaveManagement.Domain.Department.Section;
+using HRLeaveManagement.Domain.TimeTracking.RemoteWorkLimit;
+using HRLeaveManagement.Domain.TimeTracking.TimeRegister;
+using HRLeaveManagement.Domain.WorkRequest;
+using HRLeaveManagement.Domain.Leave.LeaveRequest.CheckerContracts;
 
 namespace HRLeaveManagement.Domain.Tests.Helpers;
 
@@ -50,7 +58,7 @@ internal class EmployeeHelper
         ContractType contractType = ContractType.Employment;
         string contractDetails = "Details for contract";
 
-        Mock<IEmployeeDocumentRuleSet> employeeDocumentRuleSetMock = EmployeeDocumentHelper.CreateEmployeeDocumentRuleSetMock();
+        Mock<IEmployeeDocumentNumberUniqueChecker> employeeDocumentRuleSetMock = EmployeeDocumentHelper.CreateEmployeeDocumentRuleSetMock();
         EmployeeDocumentHelper.SetupIsDocumentNumberUniqueAsyncToReturnValue(employeeDocumentRuleSetMock, isRuleFailed: false);
 
         foreach (var (startedAt, expiredAt) in contractDateRanges)
@@ -113,9 +121,9 @@ internal class EmployeeHelper
         Employee substitutor = CreateEmployee();
         approver ??= CreateEmployee();
 
-        Domain.Entities.LeaveType leaveType = await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
+        LeaveType leaveType = await LeaveTypeHelper.CreateLeaveTypeAsync("Vacation leave");
 
-        Mock<ILeaveRequestRuleSet> leaveRequestRuleSetMock = new();
+        Mock<ILeaveRequestApproverSuperiorOfEmployeeChecker> leaveRequestRuleSetMock = new();
         leaveRequestRuleSetMock
             .Setup(rule => rule.IsRequestApproverSuperiorOfEmployeeAsync(requestingEmployee, substitutor, CancellationToken.None))
             .ReturnsAsync(true);

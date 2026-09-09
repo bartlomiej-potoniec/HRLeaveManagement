@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Department;
 using HRLeaveManagement.Domain.Tests.Helpers;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
@@ -11,7 +11,7 @@ public class DepartmentTest
         // Arrange
         string departmentName = "Department_1";
      
-        Mock<IDepartmentRuleSet> departmentRuleSetMock = CreateDepartmentRuleSetMock();
+        Mock<IDepartmentNameUniqueChecker> departmentRuleSetMock = CreateDepartmentRuleSetMock();
         SetupIsNameUniqueAsyncToReturnResult(departmentRuleSetMock, result: false);
 
         string expectedExceptionMessage = "Department with name 'Department_1' already exists";
@@ -30,11 +30,11 @@ public class DepartmentTest
     public async Task CreateAsync_ForGivenParams_ReturnsNewInstance()
     {
         // Arrange
-        Mock<IDepartmentRuleSet> departmentRuleSetMock = CreateDepartmentRuleSetMock();
+        Mock<IDepartmentNameUniqueChecker> departmentRuleSetMock = CreateDepartmentRuleSetMock();
         SetupIsNameUniqueAsyncToReturnResult(departmentRuleSetMock, result: true);
 
         // Act
-        Department department = await CreateWithDefaultValuesAsync(departmentRuleSetMock);
+        Department.Department department = await CreateWithDefaultValuesAsync(departmentRuleSetMock);
 
         // Assert
         department
@@ -50,7 +50,7 @@ public class DepartmentTest
         string description = "Description for Department_1";
         Employee? leader = null;
 
-        Mock<IDepartmentRuleSet> departmentRuleSetMock = CreateDepartmentRuleSetMock();
+        Mock<IDepartmentNameUniqueChecker> departmentRuleSetMock = CreateDepartmentRuleSetMock();
         SetupIsNameUniqueAsyncToReturnResult(departmentRuleSetMock, result: true);
 
         var departmentToUpdate = await CreateWithDefaultValuesAsync(departmentRuleSetMock);
@@ -78,7 +78,7 @@ public class DepartmentTest
         string description = "Description for Department_1";
         Employee? leader = null;
 
-        Mock<IDepartmentRuleSet> departmentRuleSetMock = CreateDepartmentRuleSetMock();
+        Mock<IDepartmentNameUniqueChecker> departmentRuleSetMock = CreateDepartmentRuleSetMock();
         SetupIsNameUniqueAsyncToReturnResult(departmentRuleSetMock, result: true);
           
         var departmentToUpdate = await CreateWithDefaultValuesAsync(departmentRuleSetMock);
@@ -112,7 +112,7 @@ public class DepartmentTest
         string sectionDescription = "Description for Section_1";
         Employee? sectionLeader = null;
 
-        Department departmentWithSections = await DepartmentHelper
+        Department.Department departmentWithSections = await DepartmentHelper
             .CreateDepartmentWithSectionListAsync(departmentName, sectionName);
 
         string expectedExceptionMessage = "Section with name 'Section_1' for department: Department_1 already exists";
@@ -135,7 +135,7 @@ public class DepartmentTest
         string sectionDescription = "Description for Section_1";
         Employee? sectionLeader = null;
 
-        Department departmentWithSections = await DepartmentHelper.CreateDepartmentWithSectionListAsync();
+        Department.Department departmentWithSections = await DepartmentHelper.CreateDepartmentWithSectionListAsync();
 
         // Act
         departmentWithSections.AddSingleSection(sectionName, sectionLeader, sectionDescription);
@@ -146,18 +146,18 @@ public class DepartmentTest
             .ContainSingle(s => s.Name == sectionName);
     }
 
-    private static Mock<IDepartmentRuleSet> CreateDepartmentRuleSetMock() => new();
+    private static Mock<IDepartmentNameUniqueChecker> CreateDepartmentRuleSetMock() => new();
 
-    private static void SetupIsNameUniqueAsyncToReturnResult(Mock<IDepartmentRuleSet> departmentRuleSetMock, bool result)
+    private static void SetupIsNameUniqueAsyncToReturnResult(Mock<IDepartmentNameUniqueChecker> departmentRuleSetMock, bool result)
         => departmentRuleSetMock
-            .Setup(rule => rule.IsNameUniqueAsync(It.IsAny<string>(), CancellationToken.None))
+            .Setup(rule => rule.IsEligible(It.IsAny<string>(), CancellationToken.None))
             .ReturnsAsync(result);
 
-    private static async Task<Department> CreateWithDefaultValuesAsync(Mock<IDepartmentRuleSet> departmentRuleSetMock,
+    private static async Task<Department.Department> CreateWithDefaultValuesAsync(Mock<IDepartmentNameUniqueChecker> departmentRuleSetMock,
                                                                        string name = "R&D",
                                                                        string? description = "R&D department",
                                                                        Employee? leader = null)
-        => await Department.CreateSingleAsync(
+        => await Department.Department.CreateSingleAsync(
             departmentRuleSetMock.Object,
             name,
             leader,

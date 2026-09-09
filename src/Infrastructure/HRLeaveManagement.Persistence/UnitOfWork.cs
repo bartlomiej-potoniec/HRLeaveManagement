@@ -1,5 +1,4 @@
 ﻿using HRLeaveManagement.Application.Contracts.Persistence;
-using HRLeaveManagement.Persistence.DbContexts;
 
 namespace HRLeaveManagement.Persistence;
 

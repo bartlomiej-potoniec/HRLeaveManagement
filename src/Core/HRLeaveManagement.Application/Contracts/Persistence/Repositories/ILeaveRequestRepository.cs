@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.Entities;
+﻿using HRLeaveManagement.Domain.Leave.LeaveRequest;
 
 namespace HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 

@@ -1,4 +1,5 @@
 ﻿using HRLeaveManagement.Domain.Tests.Helpers;
+using HRLeaveManagement.Domain.TimeTracking.RemoteWorkLimit;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
 

@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\Core\HRLeaveManagement.Application\HRLeaveManagement.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Employee\Address\" />
+  </ItemGroup>
+
 </Project>

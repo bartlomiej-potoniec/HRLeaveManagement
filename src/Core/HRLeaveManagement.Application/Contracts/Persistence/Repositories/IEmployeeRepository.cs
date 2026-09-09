@@ -1,4 +1,7 @@
-﻿using HRLeaveManagement.Domain.Entities;
+﻿using HRLeaveManagement.Domain.Employee;
+using HRLeaveManagement.Domain.Employee.Contract;
+using HRLeaveManagement.Domain.Employee.Education;
+using HRLeaveManagement.Domain.Employee.Experience;
 
 namespace HRLeaveManagement.Application.Contracts.Persistence.Repositories;
 

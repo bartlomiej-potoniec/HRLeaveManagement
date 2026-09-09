@@ -1,8 +1,9 @@
-﻿using HRLeaveManagement.Application.Features.LeaveAllocation.Commands;
-using HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
+﻿using HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
 using HRLeaveManagement.Application.DTOs.LeaveAllocations;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using HRLeaveManagement.Application.Features.LeaveAllocation.CreateLeaveAllocation.Commands;
+using HRLeaveManagement.Application.Features.LeaveAllocation.UpdateLeaveAllocation.Commands;
 
 namespace HRLeaveManagement.Api.Controllers;
 

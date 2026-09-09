@@ -1,5 +1,6 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
-using HRLeaveManagement.Domain.Tests.Helpers;
+﻿using HRLeaveManagement.Domain.Tests.Helpers;
+using HRLeaveManagement.Domain.WorkRequest;
+using HRLeaveManagement.Domain.WorkRequest.OvertimeRequest;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
 

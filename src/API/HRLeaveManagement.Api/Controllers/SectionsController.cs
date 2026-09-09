@@ -1,8 +1,9 @@
 ﻿using HRLeaveManagement.Application.DTOs.Sections;
 using HRLeaveManagement.Application.Features.Section.Queries;
-using HRLeaveManagement.Application.Features.Section.Commands;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using HRLeaveManagement.Application.Features.Department.Section.CreateSection.Commands;
+using HRLeaveManagement.Application.Features.Department.Section.UpdateSection.Commands;
 
 namespace HRLeaveManagement.Api.Controllers;
 

@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Leave.LeaveType;
 
 namespace HRLeaveManagement.Domain.Tests.Helpers;
 
@@ -8,9 +8,9 @@ internal class LeaveTypeHelper
                                                                decimal paidFraction = 1.0M,
                                                                string? description = null)
     {
-        Mock<ILeaveTypeRuleSet> leaveTypeRuleSetMock = new();
+        Mock<ILeaveTypeNameUniqueChecker> leaveTypeRuleSetMock = new();
         leaveTypeRuleSetMock
-            .Setup(rule => rule.IsNameUniqueAsync(name, CancellationToken.None))
+            .Setup(rule => rule.IsEligible(name, CancellationToken.None))
             .ReturnsAsync(true);
 
         LeaveType leaveType = await LeaveType.CreateAsync(leaveTypeRuleSetMock.Object, name, paidFraction, description);

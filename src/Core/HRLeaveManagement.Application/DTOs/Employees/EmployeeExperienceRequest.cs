@@ -1,4 +1,4 @@
-﻿using HRLeaveManagement.Domain.Enums;
+﻿using HRLeaveManagement.Domain.Employee.Contract;
 
 namespace HRLeaveManagement.Application.DTOs.Employees;
 

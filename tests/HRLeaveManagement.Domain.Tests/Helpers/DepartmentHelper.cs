@@ -1,17 +1,17 @@
-﻿using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Department;
 
 namespace HRLeaveManagement.Domain.Tests.Helpers;
 
 internal class DepartmentHelper
 {
-    internal static async Task<Department> CreateDepartmentWithSectionListAsync(string? departmentName = null,
+    internal static async Task<Department.Department> CreateDepartmentWithSectionListAsync(string? departmentName = null,
                                                                                 string? dedicatedSectionName = null)
     {
-        Department department = await Department.CreateSingleAsync(
+        Department.Department department = await Department.Department.CreateSingleAsync(
             name: departmentName ?? "Department",
             leader: null,
             description: null,
-            departmentRuleSet: new Mock<IDepartmentRuleSet>().Object
+            departmentRuleSet: new Mock<IDepartmentNameUniqueChecker>().Object
         );
 
         department.AddSingleSection(dedicatedSectionName ?? "Section_1", leader: null);

@@ -1,13 +1,14 @@
-﻿using DomainLeaveType = HRLeaveManagement.Domain.Entities.LeaveType;
-using HRLeaveManagement.Domain.Contracts;
-using HRLeaveManagement.Domain.Enums;
+﻿using DomainLeaveType = HRLeaveManagement.Domain.Leave.LeaveType.LeaveType;
+using HRLeaveManagement.Domain.Leave;
+using HRLeaveManagement.Domain.Leave.LeaveType;
+using HRLeaveManagement.Domain.Leave.Policies;
 using HRLeaveManagement.Domain.Policies.Leaves;
 
 namespace HRLeaveManagement.Application.Features.LeaveAllocation;
 
 public class LeavePolicyFactory
 {
-    public ILeaveAllocationPolicy Create(DomainLeaveType leaveType) => leaveType.Rule switch
+    public ILeavePolicy Create(DomainLeaveType leaveType) => leaveType.Rule switch
     {
         LeaveRuleType.AnnualLeave           => new AnnualLeavePolicy(),
         LeaveRuleType.UponRequestLeave      => new UponRequestLeavePolicy(),
@@ -23,7 +24,6 @@ public class LeavePolicyFactory
         LeaveRuleType.JobSeekingLeave       => new JobSeekingLeavePolicy(),
         LeaveRuleType.TrainingLeave         => new TrainingLeavePolicy(),
         LeaveRuleType.BloodDonationLeave    => new BloodDonationLeavePolicy(),
-        LeaveRuleType.CustomLeave           => new CustomLeavePolicy(leaveType.DefaultDays, c => false),
         _                                   => throw new InvalidOperationException($"Unknown leave rule")
     };
 }

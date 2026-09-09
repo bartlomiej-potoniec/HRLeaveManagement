@@ -1,0 +1,7 @@
+2025-04-12 13:49:17.949 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-04-12 13:49:23.676 +02:00 [INF] Now listening on: https://localhost:7131
+2025-04-12 13:49:23.684 +02:00 [INF] Now listening on: http://localhost:5133
+2025-04-12 13:49:23.768 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-12 13:49:23.770 +02:00 [INF] Hosting environment: Development
+2025-04-12 13:49:23.788 +02:00 [INF] Content root path: C:\Users\Bartek\source\repos\HRLeaveManagement\src\API\HRLeaveManagement.Api
+2025-04-12 13:55:07.292 +02:00 [WRN] No store type was specified for the decimal property 'CashAdvance' on entity type 'DelegationRequest'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.

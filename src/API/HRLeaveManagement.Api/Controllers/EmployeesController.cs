@@ -1,5 +1,4 @@
-﻿using HRLeaveManagement.Application.Features.Employee.Commands;
-using HRLeaveManagement.Application.Features.Employee.Queries;
+﻿using HRLeaveManagement.Application.Features.Employee.Queries;
 using HRLeaveManagement.Application.Features.RemoteWorkLimit.Queries;
 using HRLeaveManagement.Application.Features.LeaveAllocation.Queries;
 using HRLeaveManagement.Application.DTOs.Employees;
@@ -8,6 +7,15 @@ using HRLeaveManagement.Application.DTOs.LeaveAllocations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using HRLeaveManagement.Application.Features.Employee.CreateEmployee.Commands;
+using HRLeaveManagement.Application.Features.Employee.Education.CreateEducation.Commands;
+using HRLeaveManagement.Application.Features.Employee.UpdateEmployee.Commands;
+using HRLeaveManagement.Application.Features.Employee.Education.UpdateEducation.Commands;
+using HRLeaveManagement.Application.Features.Employee.Contract.CreateContract.Commands;
+using HRLeaveManagement.Application.Features.Employee.Contract.UpdateContract.Commands;
+using HRLeaveManagement.Application.Features.Employee.Contract.TerminateContract.Commands;
+using HRLeaveManagement.Application.Features.Employee.Experience.CreateExperieence.Commands;
+using HRLeaveManagement.Application.Features.Employee.Experience.UpdateExperience.Commands;
 
 namespace HRLeaveManagement.Api.Controllers;
 

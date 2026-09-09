@@ -1,5 +1,5 @@
-﻿using HRLeaveManagement.Domain.Enums;
-using HRLeaveManagement.Domain.RuleContracts;
+﻿using HRLeaveManagement.Domain.Document;
+using HRLeaveManagement.Domain.Employee.Education;
 using HRLeaveManagement.Domain.Tests.Helpers;
 
 namespace HRLeaveManagement.Domain.Tests.Entities;
@@ -103,7 +103,7 @@ public class EmployeeEducationTest
             (new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1))
         );
 
-        Mock<IEmployeeDocumentRuleSet> employeeDocumentRuleSetMock = EmployeeDocumentHelper.CreateEmployeeDocumentRuleSetMock();
+        Mock<IEmployeeDocumentNumberUniqueChecker> employeeDocumentRuleSetMock = EmployeeDocumentHelper.CreateEmployeeDocumentRuleSetMock();
         EmployeeDocumentHelper.SetupIsDocumentNumberUniqueAsyncToReturnValue(employeeDocumentRuleSetMock, isRuleFailed: false);
 
         EmployeeEducation employeeEducation = employee.EmployeeEducations.First();
